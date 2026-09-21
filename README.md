@@ -24,7 +24,7 @@ src/
     routes.ts            Dile göre URL üretimi ve çözümlemesi
     dictionaries/        tr.ts (kaynak) · en.ts (tr'nin tipine uymak zorunda)
   data/projects.ts       Portfolyo listesi (şu an boş)
-  proxy.ts               Dil yönlendirme + yerelleştirilmiş URL rewrite
+next.config.ts           Dil yönlendirmesi + yerelleşen URL rewrite tablosu
 ```
 
 ## Sık yapılacak işler
@@ -49,8 +49,12 @@ Kullanım yerleri (header, footer) değişmez.
 | Hizmet  | `/tr/hizmetler/...`   | `/en/services/...`      |
 | Hakkında| `/tr/hakkimizda`      | `/en/about`             |
 
-Yeni bir sayfa eklerken klasör adı İngilizce (canonical), görünen Türkçe yol
-`src/i18n/routes.ts` içindeki `pageSegments` tablosuna eklenir.
+Yeni bir sayfa eklerken klasör adı İngilizce (canonical) olur, görünen Türkçe
+yol ise **iki yere birden** yazılır: `src/i18n/routes.ts` (bağlantı üretimi) ve
+`next.config.ts` (rewrite tablosu). İkisi aynı kalmazsa bağlantı 404 verir.
+
+Site kasıtlı olarak middleware/proxy kullanmaz; yönlendirmeler `next.config.ts`
+içinde statik tanımlıdır, böylece her hosting sağlayıcısında aynı çalışır.
 
 ## İletişim formu
 

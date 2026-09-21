@@ -7,8 +7,8 @@ import {
 
 /**
  * Klasör adları (canonical) İngilizce; her dil için görünen URL parçası ayrı.
- * Middleware, görünen yolu canonical yola rewrite eder — adres çubuğunda
- * ziyaretçi kendi dilindeki URL'i görür.
+ * Görünen yolu canonical yola çeviren rewrite tablosu next.config.ts içinde —
+ * bu dosyadaki tablolar değişirse orası da güncellenmeli.
  */
 export type RouteKey = "home" | "about" | "services" | "projects" | "contact";
 
@@ -51,35 +51,6 @@ export function switchLocalePath(
   service?: ServiceSlug,
 ): string {
   return pathFor(targetLocale, key, service);
-}
-
-/**
- * Görünen yolu canonical klasör yoluna çevirir.
- * Rewrite gerekmiyorsa null döner.
- */
-export function canonicalPath(pathname: string): string | null {
-  const parts = pathname.split("/").filter(Boolean);
-  const [locale, page, sub] = parts;
-  if (!locale || !isLocale(locale) || !page) return null;
-
-  const pageKey = (
-    Object.keys(pageSegments) as Array<Exclude<RouteKey, "home">>
-  ).find((key) => pageSegments[key][locale] === page);
-  if (!pageKey) return null;
-
-  let canonical = `/${locale}/${pageKey}`;
-
-  if (pageKey === "services" && sub) {
-    const slug = serviceSlugs.find(
-      (candidate) => serviceSegments[candidate][locale] === sub,
-    );
-    if (!slug) return null;
-    canonical += `/${slug}`;
-  } else if (sub) {
-    return null;
-  }
-
-  return canonical === pathname ? null : canonical;
 }
 
 /** Canonical servis slug'ını verilen dildeki görünen slug'a çevirir. */
