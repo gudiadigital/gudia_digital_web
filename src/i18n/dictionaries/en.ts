@@ -14,7 +14,7 @@ export const en: Dictionary = {
     services: "Services",
     projects: "Projects",
     contact: "Contact",
-    cta: "Start a Project",
+    cta: "Free Review",
     menu: "Menu",
     close: "Close",
     langLabel: "Language",
@@ -34,8 +34,8 @@ export const en: Dictionary = {
     pillars: ["Web", "Mobile", "Interactive", "Content", "Commerce"],
     subtitle:
       "We build products from scratch, fix the digital assets you already have, and get them ready to sell. Small team — no account managers, no agency layers, you talk to the people who actually build it.",
-    ctaPrimary: "Start a Project",
-    ctaSecondary: "Explore Services",
+    ctaPrimary: "Get a Free Review",
+    ctaSecondary: "Our Services",
     stats: [
       { value: "iOS", label: "Native development experience" },
       { value: "6", label: "Service areas" },
@@ -290,17 +290,17 @@ export const en: Dictionary = {
   },
 
   cta: {
-    title: "Got a project in mind?",
+    title: "Want us to look at what you have?",
     subtitle:
-      "Write to us even if it's still just an idea. The first conversation is free — we'll review what you have and talk through feasibility and rough cost.",
-    button: "Get in Touch",
+      "We'll review your app, site or store and send you a written list of what can concretely be improved — free, no obligation. Nothing built yet? Write anyway, and we'll talk through feasibility in the first call.",
+    button: "Get a Free Review",
   },
 
   contact: {
     eyebrow: "Contact",
     title: "Let's talk",
     subtitle:
-      "Fill in the form or email us directly. We usually reply the same day.",
+      "Ask for a free review, tell us about your project, or email us directly. We usually reply the same day.",
     emailLabel: "Email",
     email: "contact@gudiadigital.com",
     responseLabel: "Response time",
@@ -313,7 +313,8 @@ export const en: Dictionary = {
       email: "Email",
       emailPlaceholder: "you@company.com",
       subject: "Subject",
-      subjectPlaceholder: "Choose a service",
+      subjectPlaceholder: "Choose a subject",
+      subjectReview: "I'd like a free review",
       subjectOther: "Other",
       message: "Your message",
       messagePlaceholder: "Tell us briefly about your project: what do you want to build, and by when?",

@@ -12,7 +12,7 @@ export const tr = {
     services: "Hizmetler",
     projects: "Projeler",
     contact: "İletişim",
-    cta: "Projeni Konuşalım",
+    cta: "Ücretsiz İnceleme",
     menu: "Menü",
     close: "Kapat",
     langLabel: "Dil",
@@ -32,8 +32,8 @@ export const tr = {
     pillars: ["Web", "Mobile", "Interactive", "Content", "Commerce"],
     subtitle:
       "Sıfırdan ürün kuruyoruz, elinizdeki dijital varlıkları toparlıyoruz ve satışa hazır hale getiriyoruz. Küçük bir ekibiz — aracı yok, ajans katmanı yok, ürünü kuran kişilerle konuşursunuz.",
-    ctaPrimary: "Projeni Konuşalım",
-    ctaSecondary: "Hizmetleri İncele",
+    ctaPrimary: "Ücretsiz İnceleme İsteyin",
+    ctaSecondary: "Hizmetlerimiz",
     stats: [
       { value: "iOS", label: "Native geliştirme deneyimi" },
       { value: "6", label: "Hizmet alanı" },
@@ -288,17 +288,17 @@ export const tr = {
   },
 
   cta: {
-    title: "Aklınızda bir proje mi var?",
+    title: "Mevcut ürününüze bakalım mı?",
     subtitle:
-      "Fikir aşamasında olsanız bile yazın. İlk görüşme ücretsiz; mevcut ürününüzü inceleyip yapılabilirliğini ve yaklaşık maliyetini konuşalım.",
-    button: "İletişime Geç",
+      "Uygulamanızı, sitenizi ya da mağazanızı inceleyip somut olarak neyin düzeltilebileceğini yazılı gönderiyoruz — ücretsiz, hiçbir yükümlülük yok. Henüz bir ürününüz yoksa da yazın; ilk görüşmede fikrin yapılabilirliğini konuşalım.",
+    button: "Ücretsiz İnceleme İsteyin",
   },
 
   contact: {
     eyebrow: "İletişim",
     title: "Konuşalım",
     subtitle:
-      "Formu doldurabilir ya da doğrudan e-posta gönderebilirsiniz. Genellikle aynı gün içinde dönüş yapıyoruz.",
+      "Ücretsiz inceleme isteyebilir, projenizi anlatabilir ya da doğrudan e-posta gönderebilirsiniz. Genellikle aynı gün içinde dönüş yapıyoruz.",
     emailLabel: "E-posta",
     email: "contact@gudiadigital.com",
     responseLabel: "Yanıt süresi",
@@ -311,7 +311,8 @@ export const tr = {
       email: "E-posta",
       emailPlaceholder: "ornek@sirket.com",
       subject: "Konu",
-      subjectPlaceholder: "Bir hizmet seçin",
+      subjectPlaceholder: "Bir konu seçin",
+      subjectReview: "Ücretsiz inceleme istiyorum",
       subjectOther: "Diğer",
       message: "Mesajınız",
       messagePlaceholder: "Projenizden kısaca bahsedin: ne yapmak istiyorsunuz, ne zamana kadar?",

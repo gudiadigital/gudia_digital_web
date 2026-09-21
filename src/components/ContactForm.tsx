@@ -77,6 +77,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
             <option value="" disabled>
               {t.subjectPlaceholder}
             </option>
+            <option value={t.subjectReview}>{t.subjectReview}</option>
             {serviceSlugs.map((slug) => (
               <option key={slug} value={dict.services.items[slug].title}>
                 {dict.services.items[slug].title}
