@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { Container } from "../Container";
 import { Aurora } from "../Aurora";
+import { HeroCanvas } from "../HeroCanvas";
 import type { Locale } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -42,6 +43,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <section className="relative isolate flex min-h-[88vh] items-center overflow-hidden pt-14 pb-24 sm:pt-20">
       <Aurora />
+      <HeroCanvas />
       <div className="grid-dots" aria-hidden="true" />
 
       <Container className="relative z-10">

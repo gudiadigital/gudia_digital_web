@@ -287,6 +287,19 @@ export const en: Dictionary = {
       "We're getting our first projects ready for launch. This section will be updated soon — in the meantime, if you'd like to discuss a project, get in touch.",
     emptyCta: "Get in touch",
     viewProject: "View project",
+    featuredEyebrow: "Selected work",
+    featuredTitle: "Projects that shipped",
+    featuredSubtitle:
+      "From experiences we built for brands to our own apps — work that is genuinely live.",
+    allProjects: "All projects",
+    linkLabels: {
+      appstore: "App Store",
+      playstore: "Google Play",
+      steam: "Steam",
+      web: "Website",
+      trendyol: "Trendyol",
+      instagram: "Instagram",
+    },
   },
 
   cta: {

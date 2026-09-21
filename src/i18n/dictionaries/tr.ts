@@ -285,6 +285,19 @@ export const tr = {
       "İlk projelerimizi yayına hazırlıyoruz. Bu bölüm çok yakında güncellenecek — bu arada aklınızdaki projeyi konuşmak isterseniz bize yazın.",
     emptyCta: "Bize yazın",
     viewProject: "Projeyi gör",
+    featuredEyebrow: "Öne çıkan işler",
+    featuredTitle: "Yayında olan projeler",
+    featuredSubtitle:
+      "Markalar için kurduğumuz deneyimlerden kendi uygulamalarımıza kadar, gerçekten yayında olan işler.",
+    allProjects: "Tüm projeler",
+    linkLabels: {
+      appstore: "App Store",
+      playstore: "Google Play",
+      steam: "Steam",
+      web: "Web sitesi",
+      trendyol: "Trendyol",
+      instagram: "Instagram",
+    },
   },
 
   cta: {

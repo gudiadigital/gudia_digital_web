@@ -2,12 +2,12 @@ import Link from "next/link";
 import { pathFor } from "@/i18n/routes";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
+import { ProjectCard } from "@/components/ProjectCard";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { projects } from "@/data/projects";
 import type { PageContentProps } from "./types";
 
 export function ProjectsContent({ locale, dict }: PageContentProps) {
-
   return (
     <>
       <PageHeader
@@ -30,27 +30,15 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <article key={project.slug} className="card rounded-2xl p-6">
-                <p className="text-accent font-display text-xs font-semibold uppercase tracking-[0.18em]">
-                  {dict.services.items[project.service].title} · {project.year}
-                </p>
-                <h2 className="mt-3 text-lg font-semibold">{project.title}</h2>
-                <p className="text-muted mt-2.5 text-sm leading-relaxed">
-                  {project.summary[locale]}
-                </p>
-                {project.url && (
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="text-accent mt-5 inline-block text-sm font-medium"
-                  >
-                    {dict.projects.viewProject}
-                  </a>
-                )}
-              </article>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, index) => (
+              <div
+                key={project.slug}
+                data-reveal
+                data-reveal-delay={(index % 3) * 100}
+              >
+                <ProjectCard project={project} locale={locale} dict={dict} />
+              </div>
             ))}
           </div>
         )}
