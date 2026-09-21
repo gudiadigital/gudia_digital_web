@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Gudia Dijital — "Soft Deep Space"
+   Koyu mod varsayılan; cihaz açık mod tercih ederse otomatik geçer.
+   :root[data-theme] override'ları ileride elle tema anahtarı için.
+   --------------------------------------------------------------- */
+
+:root {
+  --space: #131730;
+  --surface: #1e2440;
+  --accent: #7c93ff;
+  --accent-2: #a78bfa;
+  --ink: #edeef7;
+  --muted: #9ca3c4;
+
+  --line: rgb(255 255 255 / 0.08);
+  --line-strong: rgb(255 255 255 / 0.14);
+  --surface-soft: rgb(255 255 255 / 0.04);
+  --glow-a: rgb(124 147 255 / 0.28);
+  --glow-b: rgb(167 139 250 / 0.22);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -20px rgb(0 0 0 / 0.6);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --space: #f6f7fc;
+    --surface: #ffffff;
+    --accent: #5b6ef5;
+    --accent-2: #8b5cf6;
+    --ink: #1b1f35;
+    --muted: #5b6180;
+
+    --line: rgb(27 31 53 / 0.09);
+    --line-strong: rgb(27 31 53 / 0.16);
+    --surface-soft: rgb(27 31 53 / 0.03);
+    --glow-a: rgb(91 110 245 / 0.18);
+    --glow-b: rgb(139 92 246 / 0.14);
+    --shadow-card: 0 1px 2px rgb(27 31 53 / 0.05), 0 16px 40px -24px rgb(27 31 53 / 0.25);
+  }
+}
+
+:root[data-theme="light"] {
+  --space: #f6f7fc;
+  --surface: #ffffff;
+  --accent: #5b6ef5;
+  --accent-2: #8b5cf6;
+  --ink: #1b1f35;
+  --muted: #5b6180;
+
+  --line: rgb(27 31 53 / 0.09);
+  --line-strong: rgb(27 31 53 / 0.16);
+  --surface-soft: rgb(27 31 53 / 0.03);
+  --glow-a: rgb(91 110 245 / 0.18);
+  --glow-b: rgb(139 92 246 / 0.14);
+  --shadow-card: 0 1px 2px rgb(27 31 53 / 0.05), 0 16px 40px -24px rgb(27 31 53 / 0.25);
+}
+
+@theme inline {
+  --color-space: var(--space);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: var(--shadow-card);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    background-color: var(--space);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--glow-a);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  /* Sayfanın üstünde duran yumuşak nebula parıltısı */
+  .nebula {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .nebula::before,
+  .nebula::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+  }
+
+  .nebula::before {
+    width: 46rem;
+    height: 46rem;
+    top: -18rem;
+    left: -12rem;
+    background: var(--glow-a);
+  }
+
+  .nebula::after {
+    width: 38rem;
+    height: 38rem;
+    top: -10rem;
+    right: -14rem;
+    background: var(--glow-b);
+  }
+
+  .text-gradient {
+    background: linear-gradient(120deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Cam yüzeyli kart */
+  .card {
+    background-color: color-mix(in srgb, var(--surface) 78%, transparent);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(12px);
+  }
+
+  .glow-ring {
+    box-shadow: 0 0 0 1px var(--line-strong), 0 0 40px -12px var(--glow-a);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
