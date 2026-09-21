@@ -246,7 +246,7 @@ export const en: Dictionary = {
     subtitle:
       "Fill in the form or email us directly. We usually reply the same day.",
     emailLabel: "Email",
-    email: "contact@gudiadijital.com",
+    email: "contact@gudiadigital.com",
     responseLabel: "Response time",
     responseValue: "Within 24 hours on weekdays",
     locationLabel: "Location",
@@ -264,7 +264,7 @@ export const en: Dictionary = {
       submit: "Send Message",
       submitting: "Sending…",
       success: "Message received. We'll get back to you shortly.",
-      error: "Couldn't send the message. Please email contact@gudiadijital.com directly.",
+      error: "Couldn't send the message. Please email contact@gudiadigital.com directly.",
       required: "This field is required",
       invalidEmail: "Enter a valid email address",
     },

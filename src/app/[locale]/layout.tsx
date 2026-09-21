@@ -20,7 +20,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const SITE_URL = "https://gudiadijital.com";
+const SITE_URL = "https://gudiadigital.com";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

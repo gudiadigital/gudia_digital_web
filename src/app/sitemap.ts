@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { locales, serviceSlugs } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 
-export const SITE_URL = "https://gudiadijital.com";
+export const SITE_URL = "https://gudiadigital.com";
 
 // Statik export: dosya derleme sırasında bir kez üretilir.
 export const dynamic = "force-static";

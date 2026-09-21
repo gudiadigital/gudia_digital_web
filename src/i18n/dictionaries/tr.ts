@@ -244,7 +244,7 @@ export const tr = {
     subtitle:
       "Formu doldurabilir ya da doğrudan e-posta gönderebilirsiniz. Genellikle aynı gün içinde dönüş yapıyoruz.",
     emailLabel: "E-posta",
-    email: "contact@gudiadijital.com",
+    email: "contact@gudiadigital.com",
     responseLabel: "Yanıt süresi",
     responseValue: "Hafta içi 24 saat içinde",
     locationLabel: "Konum",
@@ -262,7 +262,7 @@ export const tr = {
       submit: "Mesajı Gönder",
       submitting: "Gönderiliyor…",
       success: "Mesajınız alındı. En kısa sürede dönüş yapacağız.",
-      error: "Mesaj gönderilemedi. Lütfen doğrudan contact@gudiadijital.com adresine yazın.",
+      error: "Mesaj gönderilemedi. Lütfen doğrudan contact@gudiadigital.com adresine yazın.",
       required: "Bu alan zorunlu",
       invalidEmail: "Geçerli bir e-posta adresi girin",
     },

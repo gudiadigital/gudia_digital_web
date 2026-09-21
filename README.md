@@ -1,4 +1,4 @@
-# Gudia Dijital — gudiadijital.com
+# Gudia Dijital — gudiadigital.com
 
 Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · TR/EN çok dilli.
 Statik site olarak derlenir, GitHub Pages'te yayınlanır.

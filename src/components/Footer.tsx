@@ -93,7 +93,7 @@ export function Footer({
           <p>
             © {new Date().getFullYear()} {dict.meta.siteName}. {dict.footer.rights}
           </p>
-          <p>gudiadijital.com</p>
+          <p>gudiadigital.com</p>
         </div>
       </Container>
     </footer>
