@@ -1,27 +1,12 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
 import { pathFor } from "@/i18n/routes";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { projects } from "@/data/projects";
+import type { PageContentProps } from "./types";
 
-type Params = { params: Promise<{ locale: string }> };
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { locale } = await params;
-  if (!isLocale(locale)) return {};
-  const dict = getDictionary(locale);
-  return { title: dict.nav.projects, description: dict.projects.subtitle };
-}
-
-export default async function ProjectsPage({ params }: Params) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const dict = getDictionary(locale);
+export function ProjectsContent({ locale, dict }: PageContentProps) {
 
   return (
     <>

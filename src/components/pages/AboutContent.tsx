@@ -1,24 +1,9 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { CallToAction } from "@/components/sections/CallToAction";
+import type { PageContentProps } from "./types";
 
-type Params = { params: Promise<{ locale: string }> };
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { locale } = await params;
-  if (!isLocale(locale)) return {};
-  const dict = getDictionary(locale);
-  return { title: dict.nav.about, description: dict.about.lead };
-}
-
-export default async function AboutPage({ params }: Params) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const dict = getDictionary(locale);
+export function AboutContent({ locale, dict }: PageContentProps) {
   const { about } = dict;
 
   return (

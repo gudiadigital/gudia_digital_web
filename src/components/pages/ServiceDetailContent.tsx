@@ -1,43 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import {
-  isLocale,
-  locales,
-  serviceSlugs,
-  type ServiceSlug,
-} from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { serviceSlugs, type ServiceSlug } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
+import type { PageContentProps } from "./types";
 
-type Params = { params: Promise<{ locale: string; slug: string }> };
+type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
 
-function isServiceSlug(value: string): value is ServiceSlug {
-  return (serviceSlugs as readonly string[]).includes(value);
-}
-
-export function generateStaticParams() {
-  return locales.flatMap((locale) =>
-    serviceSlugs.map((slug) => ({ locale, slug })),
-  );
-}
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { locale, slug } = await params;
-  if (!isLocale(locale) || !isServiceSlug(slug)) return {};
-  const service = getDictionary(locale).services.items[slug];
-  return { title: service.title, description: service.short };
-}
-
-export default async function ServiceDetailPage({ params }: Params) {
-  const { locale, slug } = await params;
-  if (!isLocale(locale) || !isServiceSlug(slug)) notFound();
-
-  const dict = getDictionary(locale);
+export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps) {
   const service = dict.services.items[slug];
   const others = serviceSlugs.filter((candidate) => candidate !== slug);
 

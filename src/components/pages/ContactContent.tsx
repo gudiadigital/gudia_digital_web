@@ -1,24 +1,9 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
+import type { PageContentProps } from "./types";
 
-type Params = { params: Promise<{ locale: string }> };
-
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { locale } = await params;
-  if (!isLocale(locale)) return {};
-  const dict = getDictionary(locale);
-  return { title: dict.nav.contact, description: dict.contact.subtitle };
-}
-
-export default async function ContactPage({ params }: Params) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
-  const dict = getDictionary(locale);
+export function ContactContent({ dict }: PageContentProps) {
 
   const details = [
     {

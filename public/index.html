@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gudia Dijital</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href="https://gudiadijital.com/tr/" />
+    <script>
+      // Tarayıcı dili İngilizce ise /en/, değilse /tr/
+      (function () {
+        var lang = (navigator.language || "tr").toLowerCase();
+        window.location.replace(lang.indexOf("en") === 0 ? "/en/" : "/tr/");
+      })();
+    </script>
+    <meta http-equiv="refresh" content="0; url=/tr/" />
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #131730;
+        color: #9ca3c4;
+        font: 15px/1.6 system-ui, sans-serif;
+      }
+      a { color: #7c93ff; }
+      @media (prefers-color-scheme: light) {
+        body { background: #f6f7fc; color: #5b6180; }
+        a { color: #5b6ef5; }
+      }
+    </style>
+  </head>
+  <body>
+    <p>Yönlendiriliyorsunuz… <a href="/tr/">Gudia Dijital</a></p>
+  </body>
+</html>

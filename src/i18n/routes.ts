@@ -85,3 +85,32 @@ export function parsePath(pathname: string): {
 
   return { locale, key: pageKey };
 }
+
+export const pageKeys = ["about", "services", "projects", "contact"] as const;
+
+export type PageKey = (typeof pageKeys)[number];
+
+/** Verilen dildeki görünen sayfa parçası: pageSegment("tr","about") → "hakkimizda" */
+export function pageSegment(locale: Locale, key: PageKey): string {
+  return pageSegments[key][locale];
+}
+
+/** Görünen sayfa parçasından sayfa anahtarını bulur. */
+export function pageKeyFromSegment(
+  locale: Locale,
+  segment: string,
+): PageKey | null {
+  return pageKeys.find((key) => pageSegments[key][locale] === segment) ?? null;
+}
+
+/** Görünen hizmet parçasından canonical slug'ı bulur. */
+export function serviceFromSegment(
+  locale: Locale,
+  segment: string,
+): ServiceSlug | null {
+  return (
+    serviceSlugs.find(
+      (slug) => serviceSegments[slug][locale] === segment,
+    ) ?? null
+  );
+}
