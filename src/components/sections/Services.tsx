@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container, SectionHeading } from "../Container";
 import { ServiceIcon } from "../ServiceIcon";
-import { serviceSlugs, type Locale } from "@/i18n/config";
+import { serviceSlugs, groupOfService, type Locale } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
 
@@ -38,6 +38,9 @@ export function Services({
                   <ServiceIcon slug={slug} className="h-5 w-5" />
                 </span>
 
+                <span className="text-muted font-display mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
+                  {dict.services.groupLabels[groupOfService[slug]]}
+                </span>
                 <h3 className="text-lg font-semibold">{service.title}</h3>
                 <p className="text-muted mt-2.5 flex-1 text-sm leading-relaxed">
                   {service.short}

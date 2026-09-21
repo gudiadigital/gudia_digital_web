@@ -3,9 +3,9 @@ import type { Dictionary } from "./tr";
 export const en: Dictionary = {
   meta: {
     siteName: "Gudia Digital",
-    title: "Gudia Digital — Mobile Apps, Web and Game Development",
+    title: "Gudia Digital — Digital Products & Growth Studio",
     description:
-      "Mobile app, website, mobile and PC game development; Trendyol store and social media management. A digital studio that takes your idea all the way to launch.",
+      "We build, improve and grow digital products for brands. Mobile apps, websites, branded games, product improvement, social media content and e-commerce optimization.",
   },
 
   nav: {
@@ -21,19 +21,50 @@ export const en: Dictionary = {
   },
 
   hero: {
-    eyebrow: "Digital product studio",
-    titleLead: "We turn your idea into",
-    titleAccent: "a product that ships",
-    titleTail: "— not a slide deck.",
+    eyebrow: "Digital Products & Growth Studio",
+    title: [
+      { text: "We ", accent: false },
+      { text: "build", accent: true },
+      { text: ", ", accent: false },
+      { text: "improve", accent: true },
+      { text: " and ", accent: false },
+      { text: "grow", accent: true },
+      { text: " digital products for brands.", accent: false },
+    ],
+    pillars: ["Web", "Mobile", "Interactive", "Content", "Commerce"],
     subtitle:
-      "Gudia Digital builds mobile apps, websites and games, and grows e-commerce stores. Small team, no account managers, no agency layers — you talk to the people who actually build it.",
+      "We build products from scratch, fix the digital assets you already have, and get them ready to sell. Small team — no account managers, no agency layers, you talk to the people who actually build it.",
     ctaPrimary: "Start a Project",
     ctaSecondary: "Explore Services",
     stats: [
       { value: "iOS", label: "Native development experience" },
-      { value: "2", label: "Founders, direct contact" },
       { value: "6", label: "Service areas" },
+      { value: "2", label: "Founders, direct contact" },
     ],
+  },
+
+  approach: {
+    eyebrow: "How we work",
+    title: "Build, improve, grow",
+    subtitle:
+      "No two brands are at the same point. Some need a product built from scratch, some need what they have fixed, some need it turned into sales. The same team handles all three.",
+    groups: {
+      build: {
+        label: "Build",
+        title: "From scratch",
+        text: "When there's nothing there yet, we build it: mobile apps, websites, branded games and interactive experiences.",
+      },
+      improve: {
+        label: "Improve",
+        title: "Fix what you have",
+        text: "If your app is dated, your site is slow or the design has fallen behind, we repair, speed up and modernise it without a rewrite.",
+      },
+      grow: {
+        label: "Grow",
+        title: "Make it visible and sellable",
+        text: "A good product still doesn't sell without content and a tidy storefront. We produce your social content and rebuild your e-commerce pages.",
+      },
+    },
   },
 
   services: {
@@ -43,39 +74,44 @@ export const en: Dictionary = {
       "We work on a single product or your brand's entire digital presence. Every service has a defined scope and process — no surprise invoices.",
     allLink: "All services",
     detailLink: "See details",
+    groupLabels: {
+      build: "Build",
+      improve: "Improve",
+      grow: "Grow",
+    },
     items: {
       "mobil-uygulama": {
         title: "Mobile App Development",
         short:
-          "Native-performance apps for iOS and Android, delivered all the way through App Store and Google Play release.",
+          "Apps built from scratch for iOS and Android: booking, membership, loyalty, payments and customer portals tailored to your business.",
         intro:
-          "We take your app from idea to store listing. With our co-founder Gürkan's background as an iOS developer, we go especially deep in the Apple ecosystem: App Store review, privacy manifests, TestFlight distribution and release management included.",
+          "Our goal isn't just to hand over an app; it's to build a product the business actually uses, one that touches operations or sales. With our co-founder Gürkan's background as an iOS developer, we go especially deep in the Apple ecosystem.",
         features: [
           "Native iOS development with Swift / SwiftUI",
           "Android and cross-platform options",
-          "Interface design and user flow architecture",
-          "Backend, database and API integration",
+          "Booking, membership, loyalty and payment flows",
+          "Customer portals and internal operations screens",
           "Push notifications, analytics and in-app purchases",
           "App Store & Google Play release and version management",
         ],
         deliverables: [
           "Full source code ownership",
           "Design files and component library",
-          "Post-launch technical support period",
+          "TestFlight distribution and post-launch support period",
         ],
       },
       "web-sitesi": {
         title: "Website Development",
         short:
-          "Fast-loading, search-visible sites and web apps that work properly on phones and desktops alike.",
+          "Fast-loading, search-visible corporate sites and landing pages that work properly on phones and desktops alike.",
         intro:
-          "We don't install templates. We build sites designed around your brand with a measurable goal: a marketing site, a corporate presence, a landing page, or a web app with real business logic behind it.",
+          "We don't install templates. We build sites designed around your brand with a measurable goal: a marketing site, a corporate presence, a landing page, or a web app with booking or a customer portal inside it.",
         features: [
           "Custom interface and design system",
           "Mobile-first, responsive across every screen",
           "Technical SEO, performance and accessibility work",
-          "Content management panel (optional)",
-          "Multilingual structure and regional content",
+          "Conversion points: WhatsApp, forms, booking",
+          "Content management panel and multilingual setup (optional)",
           "Domain, hosting and deployment setup",
         ],
         deliverables: [
@@ -84,64 +120,84 @@ export const en: Dictionary = {
           "Performance and SEO report",
         ],
       },
-      "mobil-oyun": {
-        title: "Mobile Game Development",
+      "markali-oyunlar": {
+        title: "Branded Games & Interactive",
         short:
-          "From hypercasual to mid-scale projects — mobile games built ready for store release.",
+          "Custom games and interactive activations for events, campaigns and trade shows.",
         intro:
-          "We start your game idea as a playable prototype and carry it to a tested, shippable build. The core loop, progression balance and revenue model are designed together from day one.",
+          "Something people play instead of another ad. A competition that draws a queue at your trade show stand, a campaign-linked prize wheel, a training simulation, or a small game set in your brand's world — we define the scope together.",
         features: [
-          "Gameplay design and prototyping",
-          "2D / 3D game development",
-          "Level design and difficulty balancing",
-          "Ad and in-app purchase integration",
-          "Leaderboards, achievements, cloud saves",
-          "Store release and update cycle",
+          "Gamification for events and trade shows",
+          "Campaign-linked interactive experiences",
+          "Custom characters, visual language and gameplay",
+          "Runs on tablet, kiosk, web and mobile",
+          "Leaderboards, prizes and participant data capture",
+          "Post-event reporting",
         ],
         deliverables: [
           "Playable prototype",
-          "Release-ready game build",
-          "Store assets and promotional material",
+          "Event-ready setup with a fallback plan",
+          "Participation and engagement report",
         ],
       },
-      "pc-oyun": {
-        title: "PC Game Development",
+      "dijital-urun-iyilestirme": {
+        title: "Digital Product Improvement",
         short:
-          "Game projects for Steam and PC platforms, from prototype through to release.",
+          "You already have an app or site, but it's dated, slow or broken. We fix it without starting over.",
         intro:
-          "PC games are longer projects. We define the scope up front and split it into stages: vertical slice, playable demo, early access, full release. At every stage you have something you can actually show.",
+          "Most businesses don't need a new product — they need the one they have to work properly. We start with a free review and write down concretely what needs fixing; you choose the scope. Apps left un-updated for long enough can even enter App Store removal review, so this isn't work to postpone.",
         features: [
-          "Game mechanics and systems design",
-          "3D / 2D production and technical direction",
-          "Save system, settings, controller support",
-          "Steam integration and store page setup",
-          "Performance optimisation and build pipeline",
-          "Demo, early access and update planning",
+          "App audit: crash, performance and usage analysis",
+          "Interface refresh and user flow fixes",
+          "Swift and dependency updates, App Store compliance",
+          "Website refresh: mobile layout, speed, SSL and form repairs",
+          "Adding missing conversion points (WhatsApp, forms, booking)",
+          "Monthly maintenance: backups, updates, security, small changes",
         ],
         deliverables: [
-          "Playable builds at every stage",
-          "Steam store page and release setup",
-          "Technical documentation",
+          "Written review with a prioritised list",
+          "Fixed and released version",
+          "Before / after performance comparison",
         ],
       },
-      "trendyol-sosyal-medya": {
-        title: "Trendyol & Social Media Management",
+      "sosyal-medya-icerik": {
+        title: "Social Media Content Production",
         short:
-          "Day-to-day operation of your Trendyol store and a consistent social presence for your brand — handled in one place.",
+          "Monthly Reels, posts and stories — with the content plan, scripts and cover designs included.",
         intro:
-          "Even a great product doesn't sell without store operations and consistent content. We take over the Trendyol side and build a steady, no-nonsense presence on social media.",
+          "Producing content consistently is the hardest part for most businesses. You send us the footage; we handle everything from editing and design to publishing. No overpromising: professional shoots, talent and locations are outside this scope.",
         features: [
-          "Trendyol store setup and product listings",
-          "Product titles, descriptions and image curation",
-          "Price, stock and campaign tracking",
-          "Customer questions and review management",
-          "Social media content calendar and publishing",
-          "Monthly performance reporting",
+          "Monthly content plan and publishing calendar",
+          "Reels editing, ideas and short scripts",
+          "Image and carousel post design",
+          "Cover designs and caption copy",
+          "Story designs",
+          "Scheduling and publishing",
         ],
         deliverables: [
-          "Clean, live product catalogue",
           "Monthly content calendar",
-          "Sales and engagement report",
+          "Ready-to-publish Reels, image and story sets",
+          "Monthly engagement report",
+        ],
+      },
+      "e-ticaret-optimizasyonu": {
+        title: "E-Commerce Optimization",
+        short:
+          "We rebuild your marketplace product pages, images and copy around conversion.",
+        intro:
+          "Over 600,000 businesses in Türkiye sell on marketplaces, and the difference is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
+        features: [
+          "Product and cover image rework",
+          "SEO-friendly product titles and descriptions",
+          "Infographics and spec/dimension visuals",
+          "Tidying up categories and variant structure",
+          "Store cover images and storefront layout",
+          "Product uploads and bulk updates",
+        ],
+        deliverables: [
+          "Before / after comparison visuals",
+          "Rebuilt, live product pages",
+          "Sales and impressions report",
         ],
       },
     },
@@ -154,8 +210,8 @@ export const en: Dictionary = {
       "We don't like surprises. What gets delivered and when is written down before anything starts.",
     steps: [
       {
-        title: "We talk",
-        text: "We listen to what you want to build. No jargon — we work out together what the project actually needs.",
+        title: "Review",
+        text: "We look at your existing app, site or store. We listen to what you want to build and work out what the project actually needs.",
       },
       {
         title: "Scope and quote",
@@ -167,7 +223,7 @@ export const en: Dictionary = {
       },
       {
         title: "Launch and after",
-        text: "Store release, domain, servers — we handle all of it. Support continues for an agreed period after delivery.",
+        text: "Store release, domain, servers — we handle all of it. Support can continue afterwards on a maintenance plan.",
       },
     ],
   },
@@ -176,18 +232,18 @@ export const en: Dictionary = {
     eyebrow: "About",
     title: "A two-person team, direct contact",
     lead:
-      "Gudia Digital was founded to remove the layers big agencies put in the middle. You talk to whoever is building your project.",
+      "Gudia Digital is a digital product and growth studio, founded to remove the layers big agencies put in the middle — you talk to whoever is building your project.",
     story: [
       "We started Gudia Digital because of the same problem we kept seeing across years of different projects: a client explains something, three people get involved in between, and a completely different product comes out the other end.",
       "We choose to stay small. The people who take on the work are the people who build and deliver it. That's why we deliver what we promised — and say up front when something isn't work we should take.",
-      "We work across a wide range, from mobile apps and games to corporate sites and e-commerce operations. The common thread: every job ends with a product that's genuinely live and that people use.",
+      "Our work falls into three parts: building, improving and growing. With some brands we build an app from scratch, for others we fix the site they already have, and for others we rebuild a storefront that nobody can find despite a good product. The common thread: every job ends with something genuinely live that people use.",
     ],
     missionTitle: "Our mission",
     mission:
       "To make well-designed, properly working digital products reachable for small and mid-sized brands without enterprise budgets.",
     visionTitle: "Our vision",
     vision:
-      "To become a digital studio from Türkiye that also builds its own products — referenced both for client work and for our own games and apps.",
+      "To become a digital studio from Türkiye that also builds its own products — referenced both for client work and for our own apps and games.",
     valuesTitle: "Our values",
     values: [
       {
@@ -212,12 +268,12 @@ export const en: Dictionary = {
       {
         name: "Gürkan Sevilmiş",
         role: "Co-founder · iOS Developer",
-        bio: "Leads mobile app development. Builds native iOS apps with Swift and SwiftUI, and is responsible for App Store release processes, architecture decisions and technical production.",
+        bio: "Leads mobile app development and product improvement. Builds native iOS apps with Swift and SwiftUI, and is responsible for App Store release processes, architecture decisions and technical production.",
       },
       {
         name: "Dilara İşman",
         role: "Co-founder",
-        bio: "Runs project management, client communication, and e-commerce & social media operations.",
+        bio: "Runs project management, client communication, and content & e-commerce operations.",
       },
     ],
   },
@@ -236,7 +292,7 @@ export const en: Dictionary = {
   cta: {
     title: "Got a project in mind?",
     subtitle:
-      "Write to us even if it's still just an idea. The first conversation is free — let's talk about whether it's feasible and roughly what it costs.",
+      "Write to us even if it's still just an idea. The first conversation is free — we'll review what you have and talk through feasibility and rough cost.",
     button: "Get in Touch",
   },
 
@@ -271,7 +327,7 @@ export const en: Dictionary = {
   },
 
   footer: {
-    tagline: "Mobile app, web and game development studio.",
+    tagline: "Digital product and growth studio. Build, improve, grow.",
     servicesTitle: "Services",
     companyTitle: "Company",
     contactTitle: "Contact",

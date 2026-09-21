@@ -20,13 +20,17 @@ const pageSegments: Record<Exclude<RouteKey, "home">, Record<Locale, string>> = 
 };
 
 const serviceSegments: Record<ServiceSlug, Record<Locale, string>> = {
-  "mobil-uygulama": { tr: "mobil-uygulama", en: "mobile-app" },
+  "mobil-uygulama": { tr: "mobil-uygulama", en: "mobile-apps" },
   "web-sitesi": { tr: "web-sitesi", en: "web-development" },
-  "mobil-oyun": { tr: "mobil-oyun", en: "mobile-game" },
-  "pc-oyun": { tr: "pc-oyun", en: "pc-game" },
-  "trendyol-sosyal-medya": {
-    tr: "trendyol-sosyal-medya",
-    en: "ecommerce-social",
+  "markali-oyunlar": { tr: "markali-oyunlar", en: "branded-games" },
+  "dijital-urun-iyilestirme": {
+    tr: "dijital-urun-iyilestirme",
+    en: "product-improvement",
+  },
+  "sosyal-medya-icerik": { tr: "sosyal-medya-icerik", en: "social-content" },
+  "e-ticaret-optimizasyonu": {
+    tr: "e-ticaret-optimizasyonu",
+    en: "ecommerce-optimization",
   },
 };
 

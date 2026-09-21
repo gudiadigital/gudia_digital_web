@@ -90,7 +90,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
 
         <div className="border-line mt-20 border-t pt-10">
           <h2 className="text-lg font-semibold">{dict.services.allLink}</h2>
-          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {others.map((other) => (
               <Link
                 key={other}

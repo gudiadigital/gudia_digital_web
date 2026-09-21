@@ -23,11 +23,30 @@ export function Hero({
           {hero.eyebrow}
         </p>
 
-        <h1 className="mt-6 max-w-3xl text-4xl font-semibold leading-[1.1] sm:text-5xl lg:text-6xl">
-          {hero.titleLead}{" "}
-          <span className="text-gradient">{hero.titleAccent}</span>{" "}
-          {hero.titleTail}
+        <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-[1.1] sm:text-5xl lg:text-6xl">
+          {hero.title.map((part, index) =>
+            part.accent ? (
+              <span key={index} className="text-gradient">
+                {part.text}
+              </span>
+            ) : (
+              <span key={index}>{part.text}</span>
+            ),
+          )}
         </h1>
+
+        <ul className="text-muted mt-7 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-display text-sm font-medium tracking-wide sm:text-base">
+          {hero.pillars.map((pillar, index) => (
+            <li key={pillar} className="flex items-center gap-3">
+              {index > 0 && (
+                <span aria-hidden="true" className="text-accent/50">
+                  &bull;
+                </span>
+              )}
+              {pillar}
+            </li>
+          ))}
+        </ul>
 
         <p className="text-muted mt-6 max-w-2xl text-base leading-relaxed sm:text-lg">
           {hero.subtitle}

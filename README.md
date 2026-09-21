@@ -3,6 +3,10 @@
 Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · TR/EN çok dilli.
 Statik site olarak derlenir, GitHub Pages'te yayınlanır.
 
+Konumlandırma: dijital ürün ve büyüme stüdyosu. Hizmetler **kur / iyileştir /
+büyüt** olarak üç gruba ayrılır; gruplama `src/i18n/config.ts` içindeki
+`servicesByGroup` tablosunda tanımlıdır.
+
 ## Yayın
 
 `main` dalına her push, `.github/workflows/deploy.yml` üzerinden siteyi derleyip
@@ -62,12 +66,12 @@ URL'ler oradan üretildiği için başka yere dokunmak gerekmez.
 
 ## URL şeması
 
-| Sayfa    | TR                     | EN                       |
-| -------- | ---------------------- | ------------------------ |
-| Ana      | `/tr/`                 | `/en/`                   |
-| Hizmetler| `/tr/hizmetler/`       | `/en/services/`          |
-| Hizmet   | `/tr/hizmetler/pc-oyun/` | `/en/services/pc-game/` |
-| Hakkında | `/tr/hakkimizda/`      | `/en/about/`             |
+| Sayfa    | TR                            | EN                            |
+| -------- | ----------------------------- | ----------------------------- |
+| Ana      | `/tr/`                        | `/en/`                        |
+| Hizmetler| `/tr/hizmetler/`              | `/en/services/`               |
+| Hizmet   | `/tr/hizmetler/markali-oyunlar/` | `/en/services/branded-games/` |
+| Hakkında | `/tr/hakkimizda/`             | `/en/about/`                  |
 
 Kök adres (`/`) tarayıcı diline bakıp `/tr/` veya `/en/`'e yönlendirir.
 

@@ -1,9 +1,9 @@
 export const tr = {
   meta: {
     siteName: "Gudia Dijital",
-    title: "Gudia Dijital — Mobil Uygulama, Web ve Oyun Geliştirme",
+    title: "Gudia Dijital — Dijital Ürün ve Büyüme Stüdyosu",
     description:
-      "Mobil uygulama, web sitesi, mobil ve PC oyun geliştirme; Trendyol mağaza ve sosyal medya yönetimi. Fikrinizi uçtan uca yayına taşıyan dijital üretim stüdyosu.",
+      "Markaların dijital ürünlerini oluşturuyor, iyileştiriyor ve büyütüyoruz. Mobil uygulama, web sitesi, markalı oyun, ürün iyileştirme, sosyal medya içeriği ve e-ticaret optimizasyonu.",
   },
 
   nav: {
@@ -19,19 +19,50 @@ export const tr = {
   },
 
   hero: {
-    eyebrow: "Dijital üretim stüdyosu",
-    titleLead: "Fikrinizi",
-    titleAccent: "yayına çıkan ürüne",
-    titleTail: "dönüştürüyoruz.",
+    eyebrow: "Digital Products & Growth Studio",
+    title: [
+      { text: "Markaların dijital ürünlerini ", accent: false },
+      { text: "oluşturuyor", accent: true },
+      { text: ", ", accent: false },
+      { text: "iyileştiriyor", accent: true },
+      { text: " ve ", accent: false },
+      { text: "büyütüyoruz", accent: true },
+      { text: ".", accent: false },
+    ],
+    pillars: ["Web", "Mobile", "Interactive", "Content", "Commerce"],
     subtitle:
-      "Gudia Dijital; mobil uygulama, web sitesi ve oyun geliştiren, e-ticaret mağazanızı büyüten küçük ve doğrudan çalışan bir ekip. Aracı yok, ajans katmanı yok — ürünü kuran kişilerle konuşursunuz.",
+      "Sıfırdan ürün kuruyoruz, elinizdeki dijital varlıkları toparlıyoruz ve satışa hazır hale getiriyoruz. Küçük bir ekibiz — aracı yok, ajans katmanı yok, ürünü kuran kişilerle konuşursunuz.",
     ctaPrimary: "Projeni Konuşalım",
     ctaSecondary: "Hizmetleri İncele",
     stats: [
       { value: "iOS", label: "Native geliştirme deneyimi" },
-      { value: "2", label: "Kurucu, doğrudan iletişim" },
       { value: "6", label: "Hizmet alanı" },
+      { value: "2", label: "Kurucu, doğrudan iletişim" },
     ],
+  },
+
+  approach: {
+    eyebrow: "Çalışma modelimiz",
+    title: "Kur, iyileştir, büyüt",
+    subtitle:
+      "Her markanın ihtiyacı aynı noktada değil. Kimi sıfırdan ürün kurar, kimi elindekini toparlar, kimi de var olanı satışa dönüştürmek ister. Üçüne de aynı ekip bakıyor.",
+    groups: {
+      build: {
+        label: "Kur",
+        title: "Sıfırdan ürün",
+        text: "Ortada bir şey yoksa baştan kuruyoruz: mobil uygulama, web sitesi, markalı oyun ve interaktif deneyimler.",
+      },
+      improve: {
+        label: "İyileştir",
+        title: "Elindekini toparla",
+        text: "Uygulamanız eski, siteniz yavaş ya da tasarım geride kalmışsa yeniden yazmadan onarıyor, hızlandırıyor ve güncel tutuyoruz.",
+      },
+      grow: {
+        label: "Büyüt",
+        title: "Görünür ve satılabilir yap",
+        text: "Ürün iyi olsa bile içerik ve mağaza düzeni olmadan satmıyor. Sosyal medya içeriğini ve e-ticaret sayfalarınızı biz üretiyoruz.",
+      },
+    },
   },
 
   services: {
@@ -41,39 +72,44 @@ export const tr = {
       "Tek bir ürün için de, markanızın tüm dijital varlığı için de çalışıyoruz. Her hizmetin kapsamı ve süreci net — sürpriz maliyet çıkmaz.",
     allLink: "Tüm hizmetler",
     detailLink: "Detayları gör",
+    groupLabels: {
+      build: "Kur",
+      improve: "İyileştir",
+      grow: "Büyüt",
+    },
     items: {
       "mobil-uygulama": {
         title: "Mobil Uygulama Geliştirme",
         short:
-          "iOS ve Android için native performansta, App Store ve Google Play yayın sürecine kadar teslim edilen uygulamalar.",
+          "iOS ve Android için sıfırdan uygulama: rezervasyon, üyelik, sadakat, ödeme ve müşteri paneli gibi işinize özel çözümler.",
         intro:
-          "Uygulamanızı fikir aşamasından mağaza yayınına kadar götürüyoruz. Kurucumuz Gürkan'ın iOS geliştirici geçmişi sayesinde Apple ekosisteminde özellikle derinlikli çalışıyoruz: App Store inceleme süreçleri, gizlilik bildirimleri, TestFlight dağıtımı ve sürüm yönetimi dahil.",
+          "Amacımız sadece bir uygulama teslim etmek değil; işletmenin gerçekten kullandığı, operasyonuna ya da satışına dokunan bir ürün kurmak. Kurucumuz Gürkan'ın iOS geliştirici geçmişi sayesinde Apple ekosisteminde özellikle derinlikli çalışıyoruz.",
         features: [
           "iOS için Swift / SwiftUI ile native geliştirme",
           "Android ve çapraz platform seçenekleri",
-          "Arayüz tasarımı ve kullanıcı akışı kurgusu",
-          "Sunucu, veritabanı ve API entegrasyonları",
+          "Rezervasyon, üyelik, sadakat programı ve ödeme akışları",
+          "Müşteri paneli ve şirket içi operasyon ekranları",
           "Push bildirim, analitik ve uygulama içi satın alma",
           "App Store & Google Play yayın ve sürüm yönetimi",
         ],
         deliverables: [
           "Kaynak kodun tamamı size ait",
           "Tasarım dosyaları ve bileşen kütüphanesi",
-          "Yayın sonrası teknik destek süresi",
+          "TestFlight dağıtımı ve yayın sonrası destek süresi",
         ],
       },
       "web-sitesi": {
         title: "Web Sitesi Geliştirme",
         short:
-          "Hızlı açılan, arama motorlarında görünen, telefonda da masaüstünde de düzgün çalışan kurumsal siteler ve web uygulamaları.",
+          "Hızlı açılan, aramada görünen, telefonda da masaüstünde de düzgün çalışan kurumsal siteler ve açılış sayfaları.",
         intro:
-          "Hazır şablon kurmuyoruz. Markanıza özel tasarlanan, ölçülebilir hedefi olan siteler kuruyoruz: tanıtım sitesi, kurumsal site, açılış sayfası ya da içinde iş mantığı olan bir web uygulaması.",
+          "Hazır şablon kurmuyoruz. Markanıza özel tasarlanan, ölçülebilir hedefi olan siteler kuruyoruz: tanıtım sitesi, kurumsal site, açılış sayfası ya da içinde rezervasyon veya müşteri paneli olan bir web uygulaması.",
         features: [
           "Markaya özel arayüz ve tasarım sistemi",
           "Mobil öncelikli, tüm ekranlara uyumlu yapı",
           "Teknik SEO, hız ve erişilebilirlik optimizasyonu",
-          "İçerik yönetim paneli (isteğe bağlı)",
-          "Çok dilli yapı ve bölgesel içerik",
+          "WhatsApp, form ve rezervasyon gibi dönüşüm noktaları",
+          "İçerik yönetim paneli ve çok dilli yapı (isteğe bağlı)",
           "Alan adı, hosting ve yayın kurulumu",
         ],
         deliverables: [
@@ -82,64 +118,84 @@ export const tr = {
           "Performans ve SEO raporu",
         ],
       },
-      "mobil-oyun": {
-        title: "Mobil Oyun Geliştirme",
+      "markali-oyunlar": {
+        title: "Markalı Oyun & İnteraktif Deneyim",
         short:
-          "Hipercasual'dan orta ölçekli projelere kadar, mağazada yayınlanmaya hazır mobil oyunlar.",
+          "Etkinlikler, kampanyalar ve fuarlar için markaya özel oyunlar ve interaktif aktivasyonlar.",
         intro:
-          "Oyun fikrinizi oynanabilir bir prototiple başlatıp, test edilmiş ve yayınlanabilir bir sürüme taşıyoruz. Oynanış döngüsü, ilerleme dengesi ve gelir modeli baştan birlikte kurgulanır.",
+          "Standart bir reklam yerine insanların oynadığı bir şey. Fuar standında kuyruk oluşturan bir yarışma, kampanyaya bağlı bir çark, eğitim amaçlı bir simülasyon ya da markanızın dünyasında geçen küçük bir oyun — kapsamı birlikte belirliyoruz.",
         features: [
-          "Oynanış tasarımı ve prototipleme",
-          "2D / 3D oyun geliştirme",
-          "Seviye tasarımı ve zorluk dengesi",
-          "Reklam ve uygulama içi satın alma entegrasyonu",
-          "Liderlik tablosu, başarımlar, bulut kayıt",
-          "Mağaza yayını ve güncelleme döngüsü",
+          "Etkinlik ve fuar için oyunlaştırma (gamification)",
+          "Kampanyaya bağlı interaktif deneyimler",
+          "Markaya özel karakter, görsel dil ve oynanış",
+          "Tablet, kiosk, web ve mobil üzerinde çalışma",
+          "Liderlik tablosu, ödül ve katılımcı verisi toplama",
+          "Etkinlik sonrası raporlama",
         ],
         deliverables: [
           "Oynanabilir prototip",
-          "Yayına hazır oyun derlemesi",
-          "Mağaza görselleri ve tanıtım materyali",
+          "Etkinliğe hazır kurulum ve yedek plan",
+          "Katılım ve etkileşim raporu",
         ],
       },
-      "pc-oyun": {
-        title: "PC Oyun Geliştirme",
+      "dijital-urun-iyilestirme": {
+        title: "Dijital Ürün İyileştirme",
         short:
-          "Steam ve PC platformları için, prototipten yayına kadar eşlik ettiğimiz oyun projeleri.",
+          "Elinizde zaten bir uygulama veya site var ama eski, yavaş ya da çalışmıyor. Sıfırdan yazmadan toparlıyoruz.",
         intro:
-          "PC oyunları daha uzun soluklu projeler. Kapsamı baştan netleştirip aşamalara bölüyoruz: dikey dilim, oynanabilir demo, erken erişim ve tam sürüm. Her aşamada elinizde gösterilebilir bir şey oluyor.",
+          "Çoğu işletmenin ihtiyacı yeni bir ürün değil, var olanın düzgün çalışması. Önce ücretsiz bir inceleme yapıp somut olarak neyin düzeltilmesi gerektiğini yazıyoruz; kapsamı siz seçiyorsunuz. Uzun süredir güncellenmeyen uygulamalar App Store tarafından kaldırılma sürecine bile girebiliyor — bu iş ertelenecek bir iş değil.",
         features: [
-          "Oyun mekaniği ve sistem tasarımı",
-          "3D / 2D üretim ve teknik yönetim",
-          "Kaydetme sistemi, ayarlar, kontrolcü desteği",
-          "Steam entegrasyonu ve mağaza sayfası kurulumu",
-          "Performans optimizasyonu ve yapı (build) süreçleri",
-          "Demo, erken erişim ve güncelleme planlaması",
+          "Uygulama incelemesi: çökme, performans ve kullanım analizi",
+          "Arayüz yenileme ve kullanıcı akışı düzeltmeleri",
+          "Swift ve kütüphane güncellemeleri, App Store uyumluluğu",
+          "Web sitesi yenileme: mobil uyum, hız, SSL ve form onarımı",
+          "Eksik dönüşüm noktalarının eklenmesi (WhatsApp, form, rezervasyon)",
+          "Aylık teknik bakım: yedek, güncelleme, güvenlik, küçük değişiklikler",
         ],
         deliverables: [
-          "Aşama aşama oynanabilir yapılar",
-          "Steam mağaza sayfası ve yayın kurulumu",
-          "Teknik dokümantasyon",
+          "Yazılı inceleme raporu ve öncelik listesi",
+          "Düzeltilmiş ve yayına alınmış sürüm",
+          "Öncesi / sonrası performans karşılaştırması",
         ],
       },
-      "trendyol-sosyal-medya": {
-        title: "Trendyol & Sosyal Medya Yönetimi",
+      "sosyal-medya-icerik": {
+        title: "Sosyal Medya İçerik Üretimi",
         short:
-          "Trendyol mağazanızın günlük operasyonu ve markanızın sosyal medya düzeni — tek elden.",
+          "Aylık Reels, görsel ve story üretimi — içerik planı, senaryo ve kapak tasarımlarıyla birlikte.",
         intro:
-          "Ürününüz iyi olsa bile mağaza yönetimi ve içerik düzeni olmadan satış büyümüyor. Trendyol tarafında operasyonu üstleniyor, sosyal medyada ise abartısız ama düzenli bir varlık kuruyoruz.",
+          "Düzenli içerik üretmek çoğu işletme için en zor kısım. Görselleri siz gönderiyorsunuz, kurgudan tasarıma ve paylaşıma kadar kalan işi biz yapıyoruz. Abartılı vaat yok: profesyonel çekim, oyuncu ve mekân bu kapsamın dışında.",
         features: [
-          "Trendyol mağaza açılışı ve ürün girişleri",
-          "Ürün başlığı, açıklama ve görsel düzenlemesi",
-          "Fiyat, stok ve kampanya takibi",
-          "Müşteri soruları ve yorum yönetimi",
-          "Sosyal medya içerik takvimi ve paylaşım",
-          "Aylık performans raporu",
+          "Aylık içerik planı ve paylaşım takvimi",
+          "Reels kurgusu, fikir ve kısa senaryolar",
+          "Görsel ve carousel post tasarımı",
+          "Kapak tasarımları ve açıklama metinleri",
+          "Story tasarımları",
+          "İçeriklerin planlanması ve paylaşılması",
         ],
         deliverables: [
-          "Düzenlenmiş ve yayında ürün listesi",
           "Aylık içerik takvimi",
-          "Satış ve etkileşim raporu",
+          "Paylaşıma hazır Reels, görsel ve story setleri",
+          "Aylık etkileşim raporu",
+        ],
+      },
+      "e-ticaret-optimizasyonu": {
+        title: "E-Ticaret Optimizasyonu",
+        short:
+          "Trendyol mağazanızın ürün sayfalarını, görsellerini ve metinlerini dönüşüm için yeniden düzenliyoruz.",
+        intro:
+          "Türkiye'de 600 binden fazla işletme pazaryerlerinde satış yapıyor; aradaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
+        features: [
+          "Ürün görselleri ve kapak görseli düzenlemesi",
+          "SEO uyumlu ürün başlığı ve açıklama metinleri",
+          "Infographic ve ölçü/özellik görselleri",
+          "Kategori ve varyant düzeninin toparlanması",
+          "Mağaza kapak görselleri ve vitrin düzeni",
+          "Ürün yükleme ve toplu güncelleme",
+        ],
+        deliverables: [
+          "Öncesi / sonrası karşılaştırma görselleri",
+          "Düzenlenmiş ve yayında ürün sayfaları",
+          "Satış ve görüntülenme raporu",
         ],
       },
     },
@@ -152,8 +208,8 @@ export const tr = {
       "Sürprizi sevmiyoruz. Ne zaman ne teslim edileceği baştan yazılı olarak belli oluyor.",
     steps: [
       {
-        title: "Konuşalım",
-        text: "Ne yapmak istediğinizi dinliyoruz. Teknik detaya boğmadan, işin gerçekten neye ihtiyacı olduğunu birlikte çıkarıyoruz.",
+        title: "İnceleme",
+        text: "Mevcut uygulamanıza, sitenize veya mağazanıza bakıyoruz. Ne yapmak istediğinizi dinleyip işin gerçekten neye ihtiyacı olduğunu çıkarıyoruz.",
       },
       {
         title: "Kapsam ve teklif",
@@ -165,7 +221,7 @@ export const tr = {
       },
       {
         title: "Yayın ve sonrası",
-        text: "Mağaza yayını, alan adı, sunucu — hepsini biz hallediyoruz. Teslimden sonra da belirli bir süre destek veriyoruz.",
+        text: "Mağaza yayını, alan adı, sunucu — hepsini biz hallediyoruz. Teslimden sonra da bakım paketiyle destek verebiliyoruz.",
       },
     ],
   },
@@ -174,18 +230,18 @@ export const tr = {
     eyebrow: "Hakkımızda",
     title: "İki kişilik bir ekip, doğrudan iletişim",
     lead:
-      "Gudia Dijital, büyük ajansların araya koyduğu katmanları kaldırmak için kuruldu. Projenizi kim yapıyorsa onunla konuşursunuz.",
+      "Gudia Dijital bir dijital ürün ve büyüme stüdyosu. Büyük ajansların araya koyduğu katmanları kaldırmak için kuruldu — projenizi kim yapıyorsa onunla konuşursunuz.",
     story: [
       "Gudia Dijital'i, yıllarca farklı projelerde gördüğümüz aynı sorundan yola çıkarak kurduk: müşteri bir şey anlatıyor, araya üç kişi giriyor, ortaya bambaşka bir ürün çıkıyor.",
       "Biz küçük kalmayı tercih ediyoruz. İşi alan, yapan ve teslim eden aynı kişiler. Bu yüzden ne söz verdiysek onu teslim ediyoruz; yapamayacağımız işi de baştan söylüyoruz.",
-      "Mobil uygulamadan oyuna, kurumsal siteden e-ticaret operasyonuna kadar geniş bir alanda çalışıyoruz. Ortak nokta şu: her işin sonunda gerçekten yayında olan, insanların kullandığı bir ürün oluyor.",
+      "Çalışma şeklimiz üç başlıkta toplanıyor: kurmak, iyileştirmek ve büyütmek. Bazı markalarla sıfırdan bir uygulama kuruyoruz, bazılarının elindeki siteyi toparlıyoruz, bazılarının da ürünü hazır olduğu halde görünmeyen mağazasını düzenliyoruz. Ortak nokta şu: her işin sonunda gerçekten yayında olan, insanların kullandığı bir şey oluyor.",
     ],
     missionTitle: "Misyonumuz",
     mission:
       "Küçük ve orta ölçekli markaların, büyük bütçeler olmadan da iyi tasarlanmış ve düzgün çalışan dijital ürünlere sahip olmasını sağlamak.",
     visionTitle: "Vizyonumuz",
     vision:
-      "Türkiye'den çıkan, kendi ürünlerini de geliştiren; hem müşteri projelerinde hem kendi oyun ve uygulamalarında referans gösterilen bir dijital stüdyo olmak.",
+      "Türkiye'den çıkan, kendi ürünlerini de geliştiren; hem müşteri projelerinde hem kendi uygulama ve oyunlarında referans gösterilen bir dijital stüdyo olmak.",
     valuesTitle: "Değerlerimiz",
     values: [
       {
@@ -210,12 +266,12 @@ export const tr = {
       {
         name: "Gürkan Sevilmiş",
         role: "Kurucu Ortak · iOS Geliştirici",
-        bio: "Mobil uygulama geliştirme tarafını yürütüyor. Swift ve SwiftUI ile native iOS uygulamaları geliştiriyor; App Store yayın süreçleri, mimari kararlar ve teknik üretimden sorumlu.",
+        bio: "Mobil uygulama geliştirme ve ürün iyileştirme tarafını yürütüyor. Swift ve SwiftUI ile native iOS uygulamaları geliştiriyor; App Store yayın süreçleri, mimari kararlar ve teknik üretimden sorumlu.",
       },
       {
         name: "Dilara İşman",
         role: "Kurucu Ortak",
-        bio: "Proje yönetimi, müşteri iletişimi ve e-ticaret & sosyal medya operasyonunu yürütüyor.",
+        bio: "Proje yönetimi, müşteri iletişimi ve içerik & e-ticaret operasyonunu yürütüyor.",
       },
     ],
   },
@@ -234,7 +290,7 @@ export const tr = {
   cta: {
     title: "Aklınızda bir proje mi var?",
     subtitle:
-      "Fikir aşamasında olsanız bile yazın. İlk görüşme ücretsiz; yapılabilirliğini ve yaklaşık maliyetini konuşalım.",
+      "Fikir aşamasında olsanız bile yazın. İlk görüşme ücretsiz; mevcut ürününüzü inceleyip yapılabilirliğini ve yaklaşık maliyetini konuşalım.",
     button: "İletişime Geç",
   },
 
@@ -269,7 +325,7 @@ export const tr = {
   },
 
   footer: {
-    tagline: "Mobil uygulama, web ve oyun geliştirme stüdyosu.",
+    tagline: "Dijital ürün ve büyüme stüdyosu. Kur, iyileştir, büyüt.",
     servicesTitle: "Hizmetler",
     companyTitle: "Şirket",
     contactTitle: "İletişim",
