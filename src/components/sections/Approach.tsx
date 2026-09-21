@@ -24,8 +24,14 @@ export function Approach({
           {serviceGroups.map((group, index) => {
             const content = dict.approach.groups[group];
             return (
-              <div key={group} className="card flex flex-col rounded-2xl p-7">
-                <div className="flex items-center gap-3">
+              <div
+                key={group}
+                data-reveal
+                data-reveal-delay={index * 110}
+                data-spotlight
+                className="card spotlight flex flex-col rounded-2xl p-7"
+              >
+                <div className="relative z-10 flex items-center gap-3">
                   <span className="border-line bg-surface-soft text-accent font-display inline-flex h-8 w-8 items-center justify-center rounded-lg border text-xs font-bold tabular-nums">
                     {index + 1}
                   </span>
@@ -34,12 +40,12 @@ export function Approach({
                   </span>
                 </div>
 
-                <h3 className="mt-5 text-lg font-semibold">{content.title}</h3>
-                <p className="text-muted mt-2.5 flex-1 text-sm leading-relaxed">
+                <h3 className="relative z-10 mt-5 text-lg font-semibold">{content.title}</h3>
+                <p className="text-muted relative z-10 mt-2.5 flex-1 text-sm leading-relaxed">
                   {content.text}
                 </p>
 
-                <ul className="border-line mt-6 space-y-2 border-t pt-5">
+                <ul className="border-line relative z-10 mt-6 space-y-2 border-t pt-5">
                   {servicesByGroup[group].map((slug) => (
                     <li key={slug}>
                       <Link

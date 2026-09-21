@@ -14,7 +14,10 @@ export function CallToAction({
   return (
     <section className="py-20 sm:py-24">
       <Container>
-        <div className="card glow-ring relative isolate overflow-hidden rounded-3xl px-6 py-14 text-center sm:px-14">
+        <div
+          data-reveal
+          className="card glow-ring relative isolate overflow-hidden rounded-3xl px-6 py-14 text-center sm:px-14"
+        >
           <div className="nebula" aria-hidden="true" />
           <div className="relative z-10">
             <h2 className="text-2xl font-semibold sm:text-3xl">

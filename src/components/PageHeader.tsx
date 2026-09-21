@@ -12,15 +12,21 @@ export function PageHeader({
   return (
     <section className="relative isolate overflow-hidden pt-14 pb-10 sm:pt-20 sm:pb-14">
       <div className="nebula" aria-hidden="true" />
-      <Container className="relative z-10">
-        <p className="text-accent mb-3 font-display text-xs font-semibold uppercase tracking-[0.18em]">
+      <Container className="relative z-10" >
+        <p className="text-accent fade-up mb-3 font-display text-xs font-semibold uppercase tracking-[0.18em]">
           {eyebrow}
         </p>
-        <h1 className="max-w-3xl text-4xl font-semibold leading-[1.12] sm:text-5xl">
+        <h1
+          className="fade-up max-w-3xl text-4xl font-semibold leading-[1.12] sm:text-5xl"
+          style={{ animationDelay: "0.08s" }}
+        >
           {title}
         </h1>
         {subtitle && (
-          <p className="text-muted mt-5 max-w-2xl text-base leading-relaxed sm:text-lg">
+          <p
+            className="text-muted fade-up mt-5 max-w-2xl text-base leading-relaxed sm:text-lg"
+            style={{ animationDelay: "0.18s" }}
+          >
             {subtitle}
           </p>
         )}

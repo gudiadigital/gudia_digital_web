@@ -15,7 +15,7 @@ export function AboutTeaser({
     <section className="py-20 sm:py-24">
       <Container>
         <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
-          <div>
+          <div data-reveal>
             <p className="text-accent mb-3 font-display text-xs font-semibold uppercase tracking-[0.18em]">
               {dict.about.eyebrow}
             </p>
@@ -40,8 +40,13 @@ export function AboutTeaser({
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            {dict.about.values.map((value) => (
-              <div key={value.title} className="card rounded-2xl p-5">
+            {dict.about.values.map((value, index) => (
+              <div
+                key={value.title}
+                data-reveal
+                data-reveal-delay={index * 90}
+                className="card rounded-2xl p-5"
+              >
                 <h3 className="text-sm font-semibold">{value.title}</h3>
                 <p className="text-muted mt-2 text-sm leading-relaxed">
                   {value.text}

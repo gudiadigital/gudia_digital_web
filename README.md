@@ -34,6 +34,8 @@ src/
   components/
     pages/               Sayfa içerikleri (route dosyaları bunları çağırır)
     sections/            Ana sayfa bölümleri
+    Motion.tsx           Tek istemci adası: kaydırma açılışları + imleç efektleri
+    Aurora.tsx           Hero arkasındaki canlı ışık katmanı (saf CSS)
   i18n/
     config.ts            Diller ve hizmet slug listesi
     routes.ts            Dile göre URL üretimi — TEK kaynak
@@ -74,6 +76,28 @@ URL'ler oradan üretildiği için başka yere dokunmak gerekmez.
 | Hakkında | `/tr/hakkimizda/`             | `/en/about/`                  |
 
 Kök adres (`/`) tarayıcı diline bakıp `/tr/` veya `/en/`'e yönlendirir.
+
+## Hareket / animasyon
+
+Animasyonların tamamı CSS'te (`globals.css` sonundaki "Hareket katmanı").
+JavaScript yalnızca iki şey yapar: bir bölüm görünür olduğunda `is-visible`
+sınıfını ekler ve imleç konumunu `--px` / `--py` değişkenlerine yazar.
+
+Bir bölümün kaydırınca belirmesi için ona `data-reveal` eklemek yeterli;
+`data-reveal-delay="120"` ile sıralama gecikmesi verilir. Kart üzerinde imleci
+takip eden ışık için `data-spotlight` ve `spotlight` sınıfı eklenir.
+
+İki bilinçli tercih:
+
+- Bölüm açılışları `IntersectionObserver` yerine doğrudan konum ölçümüyle,
+  kısıtlama da `requestAnimationFrame` yerine `setTimeout` ile yapılıyor.
+  İkisi de arka plandaki sekmelerde tarayıcı tarafından askıya alınıyor ve
+  bu durumda bölümler görünmez kalıyordu.
+- JavaScript çalışmazsa hiçbir şey gizlenmez; `data-reveal-root` işareti
+  konmadığı için tüm içerik normal şekilde görünür.
+
+`prefers-reduced-motion: reduce` seçili cihazlarda tüm hareket kapanır ve
+içerik doğrudan görünür gelir.
 
 ## Kısıtlar
 

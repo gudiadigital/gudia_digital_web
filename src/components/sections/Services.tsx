@@ -26,27 +26,30 @@ export function Services({
         )}
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {serviceSlugs.map((slug) => {
+          {serviceSlugs.map((slug, index) => {
             const service = dict.services.items[slug];
             return (
               <Link
                 key={slug}
                 href={pathFor(locale, "services", slug)}
-                className="card group flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)]"
+                data-reveal
+                data-reveal-delay={(index % 3) * 100}
+                data-spotlight
+                className="card spotlight group relative flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)]"
               >
-                <span className="border-line bg-surface-soft text-accent mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-colors group-hover:border-[var(--accent)]">
+                <span className="border-line bg-surface-soft text-accent relative z-10 mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-colors group-hover:border-[var(--accent)]">
                   <ServiceIcon slug={slug} className="h-5 w-5" />
                 </span>
 
-                <span className="text-muted font-display mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
+                <span className="text-muted font-display relative z-10 mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
                   {dict.services.groupLabels[groupOfService[slug]]}
                 </span>
-                <h3 className="text-lg font-semibold">{service.title}</h3>
-                <p className="text-muted mt-2.5 flex-1 text-sm leading-relaxed">
+                <h3 className="relative z-10 text-lg font-semibold">{service.title}</h3>
+                <p className="text-muted relative z-10 mt-2.5 flex-1 text-sm leading-relaxed">
                   {service.short}
                 </p>
 
-                <span className="text-accent mt-5 inline-flex items-center gap-1.5 text-sm font-medium">
+                <span className="text-accent relative z-10 mt-5 inline-flex items-center gap-1.5 text-sm font-medium">
                   {dict.services.detailLink}
                   <svg
                     viewBox="0 0 16 16"

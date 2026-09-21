@@ -25,7 +25,7 @@ export function SectionHeading({
 }) {
   const alignment = align === "center" ? "text-center mx-auto" : "text-left";
   return (
-    <div className={`max-w-2xl ${alignment}`}>
+    <div className={`max-w-2xl ${alignment}`} data-reveal>
       {eyebrow && (
         <p className="text-accent mb-3 font-display text-xs font-semibold uppercase tracking-[0.18em]">
           {eyebrow}
