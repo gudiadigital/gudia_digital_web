@@ -43,6 +43,13 @@ export const en: Dictionary = {
     ],
   },
 
+  story: {
+    chapter: "Chapter",
+    progress: "Progress",
+    time: "Time",
+    tag: "Gudia Digital // Digital Products & Growth Studio",
+  },
+
   approach: {
     eyebrow: "How we work",
     title: "Build, improve, grow",

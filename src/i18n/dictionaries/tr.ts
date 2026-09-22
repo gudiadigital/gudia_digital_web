@@ -41,6 +41,13 @@ export const tr = {
     ],
   },
 
+  story: {
+    chapter: "Bölüm",
+    progress: "İlerleme",
+    time: "Süre",
+    tag: "Gudia Dijital // Digital Products & Growth Studio",
+  },
+
   approach: {
     eyebrow: "Çalışma modelimiz",
     title: "Kur, iyileştir, büyüt",

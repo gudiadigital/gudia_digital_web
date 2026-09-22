@@ -60,6 +60,9 @@ export function ScrollStory({
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
+  const chapterRef = useRef<HTMLSpanElement>(null);
+  const percentRef = useRef<HTMLSpanElement>(null);
+  const clockRef = useRef<HTMLSpanElement>(null);
   const { hero } = dict;
   const words = toWords(hero.title);
   const afterTitle = 0.2 + words.length * 0.05;
@@ -121,6 +124,24 @@ export function ScrollStory({
       items.forEach((item, index) => {
         item.classList.toggle("is-active", index === active);
       });
+
+      // HUD sayaçları doğrudan burada güncelleniyor; rAF'a bağlı olsalardı
+      // sekme arka plana alındığında donmuş sayılar görünürdü.
+      const chapter = chapterRef.current;
+      if (chapter) {
+        chapter.textContent = `${String(active + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
+      }
+      const percent = percentRef.current;
+      if (percent) {
+        percent.textContent = `${String(Math.round(progress * 100)).padStart(3, "0")}%`;
+      }
+      const clock = clockRef.current;
+      if (clock && video.duration) {
+        const at = progress * video.duration;
+        const sec = Math.floor(at);
+        const frames = Math.floor((at - sec) * 24);
+        clock.textContent = `00:${String(sec).padStart(2, "0")}:${String(frames).padStart(2, "0")}`;
+      }
 
       inView = rect.bottom > 0 && rect.top < window.innerHeight;
       if (scrubbing && video.duration) {
@@ -305,8 +326,37 @@ export function ScrollStory({
           </span>
         </div>
 
-        <div className="story-rail" aria-hidden="true">
-          <span />
+        <div className="story-hud" aria-hidden="true">
+          <div className="hud-ruler">
+            <span className="hud-ruler-mark" />
+          </div>
+
+          <div className="hud-readout">
+            <div>
+              <span className="hud-key">{dict.story.chapter}</span>
+              <span ref={chapterRef} className="hud-val">
+                01 / 04
+              </span>
+            </div>
+            <div>
+              <span className="hud-key">{dict.story.progress}</span>
+              <span ref={percentRef} className="hud-val hud-big">
+                000%
+              </span>
+            </div>
+            <div>
+              <span className="hud-key">{dict.story.time}</span>
+              <span ref={clockRef} className="hud-val">
+                00:00:00
+              </span>
+            </div>
+          </div>
+
+          <p className="hud-tag">{dict.story.tag}</p>
+
+          <div className="hud-bar">
+            <span />
+          </div>
         </div>
       </div>
     </section>
