@@ -107,7 +107,14 @@ Ana sayfadaki kaydırmalı bölümün videosu `public/video/story.mp4`.
 Kaydırma ilerlemesi doğrudan videonun zamanına bağlanır; paneller ilerlemeyi
 eşit dilimlere bölerek sırayla devreye girer.
 
-**Videoyu değiştirmek:** dosyayı aynı adla değiştirmek yeterli. İki koşul var:
+**Videoyu değiştirmek:** ham dosyayı hazırlama betiğine ver, gerisini o yapar:
+
+```bash
+tools/prepare-video.sh ~/Downloads/yeni-video.mp4
+```
+
+Betik sesi kaldırır, rengi markaya çeker, her kareyi anahtar kare yapar,
+1152px'e indirir ve posteri üretir. Elle yapmak istersen iki koşul var:
 
 1. **Her kare anahtar kare olmalı** (all-intra), yoksa kaydırma takılır —
    ara karelere atlarken tarayıcı geriye gidip çözmek zorunda kalıyor.
