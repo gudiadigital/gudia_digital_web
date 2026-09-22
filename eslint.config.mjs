@@ -12,6 +12,13 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendor edilmiş araç kurulumları (ör. Impeccable): kendi paket
+    // dosyaları bizim kod standardımıza tabi değil.
+    ".claude/**",
+    ".github/skills/**",
+    ".github/agents/**",
+    ".github/hooks/**",
+    ".impeccable/**",
   ]),
 ]);
 

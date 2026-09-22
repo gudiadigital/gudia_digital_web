@@ -39,3 +39,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# yerel tasarim araci kurulumu (Impeccable) — makineye özel, depoda tutulmuyor
+.claude/settings.local.json
+.claude/skills/
+.claude/agents/
+.github/skills/
+.github/agents/
+.github/hooks/
+.impeccable/
