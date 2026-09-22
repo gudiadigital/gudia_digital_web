@@ -1,7 +1,17 @@
 import { Container, SectionHeading } from "../Container";
 import type { Dictionary } from "@/i18n/dictionaries";
 
+/**
+ * Adımlar yan yana dizilmek yerine kaydırdıkça üst üste yığılıyor.
+ * Her kart bir öncekinden biraz aşağıda yapışıyor, böylece sıranın
+ * ilerlediği fiziksel olarak görünüyor — dört kutuyu aynı anda okumak
+ * yerine adım adım geçiliyor.
+ *
+ * Yapışma yalnızca geniş ekranlarda; dar ekranda normal akış daha iyi.
+ */
 export function Process({ dict }: { dict: Dictionary }) {
+  const steps = dict.process.steps;
+
   return (
     <section className="relative isolate py-20 sm:py-24">
       <Container>
@@ -11,21 +21,32 @@ export function Process({ dict }: { dict: Dictionary }) {
           subtitle={dict.process.subtitle}
         />
 
-        <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {dict.process.steps.map((step, index) => (
+        <ol className="process-stack mt-14">
+          {steps.map((step, index) => (
             <li
               key={step.title}
-              data-reveal
-              data-reveal-delay={index * 90}
-              className="card rounded-2xl p-6"
+              className="process-step"
+              style={{ "--i": index } as React.CSSProperties}
             >
-              <span className="font-display text-accent/40 text-3xl font-bold tabular-nums">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-3 text-base font-semibold">{step.title}</h3>
-              <p className="text-muted mt-2 text-sm leading-relaxed">
-                {step.text}
-              </p>
+              <div className="card flex flex-col gap-5 rounded-2xl p-7 sm:flex-row sm:items-start sm:gap-8 sm:p-9">
+                <div className="flex items-center gap-4 sm:w-44 sm:shrink-0 sm:flex-col sm:items-start">
+                  <span className="font-display text-gradient text-4xl font-bold tabular-nums sm:text-5xl">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-muted font-mono text-[0.625rem] uppercase tracking-[0.16em] sm:mt-1">
+                    {index + 1} / {steps.length}
+                  </span>
+                </div>
+
+                <div className="sm:flex-1">
+                  <h3 className="text-xl font-semibold sm:text-2xl">
+                    {step.title}
+                  </h3>
+                  <p className="text-muted mt-3 max-w-2xl leading-relaxed">
+                    {step.text}
+                  </p>
+                </div>
+              </div>
             </li>
           ))}
         </ol>

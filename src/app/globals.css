@@ -712,3 +712,45 @@ html.lenis body {
     transition: none !important;
   }
 }
+
+/* ---------------------------------------------------------------
+   Süreç adımları — kaydırdıkça üst üste yığılan kartlar
+   --------------------------------------------------------------- */
+
+/*
+ * Blok düzen; grid DEĞİL. Grid'de her öğenin kapsayıcı bloğu kendi hücresi
+ * kadar olur ve position: sticky'nin yapışacak yolu kalmaz.
+ */
+.process-stack {
+  display: block;
+}
+
+.process-step + .process-step {
+  margin-top: 1.25rem;
+}
+
+.process-step > .card {
+  background-color: color-mix(in srgb, var(--surface) 94%, transparent);
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  /*
+   * Kartlar arası mesafe yığılmanın süresini belirliyor. 2rem ile yığılma
+   * göz kırpması kadar sürüyordu; her adımın kendi anı olsun diye ekran
+   * yüksekliğine bağlı bir aralık veriliyor.
+   */
+  .process-step + .process-step {
+    margin-top: 18vh;
+  }
+
+  .process-step {
+    position: sticky;
+    /* Her kart bir öncekinden ~18px aşağıda yapışır */
+    top: calc(6.5rem + var(--i) * 18px);
+  }
+
+  /* Alttaki kartlar üsttekinin altından geçerken hafifçe küçülür */
+  .process-step > .card {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
