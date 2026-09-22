@@ -3,7 +3,7 @@ import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { Hero } from "@/components/sections/Hero";
 import { Marquee } from "@/components/sections/Marquee";
-import { Approach } from "@/components/sections/Approach";
+import { ScrollStory } from "@/components/sections/ScrollStory";
 import { Services } from "@/components/sections/Services";
 import { Process } from "@/components/sections/Process";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
@@ -23,7 +23,7 @@ export default async function HomePage({
     <>
       <Hero locale={locale} dict={dict} />
       <Marquee dict={dict} />
-      <Approach locale={locale} dict={dict} />
+      <ScrollStory locale={locale} dict={dict} />
       <Services locale={locale} dict={dict} />
       <FeaturedProjects locale={locale} dict={dict} />
       <AboutTeaser locale={locale} dict={dict} />

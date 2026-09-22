@@ -388,3 +388,110 @@
     transform: none !important;
   }
 }
+
+/* ---------------------------------------------------------------
+   Kaydırmalı video bölümü (ScrollStory)
+   Yükseklik = panel sayısı × ekran; içerideki katman sticky kalır.
+   --------------------------------------------------------------- */
+
+@layer utilities {
+  .story {
+    height: 340vh;
+  }
+
+  /* Video üzerine okunabilirlik katmanı */
+  .story-veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        100deg,
+        color-mix(in srgb, var(--space) 88%, transparent) 0%,
+        color-mix(in srgb, var(--space) 62%, transparent) 46%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--space) 92%, transparent) 0%,
+        transparent 38%
+      );
+  }
+
+  /* Paneller üst üste durur; yalnızca aktif olan görünür */
+  .story-panel {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .story-panel.is-active {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  /* Panelleri aynı hücreye yerleştir */
+  .story [data-panel] {
+    display: block;
+  }
+
+  .story .sticky > div > div:first-child,
+  .story [data-panel] {
+    grid-area: 1 / 1;
+  }
+
+  /* İlerleme çubuğu */
+  .story-rail {
+    position: absolute;
+    right: clamp(1rem, 3vw, 2.5rem);
+    top: 50%;
+    translate: 0 -50%;
+    width: 2px;
+    height: 34vh;
+    border-radius: 999px;
+    background: var(--line-strong);
+    overflow: hidden;
+  }
+
+  .story-rail span {
+    display: block;
+    width: 100%;
+    height: calc(var(--story, 0) * 100%);
+    background: linear-gradient(to bottom, var(--accent), var(--accent-2));
+    border-radius: 999px;
+    transition: height 0.25s linear;
+  }
+}
+
+/* Panel kapsayıcısı: üst üste bindirme için grid */
+.story [data-panel] {
+  grid-area: 1 / 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story {
+    height: auto;
+  }
+
+  .story .sticky {
+    position: static;
+    height: auto;
+    padding-block: 5rem;
+  }
+
+  .story-panel {
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    margin-bottom: 3.5rem;
+  }
+
+  .story-rail {
+    display: none;
+  }
+}

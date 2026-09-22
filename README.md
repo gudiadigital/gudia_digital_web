@@ -99,6 +99,26 @@ takip eden ışık için `data-spotlight` ve `spotlight` sınıfı eklenir.
 `prefers-reduced-motion: reduce` seçili cihazlarda tüm hareket kapanır ve
 içerik doğrudan görünür gelir.
 
+## Arka plan videosu (ScrollStory)
+
+Ana sayfadaki kaydırmalı bölümün videosu `public/video/nebula.mp4`.
+Kaydırma ilerlemesi doğrudan videonun zamanına bağlanır; paneller ilerlemeyi
+eşit dilimlere bölerek sırayla devreye girer.
+
+**Videoyu değiştirmek:** dosyayı aynı adla değiştirmek yeterli. İki koşul var:
+
+1. **Sık anahtar kare** gerekir, yoksa kaydırma takılır. Kodlarken:
+   `-g 5 -keyint_min 5 -sc_threshold 0 -movflags +faststart`
+2. Sunucunun **HTTP Range** desteklemesi gerekir (GitHub Pages destekliyor).
+   Desteklemezse tarayıcı videoda konum değiştiremez ve video ilk karede donar.
+
+Poster görseli `public/video/nebula-poster.jpg` — video yüklenene kadar görünür,
+ilk karesiyle aynı olmalı.
+
+Dar ekranlarda ve `prefers-reduced-motion` açıkken video kaydırmaya bağlanmaz;
+mobilde normal döngüde oynar, hareket azaltmada bölüm normal yüksekliğe döner
+ve paneller alt alta sıralanır.
+
 ## Kısıtlar
 
 Site tamamen statiktir — sunucu tarafında çalışan kod yoktur. Bu yüzden
