@@ -1,24 +1,54 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Container } from "../Container";
 import { serviceGroups, servicesByGroup, type Locale } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
 
+type Segment = { text: string; accent: boolean };
+
 /**
- * Kaydırdıkça arka plandaki video ilerler, üzerindeki paneller sırayla
- * devreye girer.
+ * Başlık parçalarını kelimelere böler. Bir kelime birden fazla parçadan
+ * oluşabilir ("büyütüyoruz" vurgulu + "." vurgusuz), bu yüzden her kelime
+ * kendi içinde parça dizisi tutar.
+ */
+function toWords(segments: readonly Segment[]): Segment[][] {
+  const words: Segment[][] = [];
+  let current: Segment[] = [];
+
+  for (const segment of segments) {
+    for (const piece of segment.text.split(/(\s+)/)) {
+      if (!piece) continue;
+      if (/^\s+$/.test(piece)) {
+        if (current.length) {
+          words.push(current);
+          current = [];
+        }
+      } else {
+        current.push({ text: piece, accent: segment.accent });
+      }
+    }
+  }
+  if (current.length) words.push(current);
+  return words;
+}
+
+/**
+ * Sayfanın açılış bölümü: arka planda kaydırmayla ilerleyen video, üzerinde
+ * sırayla devreye giren paneller. İlk panel karşılama (başlık + çağrı),
+ * sonraki üçü çalışma modeli (kur / iyileştir / büyüt).
  *
- * İki ayrı mekanizma bilinçli olarak ayrıldı:
- *  - Panel görünürlüğü doğrudan scroll olayında hesaplanır. Böylece içerik
- *    hiçbir koşulda görünmez kalmaz.
- *  - Videonun zamanı rAF içinde hedefe yumuşatılarak taşınır; bu yalnızca
- *    görsel bir süsleme olduğu için sekme arka plandayken durması sorun değil.
+ * İki mekanizma bilinçli olarak ayrı:
+ *  - Panel görünürlüğü doğrudan scroll olayında hesaplanır; içerik hiçbir
+ *    koşulda görünmez kalmaz. İlk panel sunucu çıktısında zaten açık gelir,
+ *    böylece JS çalışmasa da sayfa anlamlı.
+ *  - Videonun zamanı rAF ile yumuşatılır; büyük sıçramalarda doğrudan
+ *    konumlanır, çünkü rAF arka plandaki sekmelerde duruyor.
  *
- * Dar ekranlarda video kaydırmaya bağlanmaz, normal döngüde oynar — mobil
- * cihazlarda kare kare arama (seek) tutukluk yapıyor.
+ * Dar ekranlarda video kaydırmaya bağlanmaz, normal döngüde oynar — mobilde
+ * kare arama tutukluk yapıyor.
  */
 export function ScrollStory({
   locale,
@@ -30,6 +60,9 @@ export function ScrollStory({
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const panelsRef = useRef<HTMLDivElement>(null);
+  const { hero } = dict;
+  const words = toWords(hero.title);
+  const afterTitle = 0.2 + words.length * 0.05;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -58,7 +91,6 @@ export function ScrollStory({
       const progress = Math.min(1, Math.max(0, -rect.top / span));
       section.style.setProperty("--story", progress.toFixed(4));
 
-      // Hangi panel aktif: ilerleme eşit dilimlere bölünür
       const active = Math.min(total - 1, Math.floor(progress * total));
       items.forEach((item, index) => {
         item.classList.toggle("is-active", index === active);
@@ -66,8 +98,6 @@ export function ScrollStory({
 
       if (scrubbing && video.duration) {
         targetTime = progress * (video.duration - 0.05);
-        // Büyük sıçramalarda (hızlı kaydırma, sayfa açılışı, rAF'ın kısıldığı
-        // durumlar) doğrudan konumlan; küçük farkları rAF yumuşatsın.
         if (Math.abs(targetTime - video.currentTime) > 0.4) {
           video.currentTime = targetTime;
         } else if (!frame) {
@@ -76,7 +106,6 @@ export function ScrollStory({
       }
     };
 
-    // Videoyu hedefe yumuşatarak taşı — doğrudan atama titriyor
     const smooth = () => {
       frame = 0;
       if (!video.duration) return;
@@ -90,13 +119,22 @@ export function ScrollStory({
       if (!timer) timer = window.setTimeout(applyProgress, 40);
     };
 
+    // Döngü kipinde oynatma isteği reddedilebilir (video henüz hazır değilse
+    // ya da tarayıcı otomatik oynatmayı engellemişse). Hazır olduğunda bir kez
+    // daha denenir; yine olmazsa poster görseli kalır, sayfa bozulmaz.
+    const tryPlay = () => {
+      void video.play().catch(() => {});
+    };
+
     const setMode = () => {
       scrubbing = !narrow.matches && !reduced.matches;
       if (scrubbing) {
+        video.removeEventListener("canplay", tryPlay);
         video.pause();
       } else {
         video.loop = true;
-        void video.play().catch(() => {});
+        tryPlay();
+        video.addEventListener("canplay", tryPlay);
       }
     };
 
@@ -113,6 +151,7 @@ export function ScrollStory({
       window.removeEventListener("resize", schedule);
       narrow.removeEventListener("change", setMode);
       video.removeEventListener("loadedmetadata", applyProgress);
+      video.removeEventListener("canplay", tryPlay);
       if (frame) cancelAnimationFrame(frame);
       if (timer) clearTimeout(timer);
     };
@@ -135,18 +174,88 @@ export function ScrollStory({
 
         <Container className="relative z-10 flex h-full items-center">
           <div ref={panelsRef} className="grid w-full">
-            <p className="text-accent font-display mb-6 text-xs font-semibold uppercase tracking-[0.18em]">
-              {dict.approach.eyebrow}
-            </p>
+            {/* Panel 0 — karşılama */}
+            <div data-panel className="story-panel is-active max-w-4xl">
+              <p
+                className="border-line bg-space/40 text-muted fade-up inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
+                style={{ animationDelay: "0.05s" }}
+              >
+                <span className="bg-accent inline-block h-1.5 w-1.5 rounded-full" />
+                {hero.eyebrow}
+              </p>
 
+              <h1 className="mt-7 text-[2.5rem] font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
+                {words.map((word, index) => (
+                  <Fragment key={index}>
+                    {index > 0 && " "}
+                    <span className="word-mask">
+                      <span
+                        className="word-rise"
+                        style={{ animationDelay: `${0.18 + index * 0.05}s` }}
+                      >
+                        {word.map((part, partIndex) =>
+                          part.accent ? (
+                            <span key={partIndex} className="text-gradient">
+                              {part.text}
+                            </span>
+                          ) : (
+                            <span key={partIndex}>{part.text}</span>
+                          ),
+                        )}
+                      </span>
+                    </span>
+                  </Fragment>
+                ))}
+              </h1>
+
+              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-display text-sm font-medium tracking-wide sm:text-base">
+                {hero.pillars.map((pillar, index) => (
+                  <li
+                    key={pillar}
+                    className="fade-up flex items-center gap-3"
+                    style={{ animationDelay: `${afterTitle + index * 0.07}s` }}
+                  >
+                    {index > 0 && (
+                      <span aria-hidden="true" className="text-accent/50">
+                        &bull;
+                      </span>
+                    )}
+                    {pillar}
+                  </li>
+                ))}
+              </ul>
+
+              <p
+                className="text-muted fade-up mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
+                style={{ animationDelay: `${afterTitle + 0.3}s` }}
+              >
+                {hero.subtitle}
+              </p>
+
+              <div
+                className="fade-up mt-9 flex flex-wrap items-center gap-3"
+                style={{ animationDelay: `${afterTitle + 0.42}s` }}
+              >
+                <Link
+                  href={pathFor(locale, "contact")}
+                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_38px_-12px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
+                >
+                  {hero.ctaPrimary}
+                </Link>
+                <Link
+                  href={pathFor(locale, "services")}
+                  className="border-line-strong bg-space/30 text-ink hover:bg-space/60 rounded-full border px-6 py-3.5 text-sm font-semibold backdrop-blur-sm transition-colors"
+                >
+                  {hero.ctaSecondary}
+                </Link>
+              </div>
+            </div>
+
+            {/* Panel 1–3 — çalışma modeli */}
             {serviceGroups.map((group, index) => {
               const content = dict.approach.groups[group];
               return (
-                <div
-                  key={group}
-                  data-panel
-                  className="story-panel max-w-2xl"
-                >
+                <div key={group} data-panel className="story-panel max-w-2xl">
                   <span className="text-muted font-display text-sm font-semibold tabular-nums">
                     {String(index + 1).padStart(2, "0")} / 0{serviceGroups.length}
                   </span>
@@ -173,6 +282,14 @@ export function ScrollStory({
             })}
           </div>
         </Container>
+
+        <div className="story-cue scroll-cue text-muted" aria-hidden="true">
+          <span>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 5v14M6 13l6 6 6-6" />
+            </svg>
+          </span>
+        </div>
 
         <div className="story-rail" aria-hidden="true">
           <span />

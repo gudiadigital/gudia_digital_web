@@ -396,7 +396,8 @@
 
 @layer utilities {
   .story {
-    height: 340vh;
+    /* panel sayısı × ekran yüksekliği */
+    height: 440vh;
   }
 
   /* Video üzerine okunabilirlik katmanı */
@@ -415,6 +416,12 @@
         to top,
         color-mix(in srgb, var(--space) 92%, transparent) 0%,
         transparent 38%
+      ),
+      /* üst menü videonun üzerinde okunabilsin */
+      linear-gradient(
+        to bottom,
+        color-mix(in srgb, var(--space) 72%, transparent) 0%,
+        transparent 16%
       );
   }
 
@@ -443,6 +450,18 @@
   .story .sticky > div > div:first-child,
   .story [data-panel] {
     grid-area: 1 / 1;
+  }
+
+  /* Aşağı kaydır işareti — ilerleme başlayınca kaybolur */
+  .story-cue {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    opacity: clamp(0, calc(1 - var(--story, 0) * 12), 1);
+    transition: opacity 0.3s linear;
+    pointer-events: none;
   }
 
   /* İlerleme çubuğu */

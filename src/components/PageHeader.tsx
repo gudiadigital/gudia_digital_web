@@ -1,4 +1,6 @@
 import { Container } from "./Container";
+import { Aurora } from "./Aurora";
+import { HeroCanvas } from "./HeroCanvas";
 
 export function PageHeader({
   eyebrow,
@@ -10,8 +12,10 @@ export function PageHeader({
   subtitle?: string;
 }) {
   return (
-    <section className="relative isolate overflow-hidden pt-14 pb-10 sm:pt-20 sm:pb-14">
-      <div className="nebula" aria-hidden="true" />
+    <section className="relative isolate overflow-hidden pt-28 pb-10 sm:pt-36 sm:pb-14">
+      <Aurora />
+      <HeroCanvas />
+      <div className="grid-dots" aria-hidden="true" />
       <Container className="relative z-10" >
         <p className="text-accent fade-up mb-3 font-display text-xs font-semibold uppercase tracking-[0.18em]">
           {eyebrow}
