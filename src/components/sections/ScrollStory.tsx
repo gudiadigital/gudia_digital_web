@@ -139,6 +139,8 @@ export function ScrollStory({
         item.style.opacity = (1 - away).toFixed(3);
         item.style.transform = `translate3d(0, ${(-distance * 56).toFixed(1)}px, 0)`;
         item.style.pointerEvents = Math.abs(distance) < 0.4 ? "auto" : "none";
+        // Panel yerine oturduğunda içindeki parçalar sırayla giriyor
+        item.classList.toggle("is-in", away < 0.35);
 
         if (Math.abs(distance) < bestDistance) {
           bestDistance = Math.abs(distance);
@@ -311,7 +313,7 @@ export function ScrollStory({
             {serviceGroups.map((group, index) => {
               const content = dict.approach.groups[group];
               return (
-                <div key={group} data-panel className="story-panel max-w-2xl">
+                <div key={group} data-panel className="story-panel max-w-3xl">
                   <span className="text-muted font-display text-sm font-semibold tabular-nums">
                     {String(index + 1).padStart(2, "0")} / 0{serviceGroups.length}
                   </span>
@@ -321,12 +323,26 @@ export function ScrollStory({
                   <p className="text-muted mt-5 text-base leading-relaxed sm:text-lg">
                     {content.text}
                   </p>
+                  {/* Teknik okuma: her aşamanın somut bilgileri */}
+                  <dl className="border-line mt-8 grid gap-x-8 gap-y-3 border-t pt-6 sm:grid-cols-3">
+                    {content.specs.map((spec) => (
+                      <div key={spec.k} data-stagger>
+                        <dt className="text-muted font-mono text-[0.625rem] uppercase tracking-[0.14em]">
+                          {spec.k}
+                        </dt>
+                        <dd className="text-ink mt-1.5 text-sm leading-snug">
+                          {spec.v}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
                   <ul className="mt-7 flex flex-wrap gap-2.5">
                     {servicesByGroup[group].map((slug) => (
-                      <li key={slug}>
+                      <li key={slug} data-stagger>
                         <Link
                           href={pathFor(locale, "services", slug)}
-                          className="border-line-strong bg-space/40 text-ink hover:border-accent rounded-full border px-4 py-2 text-sm backdrop-blur-sm transition-colors"
+                          className="border-line-strong bg-space/40 text-ink hover:border-accent rounded-full border px-4 py-2 text-sm backdrop-blur-sm transition-all active:scale-[0.97]"
                         >
                           {dict.services.items[slug].title}
                         </Link>

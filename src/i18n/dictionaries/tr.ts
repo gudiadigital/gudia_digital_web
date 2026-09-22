@@ -58,16 +58,31 @@ export const tr = {
         label: "Kur",
         title: "Sıfırdan ürün",
         text: "Ortada bir şey yoksa baştan kuruyoruz: mobil uygulama, web sitesi, markalı oyun ve interaktif deneyimler.",
+        specs: [
+          { k: "Platform", v: "iOS · Android · Web · PC" },
+          { k: "Teslim", v: "Kaynak kodun tamamı size ait" },
+          { k: "Süreç", v: "Aşamalı, her aşamada çalışan sürüm" },
+        ],
       },
       improve: {
         label: "İyileştir",
         title: "Elindekini toparla",
         text: "Uygulamanız eski, siteniz yavaş ya da tasarım geride kalmışsa yeniden yazmadan onarıyor, hızlandırıyor ve güncel tutuyoruz.",
+        specs: [
+          { k: "Başlangıç", v: "Ücretsiz inceleme raporu" },
+          { k: "Yöntem", v: "Yeniden yazmadan onarım" },
+          { k: "Sonrası", v: "Aylık teknik bakım" },
+        ],
       },
       grow: {
         label: "Büyüt",
         title: "Görünür ve satılabilir yap",
         text: "Ürün iyi olsa bile içerik ve mağaza düzeni olmadan satmıyor. Sosyal medya içeriğini ve e-ticaret sayfalarınızı biz üretiyoruz.",
+        specs: [
+          { k: "İçerik", v: "Aylık plan, üretim ve paylaşım" },
+          { k: "Pazaryeri", v: "Ürün sayfası ve görsel düzeni" },
+          { k: "Ölçüm", v: "Aylık performans raporu" },
+        ],
       },
     },
   },

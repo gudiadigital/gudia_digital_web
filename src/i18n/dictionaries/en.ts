@@ -60,16 +60,31 @@ export const en: Dictionary = {
         label: "Build",
         title: "From scratch",
         text: "When there's nothing there yet, we build it: mobile apps, websites, branded games and interactive experiences.",
+        specs: [
+          { k: "Platform", v: "iOS · Android · Web · PC" },
+          { k: "Handover", v: "You own the full source code" },
+          { k: "Process", v: "Staged, a working build at each step" },
+        ],
       },
       improve: {
         label: "Improve",
         title: "Fix what you have",
         text: "If your app is dated, your site is slow or the design has fallen behind, we repair, speed up and modernise it without a rewrite.",
+        specs: [
+          { k: "Start", v: "Free written review" },
+          { k: "Method", v: "Repair without a rewrite" },
+          { k: "After", v: "Monthly technical maintenance" },
+        ],
       },
       grow: {
         label: "Grow",
         title: "Make it visible and sellable",
         text: "A good product still doesn't sell without content and a tidy storefront. We produce your social content and rebuild your e-commerce pages.",
+        specs: [
+          { k: "Content", v: "Monthly plan, production, publishing" },
+          { k: "Marketplace", v: "Product pages and imagery" },
+          { k: "Measurement", v: "Monthly performance report" },
+        ],
       },
     },
   },

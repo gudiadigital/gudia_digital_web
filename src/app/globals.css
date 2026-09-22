@@ -22,6 +22,7 @@
   --aurora-a: rgb(124 147 255 / 0.5);
   --aurora-b: rgb(167 139 250 / 0.42);
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -20px rgb(0 0 0 / 0.6);
+  --edge-light: rgb(255 255 255 / 0.07);
 }
 
 @media (prefers-color-scheme: light) {
@@ -41,6 +42,8 @@
     --aurora-a: rgb(91 110 245 / 0.22);
     --aurora-b: rgb(139 92 246 / 0.18);
     --shadow-card: 0 1px 2px rgb(27 31 53 / 0.05), 0 16px 40px -24px rgb(27 31 53 / 0.25);
+  --edge-light: rgb(255 255 255 / 0.9);
+    --edge-light: rgb(255 255 255 / 0.9);
   }
 }
 
@@ -60,6 +63,7 @@
   --aurora-a: rgb(91 110 245 / 0.22);
   --aurora-b: rgb(139 92 246 / 0.18);
   --shadow-card: 0 1px 2px rgb(27 31 53 / 0.05), 0 16px 40px -24px rgb(27 31 53 / 0.25);
+  --edge-light: rgb(255 255 255 / 0.9);
 }
 
 @theme inline {
@@ -153,10 +157,17 @@
   }
 
   /* Cam yüzeyli kart */
+  /*
+   * Kartın üst kenarında ince bir iç ışık: gerçek malzemede kenarın ışığı
+   * kırması gibi. Tek satırlık ek gölge ama yüzeyi "basılı" olmaktan
+   * çıkarıp hacimli gösteriyor.
+   */
   .card {
     background-color: color-mix(in srgb, var(--surface) 78%, transparent);
     border: 1px solid var(--line);
-    box-shadow: var(--shadow-card);
+    box-shadow:
+      var(--shadow-card),
+      inset 0 1px 0 var(--edge-light);
   }
 
   .glow-ring {
@@ -667,5 +678,37 @@ html.lenis body {
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) .grain {
     opacity: 0.025;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Panel içi sıralı giriş — parçalar topluca değil arka arkaya gelir.
+   Panelin kendi opaklığı JS ile sürüldüğü için çocuklar yalnızca
+   panel yerine oturduğunda (is-in) devreye girer.
+   --------------------------------------------------------------- */
+
+.story-panel [data-stagger] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.story-panel.is-in [data-stagger] {
+  opacity: 1;
+  transform: none;
+}
+
+.story-panel [data-stagger]:nth-child(1) { transition-delay: 0.06s; }
+.story-panel [data-stagger]:nth-child(2) { transition-delay: 0.14s; }
+.story-panel [data-stagger]:nth-child(3) { transition-delay: 0.22s; }
+.story-panel [data-stagger]:nth-child(4) { transition-delay: 0.30s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .story-panel [data-stagger] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
