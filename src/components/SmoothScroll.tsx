@@ -27,12 +27,16 @@ export function SmoothScroll() {
       if (cancelled) return;
 
       lenis = new Lenis({
-        // Yüksek değer = daha uzun süren, daha akışkan yavaşlama
-        duration: 1.15,
-        easing: (t: number) => 1 - Math.pow(1 - t, 3),
-        // Dokunmatik cihazlarda tarayıcının kendi kaydırması daha iyi
+        /*
+         * Süre yerine lerp kullanılıyor: süre tabanlı yumuşatma her tekerlek
+         * hareketini sabit bir animasyona bağlıyor ve sayfa "sürükleniyor" gibi
+         * hissettiriyordu. lerp her karede hedefe belli bir oranda yaklaşır;
+         * hareket hemen başlar, hızlıca oturur.
+         */
+        lerp: 0.14,
+        // Dokunmatikte tarayıcının kendi kaydırması daha iyi
         syncTouch: false,
-        touchMultiplier: 1.6,
+        touchMultiplier: 1.5,
         wheelMultiplier: 1,
       });
 

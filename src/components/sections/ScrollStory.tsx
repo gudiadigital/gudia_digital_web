@@ -138,7 +138,6 @@ export function ScrollStory({
         );
         item.style.opacity = (1 - away).toFixed(3);
         item.style.transform = `translate3d(0, ${(-distance * 56).toFixed(1)}px, 0)`;
-        item.style.filter = away > 0.02 ? `blur(${(away * 7).toFixed(1)}px)` : "none";
         item.style.pointerEvents = Math.abs(distance) < 0.4 ? "auto" : "none";
 
         if (Math.abs(distance) < bestDistance) {

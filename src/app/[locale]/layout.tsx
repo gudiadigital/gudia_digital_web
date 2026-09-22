@@ -13,12 +13,15 @@ import { getDictionary } from "@/i18n/dictionaries";
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin", "latin-ext"],
+  // Sitede yalnızca bu ağırlıklar kullanılıyor; değişken fontun tamamı gereksiz
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 

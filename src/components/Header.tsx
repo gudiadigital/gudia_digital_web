@@ -51,7 +51,7 @@ export function Header({
     <header
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
         scrolled
-          ? "border-line bg-space/80 backdrop-blur-xl"
+          ? "border-line bg-space/90 backdrop-blur-md"
           : "border-transparent bg-transparent"
       }`}
     >
@@ -110,7 +110,7 @@ export function Header({
       </Container>
 
       {open && (
-        <div className="border-line bg-space/95 border-t backdrop-blur-xl md:hidden">
+        <div className="border-line bg-space/95 border-t backdrop-blur-md md:hidden">
           <Container className="flex flex-col gap-1 py-4">
             {navKeys.map(({ key, label }) => (
               <Link
