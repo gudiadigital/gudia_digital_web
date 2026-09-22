@@ -120,9 +120,31 @@ export function ScrollStory({
       const progress = Math.min(1, Math.max(0, -rect.top / span));
       section.style.setProperty("--story", progress.toFixed(4));
 
-      const active = Math.min(total - 1, Math.floor(progress * total));
+      // Paneller eşiklerle değil, ilerlemeye bağlı olarak sürekli hareket eder.
+      // Her panelin bir çapası var (0, 1/3, 2/3, 1); ilerleme çapaya yaklaştıkça
+      // panel netleşip yerine oturuyor, uzaklaştıkça yukarı kayıp bulanıklaşıyor.
+      // Böylece kaydırmanın her pikselinde ekranda bir şey değişiyor.
+      const spread = total - 1;
+      let active = 0;
+      let bestDistance = Infinity;
+
       items.forEach((item, index) => {
-        item.classList.toggle("is-active", index === active);
+        const distance = progress * spread - index;
+        // Çapanın etrafında bir "durma" payı: panel hemen solmaya başlamıyor,
+        // önce yerinde net duruyor, sonra geçiş başlıyor.
+        const away = Math.min(
+          1,
+          Math.max(0, (Math.abs(distance) - 0.22) / 0.62),
+        );
+        item.style.opacity = (1 - away).toFixed(3);
+        item.style.transform = `translate3d(0, ${(-distance * 56).toFixed(1)}px, 0)`;
+        item.style.filter = away > 0.02 ? `blur(${(away * 7).toFixed(1)}px)` : "none";
+        item.style.pointerEvents = Math.abs(distance) < 0.4 ? "auto" : "none";
+
+        if (Math.abs(distance) < bestDistance) {
+          bestDistance = Math.abs(distance);
+          active = index;
+        }
       });
 
       // HUD sayaçları doğrudan burada güncelleniyor; rAF'a bağlı olsalardı
@@ -151,7 +173,7 @@ export function ScrollStory({
     };
 
     const schedule = () => {
-      if (!timer) timer = window.setTimeout(applyProgress, 25);
+      if (!timer) timer = window.setTimeout(applyProgress, 16);
     };
 
     // Döngü kipinde oynatma isteği reddedilebilir (video henüz hazır değilse
@@ -210,7 +232,7 @@ export function ScrollStory({
         <Container className="relative z-10 flex h-full items-center">
           <div ref={panelsRef} className="grid w-full">
             {/* Panel 0 — karşılama */}
-            <div data-panel className="story-panel is-active max-w-4xl">
+            <div data-panel className="story-panel max-w-4xl">
               <p
                 className="border-line bg-space/40 text-muted fade-up inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
                 style={{ animationDelay: "0.05s" }}
