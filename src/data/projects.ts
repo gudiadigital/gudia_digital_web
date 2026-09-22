@@ -22,6 +22,11 @@ export type Project = {
   /** true ise kart görseli ikon gibi (kare, ortalanmış) gösterilir. */
   iconStyle?: boolean;
   links: ProjectLink[];
+  /**
+   * Platform rozetleri normalde bağlantılardan türetilir. Mağaza linki
+   * olmayan ama o platformda yayında olan uygulamalar için elle verilir.
+   */
+  platforms?: string[];
 };
 
 /** iOS / Android / PC rozetleri bağlantılardan türetilir. */
@@ -63,11 +68,15 @@ export const projects: Project[] = [
     year: 2026,
     image: "icon-ikra.jpg",
     iconStyle: true,
+    platforms: ["iOS", "Android"],
     summary: {
       tr: "Namaz vakitleri, Kur'an okuma, kıble ve günlük zikir takibiyle İslami yaşam asistanı. On bir dilde yayında, App Store'da 4.6 puan.",
       en: "An Islamic lifestyle companion with prayer times, Quran reading, qibla and daily dhikr tracking. Live in eleven languages, rated 4.6 on the App Store.",
     },
-    links: [{ kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" }],
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/app/id6756602687" },
+      { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
+    ],
   },
   {
     slug: "snappet",
@@ -76,11 +85,15 @@ export const projects: Project[] = [
     year: 2026,
     image: "icon-snappet.jpg",
     iconStyle: true,
+    platforms: ["iOS", "Android"],
     summary: {
       tr: "Sokakta gördüğünüz kedi ve köpekleri fotoğraflayıp koleksiyona dönüştüren kamera tabanlı kart oyunu. iOS ve Android sürümleri var.",
       en: "A camera-based card game that turns the cats and dogs you meet on the street into a collection. Available on iOS and Android.",
     },
-    links: [{ kind: "instagram", url: "https://www.instagram.com/playsnappet/" }],
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/app/id6784579838" },
+      { kind: "instagram", url: "https://www.instagram.com/playsnappet/" },
+    ],
   },
   {
     slug: "photosensia",
@@ -93,7 +106,7 @@ export const projects: Project[] = [
       en: "A simple, safe photo app designed for children. Live on the App Store and Google Play.",
     },
     links: [
-      { kind: "appstore", url: "https://apps.apple.com/tr/app/photosensia-kids/id6624305795" },
+      { kind: "appstore", url: "https://apps.apple.com/app/id6624305795" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids" },
     ],
   },
@@ -105,22 +118,26 @@ export const projects: Project[] = [
     image: "icon-pofu.jpg",
     iconStyle: true,
     summary: {
-      tr: "HealthKit ve Apple Watch entegrasyonlu kalori ve beslenme takibi. Ana ekran widget'ları ve saat uygulamasıyla birlikte.",
-      en: "Calorie and nutrition tracking with HealthKit and Apple Watch integration, including home screen widgets and a watch app.",
+      tr: "Kadınlara özel kalori ve beslenme takibi. HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve saat uygulamasıyla birlikte.",
+      en: "Calorie and nutrition tracking built for women, with HealthKit and Apple Watch integration, home screen widgets and a watch app.",
     },
-    links: [{ kind: "instagram", url: "https://www.instagram.com/pofu.app/" }],
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/app/id6778044605" },
+      { kind: "instagram", url: "https://www.instagram.com/pofu.app/" },
+    ],
   },
   {
     slug: "habitile",
     title: "Habitile",
     service: "mobil-uygulama",
     year: 2026,
-    image: "habitile.jpg",
+    image: "icon-habitile.jpg",
+    iconStyle: true,
     summary: {
-      tr: "Alışkanlık takip uygulaması: Core Data ile yerel saklama, Swift Charts ile ilerleme grafikleri ve WidgetKit ile ana ekran widget'ları.",
-      en: "A habit tracker with local storage via Core Data, progress charts with Swift Charts and home screen widgets through WidgetKit.",
+      tr: "Sakin ve widget öncelikli alışkanlık takibi. Ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz; affeden seriler bir günü kaçırınca ilerlemeyi silmiyor. Altı dilde yayında.",
+      en: "A calm, widget-first habit tracker. Check habits with one tap from the Home Screen, Lock Screen or Apple Watch, and forgiving streaks mean one missed day won't wipe your progress. Live in six languages.",
     },
-    links: [],
+    links: [{ kind: "appstore", url: "https://apps.apple.com/app/id6779264379" }],
   },
   {
     slug: "divonia",
