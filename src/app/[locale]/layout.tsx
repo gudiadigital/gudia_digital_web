@@ -43,6 +43,13 @@ export async function generateMetadata({
       template: `%s · ${dict.meta.siteName}`,
     },
     description: dict.meta.description,
+    icons: {
+      icon: [
+        { url: "/brand/favicon-light.png", media: "(prefers-color-scheme: light)" },
+        { url: "/brand/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+      ],
+      apple: "/brand/apple-touch-icon.png",
+    },
     alternates: {
       canonical: `/${locale}`,
       languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),

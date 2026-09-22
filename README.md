@@ -58,8 +58,10 @@ Liste boş olduğu sürece Projeler sayfası boş durum metnini gösterir.
 **Renk değiştirmek** → `src/app/globals.css` içindeki `:root` blokları.
 Koyu mod varsayılan; açık mod `prefers-color-scheme: light` ile otomatik.
 
-**Logo değiştirmek** → `src/components/Logo.tsx` içindeki `<svg>` bloğu.
-Kullanım yerleri (header, footer) değişmez.
+**Logo değiştirmek** → `public/brand/` altındaki PNG'ler: `mark-dark.png` /
+`mark-light.png` (header–footer, moda göre seçilir), `favicon-dark.png` /
+`favicon-light.png`, `apple-touch-icon.png`. `src/app/favicon.ico` eski
+tarayıcılar için lacivert zeminli yedek. Kullanım yerleri değişmez.
 
 **Yeni sayfa eklemek** → `src/i18n/routes.ts` içindeki `pageSegments` tablosuna
 iki dildeki URL parçasını ekle, `pageKeys`'e anahtarı ekle, içeriği
