@@ -124,8 +124,8 @@ export function ScrollStory({
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
-          src="/video/nebula.mp4"
-          poster="/video/nebula-poster.jpg"
+          src="/video/story.mp4"
+          poster="/video/story-poster.jpg"
           muted
           playsInline
           preload="auto"

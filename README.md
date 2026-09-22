@@ -101,7 +101,7 @@ içerik doğrudan görünür gelir.
 
 ## Arka plan videosu (ScrollStory)
 
-Ana sayfadaki kaydırmalı bölümün videosu `public/video/nebula.mp4`.
+Ana sayfadaki kaydırmalı bölümün videosu `public/video/story.mp4`.
 Kaydırma ilerlemesi doğrudan videonun zamanına bağlanır; paneller ilerlemeyi
 eşit dilimlere bölerek sırayla devreye girer.
 
@@ -112,7 +112,7 @@ eşit dilimlere bölerek sırayla devreye girer.
 2. Sunucunun **HTTP Range** desteklemesi gerekir (GitHub Pages destekliyor).
    Desteklemezse tarayıcı videoda konum değiştiremez ve video ilk karede donar.
 
-Poster görseli `public/video/nebula-poster.jpg` — video yüklenene kadar görünür,
+Poster görseli `public/video/story-poster.jpg` — video yüklenene kadar görünür,
 ilk karesiyle aynı olmalı.
 
 Dar ekranlarda ve `prefers-reduced-motion` açıkken video kaydırmaya bağlanmaz;
