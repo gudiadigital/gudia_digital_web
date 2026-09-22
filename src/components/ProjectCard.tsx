@@ -6,10 +6,13 @@ export function ProjectCard({
   project,
   locale,
   dict,
+  featured = false,
 }: {
   project: Project;
   locale: Locale;
   dict: Dictionary;
+  /** Öne çıkan kart: iki sütun genişliğinde, görsel ve başlık büyür. */
+  featured?: boolean;
 }) {
   const platforms = project.links
     .map((link) => platformOf[link.kind])
@@ -18,9 +21,15 @@ export function ProjectCard({
   return (
     <article
       data-spotlight
-      className="card spotlight group flex flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)]"
+      className={`card spotlight group flex flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)] active:translate-y-0 ${
+        featured ? "sm:col-span-2" : ""
+      }`}
     >
-      <div className="bg-surface-soft relative z-10 aspect-[16/10] overflow-hidden">
+      <div
+        className={`bg-surface-soft relative z-10 overflow-hidden ${
+          featured ? "aspect-[16/8]" : "aspect-[16/10]"
+        }`}
+      >
         {project.image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
@@ -50,8 +59,18 @@ export function ProjectCard({
           )}
         </p>
 
-        <h3 className="mt-2.5 text-lg font-semibold">{project.title}</h3>
-        <p className="text-muted mt-2.5 flex-1 text-sm leading-relaxed">
+        <h3
+          className={`mt-2.5 font-semibold ${
+            featured ? "text-xl sm:text-2xl" : "text-lg"
+          }`}
+        >
+          {project.title}
+        </h3>
+        <p
+          className={`text-muted mt-2.5 flex-1 leading-relaxed ${
+            featured ? "max-w-2xl text-sm sm:text-base" : "text-sm"
+          }`}
+        >
           {project.summary[locale]}
         </p>
 

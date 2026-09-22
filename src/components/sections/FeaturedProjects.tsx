@@ -28,14 +28,20 @@ export function FeaturedProjects({
           subtitle={dict.projects.featuredSubtitle}
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2">
           {featured.map((project, index) => (
             <div
               key={project.slug}
               data-reveal
               data-reveal-delay={index * 110}
+              className={index === 0 ? "sm:col-span-2" : ""}
             >
-              <ProjectCard project={project} locale={locale} dict={dict} />
+              <ProjectCard
+                project={project}
+                locale={locale}
+                dict={dict}
+                featured={index === 0}
+              />
             </div>
           ))}
         </div>

@@ -30,14 +30,20 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2">
             {projects.map((project, index) => (
               <div
                 key={project.slug}
                 data-reveal
-                data-reveal-delay={(index % 3) * 100}
+                data-reveal-delay={(index % 2) * 100}
+                className={index % 4 === 0 ? "sm:col-span-2" : ""}
               >
-                <ProjectCard project={project} locale={locale} dict={dict} />
+                <ProjectCard
+                  project={project}
+                  locale={locale}
+                  dict={dict}
+                  featured={index % 4 === 0}
+                />
               </div>
             ))}
           </div>

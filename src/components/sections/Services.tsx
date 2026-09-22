@@ -1,9 +1,31 @@
 import Link from "next/link";
 import { Container, SectionHeading } from "../Container";
 import { ServiceIcon } from "../ServiceIcon";
-import { serviceSlugs, groupOfService, type Locale } from "@/i18n/config";
+import {
+  serviceSlugs,
+  groupOfService,
+  type ServiceSlug,
+  type Locale,
+} from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
+
+/**
+ * Kart genişlikleri kasıtlı olarak eşit değil. Üç eşit sütunluk ızgara
+ * düzeni tanıdık ama karaktersiz; her satırda bir kart geniş olunca göz
+ * bir ritim yakalıyor ve geniş kartlarda teslim edilenleri de gösterecek
+ * yer kalıyor.
+ *
+ * Satır toplamları üçe tamamlanıyor: 2+1 / 1+2 / 1+2
+ */
+const span: Record<ServiceSlug, 1 | 2> = {
+  "mobil-uygulama": 2,
+  "web-sitesi": 1,
+  "markali-oyunlar": 1,
+  "dijital-urun-iyilestirme": 2,
+  "sosyal-medya-icerik": 1,
+  "e-ticaret-optimizasyonu": 2,
+};
 
 export function Services({
   locale,
@@ -28,26 +50,61 @@ export function Services({
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {serviceSlugs.map((slug, index) => {
             const service = dict.services.items[slug];
+            const wide = span[slug] === 2;
+
             return (
               <Link
                 key={slug}
                 href={pathFor(locale, "services", slug)}
                 data-reveal
-                data-reveal-delay={(index % 3) * 100}
+                data-reveal-delay={(index % 3) * 90}
                 data-spotlight
-                className="card spotlight group relative flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)]"
+                className={`card spotlight group relative flex flex-col rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)] active:translate-y-0 ${
+                  wide ? "lg:col-span-2 lg:p-8" : ""
+                }`}
               >
-                <span className="border-line bg-surface-soft text-accent relative z-10 mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl border transition-colors group-hover:border-[var(--accent)]">
-                  <ServiceIcon slug={slug} className="h-5 w-5" />
-                </span>
+                <div className="relative z-10 flex items-start justify-between gap-4">
+                  <span className="border-line bg-surface-soft text-accent inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border transition-colors group-hover:border-[var(--accent)]">
+                    <ServiceIcon slug={slug} className="h-5 w-5" />
+                  </span>
+                  <span className="text-muted font-display text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
+                    {dict.services.groupLabels[groupOfService[slug]]}
+                  </span>
+                </div>
 
-                <span className="text-muted font-display relative z-10 mb-2 text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
-                  {dict.services.groupLabels[groupOfService[slug]]}
-                </span>
-                <h3 className="relative z-10 text-lg font-semibold">{service.title}</h3>
-                <p className="text-muted relative z-10 mt-2.5 flex-1 text-sm leading-relaxed">
+                <h3
+                  className={`relative z-10 mt-5 font-semibold ${
+                    wide ? "text-xl lg:text-2xl" : "text-lg"
+                  }`}
+                >
+                  {service.title}
+                </h3>
+
+                <p
+                  className={`text-muted relative z-10 mt-2.5 flex-1 leading-relaxed ${
+                    wide ? "max-w-xl text-sm lg:text-base" : "text-sm"
+                  }`}
+                >
                   {service.short}
                 </p>
+
+                {/* Geniş kartlarda teslim edilenler de görünüyor */}
+                {wide && (
+                  <ul className="border-line relative z-10 mt-6 hidden gap-x-6 gap-y-2 border-t pt-5 lg:grid lg:grid-cols-2">
+                    {service.deliverables.map((item) => (
+                      <li
+                        key={item}
+                        className="text-muted flex items-start gap-2 text-sm"
+                      >
+                        <span
+                          aria-hidden="true"
+                          className="bg-accent/60 mt-2 h-1 w-1 shrink-0 rounded-full"
+                        />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <span className="text-accent relative z-10 mt-5 inline-flex items-center gap-1.5 text-sm font-medium">
                   {dict.services.detailLink}

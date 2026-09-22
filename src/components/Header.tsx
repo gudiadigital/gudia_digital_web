@@ -154,6 +154,12 @@ function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
           key={candidate}
           href={pathFor(candidate, current?.key ?? "home", current?.service)}
           hrefLang={candidate}
+          /*
+           * Statik export'ta Next, dinamik segmentli rotalar için geçersiz bir
+           * RSC yolu (__next.$d$locale.txt) isteyip 404 alıyor. Site zaten
+           * tamamen statik, ön getirmenin kazancı yok; kapatınca konsol temiz.
+           */
+          prefetch={false}
           aria-current={candidate === locale ? "true" : undefined}
           className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase transition-colors ${
             candidate === locale
