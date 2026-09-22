@@ -81,6 +81,32 @@ export function ScrollStory({
     let targetTime = 0;
     let frame = 0;
     let timer = 0;
+    let inView = false;
+
+    /**
+     * Gösterilen an, videodan okunarak değil ayrı tutularak ilerletiliyor.
+     * `video.currentTime`'a yazmak asenkron bir arama başlatıyor; hemen geri
+     * okunduğunda hâlâ eski değer dönüyor. Kendi durumumuzu tutmazsak fark
+     * hiç kapanmıyor, video kaydırma boyunca donuyor ve kaydırma durunca
+     * biriken farkı tek hamlede atlıyor.
+     */
+    let displayTime = 0;
+
+    const tick = () => {
+      frame = 0;
+      if (!scrubbing || !video.duration) return;
+
+      const diff = targetTime - displayTime;
+      if (Math.abs(diff) > 1.5) {
+        // Sayfa açılışı ya da bağlantıyla atlama: doğrudan konumlan
+        displayTime = targetTime;
+      } else if (Math.abs(diff) > 0.004) {
+        displayTime += diff * 0.2;
+      }
+      video.currentTime = displayTime;
+
+      if (inView) frame = requestAnimationFrame(tick);
+    };
 
     const applyProgress = () => {
       timer = 0;
@@ -96,27 +122,15 @@ export function ScrollStory({
         item.classList.toggle("is-active", index === active);
       });
 
+      inView = rect.bottom > 0 && rect.top < window.innerHeight;
       if (scrubbing && video.duration) {
         targetTime = progress * (video.duration - 0.05);
-        if (Math.abs(targetTime - video.currentTime) > 0.4) {
-          video.currentTime = targetTime;
-        } else if (!frame) {
-          frame = requestAnimationFrame(smooth);
-        }
+        if (inView && !frame) frame = requestAnimationFrame(tick);
       }
     };
 
-    const smooth = () => {
-      frame = 0;
-      if (!video.duration) return;
-      const diff = targetTime - video.currentTime;
-      if (Math.abs(diff) < 0.02) return;
-      video.currentTime += diff * 0.18;
-      frame = requestAnimationFrame(smooth);
-    };
-
     const schedule = () => {
-      if (!timer) timer = window.setTimeout(applyProgress, 40);
+      if (!timer) timer = window.setTimeout(applyProgress, 25);
     };
 
     // Döngü kipinde oynatma isteği reddedilebilir (video henüz hazır değilse

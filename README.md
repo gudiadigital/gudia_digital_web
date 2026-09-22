@@ -107,13 +107,21 @@ eşit dilimlere bölerek sırayla devreye girer.
 
 **Videoyu değiştirmek:** dosyayı aynı adla değiştirmek yeterli. İki koşul var:
 
-1. **Sık anahtar kare** gerekir, yoksa kaydırma takılır. Kodlarken:
-   `-g 5 -keyint_min 5 -sc_threshold 0 -movflags +faststart`
+1. **Her kare anahtar kare olmalı** (all-intra), yoksa kaydırma takılır —
+   ara karelere atlarken tarayıcı geriye gidip çözmek zorunda kalıyor.
+   Kodlarken: `-g 1 -keyint_min 1 -sc_threshold 0 -movflags +faststart`
+   Kare hızını düşürmek (15 fps) boyutu dengeler; kaydırmada hızı zaten
+   kullanıcı belirlediği için 15 fps yeterli.
 2. Sunucunun **HTTP Range** desteklemesi gerekir (GitHub Pages destekliyor).
    Desteklemezse tarayıcı videoda konum değiştiremez ve video ilk karede donar.
 
 Poster görseli `public/video/story-poster.jpg` — video yüklenene kadar görünür,
 ilk karesiyle aynı olmalı.
+
+Gösterilen an bileşen içinde ayrı bir değişkende tutulur, videodan geri
+okunmaz: `video.currentTime`'a yazmak asenkron bir arama başlatır ve hemen geri
+okunduğunda eski değer döner. Geri okunursa fark hiç kapanmaz, video kaydırma
+boyunca donar ve kaydırma durunca biriken farkı tek hamlede atlar.
 
 Dar ekranlarda ve `prefers-reduced-motion` açıkken video kaydırmaya bağlanmaz;
 mobilde normal döngüde oynar, hareket azaltmada bölüm normal yüksekliğe döner
