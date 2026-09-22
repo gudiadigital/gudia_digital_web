@@ -11,11 +11,9 @@ export function ProjectCard({
   locale: Locale;
   dict: Dictionary;
 }) {
-  const platforms =
-    project.platforms ??
-    project.links
-      .map((link) => platformOf[link.kind])
-      .filter((value): value is string => Boolean(value));
+  const platforms = project.links
+    .map((link) => platformOf[link.kind])
+    .filter((value): value is string => Boolean(value));
 
   return (
     <article

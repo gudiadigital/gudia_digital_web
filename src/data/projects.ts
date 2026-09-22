@@ -22,11 +22,6 @@ export type Project = {
   /** true ise kart görseli ikon gibi (kare, ortalanmış) gösterilir. */
   iconStyle?: boolean;
   links: ProjectLink[];
-  /**
-   * Platform rozetleri normalde bağlantılardan türetilir. Mağaza linki
-   * olmayan ama o platformda yayında olan uygulamalar için elle verilir.
-   */
-  platforms?: string[];
 };
 
 /** iOS / Android / PC rozetleri bağlantılardan türetilir. */
@@ -68,13 +63,13 @@ export const projects: Project[] = [
     year: 2026,
     image: "icon-ikra.jpg",
     iconStyle: true,
-    platforms: ["iOS", "Android"],
     summary: {
       tr: "Namaz vakitleri, Kur'an okuma, kıble ve günlük zikir takibiyle İslami yaşam asistanı. On bir dilde yayında, App Store'da 4.6 puan.",
       en: "An Islamic lifestyle companion with prayer times, Quran reading, qibla and daily dhikr tracking. Live in eleven languages, rated 4.6 on the App Store.",
     },
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6756602687" },
+      { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.gurkan.ikra" },
       { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
     ],
   },
@@ -85,13 +80,13 @@ export const projects: Project[] = [
     year: 2026,
     image: "icon-snappet.jpg",
     iconStyle: true,
-    platforms: ["iOS", "Android"],
     summary: {
       tr: "Sokakta gördüğünüz kedi ve köpekleri fotoğraflayıp koleksiyona dönüştüren kamera tabanlı kart oyunu. iOS ve Android sürümleri var.",
       en: "A camera-based card game that turns the cats and dogs you meet on the street into a collection. Available on iOS and Android.",
     },
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6784579838" },
+      { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.easestack.snappet" },
       { kind: "instagram", url: "https://www.instagram.com/playsnappet/" },
     ],
   },
