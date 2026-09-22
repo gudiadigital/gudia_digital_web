@@ -81,7 +81,8 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Atalet SmoothScroll bileşeninde; ikisi birden çakışıyor */
+    scroll-behavior: auto;
     scroll-padding-top: 5.5rem;
   }
 
@@ -437,9 +438,9 @@
     pointer-events: none;
     will-change: opacity, transform, filter;
     transition:
-      opacity 0.14s linear,
-      transform 0.14s linear,
-      filter 0.14s linear;
+      opacity 0.06s linear,
+      transform 0.06s linear,
+      filter 0.06s linear;
   }
 
   /* JS çalışmazsa ilk panel görünür kalsın */
@@ -625,4 +626,30 @@
   .story-panel {
     filter: none !important;
   }
+}
+
+/* ---------------------------------------------------------------
+   Lenis (kaydırma ataleti) — paketin gerektirdiği kurallar.
+   Ayrı bir CSS dosyası çekmemek için buraya alındı.
+   --------------------------------------------------------------- */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

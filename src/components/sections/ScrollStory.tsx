@@ -104,7 +104,7 @@ export function ScrollStory({
         // Sayfa açılışı ya da bağlantıyla atlama: doğrudan konumlan
         displayTime = targetTime;
       } else if (Math.abs(diff) > 0.004) {
-        displayTime += diff * 0.2;
+        displayTime += diff * 0.34;
       }
       video.currentTime = displayTime;
 

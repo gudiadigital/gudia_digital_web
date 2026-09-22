@@ -6,6 +6,7 @@ import "../globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Motion } from "@/components/Motion";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
@@ -95,6 +96,7 @@ export default async function LocaleLayout({
         >
           {dict.common.skipToContent}
         </a>
+        <SmoothScroll />
         <Motion />
         <Header locale={locale} nav={dict.nav} siteName={dict.meta.siteName} />
         <main id="main" className="flex-1">
