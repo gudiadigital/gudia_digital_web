@@ -353,6 +353,9 @@ export const en: Dictionary = {
     companyTitle: "Company",
     contactTitle: "Contact",
     rights: "All rights reserved.",
+    privacyTitle: "Your data",
+    privacyNote:
+      "This site uses no cookies, analytics or tracking. The contact form opens the message in your own email app; no data is collected or stored by this site.",
   },
 
   common: {

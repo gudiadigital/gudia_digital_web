@@ -65,11 +65,20 @@ export async function generateMetadata({
       description: dict.meta.description,
       locale: locale === "tr" ? "tr_TR" : "en_US",
       url: `/${locale}`,
+      images: [
+        {
+          url: "/brand/og.jpg",
+          width: 1200,
+          height: 630,
+          alt: dict.meta.siteName,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: dict.meta.title,
       description: dict.meta.description,
+      images: ["/brand/og.jpg"],
     },
   };
 }
@@ -99,6 +108,7 @@ export default async function LocaleLayout({
         >
           {dict.common.skipToContent}
         </a>
+        <div className="grain" aria-hidden="true" />
         <SmoothScroll />
         <Motion />
         <Header locale={locale} nav={dict.nav} siteName={dict.meta.siteName} />

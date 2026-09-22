@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{width:1200px;height:630px;background:#131730;color:#EDEEF7;
+       font-family:Inter,sans-serif;overflow:hidden;position:relative}
+  .glow{position:absolute;border-radius:9999px;filter:blur(90px)}
+  .g1{width:760px;height:760px;top:-260px;left:-180px;background:rgba(124,147,255,.42)}
+  .g2{width:620px;height:620px;top:-120px;right:-180px;background:rgba(167,139,250,.34)}
+  .g3{width:520px;height:520px;bottom:-280px;left:40%;background:rgba(124,147,255,.22)}
+  .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1px);
+        background-size:34px 34px;
+        -webkit-mask-image:radial-gradient(ellipse 80% 70% at 40% 30%,#000 20%,transparent 75%)}
+  .wrap{position:relative;z-index:2;padding:76px 80px;height:100%;display:flex;flex-direction:column;justify-content:space-between}
+  .top{display:flex;align-items:center;gap:14px}
+  .mark{width:52px;height:52px}
+  .name{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:600;letter-spacing:-.02em}
+  .name span{color:#7C93FF}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:74px;line-height:1.05;font-weight:600;
+     letter-spacing:-.03em;max-width:1000px}
+  .accent{background:linear-gradient(120deg,#7C93FF,#A78BFA);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .pillars{font-family:'Space Grotesk',sans-serif;font-size:21px;color:#9CA3C4;letter-spacing:.04em;
+           display:flex;gap:18px;align-items:center}
+  .dot{width:5px;height:5px;border-radius:9999px;background:#7C93FF;opacity:.6}
+  .bar{position:absolute;left:0;right:0;bottom:0;height:5px;background:linear-gradient(90deg,#7C93FF,#A78BFA)}
+</style></head><body>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+<div class="dots"></div>
+<div class="wrap">
+  <div class="top">
+    <img class="mark" src="/brand/mark-dark.png" alt="">
+    <div class="name">Gudia <span>Dijital</span></div>
+  </div>
+  <h1>Markaların dijital ürünlerini <span class="accent">oluşturuyor</span>, <span class="accent">iyileştiriyor</span> ve <span class="accent">büyütüyoruz</span>.</h1>
+  <div class="pillars">
+    <span>Web</span><i class="dot"></i><span>Mobile</span><i class="dot"></i><span>Interactive</span><i class="dot"></i><span>Content</span><i class="dot"></i><span>Commerce</span>
+  </div>
+</div>
+<div class="bar"></div>
+</body></html>

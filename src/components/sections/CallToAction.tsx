@@ -29,7 +29,7 @@ export function CallToAction({
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link
                 href={pathFor(locale, "contact")}
-                className="bg-accent rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_32px_-12px_var(--accent)] transition-transform hover:-translate-y-0.5"
+                className="bg-accent rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_32px_-12px_var(--accent)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
               >
                 {dict.cta.button}
               </Link>

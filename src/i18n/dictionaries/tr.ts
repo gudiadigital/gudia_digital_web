@@ -351,6 +351,9 @@ export const tr = {
     companyTitle: "Şirket",
     contactTitle: "İletişim",
     rights: "Tüm hakları saklıdır.",
+    privacyTitle: "Verileriniz",
+    privacyNote:
+      "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formu mesajınızı kendi e-posta uygulamanızda açar; hiçbir veri bu site üzerinden toplanmaz veya saklanmaz.",
   },
 
   common: {

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="tr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sayfa bulunamadı · Gudia Dijital</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/brand/favicon-dark.png">
+<style>
+ :root{--bg:#131730;--ink:#EDEEF7;--muted:#9CA3C4;--a:#7C93FF;--a2:#A78BFA;--line:rgba(255,255,255,.12)}
+ @media(prefers-color-scheme:light){:root{--bg:#F6F7FC;--ink:#1B1F35;--muted:#5B6180;--a:#5B6EF5;--a2:#8B5CF6;--line:rgba(27,31,53,.14)}}
+ *{margin:0;padding:0;box-sizing:border-box}
+ body{min-height:100dvh;background:var(--bg);color:var(--ink);display:grid;place-items:center;
+      font:400 16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px;position:relative;overflow:hidden}
+ .glow{position:absolute;border-radius:9999px;filter:blur(90px);pointer-events:none}
+ .g1{width:44rem;height:44rem;top:-18rem;left:-12rem;background:color-mix(in srgb,var(--a) 34%,transparent)}
+ .g2{width:36rem;height:36rem;top:-8rem;right:-14rem;background:color-mix(in srgb,var(--a2) 28%,transparent)}
+ .box{position:relative;z-index:1;max-width:34rem;text-align:center}
+ .code{font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
+       border:1px solid var(--line);border-radius:999px;padding:.4rem .9rem;display:inline-block}
+ h1{margin:1.6rem 0 0;font-size:clamp(2rem,6vw,3rem);line-height:1.1;letter-spacing:-.02em;font-weight:600}
+ .grad{background:linear-gradient(120deg,var(--a),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+ p{margin-top:1rem;color:var(--muted)}
+ .row{margin-top:2rem;display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center}
+ a{text-decoration:none;border-radius:999px;padding:.8rem 1.5rem;font-size:.875rem;font-weight:600;
+   transition:transform .2s,background .2s}
+ a:active{transform:scale(.97)}
+ .primary{background:var(--a);color:#fff}
+ .ghost{border:1px solid var(--line);color:var(--ink)}
+ .ghost:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+</style></head><body>
+<div class="glow g1"></div><div class="glow g2"></div>
+<main class="box">
+  <span class="code">404 — Sayfa bulunamadı</span>
+  <h1>Aradığın sayfa <span class="grad">burada değil</span>.</h1>
+  <p>Bağlantı eski olabilir ya da adres yanlış yazılmış olabilir. Buradan devam edebilirsin.</p>
+  <div class="row">
+    <a class="primary" href="/tr/">Ana sayfa</a>
+    <a class="ghost" href="/tr/projeler/">Projeler</a>
+    <a class="ghost" href="/tr/iletisim/">İletişim</a>
+  </div>
+</main>
+</body></html>

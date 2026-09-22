@@ -215,7 +215,7 @@ export function ScrollStory({
 
   return (
     <section ref={sectionRef} className="story relative">
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-dvh overflow-hidden">
         <video
           ref={videoRef}
           className="absolute inset-0 h-full w-full object-cover"
@@ -294,13 +294,13 @@ export function ScrollStory({
               >
                 <Link
                   href={pathFor(locale, "contact")}
-                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_38px_-12px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5"
+                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_38px_-12px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
                 >
                   {hero.ctaPrimary}
                 </Link>
                 <Link
                   href={pathFor(locale, "services")}
-                  className="border-line-strong bg-space/30 text-ink hover:bg-space/60 rounded-full border px-6 py-3.5 text-sm font-semibold backdrop-blur-sm transition-colors"
+                  className="border-line-strong bg-space/30 text-ink hover:bg-space/60 rounded-full border px-6 py-3.5 text-sm font-semibold backdrop-blur-sm transition-all active:scale-[0.98]"
                 >
                   {hero.ctaSecondary}
                 </Link>
