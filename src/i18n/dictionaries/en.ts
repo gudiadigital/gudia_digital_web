@@ -370,7 +370,7 @@ export const en: Dictionary = {
     eyebrow: "Examples",
     title: "Improvements we made to our own products",
     subtitle:
-      "Our own apps show best what this service means: both were reworked while already live, with the store side rebuilt and the version line moved forward.",
+      "Our own apps show best what this service means. Both were reworked while already live; below is what was done at each stage, in order.",
     projectLink: "Project page",
   },
 

@@ -368,7 +368,7 @@ export const tr = {
     eyebrow: "Örnekler",
     title: "Kendi ürünlerimizde yaptığımız iyileştirmeler",
     subtitle:
-      "Bu hizmetin ne demek olduğunu en iyi kendi uygulamalarımız gösteriyor: ikisi de yayındayken elden geçirildi, mağaza tarafı yeniden kuruldu ve sürüm çizgisi ilerletildi.",
+      "Bu hizmetin ne demek olduğunu en iyi kendi uygulamalarımız gösteriyor. İkisi de yayındayken elden geçirildi; aşağıda hangi aşamada ne yapıldığı sırasıyla yazıyor.",
     projectLink: "Proje sayfası",
   },
 
