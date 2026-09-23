@@ -39,7 +39,6 @@ export const tr = {
   story: {
     chapter: "Bölüm",
     progress: "İlerleme",
-    tag: "Gudia Dijital // Digital Products & Growth Studio",
   },
 
   approach: {
@@ -358,7 +357,6 @@ export const tr = {
   footer: {
     tagline: "Dijital ürün ve büyüme stüdyosu. Kur, iyileştir, büyüt.",
     servicesTitle: "Hizmetler",
-    companyTitle: "Şirket",
     contactTitle: "İletişim",
     rights: "Tüm hakları saklıdır.",
     privacyTitle: "Verileriniz",

@@ -41,7 +41,6 @@ export const en: Dictionary = {
   story: {
     chapter: "Chapter",
     progress: "Progress",
-    tag: "Gudia Digital // Digital Products & Growth Studio",
   },
 
   approach: {
@@ -360,7 +359,6 @@ export const en: Dictionary = {
   footer: {
     tagline: "Digital product and growth studio. Build, improve, grow.",
     servicesTitle: "Services",
-    companyTitle: "Company",
     contactTitle: "Contact",
     rights: "All rights reserved.",
     privacyTitle: "Your data",

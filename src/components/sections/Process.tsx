@@ -28,22 +28,17 @@ export function Process({ dict }: { dict: Dictionary }) {
               className="process-step"
               style={{ "--i": index } as React.CSSProperties}
             >
-              <div className="card flex flex-col gap-5 rounded-2xl p-7 sm:flex-row sm:items-start sm:gap-8 sm:p-9">
-                <div className="flex items-center gap-4 sm:w-44 sm:shrink-0 sm:flex-col sm:items-start">
-                  <span className="text-muted font-mono text-xs tabular-nums tracking-[0.16em]">
-                    {String(index + 1).padStart(2, "0")} /{" "}
-                    {String(steps.length).padStart(2, "0")}
-                  </span>
-                </div>
-
-                <div className="sm:flex-1">
-                  <h3 className="text-xl font-semibold sm:text-2xl">
-                    {step.title}
-                  </h3>
-                  <p className="text-muted mt-3 max-w-2xl leading-relaxed">
-                    {step.text}
-                  </p>
-                </div>
+              <div className="card rounded-2xl p-7 sm:p-9">
+                <span className="text-muted font-mono text-xs tabular-nums tracking-[0.16em]">
+                  {String(index + 1).padStart(2, "0")} /{" "}
+                  {String(steps.length).padStart(2, "0")}
+                </span>
+                <h3 className="mt-4 text-xl font-semibold sm:text-2xl">
+                  {step.title}
+                </h3>
+                <p className="text-muted mt-3 max-w-2xl leading-relaxed">
+                  {step.text}
+                </p>
               </div>
             </li>
           ))}

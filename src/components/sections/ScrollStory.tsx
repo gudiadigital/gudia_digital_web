@@ -225,14 +225,11 @@ export function ScrollStory({
             </div>
 
             {/* Panel 1–3 — çalışma modeli */}
-            {serviceGroups.map((group, index) => {
+            {serviceGroups.map((group) => {
               const content = dict.approach.groups[group];
               return (
                 <div key={group} data-panel className="story-panel max-w-3xl">
-                  <span className="text-muted font-display text-sm font-semibold tabular-nums">
-                    {String(index + 1).padStart(2, "0")} / 0{serviceGroups.length}
-                  </span>
-                  <h2 className="mt-4 text-4xl font-semibold sm:text-5xl lg:text-6xl">
+                  <h2 className="text-4xl font-semibold sm:text-5xl lg:text-6xl">
                     {content.title}
                   </h2>
                   <p className="text-muted mt-5 text-base leading-relaxed sm:text-lg">
@@ -297,8 +294,6 @@ export function ScrollStory({
               </span>
             </div>
           </div>
-
-          <p className="hud-tag">{dict.story.tag}</p>
 
           <div className="hud-bar">
             <span />
