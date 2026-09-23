@@ -558,6 +558,17 @@ export const projects: Project[] = [
   },
 ];
 
+/**
+ * Projeler sayfasında ve ana sayfadaki öne çıkanlarda listelenen işler.
+ *
+ * Web sitesi işleri burada çıkmıyor; onlar Hizmetler > Web Sitesi
+ * Geliştirme sayfasındaki referans listesinde duruyor. Detay sayfaları
+ * yerinde, bağlantı verilebiliyor.
+ */
+export const listedProjects = projects.filter(
+  (project) => project.service !== "web-sitesi",
+);
+
 /** Ana sayfada gösterilecek öne çıkanlar. */
 export const featuredSlugs = ["pofu", "snappet", "date-for-dead"] as const;
 

@@ -4,7 +4,7 @@ import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { pathFor, projectPath } from "@/i18n/routes";
-import { projects, platformOf, type Project } from "@/data/projects";
+import { listedProjects, platformOf, type Project } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
@@ -44,7 +44,9 @@ export function ProjectDetailContent({
     .map((link) => platformOf[link.kind])
     .filter((value): value is string => Boolean(value));
   const shots = Array.from({ length: project.shots ?? 0 }, (_, i) => i + 1);
-  const others = projects.filter((item) => item.slug !== project.slug).slice(0, 4);
+  const others = listedProjects
+    .filter((item) => item.slug !== project.slug)
+    .slice(0, 4);
   const facts = project.facts?.[locale] ?? [];
   /*
    * Başlık işin türüne göre: uygulama ve oyunlarda görseller mağaza

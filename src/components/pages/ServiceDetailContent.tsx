@@ -4,6 +4,7 @@ import { pathFor } from "@/i18n/routes";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
+import { webSites } from "@/data/webSites";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
@@ -19,9 +20,17 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
    * Bu hizmet kapsamındaki işler. Ana alanı bu hizmet olanlar ve ek
    * kapsamında bu hizmeti taşıyanlar birlikte; hiç yoksa bölüm çıkmıyor.
    */
+  /*
+   * Web sitesi hizmetinde yukarıdaki vitrin zaten beş siteyi tarayıcı
+   * penceresi olarak gösteriyor; aynı işler burada ikinci kez çıkmasın.
+   */
+  const vitrindeOlan = new Set(
+    webSites.map((site) => site.project).filter(Boolean),
+  );
   const references = projects.filter(
     (project) =>
-      project.service === slug || project.alsoServices?.includes(slug),
+      (project.service === slug || project.alsoServices?.includes(slug)) &&
+      !(slug === "web-sitesi" && vitrindeOlan.has(project.slug)),
   );
 
   return (

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Container, SectionHeading } from "../Container";
 import { ProjectCard } from "../ProjectCard";
-import { projects, featuredSlugs } from "@/data/projects";
+import { listedProjects, featuredSlugs } from "@/data/projects";
 import { pathFor } from "@/i18n/routes";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -14,7 +14,7 @@ export function FeaturedProjects({
   dict: Dictionary;
 }) {
   const featured = featuredSlugs
-    .map((slug) => projects.find((project) => project.slug === slug))
+    .map((slug) => listedProjects.find((project) => project.slug === slug))
     .filter((project): project is NonNullable<typeof project> => Boolean(project));
 
   if (featured.length === 0) return null;
