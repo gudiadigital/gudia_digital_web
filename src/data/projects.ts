@@ -206,7 +206,6 @@ export const projects: Project[] = [
     slug: "ikra",
     title: "İkra",
     service: "mobil-uygulama",
-    alsoServices: ["sosyal-medya-icerik"],
     year: 2026,
     image: "icon-ikra.webp",
     iconStyle: true,
