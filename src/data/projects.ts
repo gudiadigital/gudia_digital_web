@@ -36,22 +36,29 @@ export const platformOf: Partial<Record<ProjectLinkKind, string>> = {
  * sonra web ve e-ticaret işleri. Hem Projeler sayfası hem ana sayfadaki
  * öne çıkanlar bu diziden okuyor.
  */
+/*
+ * Sıra Gürkan'ın belirlediği gibi: Pofu, SnapPet, Habitile, İkra, sonra
+ * kalan uygulama, ardından markalı oyunlar, en sonda web ve e-ticaret.
+ * Hem Projeler sayfası hem ana sayfadaki öne çıkanlar bu diziden okuyor.
+ *
+ * Geniş kart yuvaları 0, 3 ve 6'ya düşüyor (bkz. ProjectsContent); o üç
+ * sıradaki işin görseli yüksek çözünürlüklü olmalı.
+ */
 export const projects: Project[] = [
   {
-    slug: "ikra",
-    title: "İkra",
+    slug: "pofu",
+    title: "Pofu",
     service: "mobil-uygulama",
     year: 2026,
-    image: "icon-ikra.jpg",
+    image: "icon-pofu.jpg",
     iconStyle: true,
     summary: {
-      tr: "Namaz vakitleri, Kur'an okuma, kıble ve günlük zikir takibiyle İslami yaşam asistanı. On bir dilde yayında, App Store'da 4.6 puan.",
-      en: "An Islamic lifestyle companion with prayer times, Quran reading, qibla and daily dhikr tracking. Live in eleven languages, rated 4.6 on the App Store.",
+      tr: "Kadınlara özel kalori ve beslenme takibi. HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve saat uygulamasıyla birlikte.",
+      en: "Calorie and nutrition tracking built for women, with HealthKit and Apple Watch integration, home screen widgets and a watch app.",
     },
     links: [
-      { kind: "appstore", url: "https://apps.apple.com/app/id6756602687" },
-      { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.gurkan.ikra" },
-      { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
+      { kind: "appstore", url: "https://apps.apple.com/app/id6778044605" },
+      { kind: "instagram", url: "https://www.instagram.com/pofu.app/" },
     ],
   },
   {
@@ -72,22 +79,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "pofu",
-    title: "Pofu",
-    service: "mobil-uygulama",
-    year: 2026,
-    image: "icon-pofu.jpg",
-    iconStyle: true,
-    summary: {
-      tr: "Kadınlara özel kalori ve beslenme takibi. HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve saat uygulamasıyla birlikte.",
-      en: "Calorie and nutrition tracking built for women, with HealthKit and Apple Watch integration, home screen widgets and a watch app.",
-    },
-    links: [
-      { kind: "appstore", url: "https://apps.apple.com/app/id6778044605" },
-      { kind: "instagram", url: "https://www.instagram.com/pofu.app/" },
-    ],
-  },
-  {
     slug: "habitile",
     title: "Habitile",
     service: "mobil-uygulama",
@@ -99,6 +90,23 @@ export const projects: Project[] = [
       en: "A calm, widget-first habit tracker. Check habits with one tap from the Home Screen, Lock Screen or Apple Watch, and forgiving streaks mean one missed day won't wipe your progress. Live in six languages.",
     },
     links: [{ kind: "appstore", url: "https://apps.apple.com/app/id6779264379" }],
+  },
+  {
+    slug: "ikra",
+    title: "İkra",
+    service: "mobil-uygulama",
+    year: 2026,
+    image: "icon-ikra.jpg",
+    iconStyle: true,
+    summary: {
+      tr: "Namaz vakitleri, Kur'an okuma, kıble ve günlük zikir takibiyle İslami yaşam asistanı. On bir dilde yayında, App Store'da 4.6 puan.",
+      en: "An Islamic lifestyle companion with prayer times, Quran reading, qibla and daily dhikr tracking. Live in eleven languages, rated 4.6 on the App Store.",
+    },
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/app/id6756602687" },
+      { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.gurkan.ikra" },
+      { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
+    ],
   },
   {
     slug: "photosensia",
@@ -145,6 +153,8 @@ export const projects: Project[] = [
     title: "Divonia Studios",
     service: "web-sitesi",
     year: 2026,
+    image: "icon-divonia.jpg",
+    iconStyle: true,
     summary: {
       tr: "Bir oyun stüdyosu için kurumsal web sitesi: stüdyonun işlerini ve kimliğini yansıtan sade, hızlı bir tanıtım sitesi.",
       en: "A corporate website for a game studio: a clean, fast presence that reflects the studio's work and identity.",
@@ -169,7 +179,7 @@ export const projects: Project[] = [
 ];
 
 /** Ana sayfada gösterilecek öne çıkanlar. */
-export const featuredSlugs = ["ikra", "snappet", "date-for-dead"] as const;
+export const featuredSlugs = ["pofu", "snappet", "date-for-dead"] as const;
 
 export function serviceOf(project: Project): ServiceSlug {
   return project.service;
