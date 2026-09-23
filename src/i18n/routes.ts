@@ -34,6 +34,14 @@ const serviceSegments: Record<ServiceSlug, Record<Locale, string>> = {
   },
 };
 
+/**
+ * Proje detay yolu: /tr/projeler/pofu, /en/projects/pofu
+ * Proje slug'ları ürün adı olduğu için iki dilde de aynı.
+ */
+export function projectPath(locale: Locale, slug: string): string {
+  return `/${locale}/${pageSegments.projects[locale]}/${slug}`;
+}
+
 /** Ziyaretçiye gösterilecek yolu üretir. */
 export function pathFor(
   locale: Locale,
@@ -67,6 +75,8 @@ export function parsePath(pathname: string): {
   locale: Locale;
   key: RouteKey;
   service?: ServiceSlug;
+  /** Proje detayındaysak slug; dil değiştirirken aynı projede kalmak için. */
+  project?: string;
 } | null {
   const [locale, page, sub] = pathname.split("/").filter(Boolean);
   if (!locale || !isLocale(locale)) return null;
@@ -78,6 +88,11 @@ export function parsePath(pathname: string): {
     (key) => pageSegments[key][locale] === page || key === page,
   );
   if (!pageKey) return null;
+
+  // Proje slug'ları çevrilmiyor, olduğu gibi taşınıyor.
+  if (pageKey === "projects" && sub) {
+    return { locale, key: pageKey, project: sub };
+  }
 
   if (pageKey === "services" && sub) {
     const service = serviceSlugs.find(

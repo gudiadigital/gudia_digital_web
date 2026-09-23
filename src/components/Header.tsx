@@ -6,7 +6,12 @@ import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 import { Container } from "./Container";
 import { locales, type Locale } from "@/i18n/config";
-import { pathFor, parsePath, type RouteKey } from "@/i18n/routes";
+import {
+  pathFor,
+  parsePath,
+  projectPath,
+  type RouteKey,
+} from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 const navKeys: Array<{ key: RouteKey; label: keyof Dictionary["nav"] }> = [
@@ -152,7 +157,12 @@ function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
       {locales.map((candidate) => (
         <Link
           key={candidate}
-          href={pathFor(candidate, current?.key ?? "home", current?.service)}
+          /* Proje detayındayken dil değişince aynı projede kalınıyor. */
+          href={
+            current?.project
+              ? projectPath(candidate, current.project)
+              : pathFor(candidate, current?.key ?? "home", current?.service)
+          }
           hrefLang={candidate}
           /*
            * Statik export'ta Next, dinamik segmentli rotalar için geçersiz bir

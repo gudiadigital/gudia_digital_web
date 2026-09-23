@@ -829,6 +829,18 @@ html.lenis body {
    * alanı kuruyor, önde net ikon duruyor. Böylece kutu doluyor ve her
    * kartın zemini kendi uygulamasının renginden geliyor.
    */
+  /*
+   * Kartın tamamını tıklanabilir yapan bağlantı. Başlıktaki <a> gerçek
+   * bağlantı; ::after kartın üzerine yayılıyor. Böylece işaretleme
+   * geçerli kalıyor (iç içe <a> yok) ve ekran okuyucu başlığı okuyor.
+   */
+  .stretched-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+  }
+
   .icon-stage {
     position: relative;
     display: flex;
@@ -864,5 +876,47 @@ html.lenis body {
   /* Öne çıkan kart daha yayvan; ikon oransal olarak büyüyebilir */
   .sm\:col-span-2 .icon-stage-fg {
     height: 66%;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Proje detayındaki mağaza görselleri şeridi
+   --------------------------------------------------------------- */
+
+@layer utilities {
+  /*
+   * Telefon ekran görüntüleri dikey; ızgaraya dizmek sayfayı gereksiz
+   * uzatıyor. Şerit yatay kayıyor, kenarlarda maske ile soluyor.
+   */
+  .shot-rail {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .shot-rail > li {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .shot {
+    display: block;
+    height: clamp(20rem, 46vh, 30rem);
+    width: auto;
+    border-radius: 1rem;
+    border: 1px solid var(--line);
+    background: var(--surface-soft);
+    box-shadow: 0 16px 40px -22px rgb(0 0 0 / 0.6);
+  }
+
+  /* Yatay çekilmiş görseller (oyun) daha alçak durabilir */
+  @media (max-width: 640px) {
+    .shot {
+      height: 22rem;
+    }
   }
 }

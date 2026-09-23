@@ -307,6 +307,15 @@ export const en: Dictionary = {
     featuredSubtitle:
       "From experiences we built for brands to our own apps — work that is genuinely live.",
     allProjects: "All projects",
+    backToProjects: "Back to all projects",
+    detailTitle: "About the project",
+    screensTitle: "Store screenshots",
+    factsTitle: "Details",
+    linksTitle: "Where to find it",
+    ratingLabel: "App Store rating",
+    ratingCount: "ratings",
+    ratingAsOf: "as of",
+    otherProjects: "Other projects",
     linkLabels: {
       appstore: "App Store",
       playstore: "Google Play",

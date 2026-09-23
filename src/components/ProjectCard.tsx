@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { ServiceIcon } from "./ServiceIcon";
+import { projectPath } from "@/i18n/routes";
 import { type Project, platformOf } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -22,7 +24,7 @@ export function ProjectCard({
   return (
     <article
       data-spotlight
-      className={`card spotlight tilt group flex flex-col overflow-hidden rounded-2xl transition-colors duration-300 hover:border-[var(--line-strong)] ${
+      className={`card spotlight tilt group relative flex flex-col overflow-hidden rounded-2xl transition-colors duration-300 hover:border-[var(--line-strong)] ${
         featured ? "sm:col-span-2" : ""
       }`}
     >
@@ -90,7 +92,17 @@ export function ProjectCard({
             featured ? "text-xl sm:text-2xl" : "text-lg"
           }`}
         >
-          {project.title}
+          {/*
+            Bağlantı yalnızca başlıkta ama ::after ile kartın tamamına
+            yayılıyor. Mağaza rozetleri ayrı bağlantı olduğu için onları
+            iç içe koymak geçersiz olurdu; rozetler üstte kalıyor.
+          */}
+          <Link
+            href={projectPath(locale, project.slug)}
+            className="stretched-link group-hover:text-accent transition-colors"
+          >
+            {project.title}
+          </Link>
         </h3>
         <p
           className={`text-muted mt-2.5 flex-1 leading-relaxed ${
@@ -101,7 +113,7 @@ export function ProjectCard({
         </p>
 
         {project.links.length > 0 && (
-          <div className="mt-5 flex flex-wrap gap-2">
+          <div className="relative z-20 mt-5 flex flex-wrap gap-2">
             {project.links.map((link) => (
               <a
                 key={link.url}

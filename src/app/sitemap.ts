@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { locales, serviceSlugs } from "@/i18n/config";
-import { pathFor } from "@/i18n/routes";
+import { pathFor, projectPath } from "@/i18n/routes";
+import { projects } from "@/data/projects";
 
 export const SITE_URL = "https://gudiadigital.com";
 
@@ -23,6 +24,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     { url: url(pathFor(locale, "about")), lastModified: now, priority: 0.7 },
     { url: url(pathFor(locale, "projects")), lastModified: now, priority: 0.7 },
+    ...projects.map((project) => ({
+      url: url(projectPath(locale, project.slug)),
+      lastModified: now,
+      priority: 0.6,
+    })),
     { url: url(pathFor(locale, "contact")), lastModified: now, priority: 0.7 },
   ]);
 }

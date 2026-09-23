@@ -305,6 +305,15 @@ export const tr = {
     featuredSubtitle:
       "Markalar için kurduğumuz deneyimlerden kendi uygulamalarımıza kadar, gerçekten yayında olan işler.",
     allProjects: "Tüm projeler",
+    backToProjects: "Tüm projelere dön",
+    detailTitle: "Proje hakkında",
+    screensTitle: "Mağaza görselleri",
+    factsTitle: "Künye",
+    linksTitle: "Nereden ulaşılır",
+    ratingLabel: "App Store puanı",
+    ratingCount: "oy",
+    ratingAsOf: "itibarıyla",
+    otherProjects: "Diğer projeler",
     linkLabels: {
       appstore: "App Store",
       playstore: "Google Play",
