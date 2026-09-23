@@ -7,6 +7,7 @@ import { projects } from "@/data/projects";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
+import { WebShowcase } from "@/components/sections/WebShowcase";
 import type { PageContentProps } from "./types";
 
 type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
@@ -97,6 +98,10 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             </div>
           </aside>
         </div>
+
+        {/* Web sitesi hizmetinde önce yayındaki siteler geliyor: bu alanda
+            anlatılan işin kanıtı doğrudan sitenin kendisi. */}
+        {slug === "web-sitesi" && <WebShowcase locale={locale} dict={dict} />}
 
         {references.length > 0 && (
           <div className="border-line mt-20 border-t pt-12">

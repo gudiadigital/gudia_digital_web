@@ -375,6 +375,15 @@ export const tr = {
       "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formu mesajınızı kendi e-posta uygulamanızda açar; hiçbir veri bu site üzerinden toplanmaz veya saklanmaz.",
   },
 
+  webShowcase: {
+    eyebrow: "Yayında olan siteler",
+    title: "Kendi uygulamalarımız için kurduğumuz siteler",
+    subtitle:
+      "Beşinin de sayfa iskeleti ayrı: biri gazete künyesi, biri afiş, biri yan panel, biri alt gezinme çubuğu, biri kemer. Ana ekranları burada; kartlara tıklayınca sitenin kendisi açılıyor.",
+    visit: "Siteyi aç",
+    project: "Projeyi gör",
+  },
+
   common: {
     backToServices: "Tüm hizmetlere dön",
     whatWeDo: "Kapsam",

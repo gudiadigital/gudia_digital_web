@@ -377,6 +377,15 @@ export const en: Dictionary = {
       "This site uses no cookies, analytics or tracking. The contact form opens the message in your own email app; no data is collected or stored by this site.",
   },
 
+  webShowcase: {
+    eyebrow: "Live sites",
+    title: "Sites we built for our own apps",
+    subtitle:
+      "All five have a different page skeleton: a newspaper masthead, a poster, a side panel, a bottom nav bar and an arch. Their home screens are below; clicking a card opens the live site.",
+    visit: "Open the site",
+    project: "See the project",
+  },
+
   common: {
     backToServices: "Back to all services",
     whatWeDo: "Scope",
