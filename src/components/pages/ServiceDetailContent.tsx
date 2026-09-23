@@ -113,7 +113,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
                   data-reveal
                   data-reveal-delay={(index % 3) * 90}
                   /* İlk kart tam genişlikte: tek proje varsa da boş hücre kalmıyor */
-                  className={index % 3 === 0 ? "sm:col-span-2" : ""}
+                  className={index % 3 === 0 ? "h-full sm:col-span-2" : "h-full"}
                 >
                   <ProjectCard
                     project={project}

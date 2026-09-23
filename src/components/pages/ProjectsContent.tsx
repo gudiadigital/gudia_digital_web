@@ -37,7 +37,7 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
                  * ızgarayı boşluksuz dolduruyor. Dörtte bir desende geniş
                  * kart sıraya sığmadığı için yanında boş hücre kalıyordu.
                  */
-                className={index % 3 === 0 ? "sm:col-span-2" : ""}
+                className={index % 3 === 0 ? "h-full sm:col-span-2" : "h-full"}
               >
                 <ProjectCard
                   project={project}

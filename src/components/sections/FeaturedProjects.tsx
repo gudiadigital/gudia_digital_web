@@ -34,7 +34,7 @@ export function FeaturedProjects({
               key={project.slug}
               data-reveal
               data-reveal-delay={index * 110}
-              className={index === 0 ? "sm:col-span-2" : ""}
+              className={index === 0 ? "h-full sm:col-span-2" : "h-full"}
             >
               <ProjectCard
                 project={project}

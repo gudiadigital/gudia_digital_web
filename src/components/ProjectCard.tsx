@@ -45,7 +45,7 @@ export function ProjectCard({
   return (
     <article
       data-spotlight
-      className={`card spotlight tilt group relative flex flex-col overflow-hidden rounded-2xl transition-colors duration-300 hover:border-[var(--line-strong)] ${
+      className={`card spotlight tilt group relative flex h-full flex-col overflow-hidden rounded-2xl transition-colors duration-300 hover:border-[var(--line-strong)] ${
         featured ? "sm:col-span-2" : ""
       }`}
     >
