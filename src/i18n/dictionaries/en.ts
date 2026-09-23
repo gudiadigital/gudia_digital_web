@@ -310,6 +310,7 @@ export const en: Dictionary = {
     backToProjects: "Back to all projects",
     detailTitle: "About the project",
     screensTitle: "Store screenshots",
+    screensTitleSite: "Screenshots",
     factsTitle: "Details",
     linksTitle: "Where to find it",
     ratingLabel: "App Store rating",

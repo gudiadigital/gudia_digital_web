@@ -312,6 +312,7 @@ export const projects: Project[] = [
         { k: "Venue", v: "KidZania İstanbul" },
       ],
     },
+    shots: 3,
     links: [{ kind: "web", url: "https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" }],
   },
   {
@@ -382,6 +383,7 @@ export const projects: Project[] = [
         { k: "Year", v: "2026" },
       ],
     },
+    shots: 4,
     links: [{ kind: "web", url: "https://divoniastudios.com" }],
   },
   {
@@ -407,15 +409,18 @@ export const projects: Project[] = [
     facts: {
       tr: [
         { k: "Kanal", v: "Trendyol" },
+        { k: "Mağaza puanı", v: "9,8 / 10" },
+        { k: "Takipçi", v: "256" },
         { k: "Kapsam", v: "Görsel + metin düzeni" },
-        { k: "Yıl", v: "2026" },
       ],
       en: [
         { k: "Channel", v: "Trendyol" },
+        { k: "Store rating", v: "9.8 / 10" },
+        { k: "Followers", v: "256" },
         { k: "Scope", v: "Imagery + copy" },
-        { k: "Year", v: "2026" },
       ],
     },
+    shots: 3,
     links: [
       { kind: "trendyol", url: "https://www.trendyol.com/magaza/aysquilt-m-1070133" },
       { kind: "instagram", url: "https://www.instagram.com/aysquilt/" },

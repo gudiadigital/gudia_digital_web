@@ -308,6 +308,7 @@ export const tr = {
     backToProjects: "Tüm projelere dön",
     detailTitle: "Proje hakkında",
     screensTitle: "Mağaza görselleri",
+    screensTitleSite: "Ekran görüntüleri",
     factsTitle: "Künye",
     linksTitle: "Nereden ulaşılır",
     ratingLabel: "App Store puanı",

@@ -46,6 +46,14 @@ export function ProjectDetailContent({
   const shots = Array.from({ length: project.shots ?? 0 }, (_, i) => i + 1);
   const others = projects.filter((item) => item.slug !== project.slug).slice(0, 4);
   const facts = project.facts?.[locale] ?? [];
+  /*
+   * Başlık işin türüne göre: uygulama ve oyunlarda görseller mağaza
+   * listesinden geliyor, web ve e-ticaret işlerinde sitenin kendisinden.
+   */
+  const fromStore = project.links.some((link) =>
+    ["appstore", "playstore", "steam"].includes(link.kind),
+  );
+  const screensTitle = fromStore ? t.screensTitle : t.screensTitleSite;
 
   return (
     <>
@@ -181,7 +189,7 @@ export function ProjectDetailContent({
             className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl"
             data-reveal
           >
-            {t.screensTitle}
+            {screensTitle}
           </h2>
           {/*
             Yatay kaydırılan şerit: telefon ekran görüntüleri dikey olduğu
