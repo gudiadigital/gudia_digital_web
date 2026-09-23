@@ -378,7 +378,7 @@ export const tr = {
     eyebrow: "Yayında olan siteler",
     title: "Kendi uygulamalarımız için kurduğumuz siteler",
     subtitle:
-      "Beşinin de sayfa iskeleti ayrı: biri gazete künyesi, biri afiş, biri yan panel, biri alt gezinme çubuğu, biri kemer. Ana ekranları burada; kartlara tıklayınca sitenin kendisi açılıyor.",
+      "Altısının da sayfa iskeleti ayrı — aynı şablonun rengi değiştirilmiş hâli değil. Ana ekranları burada; kartlara tıklayınca sitenin kendisi açılıyor.",
     visit: "Siteyi aç",
     project: "Projeyi gör",
   },

@@ -31,6 +31,21 @@ export type WebSite = {
 
 export const webSites: WebSite[] = [
   {
+    slug: "pofu",
+    title: "Pofu",
+    url: "https://gurkansvlms.github.io/nutrition-legal-site/",
+    image: "pofu.webp",
+    project: "pofu",
+    summary: {
+      tr: "Koyu erik bir zemin, tek bir magenta vurgu ve kemer biçiminde maskelenmiş bir fotoğrafın üstünde yüzen veri rozetleri. Özellikler, karşılaştırma tablosu, fiyatlandırma ve SSS tek sayfada.",
+      en: "A deep plum ground, a single magenta accent and data badges floating over an arch-masked photograph. Features, a comparison table, pricing and an FAQ all sit on one page.",
+    },
+    tags: {
+      tr: ["Koyu erik palet", "Kemer maskesi", "TR / EN", "Fiyatlandırma ve SSS"],
+      en: ["Deep plum palette", "Arch mask", "TR / EN", "Pricing and FAQ"],
+    },
+  },
+  {
     slug: "snappet",
     title: "SnapPet",
     url: "https://gurkansvlms.github.io/SnapPetWeb/",

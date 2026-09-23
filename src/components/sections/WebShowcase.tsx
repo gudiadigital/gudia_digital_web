@@ -4,12 +4,21 @@ import { projectPath } from "@/i18n/routes";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
+/*
+ * İlk kart iki sütun genişliğinde; geri kalanlar ikişerli sıralara diziliyor.
+ * Kalanların sayısı tekse son kart yalnız kalıp yanında boş hücre bırakıyor,
+ * o yüzden o da genişletiliyor.
+ */
+function isWide(index: number, total: number) {
+  if (index === 0) return true;
+  return index === total - 1 && (total - 1) % 2 === 1;
+}
+
 /**
  * Yayında olan tanıtım sitelerinin vitrini.
  *
  * Proje kartlarından ayrı duruyor: orada anlatılan uygulama, burada o
- * uygulama için kurduğumuz site. İlk kart iki sütun genişliğinde, böylece
- * ızgara eşit üç sütun olarak okunmuyor.
+ * uygulama için kurduğumuz site.
  */
 export function WebShowcase({
   locale,
@@ -34,7 +43,7 @@ export function WebShowcase({
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
         {webSites.map((site, index) => {
-          const wide = index === 0;
+          const wide = isWide(index, webSites.length);
           const host = site.url.replace(/^https?:\/\//, "").replace(/\/$/, "");
           return (
             <article
