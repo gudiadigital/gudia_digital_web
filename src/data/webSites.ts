@@ -3,6 +3,11 @@ import type { Locale } from "@/i18n/config";
 /**
  * Yayında olan tanıtım siteleri.
  *
+ * `url` kartın açtığı adres: bizim kurduğumuz sitenin gerçekten servis
+ * edildiği yer. Habitile ve İkra'nın ürün alan adları (habitile.app,
+ * ikraapp.netlify.app) başka kurulumlara bakıyor; onlar projects.ts'te
+ * projenin bağlantısı olarak duruyor.
+ *
  * Projeler dizisinden ayrı tutuluyor: burada işin kendisi değil, o iş için
  * kurduğumuz site anlatılıyor. Görseller public/web/<slug>.webp altında,
  * 1200px genişliğinde masaüstü yakalamaları.
@@ -43,7 +48,7 @@ export const webSites: WebSite[] = [
   {
     slug: "habitile",
     title: "Habitile",
-    url: "https://habitile.app",
+    url: "https://gurkansvlms.github.io/widgetai-habit-legal-site/",
     image: "habitile.webp",
     project: "habitile",
     summary: {
@@ -73,7 +78,7 @@ export const webSites: WebSite[] = [
   {
     slug: "ikra",
     title: "İkra",
-    url: "https://ikraapp.netlify.app",
+    url: "https://gurkansvlms.github.io/ikra-app-web/",
     image: "ikra.webp",
     project: "ikra",
     summary: {
