@@ -35,7 +35,13 @@ export type Project = {
    * Dosyalar ss-1.jpg … ss-N.jpg olarak adlandırılır.
    */
   shots?: number;
+  /** Projenin ana hizmet alanı; kartta bu yazıyor. */
   service: ServiceSlug;
+  /**
+   * Ek hizmet alanları. Bir iş birden fazla kapsama girebiliyor; hizmet
+   * sayfasındaki referans listesi hem `service` hem buradakilere bakıyor.
+   */
+  alsoServices?: ServiceSlug[];
   year: number;
   /** public/projeler/ altındaki görsel adı; yoksa kart tipografik görünür. */
   image?: string;
@@ -193,6 +199,7 @@ export const projects: Project[] = [
     slug: "ikra",
     title: "İkra",
     service: "mobil-uygulama",
+    alsoServices: ["sosyal-medya-icerik"],
     year: 2026,
     image: "icon-ikra.jpg",
     iconStyle: true,
@@ -390,6 +397,7 @@ export const projects: Project[] = [
     slug: "aysquilt",
     title: "AysQuilt",
     service: "e-ticaret-optimizasyonu",
+    alsoServices: ["sosyal-medya-icerik"],
     year: 2026,
     image: "aysquilt.jpg",
     summary: {

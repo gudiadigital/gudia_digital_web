@@ -14,8 +14,14 @@ type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
 export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps) {
   const service = dict.services.items[slug];
   const others = serviceSlugs.filter((candidate) => candidate !== slug);
-  /* Bu hizmet kapsamında yaptığımız işler; hiç yoksa bölüm çıkmıyor. */
-  const references = projects.filter((project) => project.service === slug);
+  /*
+   * Bu hizmet kapsamındaki işler. Ana alanı bu hizmet olanlar ve ek
+   * kapsamında bu hizmeti taşıyanlar birlikte; hiç yoksa bölüm çıkmıyor.
+   */
+  const references = projects.filter(
+    (project) =>
+      project.service === slug || project.alsoServices?.includes(slug),
+  );
 
   return (
     <>
