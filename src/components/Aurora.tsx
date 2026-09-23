@@ -1,9 +1,11 @@
-/** Hero arkasındaki canlı ışık katmanı. Tamamen CSS ile hareket eder. */
+/**
+ * Alt sayfa başlıklarının arkasındaki ışık. Tek, büyük ve durağan bir
+ * kaynak — daha önce üç ayrı renkli küre sürekli sürükleniyordu, bu her
+ * şablonda görülen bir kalıp olduğu için kaldırıldı.
+ */
 export function Aurora({ className = "" }: { className?: string }) {
   return (
-    <div className={`aurora aurora-parallax ${className}`} aria-hidden="true">
-      <span />
-      <span />
+    <div className={`aurora ${className}`} aria-hidden="true">
       <span />
     </div>
   );

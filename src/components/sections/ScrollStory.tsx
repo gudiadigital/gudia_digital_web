@@ -10,9 +10,6 @@ import type { Dictionary } from "@/i18n/dictionaries";
 
 type Segment = { text: string; accent: boolean };
 
-/** HUD'daki zaman kodu için hayalî sahne süresi (saniye). */
-const STORY_SECONDS = 15;
-
 /**
  * Başlık parçalarını kelimelere böler. Bir kelime birden fazla parçadan
  * oluşabilir ("büyütüyoruz" vurgulu + "." vurgusuz), bu yüzden her kelime
@@ -64,7 +61,6 @@ export function ScrollStory({
   const panelsRef = useRef<HTMLDivElement>(null);
   const chapterRef = useRef<HTMLSpanElement>(null);
   const percentRef = useRef<HTMLSpanElement>(null);
-  const clockRef = useRef<HTMLSpanElement>(null);
   const { hero } = dict;
   const words = toWords(hero.title);
   const afterTitle = 0.2 + words.length * 0.05;
@@ -78,10 +74,10 @@ export function ScrollStory({
       panels.querySelectorAll<HTMLElement>("[data-panel]"),
     );
     const total = items.length;
-    let timer = 0;
+    let frame = 0;
 
     const applyProgress = () => {
-      timer = 0;
+      frame = 0;
       const rect = section.getBoundingClientRect();
       const span = rect.height - window.innerHeight;
       if (span <= 0) return;
@@ -128,17 +124,15 @@ export function ScrollStory({
       if (percent) {
         percent.textContent = `${String(Math.round(progress * 100)).padStart(3, "0")}%`;
       }
-      const clock = clockRef.current;
-      if (clock) {
-        const at = progress * STORY_SECONDS;
-        const sec = Math.floor(at);
-        const frames = Math.floor((at - sec) * 24);
-        clock.textContent = `00:${String(sec).padStart(2, "0")}:${String(frames).padStart(2, "0")}`;
-      }
     };
 
+    /*
+     * Güncelleme requestAnimationFrame ile karelere hizalanıyor. Daha önce
+     * setTimeout(16) kullanılıyordu; kareyle hizalı olmadığı için bir karede
+     * iki, sonrakinde hiç güncelleme düşüyor ve paneller takılarak iniyordu.
+     */
     const schedule = () => {
-      if (!timer) timer = window.setTimeout(applyProgress, 16);
+      if (!frame) frame = requestAnimationFrame(applyProgress);
     };
 
     applyProgress();
@@ -148,7 +142,7 @@ export function ScrollStory({
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
-      if (timer) clearTimeout(timer);
+      if (frame) cancelAnimationFrame(frame);
     };
   }, []);
 
@@ -162,15 +156,7 @@ export function ScrollStory({
           <div ref={panelsRef} className="grid w-full">
             {/* Panel 0 — karşılama */}
             <div data-panel className="story-panel max-w-4xl">
-              <p
-                className="border-line bg-space/40 text-muted fade-up inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.18em] backdrop-blur-sm"
-                style={{ animationDelay: "0.05s" }}
-              >
-                <span className="bg-accent inline-block h-1.5 w-1.5 rounded-full" />
-                {hero.eyebrow}
-              </p>
-
-              <h1 className="mt-7 text-[2.5rem] font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
+              <h1 className="text-[2.5rem] font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
                 {words.map((word, index) => (
                   <Fragment key={index}>
                     {index > 0 && " "}
@@ -181,7 +167,7 @@ export function ScrollStory({
                       >
                         {word.map((part, partIndex) =>
                           part.accent ? (
-                            <span key={partIndex} className="text-gradient">
+                            <span key={partIndex} className="text-accent">
                               {part.text}
                             </span>
                           ) : (
@@ -202,9 +188,10 @@ export function ScrollStory({
                     style={{ animationDelay: `${afterTitle + index * 0.07}s` }}
                   >
                     {index > 0 && (
-                      <span aria-hidden="true" className="text-accent/50">
-                        &bull;
-                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="bg-line-strong h-3.5 w-px shrink-0"
+                      />
                     )}
                     {pillar}
                   </li>
@@ -224,7 +211,7 @@ export function ScrollStory({
               >
                 <Link
                   href={pathFor(locale, "contact")}
-                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_38px_-12px_var(--accent)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
                 >
                   {hero.ctaPrimary}
                 </Link>
@@ -307,12 +294,6 @@ export function ScrollStory({
               <span className="hud-key">{dict.story.progress}</span>
               <span ref={percentRef} className="hud-val hud-big">
                 000%
-              </span>
-            </div>
-            <div>
-              <span className="hud-key">{dict.story.time}</span>
-              <span ref={clockRef} className="hud-val">
-                00:00:00
               </span>
             </div>
           </div>

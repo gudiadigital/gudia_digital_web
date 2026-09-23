@@ -30,11 +30,9 @@ export function Process({ dict }: { dict: Dictionary }) {
             >
               <div className="card flex flex-col gap-5 rounded-2xl p-7 sm:flex-row sm:items-start sm:gap-8 sm:p-9">
                 <div className="flex items-center gap-4 sm:w-44 sm:shrink-0 sm:flex-col sm:items-start">
-                  <span className="font-display text-gradient text-4xl font-bold tabular-nums sm:text-5xl">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-muted font-mono text-[0.625rem] uppercase tracking-[0.16em] sm:mt-1">
-                    {index + 1} / {steps.length}
+                  <span className="text-muted font-mono text-xs tabular-nums tracking-[0.16em]">
+                    {String(index + 1).padStart(2, "0")} /{" "}
+                    {String(steps.length).padStart(2, "0")}
                   </span>
                 </div>
 

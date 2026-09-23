@@ -14,7 +14,7 @@ export function Stats({ dict }: { dict: Dictionary }) {
               data-reveal-delay={index * 90}
               className="spotlight bg-surface-soft px-6 py-6 outline outline-1 outline-[var(--line)]"
             >
-              <dt className="font-display text-gradient relative z-10 text-3xl font-semibold">
+              <dt className="font-display relative z-10 text-3xl font-semibold tabular-nums">
                 {stat.value}
               </dt>
               <dd className="text-muted relative z-10 mt-1.5 text-sm">

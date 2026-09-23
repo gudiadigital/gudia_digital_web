@@ -44,7 +44,7 @@ export function ProjectCard({
           />
         ) : (
           <div className="flex h-full items-center justify-center">
-            <span className="font-display text-gradient text-3xl font-semibold">
+            <span className="text-muted font-display text-2xl font-semibold">
               {project.title}
             </span>
           </div>

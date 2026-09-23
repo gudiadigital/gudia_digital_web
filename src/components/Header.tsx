@@ -86,7 +86,7 @@ export function Header({
 
           <Link
             href={pathFor(locale, "contact")}
-            className="bg-accent hidden rounded-full px-4 py-2 text-sm font-semibold text-white shadow-[0_8px_24px_-10px_var(--accent)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] sm:inline-flex"
+            className="bg-accent hidden rounded-full px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] sm:inline-flex"
           >
             {nav.cta}
           </Link>

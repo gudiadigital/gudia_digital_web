@@ -46,7 +46,6 @@ export const en: Dictionary = {
   story: {
     chapter: "Chapter",
     progress: "Progress",
-    time: "Time",
     tag: "Gudia Digital // Digital Products & Growth Studio",
   },
 

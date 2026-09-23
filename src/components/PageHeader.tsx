@@ -19,7 +19,6 @@ export function PageHeader({
   return (
     <section className="relative isolate overflow-hidden pt-28 pb-10 sm:pt-36 sm:pb-14">
       <Aurora />
-      <div className="grid-dots" aria-hidden="true" />
       <Container className="relative z-10">
         {eyebrow && (
           <p className="text-accent fade-up mb-3 font-display text-xs font-semibold uppercase tracking-[0.18em]">
