@@ -424,12 +424,33 @@
         color-mix(in srgb, var(--space) 92%, transparent) 0%,
         transparent 38%
       ),
-      /* üst menü videonun üzerinde okunabilsin */
+      /* üst menü sahnenin üzerinde okunabilsin */
       linear-gradient(
         to bottom,
         color-mix(in srgb, var(--space) 72%, transparent) 0%,
         transparent 16%
       );
+  }
+
+  /*
+   * Telefonda metin tüm genişliği kapladığı için soldan sağa açılan degrade
+   * yetmiyor; yazının durduğu üst bölge ayrıca koyulaştırılıyor.
+   */
+  @media (max-width: 860px) {
+    .story-veil {
+      background:
+        linear-gradient(
+          to bottom,
+          color-mix(in srgb, var(--space) 92%, transparent) 0%,
+          color-mix(in srgb, var(--space) 78%, transparent) 46%,
+          transparent 82%
+        ),
+        linear-gradient(
+          to top,
+          color-mix(in srgb, var(--space) 92%, transparent) 0%,
+          transparent 30%
+        );
+    }
   }
 
   /* Paneller üst üste durur; yalnızca aktif olan görünür */
@@ -491,13 +512,38 @@
     padding-block: 5rem;
   }
 
+  /*
+   * Paneller normalde tek ızgara hücresinde üst üste durur, JS hangisinin
+   * görüneceğini belirler. Hareket azaltmada hepsi birden görünür yapılıyor;
+   * ızgara yerleşimi de kaldırılmazsa dördü aynı noktaya yığılıp okunmaz bir
+   * karmaşa oluşturuyor. Burada panel kapsayıcısı normal akışa dönüyor.
+   */
+  .story-panels {
+    display: block !important;
+  }
+
+  .story .sticky > div > div:first-child,
+  .story [data-panel],
   .story-panel {
+    grid-area: auto;
+  }
+
+  .story-panel {
+    display: block;
     opacity: 1 !important;
     transform: none !important;
     pointer-events: auto !important;
-    margin-bottom: 3.5rem;
+    margin-bottom: 4rem;
   }
 
+  .story-panel:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Dikey ortalama tek panel içindi; alt alta akışta üstten hizalanıyor. */
+  .story .sticky > .relative {
+    align-items: flex-start;
+  }
 }
 
 /* ---------------------------------------------------------------

@@ -171,7 +171,8 @@ function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
            */
           prefetch={false}
           aria-current={candidate === locale ? "true" : undefined}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase transition-colors ${
+          /* Dokunma hedefi: telefonda 24px çok küçüktü, py ile 40px'e çıktı. */
+          className={`rounded-full px-3 py-2.5 text-xs font-semibold uppercase leading-none transition-colors sm:px-2.5 sm:py-1 ${
             candidate === locale
               ? "bg-accent text-white"
               : "text-muted hover:text-ink"

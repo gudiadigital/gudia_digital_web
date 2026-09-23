@@ -76,6 +76,23 @@ export function ScrollStory({
     const total = items.length;
     let frame = 0;
 
+    /*
+     * Panel geçişinin genişliği ekrana göre değişiyor.
+     *
+     * Geniş ekranda paneller kısa, üst üste binen iki panel göz için yumuşak
+     * bir geçiş oluyor. Telefonda paneller ekranın çoğunu kapladığı için aynı
+     * bindirme iki başlığı ve iki paragrafı iç içe okutuyordu. Orada durma
+     * payı büyütülüp geçiş kısaltılıyor: bir anda tek panel okunuyor.
+     */
+    const dar = window.matchMedia("(max-width: 860px)");
+    let durma = 0.22;
+    let gecis = 0.62;
+    const olcuyuAyarla = () => {
+      durma = dar.matches ? 0.34 : 0.22;
+      gecis = dar.matches ? 0.3 : 0.62;
+    };
+    olcuyuAyarla();
+
     const applyProgress = () => {
       frame = 0;
       const rect = section.getBoundingClientRect();
@@ -100,7 +117,7 @@ export function ScrollStory({
         // önce yerinde net duruyor, sonra geçiş başlıyor.
         const away = Math.min(
           1,
-          Math.max(0, (Math.abs(distance) - 0.22) / 0.62),
+          Math.max(0, (Math.abs(distance) - durma) / gecis),
         );
         item.style.opacity = (1 - away).toFixed(3);
         item.style.transform = `translate3d(0, ${(-distance * 56).toFixed(1)}px, 0)`;
@@ -135,13 +152,20 @@ export function ScrollStory({
       if (!frame) frame = requestAnimationFrame(applyProgress);
     };
 
+    const oranDegisti = () => {
+      olcuyuAyarla();
+      applyProgress();
+    };
+
     applyProgress();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
+    dar.addEventListener("change", oranDegisti);
 
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
+      dar.removeEventListener("change", oranDegisti);
       if (frame) cancelAnimationFrame(frame);
     };
   }, []);
@@ -153,7 +177,7 @@ export function ScrollStory({
         <div className="story-veil" aria-hidden="true" />
 
         <Container className="relative z-10 flex h-full items-center">
-          <div ref={panelsRef} className="grid w-full">
+          <div ref={panelsRef} className="story-panels grid w-full">
             {/* Panel 0 — karşılama */}
             <div data-panel className="story-panel max-w-4xl">
               <h1 className="text-[2.5rem] font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
@@ -180,7 +204,7 @@ export function ScrollStory({
                 ))}
               </h1>
 
-              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-3 gap-y-1.5 font-display text-sm font-medium tracking-wide sm:text-base">
+              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-5 gap-y-1.5 font-display text-sm font-medium tracking-wide sm:gap-x-3 sm:text-base">
                 {hero.pillars.map((pillar, index) => (
                   <li
                     key={pillar}
@@ -190,7 +214,7 @@ export function ScrollStory({
                     {index > 0 && (
                       <span
                         aria-hidden="true"
-                        className="bg-line-strong h-3.5 w-px shrink-0"
+                        className="bg-line-strong hidden h-3.5 w-px shrink-0 sm:block"
                       />
                     )}
                     {pillar}

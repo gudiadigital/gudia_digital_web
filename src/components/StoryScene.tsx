@@ -80,13 +80,23 @@ vec3 normalAt(vec3 p) {
 
 void main() {
   vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / uRes.y;
-  // Yapı sağa kaydırılıyor: metin panelleri ekranın solunda duruyor, yoksa
-  // başlık doğrudan en parlak bölgenin üstüne geliyor.
-  uv.x -= 0.30;
+
+  /*
+   * Yapının yeri ekranın oranına göre değişiyor.
+   *
+   * Geniş ekranda metin panelleri solda durduğu için yapı sağa kaydırılıyor.
+   * Telefonda ise metin tüm genişliği kaplıyor; sağa kaydırmak işe yaramıyor,
+   * yapı başlığın üstüne biniyor ve kenardan taşıyordu. Orada yapı aşağı
+   * iniyor, kamera da geri çekilip küçültüyor.
+   */
+  float en = uRes.x / uRes.y;
+  float dar = 1.0 - smoothstep(0.75, 1.25, en);
+  uv.x -= mix(0.30, 0.04, dar);
+  uv.y += dar * 0.44;
 
   // Kamera: ilerledikçe geri çekilip yapının etrafında dönüyor.
   float ang = 0.55 + uProg * 1.25 + uPtr.x * 0.30;
-  float dist = mix(2.95, 4.05, uProg);
+  float dist = mix(2.95, 4.05, uProg) * mix(1.0, 1.5, dar);
   vec3 ro = vec3(sin(ang) * dist, 0.32 + uPtr.y * 0.45 - uProg * 0.12, cos(ang) * dist);
   vec3 fw = normalize(-ro);
   vec3 rt = normalize(cross(vec3(0.0, 1.0, 0.0), fw));
