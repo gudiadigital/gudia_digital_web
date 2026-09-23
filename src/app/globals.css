@@ -7,62 +7,67 @@
    --------------------------------------------------------------- */
 
 :root {
-  --space: #131730;
-  --surface: #1e2440;
+  --space: #0a0b12;
+  --surface: #14161f;
   --accent: #7c93ff;
   --accent-2: #a78bfa;
-  --ink: #edeef7;
-  --muted: #9ca3c4;
+  --accent-3: #f2a86a;
+  --ink: #ecedf5;
+  --muted: #959bb8;
 
   --line: rgb(255 255 255 / 0.08);
   --line-strong: rgb(255 255 255 / 0.14);
   --surface-soft: rgb(255 255 255 / 0.04);
   --glow-a: rgb(124 147 255 / 0.28);
   --glow-b: rgb(167 139 250 / 0.22);
+  --glow-c: rgb(242 168 106 / 0.18);
   --aurora-a: rgb(124 147 255 / 0.5);
   --aurora-b: rgb(167 139 250 / 0.42);
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 16px 40px -20px rgb(0 0 0 / 0.6);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -20px rgb(0 0 0 / 0.7);
   --edge-light: rgb(255 255 255 / 0.07);
 }
 
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
-    --space: #f6f7fc;
-    --surface: #ffffff;
-    --accent: #5b6ef5;
-    --accent-2: #8b5cf6;
-    --ink: #1b1f35;
-    --muted: #5b6180;
+    --space: #f4f1ec;
+    --surface: #fffdfa;
+    --accent: #4f5fe8;
+    --accent-2: #7c4ddb;
+    --accent-3: #c0702a;
+    --ink: #191a24;
+    --muted: #5d6076;
 
-    --line: rgb(27 31 53 / 0.09);
-    --line-strong: rgb(27 31 53 / 0.16);
-    --surface-soft: rgb(27 31 53 / 0.03);
-    --glow-a: rgb(91 110 245 / 0.18);
-    --glow-b: rgb(139 92 246 / 0.14);
-    --aurora-a: rgb(91 110 245 / 0.22);
-    --aurora-b: rgb(139 92 246 / 0.18);
-    --shadow-card: 0 1px 2px rgb(27 31 53 / 0.05), 0 16px 40px -24px rgb(27 31 53 / 0.25);
-  --edge-light: rgb(255 255 255 / 0.9);
+    --line: rgb(25 26 36 / 0.10);
+    --line-strong: rgb(25 26 36 / 0.17);
+    --surface-soft: rgb(25 26 36 / 0.035);
+    --glow-a: rgb(79 95 232 / 0.16);
+    --glow-b: rgb(124 77 219 / 0.13);
+    --glow-c: rgb(192 112 42 / 0.12);
+    --aurora-a: rgb(79 95 232 / 0.20);
+    --aurora-b: rgb(124 77 219 / 0.16);
+    --shadow-card: 0 1px 2px rgb(60 44 30 / 0.06), 0 16px 40px -24px rgb(60 44 30 / 0.28);
     --edge-light: rgb(255 255 255 / 0.9);
   }
 }
 
 :root[data-theme="light"] {
-  --space: #f6f7fc;
-  --surface: #ffffff;
-  --accent: #5b6ef5;
-  --accent-2: #8b5cf6;
-  --ink: #1b1f35;
-  --muted: #5b6180;
+  --space: #f4f1ec;
+  --surface: #fffdfa;
+  --accent: #4f5fe8;
+  --accent-2: #7c4ddb;
+  --accent-3: #c0702a;
+  --ink: #191a24;
+  --muted: #5d6076;
 
-  --line: rgb(27 31 53 / 0.09);
-  --line-strong: rgb(27 31 53 / 0.16);
-  --surface-soft: rgb(27 31 53 / 0.03);
-  --glow-a: rgb(91 110 245 / 0.18);
-  --glow-b: rgb(139 92 246 / 0.14);
-  --aurora-a: rgb(91 110 245 / 0.22);
-  --aurora-b: rgb(139 92 246 / 0.18);
-  --shadow-card: 0 1px 2px rgb(27 31 53 / 0.05), 0 16px 40px -24px rgb(27 31 53 / 0.25);
+  --line: rgb(25 26 36 / 0.10);
+  --line-strong: rgb(25 26 36 / 0.17);
+  --surface-soft: rgb(25 26 36 / 0.035);
+  --glow-a: rgb(79 95 232 / 0.16);
+  --glow-b: rgb(124 77 219 / 0.13);
+  --glow-c: rgb(192 112 42 / 0.12);
+  --aurora-a: rgb(79 95 232 / 0.20);
+  --aurora-b: rgb(124 77 219 / 0.16);
+  --shadow-card: 0 1px 2px rgb(60 44 30 / 0.06), 0 16px 40px -24px rgb(60 44 30 / 0.28);
   --edge-light: rgb(255 255 255 / 0.9);
 }
 
@@ -72,6 +77,7 @@
   --color-surface-soft: var(--surface-soft);
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
+  --color-accent-3: var(--accent-3);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);
@@ -400,7 +406,7 @@
 }
 
 /* ---------------------------------------------------------------
-   Kaydırmalı video bölümü (ScrollStory)
+   Kaydırmalı açılış bölümü (ScrollStory)
    Yükseklik = panel sayısı × ekran; içerideki katman sticky kalır.
    --------------------------------------------------------------- */
 
@@ -410,7 +416,37 @@
     height: 440vh;
   }
 
-  /* Video üzerine okunabilirlik katmanı */
+  /*
+   * WebGL sahnesinin tuvali. Tuval boşken (shader henüz kurulmadı ya da
+   * WebGL yok) altındaki degrade görünür; sahne çizmeye başlayınca
+   * .is-live sınıfı degradeyi kaldırır, böylece ilk karede zemin boş
+   * kalmıyor ve WebGL desteklenmeyen tarayıcıda da bölüm dolu duruyor.
+   */
+  .story-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background:
+      radial-gradient(
+        ellipse 70% 60% at 62% 42%,
+        var(--glow-b) 0%,
+        transparent 62%
+      ),
+      radial-gradient(
+        ellipse 60% 70% at 78% 62%,
+        var(--glow-a) 0%,
+        transparent 66%
+      ),
+      var(--space);
+  }
+
+  .story-canvas.is-live {
+    background: var(--space);
+  }
+
+  /* Sahne üzerine okunabilirlik katmanı */
   .story-veil {
     position: absolute;
     inset: 0;

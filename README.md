@@ -101,40 +101,37 @@ takip eden ışık için `data-spotlight` ve `spotlight` sınıfı eklenir.
 `prefers-reduced-motion: reduce` seçili cihazlarda tüm hareket kapanır ve
 içerik doğrudan görünür gelir.
 
-## Arka plan videosu (ScrollStory)
+## Arka plan sahnesi (ScrollStory)
 
-Ana sayfadaki kaydırmalı bölümün videosu `public/video/story.mp4`.
-Kaydırma ilerlemesi doğrudan videonun zamanına bağlanır; paneller ilerlemeyi
-eşit dilimlere bölerek sırayla devreye girer.
+Açılış bölümünün arka planı bir video değil, WebGL ile ışın yürütülerek
+(raymarching) çizilen 3B sahne: `src/components/StoryScene.tsx`. Tek bir
+fragment shader; ortada bir çekirdek, çevresinde yörüngedeki düğümler.
+Kaydırma ilerledikçe düğümler doğar, yörüngeleri genişler ve çekirdekle
+kaynaşır — "kur / iyileştir / büyüt" anlatısının görsel karşılığı.
 
-**Videoyu değiştirmek:** ham dosyayı hazırlama betiğine ver, gerisini o yapar:
+Neden video değil:
 
-```bash
-tools/prepare-video.sh ~/Downloads/yeni-video.mp4
-```
+- Dosya yok; shader birkaç KB. Önceki video 1.6 MB idi.
+- Renkler CSS değişkenlerinden (`--space`, `--accent`, `--accent-2`,
+  `--accent-3`) okunur, yani açık/koyu mod ve palet değişiklikleri sahneye
+  kendiliğinden yansır.
+- Kare araması yok. Videoda kaydırma `currentTime`'a yazıyordu ve bu asenkron
+  bir arama başlattığı için her karenin anahtar kare olması (`-g 1`) ve
+  sunucunun HTTP Range desteklemesi şarttı. Sahnede böyle bir kısıt yok.
 
-Betik sesi kaldırır, rengi markaya çeker, her kareyi anahtar kare yapar,
-1152px'e indirir ve posteri üretir. Elle yapmak istersen iki koşul var:
+**Ayarlar** shader'ın içinde, `map()` ve `main()` başındaki sabitlerde:
+düğüm sayısı (`for (int i = 0; i < 7; i++)`), kaynaşma yumuşaklığı (`k`),
+kamera mesafesi (`dist`) ve yapının yatay konumu (`uv.x -= 0.30` — metin
+panelleri solda durduğu için sahne sağa kaydırılmıştır).
 
-1. **Her kare anahtar kare olmalı** (all-intra), yoksa kaydırma takılır —
-   ara karelere atlarken tarayıcı geriye gidip çözmek zorunda kalıyor.
-   Kodlarken: `-g 1 -keyint_min 1 -sc_threshold 0 -movflags +faststart`
-   Kare hızını düşürmek (15 fps) boyutu dengeler; kaydırmada hızı zaten
-   kullanıcı belirlediği için 15 fps yeterli.
-2. Sunucunun **HTTP Range** desteklemesi gerekir (GitHub Pages destekliyor).
-   Desteklemezse tarayıcı videoda konum değiştiremez ve video ilk karede donar.
+**Başarım:** ışın yürütme piksel başına pahalıdır, bu yüzden tuval tam
+çözünürlükte çizilmez — DPR 1.5'te ve toplam 1.1 milyon piksel sınırında
+tutulur (`MAX_PIXELS`). Sahne yumuşak olduğu için fark gözle seçilmiyor.
+Bölüm ekrandan çıkınca ya da sekme arka plana alınınca döngü durur.
 
-Poster görseli `public/video/story-poster.jpg` — video yüklenene kadar görünür,
-ilk karesiyle aynı olmalı.
-
-Gösterilen an bileşen içinde ayrı bir değişkende tutulur, videodan geri
-okunmaz: `video.currentTime`'a yazmak asenkron bir arama başlatır ve hemen geri
-okunduğunda eski değer döner. Geri okunursa fark hiç kapanmaz, video kaydırma
-boyunca donar ve kaydırma durunca biriken farkı tek hamlede atlar.
-
-Dar ekranlarda ve `prefers-reduced-motion` açıkken video kaydırmaya bağlanmaz;
-mobilde normal döngüde oynar, hareket azaltmada bölüm normal yüksekliğe döner
-ve paneller alt alta sıralanır.
+**Geri düşme:** WebGL yoksa veya `prefers-reduced-motion: reduce` seçiliyse
+tuval hiç kurulmaz; `.story-canvas` üzerindeki CSS degradesi görünür kalır ve
+bölüm boş görünmez.
 
 ## Kısıtlar
 

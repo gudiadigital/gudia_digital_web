@@ -3,11 +3,15 @@
 import { Fragment, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Container } from "../Container";
+import { StoryScene } from "../StoryScene";
 import { serviceGroups, servicesByGroup, type Locale } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 type Segment = { text: string; accent: boolean };
+
+/** HUD'daki zaman kodu için hayalî sahne süresi (saniye). */
+const STORY_SECONDS = 15;
 
 /**
  * Başlık parçalarını kelimelere böler. Bir kelime birden fazla parçadan
@@ -36,19 +40,17 @@ function toWords(segments: readonly Segment[]): Segment[][] {
 }
 
 /**
- * Sayfanın açılış bölümü: arka planda kaydırmayla ilerleyen video, üzerinde
- * sırayla devreye giren paneller. İlk panel karşılama (başlık + çağrı),
- * sonraki üçü çalışma modeli (kur / iyileştir / büyüt).
+ * Sayfanın açılış bölümü: arka planda kaydırmayla ilerleyen WebGL sahnesi,
+ * üzerinde sırayla devreye giren paneller. İlk panel karşılama (başlık +
+ * çağrı), sonraki üçü çalışma modeli (kur / iyileştir / büyüt).
  *
- * İki mekanizma bilinçli olarak ayrı:
- *  - Panel görünürlüğü doğrudan scroll olayında hesaplanır; içerik hiçbir
- *    koşulda görünmez kalmaz. İlk panel sunucu çıktısında zaten açık gelir,
- *    böylece JS çalışmasa da sayfa anlamlı.
- *  - Videonun zamanı rAF ile yumuşatılır; büyük sıçramalarda doğrudan
- *    konumlanır, çünkü rAF arka plandaki sekmelerde duruyor.
+ * Bu bileşen yalnızca kaydırma ilerlemesini hesaplar ve paneli/HUD'u
+ * günceller; ilerlemeyi bir ref üzerinden sahneye verir. Sahnenin kendi
+ * yumuşatması var, burada kare araması yapılmıyor.
  *
- * Dar ekranlarda video kaydırmaya bağlanmaz, normal döngüde oynar — mobilde
- * kare arama tutukluk yapıyor.
+ * Panel görünürlüğü doğrudan kaydırma olayında hesaplanır; içerik hiçbir
+ * koşulda görünmez kalmaz. İlk panel sunucu çıktısında zaten açık gelir,
+ * böylece JS çalışmasa da sayfa anlamlı.
  */
 export function ScrollStory({
   locale,
@@ -58,7 +60,7 @@ export function ScrollStory({
   dict: Dictionary;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const progressRef = useRef(0);
   const panelsRef = useRef<HTMLDivElement>(null);
   const chapterRef = useRef<HTMLSpanElement>(null);
   const percentRef = useRef<HTMLSpanElement>(null);
@@ -69,47 +71,14 @@ export function ScrollStory({
 
   useEffect(() => {
     const section = sectionRef.current;
-    const video = videoRef.current;
     const panels = panelsRef.current;
-    if (!section || !video || !panels) return;
+    if (!section || !panels) return;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const narrow = window.matchMedia("(max-width: 768px)");
     const items = Array.from(
       panels.querySelectorAll<HTMLElement>("[data-panel]"),
     );
     const total = items.length;
-
-    let scrubbing = !narrow.matches && !reduced.matches;
-    let targetTime = 0;
-    let frame = 0;
     let timer = 0;
-    let inView = false;
-
-    /**
-     * Gösterilen an, videodan okunarak değil ayrı tutularak ilerletiliyor.
-     * `video.currentTime`'a yazmak asenkron bir arama başlatıyor; hemen geri
-     * okunduğunda hâlâ eski değer dönüyor. Kendi durumumuzu tutmazsak fark
-     * hiç kapanmıyor, video kaydırma boyunca donuyor ve kaydırma durunca
-     * biriken farkı tek hamlede atlıyor.
-     */
-    let displayTime = 0;
-
-    const tick = () => {
-      frame = 0;
-      if (!scrubbing || !video.duration) return;
-
-      const diff = targetTime - displayTime;
-      if (Math.abs(diff) > 1.5) {
-        // Sayfa açılışı ya da bağlantıyla atlama: doğrudan konumlan
-        displayTime = targetTime;
-      } else if (Math.abs(diff) > 0.004) {
-        displayTime += diff * 0.34;
-      }
-      video.currentTime = displayTime;
-
-      if (inView) frame = requestAnimationFrame(tick);
-    };
 
     const applyProgress = () => {
       timer = 0;
@@ -119,6 +88,7 @@ export function ScrollStory({
 
       const progress = Math.min(1, Math.max(0, -rect.top / span));
       section.style.setProperty("--story", progress.toFixed(4));
+      progressRef.current = progress;
 
       // Paneller eşiklerle değil, ilerlemeye bağlı olarak sürekli hareket eder.
       // Her panelin bir çapası var (0, 1/3, 2/3, 1); ilerleme çapaya yaklaştıkça
@@ -159,17 +129,11 @@ export function ScrollStory({
         percent.textContent = `${String(Math.round(progress * 100)).padStart(3, "0")}%`;
       }
       const clock = clockRef.current;
-      if (clock && video.duration) {
-        const at = progress * video.duration;
+      if (clock) {
+        const at = progress * STORY_SECONDS;
         const sec = Math.floor(at);
         const frames = Math.floor((at - sec) * 24);
         clock.textContent = `00:${String(sec).padStart(2, "0")}:${String(frames).padStart(2, "0")}`;
-      }
-
-      inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (scrubbing && video.duration) {
-        targetTime = progress * (video.duration - 0.05);
-        if (inView && !frame) frame = requestAnimationFrame(tick);
       }
     };
 
@@ -177,40 +141,13 @@ export function ScrollStory({
       if (!timer) timer = window.setTimeout(applyProgress, 16);
     };
 
-    // Döngü kipinde oynatma isteği reddedilebilir (video henüz hazır değilse
-    // ya da tarayıcı otomatik oynatmayı engellemişse). Hazır olduğunda bir kez
-    // daha denenir; yine olmazsa poster görseli kalır, sayfa bozulmaz.
-    const tryPlay = () => {
-      void video.play().catch(() => {});
-    };
-
-    const setMode = () => {
-      scrubbing = !narrow.matches && !reduced.matches;
-      if (scrubbing) {
-        video.removeEventListener("canplay", tryPlay);
-        video.pause();
-      } else {
-        video.loop = true;
-        tryPlay();
-        video.addEventListener("canplay", tryPlay);
-      }
-    };
-
-    setMode();
     applyProgress();
-
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
-    narrow.addEventListener("change", setMode);
-    video.addEventListener("loadedmetadata", applyProgress);
 
     return () => {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
-      narrow.removeEventListener("change", setMode);
-      video.removeEventListener("loadedmetadata", applyProgress);
-      video.removeEventListener("canplay", tryPlay);
-      if (frame) cancelAnimationFrame(frame);
       if (timer) clearTimeout(timer);
     };
   }, []);
@@ -218,16 +155,7 @@ export function ScrollStory({
   return (
     <section ref={sectionRef} className="story relative">
       <div className="sticky top-0 h-dvh overflow-hidden">
-        <video
-          ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/video/story.mp4"
-          poster="/video/story-poster.jpg"
-          muted
-          playsInline
-          preload="auto"
-          aria-hidden="true"
-        />
+        <StoryScene progressRef={progressRef} />
         <div className="story-veil" aria-hidden="true" />
 
         <Container className="relative z-10 flex h-full items-center">
