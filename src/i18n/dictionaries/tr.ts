@@ -364,6 +364,14 @@ export const tr = {
     },
   },
 
+  improvements: {
+    eyebrow: "Örnekler",
+    title: "Kendi ürünlerimizde yaptığımız iyileştirmeler",
+    subtitle:
+      "Bu hizmetin ne demek olduğunu en iyi kendi uygulamalarımız gösteriyor: ikisi de yayındayken elden geçirildi, mağaza tarafı yeniden kuruldu ve sürüm çizgisi ilerletildi.",
+    projectLink: "Proje sayfası",
+  },
+
   footer: {
     tagline: "Dijital ürün ve büyüme stüdyosu. Kur, iyileştir, büyüt.",
     servicesTitle: "Hizmetler",

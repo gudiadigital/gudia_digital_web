@@ -366,6 +366,14 @@ export const en: Dictionary = {
     },
   },
 
+  improvements: {
+    eyebrow: "Examples",
+    title: "Improvements we made to our own products",
+    subtitle:
+      "Our own apps show best what this service means: both were reworked while already live, with the store side rebuilt and the version line moved forward.",
+    projectLink: "Project page",
+  },
+
   footer: {
     tagline: "Digital product and growth studio. Build, improve, grow.",
     servicesTitle: "Services",
