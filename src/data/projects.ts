@@ -105,6 +105,8 @@ export const projects: Project[] = [
     title: "PhotoSensia Kids",
     service: "mobil-uygulama",
     year: 2026,
+    image: "icon-photosensia.jpg",
+    iconStyle: true,
     summary: {
       tr: "Çocuklar için tasarlanmış, sade ve güvenli bir fotoğraf uygulaması. App Store ve Google Play'de yayında.",
       en: "A simple, safe photo app designed for children. Live on the App Store and Google Play.",
@@ -113,18 +115,6 @@ export const projects: Project[] = [
       { kind: "appstore", url: "https://apps.apple.com/app/id6624305795" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids" },
     ],
-  },
-  {
-    slug: "date-for-dead",
-    title: "Date For Dead",
-    service: "markali-oyunlar",
-    year: 2026,
-    image: "date-for-dead.jpg",
-    summary: {
-      tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
-      en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
-    },
-    links: [{ kind: "steam", url: "https://store.steampowered.com/app/4622170/Date_For_Dead/" }],
   },
   {
     slug: "logo-kidzania",
@@ -137,6 +127,18 @@ export const projects: Project[] = [
       en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
     },
     links: [{ kind: "web", url: "https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" }],
+  },
+  {
+    slug: "date-for-dead",
+    title: "Date For Dead",
+    service: "markali-oyunlar",
+    year: 2026,
+    image: "date-for-dead.jpg",
+    summary: {
+      tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
+      en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
+    },
+    links: [{ kind: "steam", url: "https://store.steampowered.com/app/4622170/Date_For_Dead/" }],
   },
   {
     slug: "divonia",
