@@ -841,6 +841,47 @@ html.lenis body {
     z-index: 10;
   }
 
+  /*
+   * Uygulama kartında mağaza görselleri yan yana. Zemin yine ikonun
+   * bulanık kopyası (.icon-stage-bg), böylece kart uygulamanın kendi
+   * rengini taşıyor. Görseller alt kenardan biraz taşıyor: raf gibi
+   * duruyor, alt boşluğu da kapatıyor.
+   */
+  .shot-strip {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 3%;
+    padding-inline: 4%;
+    overflow: hidden;
+  }
+
+  /*
+   * Her görsel eşit genişlikte bir yuva alıp yüksekliği dolduruyor;
+   * artan kısım yatayda kırpılıyor (object-fit). Genişlik ya da yükseklik
+   * üzerinden ölçmek işe yaramıyordu: mağaza görsellerinin en-boy oranı
+   * uygulamadan uygulamaya değişiyor, biri sığmıyor diğerinin üstünde
+   * boşluk kalıyordu.
+   *
+   * Kırpma üstten hizalı: mağaza görsellerinin başlığı en üstte.
+   */
+  .shot-strip-item {
+    position: relative;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 106%;
+    object-fit: cover;
+    object-position: top center;
+    align-self: flex-end;
+    margin-bottom: -6%;
+    border-radius: 0.75rem;
+    box-shadow:
+      0 14px 30px -12px rgb(0 0 0 / 0.55),
+      0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+
   .icon-stage {
     position: relative;
     display: flex;

@@ -21,6 +21,27 @@ export function ProjectCard({
     .map((link) => platformOf[link.kind])
     .filter((value): value is string => Boolean(value));
 
+  /*
+   * Uygulama kartlarında ikonun iki yanı boş kalıyordu. Mağaza görselleri
+   * dikey olduğu için yan yana dizilince kutuyu dolduruyor; ikonun rengi
+   * arkada bulanık zemin olarak kalmaya devam ediyor.
+   *
+   * Yalnızca mağaza bağlantısı olan işlerde: Divonia'nın da ikonu var ama
+   * görselleri yatay site yakalamaları, yan yana dizilince okunmuyor.
+   */
+  const inStore = project.links.some((link) =>
+    ["appstore", "playstore"].includes(link.kind),
+  );
+  /*
+   * Üç görsel: dört tanesi geniş kartta yuvaları daraltıyor ve mağaza
+   * görsellerinin üstündeki başlık yanlardan kesiliyordu. Üçte kırpma
+   * dikeyde kalıyor, yazı bozulmuyor.
+   */
+  const shotStrip =
+    project.iconStyle && inStore && (project.shots ?? 0) > 0
+      ? [1, 2, 3]
+      : null;
+
   return (
     <article
       data-spotlight
@@ -29,13 +50,12 @@ export function ProjectCard({
       }`}
     >
       {/*
-        Görsel alanının üç biçimi var:
-        1. ikon  — uygulama ikonu; arkada kendi bulanık büyütülmüş kopyası,
-                   önde yuvarlatılmış köşeli net ikon. Daha önce ikon geniş
-                   kutunun ortasında küçücük yüzüyordu, kenarlarda kocaman
-                   boşluk kalıyordu.
-        2. fotoğraf — kutuyu tamamen dolduran görsel.
-        3. görselsiz — hizmet ikonu, sessiz bir alan. Kötü bir ekran
+        Görsel alanının dört biçimi var:
+        1. ekran şeridi — uygulamalarda: mağaza görselleri yan yana, arkada
+                   ikonun bulanık kopyası zemin rengini veriyor.
+        2. ikon    — mağazada olmayan ama ikonu olan işlerde (Divonia).
+        3. fotoğraf — kutuyu tamamen dolduran görsel.
+        4. görselsiz — hizmet ikonu, sessiz bir alan. Kötü bir ekran
                    görüntüsü koymaktansa boş bırakmak daha iyi duruyor.
       */}
       <div
@@ -43,7 +63,29 @@ export function ProjectCard({
           featured ? "aspect-[16/8]" : "aspect-[16/10]"
         }`}
       >
-        {project.image && project.iconStyle ? (
+        {shotStrip ? (
+          <div className="shot-strip">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/projeler/${project.image}`}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="icon-stage-bg"
+            />
+            {shotStrip.map((n) => (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                key={n}
+                src={`/projeler/${project.slug}/ss-${n}.jpg`}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                className="shot-strip-item"
+              />
+            ))}
+          </div>
+        ) : project.image && project.iconStyle ? (
           <div className="icon-stage">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
