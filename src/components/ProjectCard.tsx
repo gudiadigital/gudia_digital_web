@@ -21,7 +21,7 @@ export function ProjectCard({
   return (
     <article
       data-spotlight
-      className={`card spotlight group flex flex-col overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:border-[var(--line-strong)] active:translate-y-0 ${
+      className={`card spotlight tilt group flex flex-col overflow-hidden rounded-2xl transition-colors duration-300 hover:border-[var(--line-strong)] ${
         featured ? "sm:col-span-2" : ""
       }`}
     >
@@ -38,8 +38,8 @@ export function ProjectCard({
             loading="lazy"
             className={
               project.iconStyle
-                ? "mx-auto h-full w-auto py-8 transition-transform duration-500 group-hover:scale-105"
-                : "h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                ? "mx-auto h-full w-auto py-8"
+                : "h-full w-full object-cover"
             }
           />
         ) : (

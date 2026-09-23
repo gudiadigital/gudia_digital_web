@@ -342,6 +342,7 @@ export const en: Dictionary = {
     responseValue: "Within 24 hours on weekdays",
     locationLabel: "Location",
     locationValue: "Türkiye · We work remotely",
+    formTitle: "Or fill in the form",
     form: {
       name: "Full name",
       namePlaceholder: "Your name",

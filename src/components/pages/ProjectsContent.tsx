@@ -10,11 +10,7 @@ import type { PageContentProps } from "./types";
 export function ProjectsContent({ locale, dict }: PageContentProps) {
   return (
     <>
-      <PageHeader
-        eyebrow={dict.projects.eyebrow}
-        title={dict.projects.title}
-        subtitle={dict.projects.subtitle}
-      />
+      <PageHeader title={dict.projects.title} subtitle={dict.projects.subtitle} />
 
       <Container>
         {projects.length === 0 ? (

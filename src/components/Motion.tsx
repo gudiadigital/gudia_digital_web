@@ -98,6 +98,8 @@ export function Motion() {
       root.style.setProperty("--py", y.toFixed(4));
     };
 
+    let lastCard: HTMLElement | null = null;
+
     const onMove = (event: PointerEvent) => {
       x = event.clientX / window.innerWidth - 0.5;
       y = event.clientY / window.innerHeight - 0.5;
@@ -106,10 +108,22 @@ export function Motion() {
       const card = (event.target as Element | null)?.closest<HTMLElement>(
         "[data-spotlight]",
       );
+      if (card !== lastCard && lastCard) {
+        // Karttan çıkıldı: eğim sıfırlansın, yoksa kart yamuk kalıyor.
+        lastCard.style.setProperty("--tx", "0");
+        lastCard.style.setProperty("--ty", "0");
+      }
+      lastCard = card ?? null;
+
       if (card) {
         const box = card.getBoundingClientRect();
-        card.style.setProperty("--cx", `${event.clientX - box.left}px`);
-        card.style.setProperty("--cy", `${event.clientY - box.top}px`);
+        const left = event.clientX - box.left;
+        const top = event.clientY - box.top;
+        card.style.setProperty("--cx", `${left}px`);
+        card.style.setProperty("--cy", `${top}px`);
+        // -0.5 … 0.5 arası; CSS bunu eğim açısına çeviriyor.
+        card.style.setProperty("--tx", (left / box.width - 0.5).toFixed(3));
+        card.style.setProperty("--ty", (top / box.height - 0.5).toFixed(3));
       }
     };
 

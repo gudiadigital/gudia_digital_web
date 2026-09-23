@@ -340,6 +340,7 @@ export const tr = {
     responseValue: "Hafta içi 24 saat içinde",
     locationLabel: "Konum",
     locationValue: "Türkiye · Uzaktan çalışıyoruz",
+    formTitle: "Ya da formu doldurun",
     form: {
       name: "Ad Soyad",
       namePlaceholder: "Adınız",
