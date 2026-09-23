@@ -34,11 +34,6 @@ export const tr = {
       "Sıfırdan ürün kuruyoruz, elinizdeki dijital varlıkları toparlıyoruz ve satışa hazır hale getiriyoruz. Küçük bir ekibiz — aracı yok, ajans katmanı yok, ürünü kuran kişilerle konuşursunuz.",
     ctaPrimary: "Ücretsiz İnceleme İsteyin",
     ctaSecondary: "Hizmetlerimiz",
-    stats: [
-      { value: "iOS", label: "Native geliştirme deneyimi" },
-      { value: "6", label: "Hizmet alanı" },
-      { value: "2", label: "Kurucu, doğrudan iletişim" },
-    ],
   },
 
   story: {

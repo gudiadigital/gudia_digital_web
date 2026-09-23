@@ -36,11 +36,6 @@ export const en: Dictionary = {
       "We build products from scratch, fix the digital assets you already have, and get them ready to sell. Small team — no account managers, no agency layers, you talk to the people who actually build it.",
     ctaPrimary: "Get a Free Review",
     ctaSecondary: "Our Services",
-    stats: [
-      { value: "iOS", label: "Native development experience" },
-      { value: "6", label: "Service areas" },
-      { value: "2", label: "Founders, direct contact" },
-    ],
   },
 
   story: {
