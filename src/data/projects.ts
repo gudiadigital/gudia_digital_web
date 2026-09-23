@@ -200,7 +200,7 @@ export const projects: Project[] = [
     shots: 6,
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6779264379" },
-      { kind: "web", url: "https://habitile.app" },
+      { kind: "web", url: "https://gurkansvlms.github.io/widgetai-habit-legal-site/" },
     ],
   },
   {
@@ -512,7 +512,7 @@ export const projects: Project[] = [
         { k: "Platform", v: "For an iPhone app" },
       ],
     },
-    shots: 2,
+    shots: 3,
     links: [{ kind: "web", url: "https://gurkansvlms.github.io/widgetai-legal-site/" }],
   },
   {
