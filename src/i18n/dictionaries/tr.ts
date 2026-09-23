@@ -305,6 +305,7 @@ export const tr = {
     featuredSubtitle:
       "Markalar için kurduğumuz deneyimlerden kendi uygulamalarımıza kadar, gerçekten yayında olan işler.",
     allProjects: "Tüm projeler",
+    referencesTitle: "Bu alandaki işlerimiz",
     backToProjects: "Tüm projelere dön",
     detailTitle: "Proje hakkında",
     screensTitle: "Mağaza görselleri",

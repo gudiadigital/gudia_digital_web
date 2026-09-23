@@ -2,6 +2,8 @@ import Link from "next/link";
 import { serviceSlugs, type ServiceSlug } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import { Container } from "@/components/Container";
+import { ProjectCard } from "@/components/ProjectCard";
+import { projects } from "@/data/projects";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
@@ -12,6 +14,8 @@ type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
 export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps) {
   const service = dict.services.items[slug];
   const others = serviceSlugs.filter((candidate) => candidate !== slug);
+  /* Bu hizmet kapsamında yaptığımız işler; hiç yoksa bölüm çıkmıyor. */
+  const references = projects.filter((project) => project.service === slug);
 
   return (
     <>
@@ -87,6 +91,35 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             </div>
           </aside>
         </div>
+
+        {references.length > 0 && (
+          <div className="border-line mt-20 border-t pt-12">
+            <h2
+              className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl"
+              data-reveal
+            >
+              {dict.projects.referencesTitle}
+            </h2>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2">
+              {references.map((project, index) => (
+                <div
+                  key={project.slug}
+                  data-reveal
+                  data-reveal-delay={(index % 3) * 90}
+                  /* İlk kart tam genişlikte: tek proje varsa da boş hücre kalmıyor */
+                  className={index % 3 === 0 ? "sm:col-span-2" : ""}
+                >
+                  <ProjectCard
+                    project={project}
+                    locale={locale}
+                    dict={dict}
+                    featured={index % 3 === 0}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="border-line mt-20 border-t pt-10">
           <h2 className="text-lg font-semibold">{dict.services.allLink}</h2>

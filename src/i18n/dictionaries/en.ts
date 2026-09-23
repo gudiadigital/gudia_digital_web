@@ -307,6 +307,7 @@ export const en: Dictionary = {
     featuredSubtitle:
       "From experiences we built for brands to our own apps — work that is genuinely live.",
     allProjects: "All projects",
+    referencesTitle: "Our work in this area",
     backToProjects: "Back to all projects",
     detailTitle: "About the project",
     screensTitle: "Store screenshots",
