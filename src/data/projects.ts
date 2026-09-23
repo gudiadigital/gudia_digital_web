@@ -72,7 +72,7 @@ export const projects: Project[] = [
     service: "mobil-uygulama",
     alsoServices: ["web-sitesi"],
     year: 2026,
-    image: "icon-pofu.jpg",
+    image: "icon-pofu.webp",
     iconStyle: true,
     summary: {
       tr: "Kadınlara özel kalori ve beslenme takibi. HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve saat uygulamasıyla birlikte.",
@@ -118,7 +118,7 @@ export const projects: Project[] = [
     service: "mobil-uygulama",
     alsoServices: ["web-sitesi"],
     year: 2026,
-    image: "icon-snappet.jpg",
+    image: "icon-snappet.webp",
     iconStyle: true,
     summary: {
       tr: "Sokakta gördüğünüz kedi ve köpekleri fotoğraflayıp koleksiyona dönüştüren kamera tabanlı kart oyunu. iOS ve Android sürümleri var.",
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     service: "mobil-uygulama",
     alsoServices: ["web-sitesi"],
     year: 2026,
-    image: "icon-habitile.jpg",
+    image: "icon-habitile.webp",
     iconStyle: true,
     summary: {
       tr: "Sakin ve widget öncelikli alışkanlık takibi. Ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz; affeden seriler bir günü kaçırınca ilerlemeyi silmiyor. Altı dilde yayında.",
@@ -209,7 +209,7 @@ export const projects: Project[] = [
     service: "mobil-uygulama",
     alsoServices: ["sosyal-medya-icerik", "web-sitesi"],
     year: 2026,
-    image: "icon-ikra.jpg",
+    image: "icon-ikra.webp",
     iconStyle: true,
     summary: {
       tr: "Namaz vakitleri, Kur'an okuma, kıble ve günlük zikir takibiyle İslami yaşam asistanı. iOS ve Android'de, yirmi bir dilde yayında.",
@@ -253,9 +253,9 @@ export const projects: Project[] = [
   {
     slug: "photosensia",
     title: "PhotoSensia Kids",
-    service: "mobil-uygulama",
+    service: "markali-oyunlar",
     year: 2026,
-    image: "icon-photosensia.jpg",
+    image: "icon-photosensia.webp",
     iconStyle: true,
     summary: {
       tr: "Çocuklar için tasarlanmış, sade ve güvenli bir fotoğraf uygulaması. App Store ve Google Play'de yayında.",
@@ -299,7 +299,7 @@ export const projects: Project[] = [
     title: "Logo Yazılım × KidZania İstanbul",
     service: "markali-oyunlar",
     year: 2026,
-    image: "logo-kidzania.jpg",
+    image: "logo-kidzania.webp",
     summary: {
       tr: "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
       en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
@@ -336,7 +336,7 @@ export const projects: Project[] = [
     title: "Date For Dead",
     service: "markali-oyunlar",
     year: 2026,
-    image: "date-for-dead.jpg",
+    image: "date-for-dead.webp",
     summary: {
       tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
       en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
@@ -373,7 +373,7 @@ export const projects: Project[] = [
     title: "Divonia Studios",
     service: "web-sitesi",
     year: 2026,
-    image: "icon-divonia.jpg",
+    image: "icon-divonia.webp",
     iconStyle: true,
     summary: {
       tr: "Bir oyun stüdyosu için kurumsal web sitesi: stüdyonun işlerini ve kimliğini yansıtan sade, hızlı bir tanıtım sitesi.",
@@ -407,7 +407,7 @@ export const projects: Project[] = [
     title: "Hadis Kitapları",
     service: "web-sitesi",
     year: 2026,
-    image: "hadis-kitaplari.jpg",
+    image: "hadis-kitaplari.webp",
     summary: {
       tr: "Kütüb-i Sitte ve diğer kaynaklardaki hadisleri kelime, konu veya ravi adıyla aratan arama sitesi. Arapça metin, Türkçe meal ve kaynak bilgisiyle.",
       en: "A search site for the hadiths in Kutub al-Sittah and other sources, by word, topic or narrator, with the Arabic text, Turkish translation and source reference.",
@@ -446,7 +446,7 @@ export const projects: Project[] = [
     title: "Deyimo",
     service: "web-sitesi",
     year: 2026,
-    image: "deyimo.jpg",
+    image: "deyimo.webp",
     summary: {
       tr: "Türkçe deyim ve atasözlerini ezberletmeden öğreten uygulamanın tanıtım sitesi. 2.617 ifade, çevrimdışı kullanım.",
       en: "The marketing site for an app that teaches Turkish idioms and proverbs without rote memorisation. 2,617 expressions, works offline.",
@@ -483,7 +483,7 @@ export const projects: Project[] = [
     title: "Life Planner",
     service: "web-sitesi",
     year: 2026,
-    image: "life-planner.jpg",
+    image: "life-planner.webp",
     summary: {
       tr: "iPhone için günlük planlayıcının tanıtım sitesi: iş, alışkanlık ve sağlık takibini tek günlük akışta toplayan uygulamayı anlatıyor. Yedi dilde.",
       en: "The marketing site for an iPhone daily planner that brings work, habits and health into one daily flow. Published in seven languages.",
@@ -521,7 +521,7 @@ export const projects: Project[] = [
     service: "e-ticaret-optimizasyonu",
     alsoServices: ["sosyal-medya-icerik"],
     year: 2026,
-    image: "aysquilt.jpg",
+    image: "aysquilt.webp",
     summary: {
       tr: "El yapımı çanta charm ve aksesuar markasının Trendyol mağazası: ürün görselleri, başlık ve açıklama metinleri dönüşüm için yeniden düzenlendi.",
       en: "A handmade bag charm and accessory brand's Trendyol store: product imagery, titles and descriptions rebuilt around conversion.",

@@ -77,10 +77,13 @@ export function ProjectCard({
               /* eslint-disable-next-line @next/next/no-img-element */
               <img
                 key={n}
-                src={`/projeler/${project.slug}/ss-${n}.jpg`}
+                src={`/projeler/${project.slug}/ss-${n}-card.webp`}
                 alt=""
                 aria-hidden="true"
-                loading="lazy"
+                loading={featured && n === 1 ? "eager" : "lazy"}
+                decoding="async"
+                width={420}
+                height={910}
                 className="shot-strip-item"
               />
             ))}

@@ -201,9 +201,10 @@ export function ProjectDetailContent({
               <li key={n}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={`/projeler/${project.slug}/ss-${n}.jpg`}
+                  src={`/projeler/${project.slug}/ss-${n}.webp`}
                   alt={`${project.title} — ${n}`}
-                  loading="lazy"
+                  loading={n === 1 ? "eager" : "lazy"}
+                  decoding="async"
                   className="shot"
                 />
               </li>
