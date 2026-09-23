@@ -17,12 +17,12 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
   const service = dict.services.items[slug];
   const others = serviceSlugs.filter((candidate) => candidate !== slug);
   /*
-   * Bu hizmet kapsamındaki işler. Ana alanı bu hizmet olanlar ve ek
-   * kapsamında bu hizmeti taşıyanlar birlikte; hiç yoksa bölüm çıkmıyor.
-   */
-  /*
-   * Web sitesi hizmetinde yukarıdaki vitrin zaten beş siteyi tarayıcı
-   * penceresi olarak gösteriyor; aynı işler burada ikinci kez çıkmasın.
+   * Bu hizmet kapsamındaki işler: ana alanı bu hizmet olanlar ve ek
+   * kapsamında bu hizmeti taşıyanlar birlikte. Hiç yoksa bölüm çıkmıyor.
+   *
+   * Web sitesi hizmetinde yukarıdaki vitrin, kendi uygulamalarımız için
+   * kurduğumuz siteleri tarayıcı penceresi olarak gösteriyor; aynı işler
+   * referans listesinde ikinci kez çıkmasın diye eleniyor.
    */
   const vitrindeOlan = new Set(
     webSites.map((site) => site.project).filter(Boolean),
