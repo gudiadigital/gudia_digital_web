@@ -70,6 +70,7 @@ export const projects: Project[] = [
     slug: "pofu",
     title: "Pofu",
     service: "mobil-uygulama",
+    alsoServices: ["web-sitesi"],
     year: 2026,
     image: "icon-pofu.jpg",
     iconStyle: true,
@@ -108,12 +109,14 @@ export const projects: Project[] = [
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6778044605" },
       { kind: "instagram", url: "https://www.instagram.com/pofu.app/" },
+      { kind: "web", url: "https://gurkansvlms.github.io/nutrition-legal-site/" },
     ],
   },
   {
     slug: "snappet",
     title: "SnapPet",
     service: "mobil-uygulama",
+    alsoServices: ["web-sitesi"],
     year: 2026,
     image: "icon-snappet.jpg",
     iconStyle: true,
@@ -153,12 +156,14 @@ export const projects: Project[] = [
       { kind: "appstore", url: "https://apps.apple.com/app/id6784579838" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.easestack.snappet" },
       { kind: "instagram", url: "https://www.instagram.com/playsnappet/" },
+      { kind: "web", url: "https://gurkansvlms.github.io/SnapPetWeb/" },
     ],
   },
   {
     slug: "habitile",
     title: "Habitile",
     service: "mobil-uygulama",
+    alsoServices: ["web-sitesi"],
     year: 2026,
     image: "icon-habitile.jpg",
     iconStyle: true,
@@ -193,13 +198,16 @@ export const projects: Project[] = [
       ],
     },
     shots: 6,
-    links: [{ kind: "appstore", url: "https://apps.apple.com/app/id6779264379" }],
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/app/id6779264379" },
+      { kind: "web", url: "https://habitile.app" },
+    ],
   },
   {
     slug: "ikra",
     title: "İkra",
     service: "mobil-uygulama",
-    alsoServices: ["sosyal-medya-icerik"],
+    alsoServices: ["sosyal-medya-icerik", "web-sitesi"],
     year: 2026,
     image: "icon-ikra.jpg",
     iconStyle: true,
@@ -239,6 +247,7 @@ export const projects: Project[] = [
       { kind: "appstore", url: "https://apps.apple.com/app/id6756602687" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.gurkan.ikra" },
       { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
+      { kind: "web", url: "https://ikraapp.netlify.app" },
     ],
   },
   {
@@ -392,6 +401,119 @@ export const projects: Project[] = [
     },
     shots: 4,
     links: [{ kind: "web", url: "https://divoniastudios.com" }],
+  },
+  {
+    slug: "hadis-kitaplari",
+    title: "Hadis Kitapları",
+    service: "web-sitesi",
+    year: 2026,
+    image: "hadis-kitaplari.jpg",
+    summary: {
+      tr: "Kütüb-i Sitte ve diğer kaynaklardaki hadisleri kelime, konu veya ravi adıyla aratan arama sitesi. Arapça metin, Türkçe meal ve kaynak bilgisiyle.",
+      en: "A search site for the hadiths in Kutub al-Sittah and other sources, by word, topic or narrator, with the Arabic text, Turkish translation and source reference.",
+    },
+    detail: {
+      tr: [
+        "Kütüb-i Sitte ve diğer kaynaklardaki hadisleri tek yerden aratan bir kütüphane. Kelime, konu ya da ravi adıyla arama yapılıyor; sonuçta Arapça metin, Türkçe meal ve kaynak bilgisi birlikte geliyor.",
+        "Sitede 31.728 hadis, 8 kitap ve 219 konu sayfası var. Konu başlıkları (iman ve itikat, ahiret, ibadet, ahlak, aile ve toplum) ayrı sayfalar hâlinde gezilebiliyor.",
+        "Arama kutusu klavye kısayoluyla da açılıyor; sık aranan konular hazır etiket olarak duruyor.",
+      ],
+      en: [
+        "A library that searches the hadiths of Kutub al-Sittah and other sources from one place. You can search by word, topic or narrator, and each result carries the Arabic text, the Turkish translation and the source reference.",
+        "The site holds 31,728 hadiths, 8 books and 219 topic pages. Topic sections — faith, the hereafter, worship, ethics, family and society — can be browsed as separate pages.",
+        "The search box opens with a keyboard shortcut, and frequently searched topics sit ready as tags.",
+      ],
+    },
+    facts: {
+      tr: [
+        { k: "Tür", v: "Arama ve içerik sitesi" },
+        { k: "Hadis", v: "31.728" },
+        { k: "Kitap", v: "8" },
+        { k: "Konu sayfası", v: "219" },
+      ],
+      en: [
+        { k: "Type", v: "Search and content site" },
+        { k: "Hadiths", v: "31,728" },
+        { k: "Books", v: "8" },
+        { k: "Topic pages", v: "219" },
+      ],
+    },
+    shots: 4,
+    links: [{ kind: "web", url: "https://hadiskitaplari.com" }],
+  },
+  {
+    slug: "deyimo",
+    title: "Deyimo",
+    service: "web-sitesi",
+    year: 2026,
+    image: "deyimo.jpg",
+    summary: {
+      tr: "Türkçe deyim ve atasözlerini ezberletmeden öğreten uygulamanın tanıtım sitesi. 2.617 ifade, çevrimdışı kullanım.",
+      en: "The marketing site for an app that teaches Turkish idioms and proverbs without rote memorisation. 2,617 expressions, works offline.",
+    },
+    detail: {
+      tr: [
+        "Türkçe deyim ve atasözlerini ezberleterek değil, kullanıldığı yerde göstererek öğreten uygulamanın tanıtım sitesi.",
+        "Site ürünün nasıl çalıştığını adım adım anlatıyor, örnek kullanımları gösteriyor ve sık sorulanlara yanıt veriyor. İki dilde yayında.",
+        "Uygulama 2.617 ifade içeriyor ve internet bağlantısı olmadan da çalışıyor.",
+      ],
+      en: [
+        "The marketing site for an app that teaches Turkish idioms and proverbs by showing them in use rather than drilling them.",
+        "The site walks through how the product works, shows example usages and answers common questions. Published in two languages.",
+        "The app carries 2,617 expressions and works without an internet connection.",
+      ],
+    },
+    facts: {
+      tr: [
+        { k: "Tür", v: "Ürün tanıtım sitesi" },
+        { k: "İfade", v: "2.617" },
+        { k: "Dil", v: "Türkçe + İngilizce" },
+      ],
+      en: [
+        { k: "Type", v: "Product marketing site" },
+        { k: "Expressions", v: "2,617" },
+        { k: "Languages", v: "Turkish + English" },
+      ],
+    },
+    shots: 4,
+    links: [{ kind: "web", url: "https://gurkansvlms.github.io/IdiomWeb" }],
+  },
+  {
+    slug: "life-planner",
+    title: "Life Planner",
+    service: "web-sitesi",
+    year: 2026,
+    image: "life-planner.jpg",
+    summary: {
+      tr: "iPhone için günlük planlayıcının tanıtım sitesi: iş, alışkanlık ve sağlık takibini tek günlük akışta toplayan uygulamayı anlatıyor. Yedi dilde.",
+      en: "The marketing site for an iPhone daily planner that brings work, habits and health into one daily flow. Published in seven languages.",
+    },
+    detail: {
+      tr: [
+        "İş planlaması, alışkanlıklar ve beslenme/vücut takibini tek bir günlük akışta toplayan iPhone uygulamasının tanıtım sitesi.",
+        "Site ürünün widget tarafını öne çıkarıyor: plan uygulamayı açmadan da ana ekranda görünüyor. Gizlilik bölümünde verinin mümkün olduğunca cihazda kaldığı anlatılıyor.",
+        "Yedi dilde yayında: İngilizce, Türkçe, Almanca, İspanyolca, Fransızca, İtalyanca ve Brezilya Portekizcesi.",
+      ],
+      en: [
+        "The marketing site for an iPhone app that brings work planning, habits and meal and body tracking into a single daily flow.",
+        "The site leads with the widget side of the product: the plan stays visible on the Home Screen without opening the app. A privacy section explains that personal data stays on the device wherever possible.",
+        "Published in seven languages: English, Turkish, German, Spanish, French, Italian and Brazilian Portuguese.",
+      ],
+    },
+    facts: {
+      tr: [
+        { k: "Tür", v: "Ürün tanıtım sitesi" },
+        { k: "Dil", v: "7" },
+        { k: "Platform", v: "iPhone uygulaması için" },
+      ],
+      en: [
+        { k: "Type", v: "Product marketing site" },
+        { k: "Languages", v: "7" },
+        { k: "Platform", v: "For an iPhone app" },
+      ],
+    },
+    shots: 2,
+    links: [{ kind: "web", url: "https://gurkansvlms.github.io/widgetai-legal-site/" }],
   },
   {
     slug: "aysquilt",
