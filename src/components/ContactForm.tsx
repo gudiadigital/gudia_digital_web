@@ -42,6 +42,13 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
     )}&body=${encodeURIComponent(body)}`;
   }
 
+  /* Ücretsiz inceleme başta ve varsayılan: sayfanın asıl çağrısı bu. */
+  const subjects = [
+    t.subjectReview,
+    ...serviceSlugs.map((slug) => dict.services.items[slug].title),
+    t.subjectOther,
+  ];
+
   const fieldClass =
     "border-line bg-surface-soft text-ink placeholder:text-muted/70 w-full rounded-xl border px-4 py-3 text-sm transition-colors focus:border-[var(--accent)]";
 
@@ -71,22 +78,38 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
         </Field>
       </div>
 
-      <div className="mt-5">
-        <Field label={t.subject} htmlFor="subject">
-          <select id="subject" name="subject" defaultValue="" className={fieldClass}>
-            <option value="" disabled>
-              {t.subjectPlaceholder}
-            </option>
-            <option value={t.subjectReview}>{t.subjectReview}</option>
-            {serviceSlugs.map((slug) => (
-              <option key={slug} value={dict.services.items[slug].title}>
-                {dict.services.items[slug].title}
-              </option>
-            ))}
-            <option value={t.subjectOther}>{t.subjectOther}</option>
-          </select>
-        </Field>
-      </div>
+      {/*
+        Konu seçimi native <select> değil, radyo düğmelerinden oluşan bir
+        seçim ızgarası. Native açılır liste işletim sisteminin kendi
+        penceresi olarak çiziliyor; Windows'ta gri sistem kutusu çıkıp
+        sayfanın tasarımıyla hiç uyuşmuyordu. Radyo düğmeleri her yerde
+        aynı görünüyor ve klavyeyle ok tuşlarıyla gezilebiliyor.
+      */}
+      <fieldset className="mt-6">
+        <legend className="mb-3 text-sm font-medium">{t.subject}</legend>
+        <div className="grid gap-2.5 sm:grid-cols-2">
+          {subjects.map((subject, index) => (
+            <label
+              key={subject}
+              /* İlk ve son seçenek tam genişlikte: aradaki altı hizmet
+                 iki sütuna tam oturuyor, kenarda boş hücre kalmıyor. */
+              className={`choice ${
+                index === 0 || index === subjects.length - 1
+                  ? "sm:col-span-2"
+                  : ""
+              }`}
+            >
+              <input
+                type="radio"
+                name="subject"
+                value={subject}
+                defaultChecked={index === 0}
+              />
+              <span>{subject}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <div className="mt-5">
         <Field label={t.message} htmlFor="message" error={errors.message}>

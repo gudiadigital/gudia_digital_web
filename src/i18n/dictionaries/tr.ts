@@ -351,7 +351,6 @@ export const tr = {
       email: "E-posta",
       emailPlaceholder: "ornek@sirket.com",
       subject: "Konu",
-      subjectPlaceholder: "Bir konu seçin",
       subjectReview: "Ücretsiz inceleme istiyorum",
       subjectOther: "Diğer",
       message: "Mesajınız",

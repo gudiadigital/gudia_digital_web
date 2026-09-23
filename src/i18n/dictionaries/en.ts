@@ -353,7 +353,6 @@ export const en: Dictionary = {
       email: "Email",
       emailPlaceholder: "you@company.com",
       subject: "Subject",
-      subjectPlaceholder: "Choose a subject",
       subjectReview: "I'd like a free review",
       subjectOther: "Other",
       message: "Your message",
