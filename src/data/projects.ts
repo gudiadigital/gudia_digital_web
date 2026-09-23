@@ -31,31 +31,12 @@ export const platformOf: Partial<Record<ProjectLinkKind, string>> = {
   steam: "PC",
 };
 
+/*
+ * Sıralama kasıtlı: önce mobil uygulamalar, sonra markalı oyunlar,
+ * sonra web ve e-ticaret işleri. Hem Projeler sayfası hem ana sayfadaki
+ * öne çıkanlar bu diziden okuyor.
+ */
 export const projects: Project[] = [
-  {
-    slug: "logo-kidzania",
-    title: "Logo Yazılım × KidZania İstanbul",
-    service: "markali-oyunlar",
-    year: 2026,
-    image: "logo-kidzania.jpg",
-    summary: {
-      tr: "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
-      en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
-    },
-    links: [{ kind: "web", url: "https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" }],
-  },
-  {
-    slug: "date-for-dead",
-    title: "Date For Dead",
-    service: "markali-oyunlar",
-    year: 2026,
-    image: "date-for-dead.jpg",
-    summary: {
-      tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
-      en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
-    },
-    links: [{ kind: "steam", url: "https://store.steampowered.com/app/4622170/Date_For_Dead/" }],
-  },
   {
     slug: "ikra",
     title: "İkra",
@@ -91,21 +72,6 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "photosensia",
-    title: "PhotoSensia Kids",
-    service: "mobil-uygulama",
-    year: 2026,
-    image: "photosensia.jpg",
-    summary: {
-      tr: "Çocuklar için tasarlanmış, sade ve güvenli bir fotoğraf uygulaması. App Store ve Google Play'de yayında.",
-      en: "A simple, safe photo app designed for children. Live on the App Store and Google Play.",
-    },
-    links: [
-      { kind: "appstore", url: "https://apps.apple.com/app/id6624305795" },
-      { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids" },
-    ],
-  },
-  {
     slug: "pofu",
     title: "Pofu",
     service: "mobil-uygulama",
@@ -133,6 +99,44 @@ export const projects: Project[] = [
       en: "A calm, widget-first habit tracker. Check habits with one tap from the Home Screen, Lock Screen or Apple Watch, and forgiving streaks mean one missed day won't wipe your progress. Live in six languages.",
     },
     links: [{ kind: "appstore", url: "https://apps.apple.com/app/id6779264379" }],
+  },
+  {
+    slug: "photosensia",
+    title: "PhotoSensia Kids",
+    service: "mobil-uygulama",
+    year: 2026,
+    summary: {
+      tr: "Çocuklar için tasarlanmış, sade ve güvenli bir fotoğraf uygulaması. App Store ve Google Play'de yayında.",
+      en: "A simple, safe photo app designed for children. Live on the App Store and Google Play.",
+    },
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/app/id6624305795" },
+      { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids" },
+    ],
+  },
+  {
+    slug: "date-for-dead",
+    title: "Date For Dead",
+    service: "markali-oyunlar",
+    year: 2026,
+    image: "date-for-dead.jpg",
+    summary: {
+      tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
+      en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
+    },
+    links: [{ kind: "steam", url: "https://store.steampowered.com/app/4622170/Date_For_Dead/" }],
+  },
+  {
+    slug: "logo-kidzania",
+    title: "Logo Yazılım × KidZania İstanbul",
+    service: "markali-oyunlar",
+    year: 2026,
+    image: "logo-kidzania.jpg",
+    summary: {
+      tr: "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
+      en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
+    },
+    links: [{ kind: "web", url: "https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" }],
   },
   {
     slug: "divonia",
@@ -163,7 +167,7 @@ export const projects: Project[] = [
 ];
 
 /** Ana sayfada gösterilecek öne çıkanlar. */
-export const featuredSlugs = ["logo-kidzania", "date-for-dead", "ikra"] as const;
+export const featuredSlugs = ["ikra", "snappet", "date-for-dead"] as const;
 
 export function serviceOf(project: Project): ServiceSlug {
   return project.service;

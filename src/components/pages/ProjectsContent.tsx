@@ -31,14 +31,19 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
               <div
                 key={project.slug}
                 data-reveal
-                data-reveal-delay={(index % 2) * 100}
-                className={index % 4 === 0 ? "sm:col-span-2" : ""}
+                data-reveal-delay={(index % 3) * 100}
+                /*
+                 * Her üçüncü kart tam genişlikte: 1 geniş + 2 dar deseni
+                 * ızgarayı boşluksuz dolduruyor. Dörtte bir desende geniş
+                 * kart sıraya sığmadığı için yanında boş hücre kalıyordu.
+                 */
+                className={index % 3 === 0 ? "sm:col-span-2" : ""}
               >
                 <ProjectCard
                   project={project}
                   locale={locale}
                   dict={dict}
-                  featured={index % 4 === 0}
+                  featured={index % 3 === 0}
                 />
               </div>
             ))}

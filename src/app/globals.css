@@ -817,3 +817,52 @@ html.lenis body {
       100% 1px;
   }
 }
+
+/* ---------------------------------------------------------------
+   Proje kartındaki uygulama ikonu sahnesi
+   --------------------------------------------------------------- */
+
+@layer utilities {
+  /*
+   * Kare ikon geniş bir kutuya yerleşmiyor. Çözüm App Store'un yaptığının
+   * aynısı: arkada ikonun büyütülüp bulanıklaştırılmış kopyası bir renk
+   * alanı kuruyor, önde net ikon duruyor. Böylece kutu doluyor ve her
+   * kartın zemini kendi uygulamasının renginden geliyor.
+   */
+  .icon-stage {
+    position: relative;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .icon-stage-bg {
+    position: absolute;
+    inset: -25%;
+    width: 150%;
+    height: 150%;
+    object-fit: cover;
+    filter: blur(38px) saturate(1.25);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .icon-stage-fg {
+    position: relative;
+    height: 58%;
+    width: auto;
+    aspect-ratio: 1;
+    /* Köşe yarıçapı iOS'un squircle oranına yakın */
+    border-radius: 22.5%;
+    box-shadow:
+      0 18px 44px -14px rgb(0 0 0 / 0.55),
+      0 0 0 1px rgb(255 255 255 / 0.06);
+  }
+
+  /* Öne çıkan kart daha yayvan; ikon oransal olarak büyüyebilir */
+  .sm\:col-span-2 .icon-stage-fg {
+    height: 66%;
+  }
+}

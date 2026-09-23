@@ -1,3 +1,4 @@
+import { ServiceIcon } from "./ServiceIcon";
 import { type Project, platformOf } from "@/data/projects";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -25,28 +26,53 @@ export function ProjectCard({
         featured ? "sm:col-span-2" : ""
       }`}
     >
+      {/*
+        Görsel alanının üç biçimi var:
+        1. ikon  — uygulama ikonu; arkada kendi bulanık büyütülmüş kopyası,
+                   önde yuvarlatılmış köşeli net ikon. Daha önce ikon geniş
+                   kutunun ortasında küçücük yüzüyordu, kenarlarda kocaman
+                   boşluk kalıyordu.
+        2. fotoğraf — kutuyu tamamen dolduran görsel.
+        3. görselsiz — hizmet ikonu, sessiz bir alan. Kötü bir ekran
+                   görüntüsü koymaktansa boş bırakmak daha iyi duruyor.
+      */}
       <div
         className={`bg-surface-soft relative z-10 overflow-hidden ${
           featured ? "aspect-[16/8]" : "aspect-[16/10]"
         }`}
       >
-        {project.image ? (
+        {project.image && project.iconStyle ? (
+          <div className="icon-stage">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/projeler/${project.image}`}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className="icon-stage-bg"
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`/projeler/${project.image}`}
+              alt={project.title}
+              loading="lazy"
+              className="icon-stage-fg"
+            />
+          </div>
+        ) : project.image ? (
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={`/projeler/${project.image}`}
             alt={project.title}
             loading="lazy"
-            className={
-              project.iconStyle
-                ? "mx-auto h-full w-auto py-8"
-                : "h-full w-full object-cover"
-            }
+            className="h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full items-center justify-center">
-            <span className="text-muted font-display text-2xl font-semibold">
-              {project.title}
-            </span>
+          <div
+            className="text-line-strong flex h-full items-center justify-center"
+            aria-hidden="true"
+          >
+            <ServiceIcon slug={project.service} className="h-12 w-12" />
           </div>
         )}
       </div>
