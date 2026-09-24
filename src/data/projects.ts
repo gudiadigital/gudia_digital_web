@@ -375,26 +375,30 @@ export const projects: Project[] = [
     image: "icon-divonia.webp",
     iconStyle: true,
     summary: {
-      tr: "Bir oyun stüdyosu için kurumsal web sitesi: stüdyonun işlerini ve kimliğini yansıtan sade, hızlı bir tanıtım sitesi.",
-      en: "A corporate website for a game studio: a clean, fast presence that reflects the studio's work and identity.",
+      tr: "Bağımsız bir oyun stüdyosunun web sitesi: logodaki piksel kalpten üretilen 3B voksel sahne, oynanabilir kart destesi ve oyun diliyle yazılmış sayfalar.",
+      en: "Website for an independent game studio: a 3D voxel scene built from the logo's pixel heart, a playable card deck and pages written like a game.",
     },
     detail: {
       tr: [
-        "Bir oyun stüdyosu için kurumsal web sitesi: stüdyonun işlerini ve kimliğini yansıtan sade, hızlı bir tanıtım sitesi.",
-        "Site stüdyonun yayınladığı oyunları ve iş birliklerini tek sayfada topluyor; ziyaretçi birkaç saniyede ne yaptıklarını görüyor.",
+        "Bağımsız bir oyun stüdyosunun web sitesi: logodaki piksel kalpten üretilen 3B voksel sahne, oynanabilir kart destesi ve oyun diliyle yazılmış sayfalar.",
+        "Ana sayfada kalp, kaydırdıkça seviye seviye dağılıp yeniden toplanıyor. Hemen altındaki Date For Dead bölümünde, oyunun kendisi gibi sağa kaydırılan bir eşleşme destesi var; hizmetler bir yetenek ağacı olarak, 404 sayfası da bir GAME OVER ekranı olarak tasarlandı.",
+        "Site Türkçe ve İngilizce, gece ve gündüz modlu. Statik olarak üretiliyor; sunucu gerektirmeden hızlı açılıyor.",
       ],
       en: [
-        "A corporate website for a game studio: a clean, fast presence that reflects the studio's work and identity.",
-        "The site gathers the studio's released games and collaborations on a single page, so a visitor sees what they do within seconds.",
+        "Website for an independent game studio: a 3D voxel scene built from the logo's pixel heart, a playable card deck and pages written like a game.",
+        "On the home page the heart breaks apart and reassembles level by level as you scroll. Just below, the Date For Dead section has a swipe-right match deck like the game itself; services are laid out as a skill tree and the 404 page is a GAME OVER screen.",
+        "The site is in Turkish and English with light and dark modes. It is generated statically, so it loads fast without a server.",
       ],
     },
     facts: {
       tr: [
-        { k: "Tür", v: "Kurumsal site" },
+        { k: "Tür", v: "Stüdyo sitesi" },
+        { k: "Dil", v: "Türkçe, İngilizce" },
         { k: "Yıl", v: "2026" },
       ],
       en: [
-        { k: "Type", v: "Corporate site" },
+        { k: "Type", v: "Studio website" },
+        { k: "Languages", v: "Turkish, English" },
         { k: "Year", v: "2026" },
       ],
     },
