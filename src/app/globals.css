@@ -1152,3 +1152,154 @@ html.lenis body {
   }
 }
 
+
+/* ---------------------------------------------------------------
+   İletişim formu: gönderim sonrası bildirim penceresi
+   --------------------------------------------------------------- */
+
+.thanks-dialog {
+  margin: auto;
+  width: min(24rem, calc(100vw - 2rem));
+  max-width: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ink);
+  overflow: visible;
+}
+
+.thanks-dialog::backdrop {
+  background: rgb(6 7 14 / 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: thanks-fade 0.25s ease both;
+}
+
+.thanks-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background-color: var(--surface);
+  box-shadow:
+    var(--shadow-card),
+    inset 0 1px 0 var(--edge-light);
+  padding: 2.25rem 1.75rem 1.75rem;
+  text-align: center;
+  animation: thanks-pop 0.5s cubic-bezier(0.22, 1.25, 0.36, 1) both;
+}
+
+/* Onay işaretinin arkasından yayılan yumuşak ışık */
+.thanks-halo {
+  position: absolute;
+  z-index: -1;
+  top: 2.25rem;
+  left: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-left: -1.75rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, var(--glow-a), transparent 70%);
+  animation: thanks-halo 1.1s 0.45s ease-out both;
+}
+
+.thanks-check {
+  display: block;
+  margin: 0 auto;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Önce çember, ardından tik çiziliyor */
+.thanks-check circle {
+  stroke-dasharray: 151;
+  stroke-dashoffset: 151;
+  animation: thanks-draw 0.6s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.thanks-check path {
+  stroke-dasharray: 32;
+  stroke-dashoffset: 32;
+  animation: thanks-draw 0.35s 0.62s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.thanks-card h2,
+.thanks-card p,
+.thanks-card button {
+  animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.thanks-card h2 {
+  animation-delay: 0.2s;
+}
+.thanks-card p {
+  animation-delay: 0.28s;
+}
+.thanks-card button {
+  animation-delay: 0.36s;
+}
+
+.thanks-dialog.is-closing .thanks-card {
+  animation: thanks-out 0.18s ease-in both;
+}
+.thanks-dialog.is-closing::backdrop {
+  animation: thanks-fade 0.18s ease-in reverse both;
+}
+
+@keyframes thanks-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes thanks-pop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.92);
+  }
+}
+
+@keyframes thanks-out {
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+}
+
+@keyframes thanks-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes thanks-halo {
+  from {
+    opacity: 0.9;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thanks-dialog::backdrop,
+  .thanks-card,
+  .thanks-card h2,
+  .thanks-card p,
+  .thanks-card button,
+  .thanks-dialog.is-closing .thanks-card {
+    animation: none;
+  }
+  .thanks-halo {
+    display: none;
+  }
+  .thanks-check circle,
+  .thanks-check path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { serviceSlugs } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
-type Errors = Partial<Record<"name" | "email" | "message", string>>;
+type Errors = Partial<Record<"name" | "email" | "phone" | "contact" | "message", string>>;
 
 type Draft = { subject: string; body: string };
 
@@ -32,6 +32,8 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
   const [errors, setErrors] = useState<Errors>({});
   const [draft, setDraft] = useState<Draft | null>(null);
   const [status, setStatus] = useState<Status>("idle");
+  const [thanks, setThanks] = useState(false);
+  const submitRef = useRef<HTMLButtonElement>(null);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,22 +42,29 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
     const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
+    const phone = String(data.get("phone") ?? "").trim();
     const subject = String(data.get("subject") ?? "").trim() || dict.meta.siteName;
     const message = String(data.get("message") ?? "").trim();
 
     const nextErrors: Errors = {};
     if (!name) nextErrors.name = t.required;
-    if (!email) nextErrors.email = t.required;
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+    // Dönüş için e-posta ya da telefondan biri yeterli.
+    if (!email && !phone) nextErrors.contact = t.contactRequired;
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       nextErrors.email = t.invalidEmail;
+    if (phone && !isPhone(phone)) nextErrors.phone = t.invalidPhone;
     if (!message) nextErrors.message = t.required;
 
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    const body = [`${t.name}: ${name}`, `${t.email}: ${email}`, "", message].join(
-      "\n",
-    );
+    const body = [
+      `${t.name}: ${name}`,
+      ...(email ? [`${t.email}: ${email}`] : []),
+      ...(phone ? [`${t.phone}: ${phone}`] : []),
+      "",
+      message,
+    ].join("\n");
 
     if (!WEB3FORMS_KEY) {
       setDraft({ subject, body });
@@ -74,8 +83,10 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
           from_name: "gudiadigital.com",
           name,
           // Web3Forms bu alanı yanıt adresi yapar: gelen maile
-          // "Yanıtla" denince doğrudan ziyaretçiye gider.
-          email,
+          // "Yanıtla" denince doğrudan ziyaretçiye gider. Boşsa hiç
+          // gönderilmiyor, yoksa boş yanıt adresi olarak kalıyor.
+          ...(email ? { email } : {}),
+          ...(phone ? { phone } : {}),
           message,
           botcheck: data.get("botcheck") === "on",
         }),
@@ -84,6 +95,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       if (!response.ok || !result.success) throw new Error("web3forms");
       form.reset();
       setStatus("sent");
+      setThanks(true);
     } catch {
       setStatus("failed");
       setDraft({ subject, body });
@@ -114,27 +126,57 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       className="card rounded-2xl p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label={t.name} htmlFor="name" error={errors.name}>
-          <input
-            id="name"
-            name="name"
-            type="text"
-            autoComplete="name"
-            placeholder={t.namePlaceholder}
-            className={fieldClass}
-          />
-        </Field>
+        <div className="sm:col-span-2">
+          <Field label={t.name} htmlFor="name" error={errors.name}>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              placeholder={t.namePlaceholder}
+              className={fieldClass}
+            />
+          </Field>
+        </div>
 
-        <Field label={t.email} htmlFor="email" error={errors.email}>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            placeholder={t.emailPlaceholder}
-            className={fieldClass}
-          />
-        </Field>
+        <div className="sm:col-span-2 grid gap-5 sm:grid-cols-2">
+          <Field label={t.email} htmlFor="email" error={errors.email}>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              placeholder={t.emailPlaceholder}
+              aria-describedby="contact-hint"
+              aria-invalid={Boolean(errors.email || errors.contact)}
+              className={fieldClass}
+            />
+          </Field>
+
+          <Field label={t.phone} htmlFor="phone" error={errors.phone}>
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder={t.phonePlaceholder}
+              aria-describedby="contact-hint"
+              aria-invalid={Boolean(errors.phone || errors.contact)}
+              className={fieldClass}
+            />
+          </Field>
+
+          <p
+            id="contact-hint"
+            role={errors.contact ? "alert" : undefined}
+            className={`-mt-2 text-xs sm:col-span-2 ${
+              errors.contact ? "text-[#ff8a8a]" : "text-muted"
+            }`}
+          >
+            {errors.contact ?? t.contactHint}
+          </p>
+        </div>
       </div>
 
       {/*
@@ -194,6 +236,7 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       />
 
       <button
+        ref={submitRef}
         type="submit"
         disabled={status === "sending"}
         className="bg-accent mt-7 w-full rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto sm:px-8"
@@ -201,11 +244,6 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
         {status === "sending" ? t.submitting : t.submit}
       </button>
 
-      {status === "sent" && (
-        <p role="status" className="text-accent-3 mt-4 text-sm font-medium">
-          {t.success}
-        </p>
-      )}
       {status === "failed" && (
         <p role="alert" className="mt-4 text-sm text-[#ff8a8a]">
           {t.error}
@@ -213,7 +251,111 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       )}
 
       {draft && <SendPanel dict={dict} draft={draft} />}
+
+      {thanks && (
+        <SuccessDialog
+          text={t.success}
+          onClose={() => {
+            setThanks(false);
+            // Gönderim sırasında düğme devre dışı kaldığı için odak
+            // kayboluyor; dialog kendiliğinden geri veremiyor.
+            submitRef.current?.focus();
+          }}
+        />
+      )}
     </form>
+  );
+}
+
+/**
+ * Telefon için gevşek kontrol: yalnızca rakam, boşluk, +, -, parantez ve
+ * nokta; 7–15 rakam (uluslararası numaranın üst sınırı 15).
+ */
+function isPhone(value: string) {
+  if (!/^\+?[\d\s().-]+$/.test(value)) return false;
+  const digits = value.replace(/\D/g, "").length;
+  return digits >= 7 && digits <= 15;
+}
+
+/**
+ * Gönderim başarılı olunca açılan bildirim. Native <dialog> kullanılıyor:
+ * odak içeride tutuluyor, Esc kapatıyor, kapanınca odak Gönder düğmesine
+ * dönüyor. Kapanırken kısa bir çıkış animasyonu oynatılıp sonra kapatılıyor.
+ */
+function SuccessDialog({
+  text,
+  onClose,
+}: {
+  text: Dictionary["contact"]["form"]["success"];
+  onClose: () => void;
+}) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const [closing, setClosing] = useState(false);
+
+  useEffect(() => {
+    const dialog = ref.current;
+    if (dialog && !dialog.open) dialog.showModal();
+  }, []);
+
+  useEffect(() => {
+    if (!closing) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(
+      () => {
+        ref.current?.close();
+        onClose();
+      },
+      reduce ? 0 : 180,
+    );
+    return () => window.clearTimeout(timer);
+  }, [closing, onClose]);
+
+  return (
+    <dialog
+      ref={ref}
+      aria-labelledby="thanks-title"
+      aria-describedby="thanks-text"
+      className={`thanks-dialog ${closing ? "is-closing" : ""}`}
+      data-lenis-prevent
+      onCancel={(event) => {
+        // Esc: native kapanış yerine animasyonlu kapanış.
+        event.preventDefault();
+        setClosing(true);
+      }}
+      onClick={(event) => {
+        // Kartın dışına (arka plana) tıklamak kapatır.
+        if (event.target === event.currentTarget) setClosing(true);
+      }}
+    >
+      <div className="thanks-card">
+        <span className="thanks-halo" aria-hidden="true" />
+        <svg
+          className="thanks-check"
+          viewBox="0 0 56 56"
+          width="56"
+          height="56"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle cx="28" cy="28" r="24" />
+          <path d="M18 28.5l7 7 13-14" />
+        </svg>
+        <h2 id="thanks-title" className="font-display mt-5 text-xl font-semibold">
+          {text.title}
+        </h2>
+        <p id="thanks-text" className="text-muted mt-2 text-sm leading-relaxed">
+          {text.text}
+        </p>
+        <button
+          type="button"
+          autoFocus
+          onClick={() => setClosing(true)}
+          className="bg-accent mt-7 w-full rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+        >
+          {text.close}
+        </button>
+      </div>
+    </dialog>
   );
 }
 
