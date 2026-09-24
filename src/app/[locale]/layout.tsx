@@ -45,24 +45,27 @@ export async function generateMetadata({
       template: `%s · ${dict.meta.siteName}`,
     },
     description: dict.meta.description,
-    // Google arama sonucundaki ikon için kare ve 48'in katı boyut şart;
-    // bu yüzden 96 piksel ve boyutu belirtilmiş.
+    // Google arama sonucundaki ikon için kare ve 48'in katı boyut şart.
+    // ?v=2: ilk sürüm Next'in varsayılan ▲ ikonuyla yayınlanmıştı ve
+    // tarayıcılar onu önbellekte tutuyor; yeni adres yeniden indirtir.
     icons: {
       icon: [
+        { url: "/favicon.ico?v=2", sizes: "16x16 32x32 48x48 64x64" },
         {
-          url: "/brand/favicon-light.png",
+          url: "/brand/favicon-light.png?v=2",
           sizes: "96x96",
           type: "image/png",
           media: "(prefers-color-scheme: light)",
         },
         {
-          url: "/brand/favicon-dark.png",
+          url: "/brand/favicon-dark.png?v=2",
           sizes: "96x96",
           type: "image/png",
           media: "(prefers-color-scheme: dark)",
         },
+        { url: "/brand/icon-192.png?v=2", sizes: "192x192", type: "image/png" },
       ],
-      apple: "/brand/apple-touch-icon.png",
+      apple: { url: "/brand/apple-touch-icon.png?v=2", sizes: "180x180" },
     },
     // Ana sayfanın değerleri; alt sayfalar kendi adreslerini
     // src/i18n/seo.ts üzerinden bildiriyor.
