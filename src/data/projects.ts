@@ -401,45 +401,6 @@ export const projects: Project[] = [
     links: [{ kind: "web", url: "https://divoniastudios.com" }],
   },
   {
-    slug: "hadis-kitaplari",
-    title: "Hadis Kitapları",
-    service: "web-sitesi",
-    year: 2026,
-    image: "hadis-kitaplari.webp",
-    summary: {
-      tr: "Kütüb-i Sitte ve diğer kaynaklardaki hadisleri kelime, konu veya ravi adıyla aratan arama sitesi. Arapça metin, Türkçe meal ve kaynak bilgisiyle.",
-      en: "A search site for the hadiths in Kutub al-Sittah and other sources, by word, topic or narrator, with the Arabic text, Turkish translation and source reference.",
-    },
-    detail: {
-      tr: [
-        "Kütüb-i Sitte ve diğer kaynaklardaki hadisleri tek yerden aratan bir kütüphane. Kelime, konu ya da ravi adıyla arama yapılıyor; sonuçta Arapça metin, Türkçe meal ve kaynak bilgisi birlikte geliyor.",
-        "Sitede 31.728 hadis, 8 kitap ve 219 konu sayfası var. Konu başlıkları (iman ve itikat, ahiret, ibadet, ahlak, aile ve toplum) ayrı sayfalar hâlinde gezilebiliyor.",
-        "Arama kutusu klavye kısayoluyla da açılıyor; sık aranan konular hazır etiket olarak duruyor.",
-      ],
-      en: [
-        "A library that searches the hadiths of Kutub al-Sittah and other sources from one place. You can search by word, topic or narrator, and each result carries the Arabic text, the Turkish translation and the source reference.",
-        "The site holds 31,728 hadiths, 8 books and 219 topic pages. Topic sections — faith, the hereafter, worship, ethics, family and society — can be browsed as separate pages.",
-        "The search box opens with a keyboard shortcut, and frequently searched topics sit ready as tags.",
-      ],
-    },
-    facts: {
-      tr: [
-        { k: "Tür", v: "Arama ve içerik sitesi" },
-        { k: "Hadis", v: "31.728" },
-        { k: "Kitap", v: "8" },
-        { k: "Konu sayfası", v: "219" },
-      ],
-      en: [
-        { k: "Type", v: "Search and content site" },
-        { k: "Hadiths", v: "31,728" },
-        { k: "Books", v: "8" },
-        { k: "Topic pages", v: "219" },
-      ],
-    },
-    shots: 4,
-    links: [{ kind: "web", url: "https://hadiskitaplari.com" }],
-  },
-  {
     slug: "deyimo",
     title: "Deyimo",
     service: "web-sitesi",
