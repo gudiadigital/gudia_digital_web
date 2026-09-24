@@ -23,6 +23,8 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
       <PageHeader title={dict.projects.title} subtitle={dict.projects.subtitle} />
 
       <Container>
+        {/* Kart başlıkları h3; h1 ile arasında seviye atlamasın diye. */}
+        <h2 className="sr-only">{dict.nav.projects}</h2>
         {listedProjects.length === 0 ? (
           <div className="card rounded-2xl px-6 py-16 text-center sm:px-14">
             <p className="text-muted mx-auto max-w-xl text-base leading-relaxed">

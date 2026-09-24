@@ -3,7 +3,7 @@ export const tr = {
     siteName: "Gudia Dijital",
     title: "Gudia Dijital — Dijital Ürün ve Büyüme Stüdyosu",
     description:
-      "Markaların dijital ürünlerini oluşturuyor, iyileştiriyor ve büyütüyoruz. Mobil uygulama, web sitesi, markalı oyun, ürün iyileştirme, sosyal medya içeriği ve e-ticaret optimizasyonu.",
+      "Markaların dijital ürünlerini oluşturuyor, iyileştiriyor ve büyütüyoruz: mobil uygulama, web sitesi, markalı oyun, sosyal medya içeriği ve e-ticaret.",
   },
 
   nav: {

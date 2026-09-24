@@ -5,7 +5,7 @@ export const en: Dictionary = {
     siteName: "Gudia Digital",
     title: "Gudia Digital — Digital Products & Growth Studio",
     description:
-      "We build, improve and grow digital products for brands. Mobile apps, websites, branded games, product improvement, social media content and e-commerce optimization.",
+      "We build, improve and grow digital products for brands: mobile apps, websites, branded games, social media content and e-commerce.",
   },
 
   nav: {

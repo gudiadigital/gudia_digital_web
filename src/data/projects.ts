@@ -242,7 +242,8 @@ export const projects: Project[] = [
     rating: { score: 4.5, count: 87, store: "appstore", asOf: "2026-09-23" },
     shots: 6,
     links: [
-      { kind: "appstore", url: "https://apps.apple.com/app/id6756602687" },
+      // Yalnızca TR mağazasında; ülkesiz bağlantı yurt dışından açılınca 404 veriyor.
+      { kind: "appstore", url: "https://apps.apple.com/tr/app/id6756602687" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.gurkan.ikra" },
       { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
       { kind: "web", url: "https://ikraapp.netlify.app" },

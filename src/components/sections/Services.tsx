@@ -39,12 +39,16 @@ export function Services({
   return (
     <section id="hizmetler" className="scroll-mt-24 py-20 sm:py-24">
       <Container>
-        {showHeading && (
+        {showHeading ? (
           <SectionHeading
             eyebrow={dict.services.eyebrow}
             title={dict.services.title}
             subtitle={dict.services.subtitle}
           />
+        ) : (
+          /* Hizmetler sayfasında görünen başlık sayfanın h1'i; kartlar h3.
+             Arada h2 olmazsa ekran okuyucu başlık ağacında seviye atlıyor. */
+          <h2 className="sr-only">{dict.nav.services}</h2>
         )}
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

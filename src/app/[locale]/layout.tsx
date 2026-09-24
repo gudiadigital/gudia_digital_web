@@ -54,9 +54,14 @@ export async function generateMetadata({
       ],
       apple: "/brand/apple-touch-icon.png",
     },
+    // Ana sayfanın değerleri; alt sayfalar kendi adreslerini
+    // src/i18n/seo.ts üzerinden bildiriyor.
     alternates: {
       canonical: `/${locale}`,
-      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+      languages: {
+        ...Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+        "x-default": "/tr",
+      },
     },
     openGraph: {
       type: "website",

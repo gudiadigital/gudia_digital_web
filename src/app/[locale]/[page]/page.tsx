@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, isLocale } from "@/i18n/config";
+import { pageMetadata } from "@/i18n/seo";
 import { getDictionary } from "@/i18n/dictionaries";
 import {
   pageKeys,
   pageSegment,
+  pathFor,
   pageKeyFromSegment,
   type PageKey,
 } from "@/i18n/routes";
@@ -35,13 +37,17 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (!key) return {};
 
   const dict = getDictionary(locale);
-  const meta: Record<PageKey, Metadata> = {
+  const copy: Record<PageKey, { title: string; description: string }> = {
     about: { title: dict.nav.about, description: dict.about.lead },
     services: { title: dict.nav.services, description: dict.services.subtitle },
     projects: { title: dict.nav.projects, description: dict.projects.subtitle },
     contact: { title: dict.nav.contact, description: dict.contact.subtitle },
   };
-  return meta[key];
+  return pageMetadata({
+    locale,
+    paths: { tr: pathFor("tr", key), en: pathFor("en", key) },
+    ...copy[key],
+  });
 }
 
 export default async function LocalizedPage({ params }: Params) {

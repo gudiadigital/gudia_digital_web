@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, serviceSlugs, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { pageMetadata } from "@/i18n/seo";
 import {
   pageSegment,
   pageKeyFromSegment,
+  pathFor,
+  projectPath,
   serviceSegment,
   serviceFromSegment,
 } from "@/i18n/routes";
@@ -50,13 +53,27 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     const service = serviceFromSegment(locale, slug);
     if (!service) return {};
     const item = getDictionary(locale).services.items[service];
-    return { title: item.title, description: item.short };
+    return pageMetadata({
+      locale,
+      // Hizmet slug'ı dile göre değişiyor: /tr/hizmetler/web-sitesi ↔ /en/services/web-development
+      paths: {
+        tr: pathFor("tr", "services", service),
+        en: pathFor("en", "services", service),
+      },
+      title: item.title,
+      description: item.short,
+    });
   }
 
   if (key === "projects") {
     const project = projects.find((candidate) => candidate.slug === slug);
     if (!project) return {};
-    return { title: project.title, description: project.summary[locale] };
+    return pageMetadata({
+      locale,
+      paths: { tr: projectPath("tr", slug), en: projectPath("en", slug) },
+      title: project.title,
+      description: project.summary[locale],
+    });
   }
 
   return {};
