@@ -358,7 +358,7 @@ export const tr = {
       submit: "Mesajı Gönder",
       submitting: "Gönderiliyor…",
       success: "Mesajınız alındı. En kısa sürede dönüş yapacağız.",
-      error: "Mesaj gönderilemedi. Lütfen doğrudan contact@gudiadigital.com adresine yazın.",
+      error: "Mesaj gönderilemedi. Aşağıdaki seçeneklerden biriyle bize ulaştırabilirsiniz.",
       required: "Bu alan zorunlu",
       invalidEmail: "Geçerli bir e-posta adresi girin",
       // Gönder'e basınca açılan seçim paneli. Windows'ta çoğu zaman
@@ -393,7 +393,7 @@ export const tr = {
     rights: "Tüm hakları saklıdır.",
     privacyTitle: "Verileriniz",
     privacyNote:
-      "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formu mesajınızı seçtiğiniz e-posta uygulamasında ya da web postasında (Gmail, Outlook) açar; hiçbir veri bu site üzerinden toplanmaz veya saklanmaz.",
+      "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formuna yazdıklarınız yalnızca bize e-posta olarak ulaştırılmak üzere Web3Forms hizmeti üzerinden gönderilir; bu site hiçbir veri saklamaz.",
   },
 
   webShowcase: {

@@ -8,26 +8,39 @@ type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
 type Draft = { subject: string; body: string };
 
+type Status = "idle" | "sending" | "sent" | "failed";
+
 /**
- * Form mesajı hazırlar, ziyaretçi nereden göndereceğini seçer.
+ * Web3Forms erişim anahtarı. Mesajlar anahtarın oluşturulduğu adrese
+ * e-posta olarak gelir. Anahtar tarayıcıda çalışmak için tasarlandı,
+ * gizli değil; Web3Forms panelinden yalnızca bu alan adına kısıtlanabilir.
+ * Boş bırakılırsa form, gönderim seçenekleri paneline geri döner.
+ */
+const WEB3FORMS_KEY = "b1cf2142-424f-40cf-8fc1-c31cfbf8adb2";
+
+/**
+ * Mesaj Web3Forms üzerinden doğrudan contact adresine gönderilir.
  *
- * Önceden Gönder doğrudan mailto açıyordu. Mac'te Mail hazır olduğu için
- * çalışıyordu ama Windows'ta çoğu zaman varsayılan e-posta uygulaması
- * kurulu değil ve bağlantı hiçbir şey açmıyordu. Şimdi hazır mesaj için
- * Gmail, Outlook, e-posta uygulaması ve kopyalama seçenekleri sunuluyor;
- * hepsi sunucu gerektirmiyor, site yine hiçbir veri toplamıyor.
+ * Gönderim başarısız olursa (ağ hatası, kota) ziyaretçi takılı kalmasın
+ * diye Gmail, Outlook, e-posta uygulaması ve kopyalama seçenekleri
+ * açılır. Yalnızca mailto kullanmak yetmiyordu: Windows'ta çoğu zaman
+ * varsayılan e-posta uygulaması kurulu değil ve bağlantı hiçbir şey
+ * açmıyor.
  */
 export function ContactForm({ dict }: { dict: Dictionary }) {
   const t = dict.contact.form;
   const [errors, setErrors] = useState<Errors>({});
   const [draft, setDraft] = useState<Draft | null>(null);
+  const [status, setStatus] = useState<Status>("idle");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    if (status === "sending") return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
-    const subject = String(data.get("subject") ?? "").trim();
+    const subject = String(data.get("subject") ?? "").trim() || dict.meta.siteName;
     const message = String(data.get("message") ?? "").trim();
 
     const nextErrors: Errors = {};
@@ -43,7 +56,38 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
     const body = [`${t.name}: ${name}`, `${t.email}: ${email}`, "", message].join(
       "\n",
     );
-    setDraft({ subject: subject || dict.meta.siteName, body });
+
+    if (!WEB3FORMS_KEY) {
+      setDraft({ subject, body });
+      return;
+    }
+
+    setDraft(null);
+    setStatus("sending");
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `${subject} · ${name}`,
+          from_name: "gudiadigital.com",
+          name,
+          // Web3Forms bu alanı yanıt adresi yapar: gelen maile
+          // "Yanıtla" denince doğrudan ziyaretçiye gider.
+          email,
+          message,
+          botcheck: data.get("botcheck") === "on",
+        }),
+      });
+      const result = (await response.json()) as { success?: boolean };
+      if (!response.ok || !result.success) throw new Error("web3forms");
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("failed");
+      setDraft({ subject, body });
+    }
   }
 
   /* Ücretsiz inceleme başta ve varsayılan: sayfanın asıl çağrısı bu. */
@@ -59,9 +103,13 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
   return (
     <form
       onSubmit={handleSubmit}
-      /* Mesaj değişince hazır taslak eskiyor; panel kapanır, Gönder'e
+      /* Mesaj değişince hazır taslak ve durum mesajı eskiyor; Gönder'e
          yeniden basılınca güncel haliyle açılır. */
-      onChange={() => setDraft(null)}
+      onChange={() => {
+        if (status === "sending") return;
+        setDraft(null);
+        setStatus("idle");
+      }}
       noValidate
       className="card rounded-2xl p-6 sm:p-8"
     >
@@ -134,12 +182,35 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
         </Field>
       </div>
 
+      {/* Bot tuzağı: insanlar görmüyor, formu otomatik dolduran botlar
+          işaretliyor; Web3Forms işaretli gönderimi mail olarak iletmiyor. */}
+      <input
+        type="checkbox"
+        name="botcheck"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="hidden"
+      />
+
       <button
         type="submit"
-        className="bg-accent mt-7 w-full rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] sm:w-auto sm:px-8"
+        disabled={status === "sending"}
+        className="bg-accent mt-7 w-full rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto sm:px-8"
       >
-        {t.submit}
+        {status === "sending" ? t.submitting : t.submit}
       </button>
+
+      {status === "sent" && (
+        <p role="status" className="text-accent-3 mt-4 text-sm font-medium">
+          {t.success}
+        </p>
+      )}
+      {status === "failed" && (
+        <p role="alert" className="mt-4 text-sm text-[#ff8a8a]">
+          {t.error}
+        </p>
+      )}
 
       {draft && <SendPanel dict={dict} draft={draft} />}
     </form>

@@ -360,7 +360,7 @@ export const en: Dictionary = {
       submit: "Send Message",
       submitting: "Sending…",
       success: "Message received. We'll get back to you shortly.",
-      error: "Couldn't send the message. Please email contact@gudiadigital.com directly.",
+      error: "Couldn't send the message. You can still reach us with one of the options below.",
       required: "This field is required",
       invalidEmail: "Enter a valid email address",
       send: {
@@ -392,7 +392,7 @@ export const en: Dictionary = {
     rights: "All rights reserved.",
     privacyTitle: "Your data",
     privacyNote:
-      "This site uses no cookies, analytics or tracking. The contact form opens the message in the email app or webmail (Gmail, Outlook) you choose; no data is collected or stored by this site.",
+      "This site uses no cookies, analytics or tracking. What you write in the contact form is sent through the Web3Forms service only to deliver it to us by email; this site stores no data.",
   },
 
   webShowcase: {
