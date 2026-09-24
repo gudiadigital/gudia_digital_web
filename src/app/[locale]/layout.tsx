@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { preload } from "react-dom";
+import "../fonts.css";
 import "../globals.css";
 
 import { Header } from "@/components/Header";
@@ -10,20 +11,17 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin", "latin-ext"],
-  // Sitede yalnızca bu ağırlıklar kullanılıyor; değişken fontun tamamı gereksiz
-  weight: ["500", "600", "700"],
-  display: "swap",
-});
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
+/*
+ * Fontlar src/app/fonts.css'te tanımlı, dosyaları public/fonts altında.
+ * İlk boyamada gereken dört dosya önden yükleniyor: Türkçe metin latin-ext
+ * dosyasına da ihtiyaç duyduğu için o da listede.
+ */
+const FONT_FILES = [
+  "/fonts/space-grotesk-latin.woff2",
+  "/fonts/space-grotesk-latin-ext.woff2",
+  "/fonts/inter-latin.woff2",
+  "/fonts/inter-latin-ext.woff2",
+];
 
 const SITE_URL = "https://gudiadigital.com";
 
@@ -100,10 +98,14 @@ export default async function LocaleLayout({
 
   const dict = getDictionary(locale as Locale);
 
+  for (const href of FONT_FILES) {
+    preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  }
+
   return (
     <html
       lang={locale}
-      className={`${spaceGrotesk.variable} ${inter.variable} h-full`}
+      className="h-full"
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
