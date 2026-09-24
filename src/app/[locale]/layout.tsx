@@ -45,10 +45,22 @@ export async function generateMetadata({
       template: `%s · ${dict.meta.siteName}`,
     },
     description: dict.meta.description,
+    // Google arama sonucundaki ikon için kare ve 48'in katı boyut şart;
+    // bu yüzden 96 piksel ve boyutu belirtilmiş.
     icons: {
       icon: [
-        { url: "/brand/favicon-light.png", media: "(prefers-color-scheme: light)" },
-        { url: "/brand/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+        {
+          url: "/brand/favicon-light.png",
+          sizes: "96x96",
+          type: "image/png",
+          media: "(prefers-color-scheme: light)",
+        },
+        {
+          url: "/brand/favicon-dark.png",
+          sizes: "96x96",
+          type: "image/png",
+          media: "(prefers-color-scheme: dark)",
+        },
       ],
       apple: "/brand/apple-touch-icon.png",
     },
