@@ -363,6 +363,17 @@ export const en: Dictionary = {
       error: "Couldn't send the message. Please email contact@gudiadigital.com directly.",
       required: "This field is required",
       invalidEmail: "Enter a valid email address",
+      send: {
+        title: "Your message is ready",
+        hint: "Choose where to send it from. If there's no email app on your computer, send it with Gmail or Outlook, or copy the message and paste it into an email to us.",
+        gmail: "Send with Gmail",
+        outlook: "Send with Outlook",
+        app: "Open in email app",
+        copy: "Copy message",
+        copied: "Copied",
+        copyFailed: "Couldn't copy; please copy the message manually.",
+        to: "To",
+      },
     },
   },
 
@@ -381,7 +392,7 @@ export const en: Dictionary = {
     rights: "All rights reserved.",
     privacyTitle: "Your data",
     privacyNote:
-      "This site uses no cookies, analytics or tracking. The contact form opens the message in your own email app; no data is collected or stored by this site.",
+      "This site uses no cookies, analytics or tracking. The contact form opens the message in the email app or webmail (Gmail, Outlook) you choose; no data is collected or stored by this site.",
   },
 
   webShowcase: {

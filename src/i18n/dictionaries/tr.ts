@@ -361,6 +361,20 @@ export const tr = {
       error: "Mesaj gönderilemedi. Lütfen doğrudan contact@gudiadigital.com adresine yazın.",
       required: "Bu alan zorunlu",
       invalidEmail: "Geçerli bir e-posta adresi girin",
+      // Gönder'e basınca açılan seçim paneli. Windows'ta çoğu zaman
+      // varsayılan e-posta uygulaması kurulu olmuyor; mailto bağlantısı
+      // hiçbir şey açmıyordu. Web postası ve kopyalama her yerde çalışıyor.
+      send: {
+        title: "Mesajınız hazır",
+        hint: "Nereden göndermek istediğinizi seçin. Bilgisayarınızda e-posta uygulaması kurulu değilse Gmail ya da Outlook ile gönderin veya mesajı kopyalayıp adresimize yapıştırın.",
+        gmail: "Gmail ile gönder",
+        outlook: "Outlook ile gönder",
+        app: "E-posta uygulamasında aç",
+        copy: "Mesajı kopyala",
+        copied: "Kopyalandı",
+        copyFailed: "Kopyalanamadı; mesajı elle kopyalayın.",
+        to: "Alıcı",
+      },
     },
   },
 
@@ -379,7 +393,7 @@ export const tr = {
     rights: "Tüm hakları saklıdır.",
     privacyTitle: "Verileriniz",
     privacyNote:
-      "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formu mesajınızı kendi e-posta uygulamanızda açar; hiçbir veri bu site üzerinden toplanmaz veya saklanmaz.",
+      "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formu mesajınızı seçtiğiniz e-posta uygulamasında ya da web postasında (Gmail, Outlook) açar; hiçbir veri bu site üzerinden toplanmaz veya saklanmaz.",
   },
 
   webShowcase: {
