@@ -179,11 +179,18 @@ export function ScrollStory({
         {/* Üst boşluk sabit menünün yüksekliği (Header: h-16 sm:h-18).
             Paneller menünün altında kalan alanda ortalanıyor; tüm ekranda
             ortalanınca kısa ekranda ilk satır saydam menünün altına
-            giriyordu. */}
-        <Container className="relative z-10 flex h-full items-center pt-16 sm:pt-18">
-          <div ref={panelsRef} className="story-panels grid w-full">
-            {/* Panel 0 — karşılama. short-phone: kısa telefonda aralıklar ve
-                başlık küçülüyor ki panel menünün altına sığsın (globals.css). */}
+            giriyordu. "safe center": panel alandan uzunsa ortalama bırakılıp
+            üstten başlanıyor, taşan kısım menünün altına değil ekranın altına
+            gidiyor (araç çubukları açık telefonda h-dvh ~550px). items-center,
+            "safe" değerini tanımayan eski Safari için yedek; destekleyen
+            tarayıcıda CSS'te sonra gelen items-center-safe kazanıyor. */}
+        <Container className="relative z-10 flex h-full items-center items-center-safe pt-16 sm:pt-18">
+          {/* py-4: panel alana sığmayıp üstten başladığında menüyle arasında
+              boşluk kalsın; ortalanmış hâlde iki yana eşit, konumu değiştirmiyor. */}
+          <div ref={panelsRef} className="story-panels grid w-full py-4">
+            {/* Panel 0 — karşılama. short-phone / very-short-phone / short-wide:
+                kısa ekranda aralıklar ve başlık küçülüyor ki panel menünün
+                altına, çağrı düğmeleri de ekrana sığsın (globals.css). */}
             <div data-panel className="story-panel max-w-4xl">
               {/* Başlık markayı anmıyor; marka adı ve tanımı hemen üstünde.
                   Eskiden burada duran çerçeveli, noktalı rozet şablon izi
@@ -192,7 +199,7 @@ export function ScrollStory({
                   satır "·" işaretinden sonra kırılıyor, tanımın son kelimesi
                   tek başına alt satıra düşmüyor. */}
               <p
-                className="text-accent fade-up mb-5 font-display text-xs font-semibold uppercase tracking-[0.18em] short-phone:mb-3"
+                className="text-accent fade-up mb-5 font-display text-xs font-semibold uppercase tracking-[0.18em] short-phone:mb-3 very-short-phone:mb-2 short-wide:mb-3"
                 style={{ animationDelay: "0.05s" }}
               >
                 {hero.eyebrow.split(" · ").map((part, index) => (
@@ -202,7 +209,7 @@ export function ScrollStory({
                   </Fragment>
                 ))}
               </p>
-              <h1 className="text-[2.5rem] font-semibold leading-[1.06] short-phone:text-[2.125rem] sm:text-6xl lg:text-7xl">
+              <h1 className="text-[2.5rem] font-semibold leading-[1.06] short-phone:text-[2.125rem] very-short-phone:text-[1.875rem] sm:text-6xl lg:text-7xl short-wide:text-5xl">
                 {words.map((word, index) => (
                   <Fragment key={index}>
                     {index > 0 && " "}
@@ -226,7 +233,7 @@ export function ScrollStory({
                 ))}
               </h1>
 
-              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-5 gap-y-1.5 font-display text-sm font-medium tracking-wide short-phone:mt-5 sm:gap-x-3 sm:text-base">
+              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-5 gap-y-1.5 font-display text-sm font-medium tracking-wide short-phone:mt-5 very-short-phone:mt-3 very-short-phone:gap-x-4 very-short-phone:text-xs sm:gap-x-3 sm:text-base short-wide:mt-5">
                 {hero.pillars.map((pillar, index) => (
                   <li
                     key={pillar}
@@ -245,25 +252,25 @@ export function ScrollStory({
               </ul>
 
               <p
-                className="text-muted fade-up mt-7 max-w-2xl text-base leading-relaxed short-phone:mt-4 sm:text-lg"
+                className="text-muted fade-up mt-7 max-w-2xl text-base leading-relaxed short-phone:mt-4 very-short-phone:mt-3 very-short-phone:text-sm sm:text-lg short-wide:mt-4"
                 style={{ animationDelay: `${afterTitle + 0.3}s` }}
               >
                 {hero.subtitle}
               </p>
 
               <div
-                className="fade-up mt-9 flex flex-wrap items-center gap-3 short-phone:mt-6"
+                className="fade-up mt-9 flex flex-wrap items-center gap-3 short-phone:mt-6 very-short-phone:mt-4 very-short-phone:gap-2 short-wide:mt-6"
                 style={{ animationDelay: `${afterTitle + 0.42}s` }}
               >
                 <Link
                   href={pathFor(locale, "contact")}
-                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white very-short-phone:py-3 shadow-[var(--shadow-button)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
                 >
                   {hero.ctaPrimary}
                 </Link>
                 <Link
                   href={pathFor(locale, "services")}
-                  className="border-line-strong bg-space/30 text-ink hover:bg-space/60 rounded-full border px-6 py-3.5 text-sm font-semibold backdrop-blur-sm transition-all active:scale-[0.98]"
+                  className="border-line-strong bg-space/30 text-ink hover:bg-space/60 rounded-full border px-6 py-3.5 text-sm font-semibold backdrop-blur-sm very-short-phone:py-3 transition-all active:scale-[0.98]"
                 >
                   {hero.ctaSecondary}
                 </Link>

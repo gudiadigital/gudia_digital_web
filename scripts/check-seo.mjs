@@ -208,6 +208,11 @@ function checkJsonLd(file, html, canonical, lang) {
     fail(file, "jsonld", "application/ld+json bloğu yok");
     return;
   }
+  // Sayfa başına tek grafik: ikinci bir blok (ör. layout'a eklenen JsonLd)
+  // aynı @id'li düğümleri çoğaltır, arama motoru hangisini okuyacağını seçer.
+  if (blocks.length > 1) {
+    fail(file, "jsonld", `${blocks.length} ld+json bloğu var, 1 olmalı`);
+  }
 
   const nodes = [];
   const refs = [];
