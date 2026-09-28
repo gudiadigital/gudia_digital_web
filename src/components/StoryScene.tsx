@@ -186,28 +186,40 @@ const SOFTWARE_GL = /swiftshader|llvmpipe|software|basic render/i;
  * bekleme sayfayı dondurmuyor; donanım GPU'sunda yoklama ~10 ms sürüyor.
  * Worker ayrı bir betik olarak çalıştığı için kodu metin hâlinde duruyor;
  * paketleyiciden geçmiyor.
+ *
+ * Bayraklı bağlam alınamadığında bayraksız bir kez daha deneniyor: o
+ * zaman bağlam geliyorsa sürücü yazılımla çiziyor demek (false). İkisi de
+ * gelmiyorsa worker'da WebGL yok (null) ve karar ana iş parçacığına
+ * kalıyor: Safari 16.4–16.7 OffscreenCanvas'ta yalnızca 2B bağlam veriyor,
+ * bunu "GPU yok" saymak güçlü cihazlarda da sahneyi kapatıyordu.
  */
 const PROBE_WORKER = `onmessage = function () {
-  var renderer = "";
+  var result = null;
   try {
     var gl = new OffscreenCanvas(1, 1).getContext("webgl", { failIfMajorPerformanceCaveat: true });
     if (gl) {
       var info = gl.getExtension("WEBGL_debug_renderer_info");
-      renderer = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
+      result = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
+    } else {
+      gl = new OffscreenCanvas(1, 1).getContext("webgl");
+      if (gl) result = false;
+    }
+    if (gl) {
       var lose = gl.getExtension("WEBGL_lose_context");
       if (lose) lose.loseContext();
     }
   } catch (error) {}
-  postMessage(renderer);
+  postMessage(result);
 };`;
 
 /** Yoklama bu süreyi aşarsa GPU sahneyi taşıyacak durumda sayılmıyor. */
 const PROBE_TIMEOUT_MS = 5000;
 
 /**
- * Sonucu `onResult`a verir: false ise WebGL yok ya da yazılımla çiziliyor.
- * Worker kurulamıyorsa true döner; karar startScene'deki aynı denetimlere
- * kalır. Yoklamayı iptal eden fonksiyonu döndürür.
+ * Sonucu `onResult`a verir: false ise sürücü yazılımla çiziyor. Worker
+ * kurulamıyorsa ya da worker'da WebGL yoksa true döner; karar
+ * startScene'deki aynı denetimlere kalır. Yoklamayı iptal eden fonksiyonu
+ * döndürür.
  */
 function probeGpu(onResult: (usable: boolean) => void): () => void {
   if (typeof Worker !== "function" || typeof OffscreenCanvas !== "function") {
@@ -239,8 +251,11 @@ function probeGpu(onResult: (usable: boolean) => void): () => void {
   };
   const timer = window.setTimeout(() => finish(false), PROBE_TIMEOUT_MS);
   worker.onmessage = (event: MessageEvent<unknown>) => {
-    const renderer = typeof event.data === "string" ? event.data : "";
-    finish(renderer !== "" && !SOFTWARE_GL.test(renderer));
+    const result = event.data;
+    finish(
+      result === null ||
+        (typeof result === "string" && !SOFTWARE_GL.test(result)),
+    );
   };
   worker.onerror = () => finish(true);
   worker.postMessage(0);
@@ -276,6 +291,21 @@ const WATCH_SLOW_MS = 20;
 const SLOW_PIXEL_SHARE = 0.4;
 
 /*
+ * iOS Düşük Güç Modu ve Chrome'un enerji tasarrufu rAF'ı 30 fps'e
+ * sınırlıyor. Bekçi bunu bilmeden ortancayı ~33 ms görünce güçlü GPU'da
+ * da piksel bütçesini düşürüyordu (küre kenarları basamaklanıyor); 34 ms
+ * eşiğine bu kadar yakınken küçük bir oynama sahneyi kapatabiliyordu.
+ * Bu yüzden sahne kurulmadan önce birkaç boş karenin hızı ölçülüyor ve
+ * bekçinin eşikleri bu hızın altına inmiyor: sınıra yetişen sahne yavaş
+ * sayılmıyor. Yalnızca 30 fps'e kadarki sınır hesaba katılıyor; ölçüm
+ * uzun bir göreve denk gelirse eşikler bundan fazla gevşemiyor.
+ */
+const PACE_FRAMES = 8;
+const PACE_MAX_MS = 1000 / 30;
+// Kare zamanları biraz oynuyor; sınırın hemen üstü de "yetişiyor" sayılıyor.
+const PACE_SLACK = 1.15;
+
+/*
  * Girdi yokken sahne 30 fps'e iniyor; hareket yavaş olduğu için fark
  * görünmüyor. Bir süre hiç girdi gelmezse son 1,5 sn'de yavaşlayıp duruyor,
  * kaydırma ya da imleç hareketiyle kaldığı yerden devam ediyor.
@@ -290,12 +320,36 @@ function median(values: readonly number[]) {
 }
 
 /**
+ * Tarayıcının boştayken verdiği kare aralığını (ms, ortanca) `onResult`a
+ * verir. Ölçümü iptal eden fonksiyonu döndürür.
+ */
+function measurePace(onResult: (ms: number) => void): () => void {
+  const gaps: number[] = [];
+  let last = 0;
+  let frame = 0;
+  const tick = (now: number) => {
+    if (last) gaps.push(now - last);
+    last = now;
+    if (gaps.length < PACE_FRAMES) {
+      frame = requestAnimationFrame(tick);
+    } else {
+      frame = 0;
+      onResult(median(gaps));
+    }
+  };
+  frame = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(frame);
+}
+
+/**
  * Sahneyi kurar ve döngüyü başlatır; kapatan fonksiyonu döndürür. Sahne
  * hiç başlamazsa ya da sonradan geri düşerse tuval görünmez kalır.
  */
 function startScene(
   canvas: HTMLCanvasElement,
   progressRef: RefObject<number>,
+  /** Tarayıcının boştaki kare aralığı (ms); bkz. measurePace. */
+  pace: number,
 ): () => void {
   const gl = canvas.getContext("webgl", {
     alpha: false,
@@ -463,6 +517,9 @@ function startScene(
     let warmUntil = 0;
     let stalls = 0;
     const gaps: number[] = [];
+    const paced = Math.min(pace, PACE_MAX_MS) * PACE_SLACK;
+    const stopAbove = Math.max(WATCH_MEDIAN_MS, paced);
+    const slowAbove = Math.max(WATCH_SLOW_MS, paced);
 
     const render = (now: number) => {
       frame = 0;
@@ -491,14 +548,14 @@ function startScene(
           if (gap > WATCH_GAP_MS) stalls++;
           if (
             stalls >= WATCH_STALLS ||
-            (gaps.length >= WATCH_FRAMES && median(gaps) > WATCH_MEDIAN_MS)
+            (gaps.length >= WATCH_FRAMES && median(gaps) > stopAbove)
           ) {
             stop();
             return;
           }
           if (gaps.length >= WATCH_FRAMES) {
             watching = false;
-            if (median(gaps) > WATCH_SLOW_MS) maxPixels *= SLOW_PIXEL_SHARE;
+            if (median(gaps) > slowAbove) maxPixels *= SLOW_PIXEL_SHARE;
           }
         }
       }
@@ -632,13 +689,17 @@ export function StoryScene({
      * O ana kadar degrade zemin görünüyor.
      */
     let stop: (() => void) | undefined;
-    let cancelProbe: (() => void) | undefined;
+    let cancel: (() => void) | undefined;
     let idle = 0;
     let timer = 0;
     const begin = () => {
-      cancelProbe = probeGpu((usable) => {
-        cancelProbe = undefined;
-        if (usable) stop = startScene(canvas, progressRef);
+      cancel = probeGpu((usable) => {
+        cancel = undefined;
+        if (!usable) return;
+        cancel = measurePace((pace) => {
+          cancel = undefined;
+          stop = startScene(canvas, progressRef, pace);
+        });
       });
     };
     const whenIdle = () => {
@@ -656,7 +717,7 @@ export function StoryScene({
       window.removeEventListener("load", whenIdle);
       if (idle) window.cancelIdleCallback(idle);
       if (timer) window.clearTimeout(timer);
-      cancelProbe?.();
+      cancel?.();
       stop?.();
     };
   }, [progressRef]);

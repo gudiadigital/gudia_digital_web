@@ -34,12 +34,14 @@ export function SmoothScroll() {
      *
      * Lenis'e kendi saatimiz veriliyor: döngü dururken saat de duruyor.
      * Gerçek zaman verilseydi uyandığı ilk karede aradaki süreyi tek adımda
-     * işleyip hedefe zıplardı.
+     * işleyip hedefe zıplardı. Uyandığı kare bir kare süresi sayılıyor:
+     * sıfır sayılsaydı kaydırma tekerleğin geldiği karede değil, bir sonraki
+     * karede başlardı (sürekli dönen döngüde bu karede başlıyordu).
      */
     let clock = performance.now();
     let last = 0;
     const loop = (time: number) => {
-      clock += last ? time - last : 0;
+      clock += last ? time - last : 1000 / 60;
       last = time;
       lenis?.raf(clock);
       if (lenis?.isScrolling === "smooth") {
@@ -69,6 +71,9 @@ export function SmoothScroll() {
         touchMultiplier: 1.5,
         wheelMultiplier: 1,
       });
+      // Lenis ilk raf çağrısındaki süreyi sıfır sayıyor; saat şimdiden
+      // tanıtılıyor ki sayfadaki ilk tekerlek hareketi de hemen başlasın.
+      lenis.raf(clock);
 
       // Lenis kendi tekerlek dinleyicisini kurucuda ekliyor; bu ondan sonra
       // çalışıyor, yani uyandığımızda kaydırma hedefi çoktan ayarlanmış oluyor.

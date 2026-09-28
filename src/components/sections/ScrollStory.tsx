@@ -63,7 +63,10 @@ export function ScrollStory({
   const percentRef = useRef<HTMLSpanElement>(null);
   const { hero } = dict;
   const words = toWords(hero.title);
-  const afterTitle = 0.2 + words.length * 0.05;
+  // Alan listesi (Web, Mobil…) ve çağrı başlığın son kelimesinin hemen
+  // ardından geliyor; kelime gecikmesi (0,05 + i·0,03 sn) değişirse bu da
+  // değişmeli.
+  const afterTitle = 0.1 + words.length * 0.03;
 
   useEffect(() => {
     const section = sectionRef.current;
