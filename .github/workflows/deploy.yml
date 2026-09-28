@@ -40,8 +40,9 @@ jobs:
       # karşılaştırıp değişen adresleri .indexnow-urls.json'a yazıyor.
       - run: npm run build
 
+      # Dosya yoksa boş liste: isteğe bağlı IndexNow adımı yayını durdurmasın.
       - id: changed
-        run: echo "urls=$(cat .indexnow-urls.json)" >> "$GITHUB_OUTPUT"
+        run: echo "urls=$(cat .indexnow-urls.json 2>/dev/null || echo '[]')" >> "$GITHUB_OUTPUT"
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -76,10 +77,10 @@ jobs:
         with:
           node-version: 22
 
-      # Anahtar public/<anahtar>.txt'ten okunuyor; betik anahtar dosyası
-      # canlıda görünene kadar bekliyor (10 deneme, 30 sn arayla).
+      # Anahtar public/<anahtar>.txt'ten, alan adı public/CNAME'den okunuyor;
+      # betik anahtar dosyası canlıda görünene kadar bekliyor (10 deneme,
+      # 30 sn arayla).
       - run: node scripts/indexnow.mjs
         env:
-          SITE: https://gudiadigital.com
           URLS: ${{ needs.build.outputs.urls }}
           RESUBMIT_ALL: ${{ inputs.resubmit_all && '1' || '' }}

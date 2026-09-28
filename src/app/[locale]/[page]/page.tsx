@@ -9,6 +9,7 @@ import {
   pageSegment,
   pathFor,
   pageKeyFromSegment,
+  type PageKey,
 } from "@/i18n/routes";
 import { JsonLd } from "@/components/JsonLd";
 import { AboutContent } from "@/components/pages/AboutContent";
@@ -17,6 +18,7 @@ import { ProjectsContent } from "@/components/pages/ProjectsContent";
 import { ContactContent } from "@/components/pages/ContactContent";
 import { PrivacyContent } from "@/components/pages/PrivacyContent";
 import { GuidesContent } from "@/components/pages/GuidesContent";
+import type { PageContentProps } from "@/components/pages/types";
 import { publishedGuides } from "@/data/guides";
 
 type Params = { params: Promise<{ locale: string; page: string }> };
@@ -28,6 +30,16 @@ type Params = { params: Promise<{ locale: string; page: string }> };
  * yeterli oluyor.
  */
 export const dynamicParams = false;
+
+/** Her sayfanın içeriği; yeni bir PageKey burada eksik kalırsa tür denetimi durduruyor. */
+const pageContent: Record<PageKey, (props: PageContentProps) => React.ReactNode> = {
+  about: AboutContent,
+  services: ServicesContent,
+  projects: ProjectsContent,
+  contact: ContactContent,
+  privacy: PrivacyContent,
+  guides: GuidesContent,
+};
 
 /** Rehber dizini yalnızca yayında en az bir rehber varken; boş sayfa üretilmiyor. */
 const builtKeys = pageKeys.filter(
@@ -63,48 +75,11 @@ export default async function LocalizedPage({ params }: Params) {
   const dict = getDictionary(locale);
   const schema = <JsonLd data={pageSchema(locale, { kind: "page", key })} />;
 
-  switch (key) {
-    case "about":
-      return (
-        <>
-          {schema}
-          <AboutContent locale={locale} dict={dict} />
-        </>
-      );
-    case "services":
-      return (
-        <>
-          {schema}
-          <ServicesContent locale={locale} dict={dict} />
-        </>
-      );
-    case "projects":
-      return (
-        <>
-          {schema}
-          <ProjectsContent locale={locale} dict={dict} />
-        </>
-      );
-    case "contact":
-      return (
-        <>
-          {schema}
-          <ContactContent locale={locale} dict={dict} />
-        </>
-      );
-    case "privacy":
-      return (
-        <>
-          {schema}
-          <PrivacyContent locale={locale} dict={dict} />
-        </>
-      );
-    case "guides":
-      return (
-        <>
-          {schema}
-          <GuidesContent locale={locale} dict={dict} />
-        </>
-      );
-  }
+  const Content = pageContent[key];
+  return (
+    <>
+      {schema}
+      <Content locale={locale} dict={dict} />
+    </>
+  );
 }

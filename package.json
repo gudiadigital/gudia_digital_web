@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/postbuild.mjs && node scripts/lastmod.mjs && node scripts/check-seo.mjs",
+    "build": "next build && node scripts/postbuild.mjs && node scripts/lastmod.mjs && REQUIRE_LASTMOD=1 node scripts/check-seo.mjs && node scripts/check-fonts.mjs",
     "start": "next start",
     "lint": "eslint",
     "check:seo": "node scripts/check-seo.mjs"

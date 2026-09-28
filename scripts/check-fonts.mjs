@@ -12,7 +12,9 @@
  * hata. Google'ın latin aralığı dosyada olmayan karakterleri de kapsadığı
  * için (ör. U+2030 ‰) yalnızca aralığa bakmak yetmiyor.
  *
- * Kullanım: önce `npm run build`, sonra `node scripts/check-fonts.mjs`.
+ * Kullanım: `npm run build` sonunda check-seo'dan sonra kendiliğinden
+ * çalışıyor; eksik karakter derlemeyi (ve yayını) durdurur. Tek başına:
+ * önce `npm run build`, sonra `node scripts/check-fonts.mjs`.
  * Yalnızca Node'un kendi modülleri kullanılıyor; bağımlılık yok.
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";

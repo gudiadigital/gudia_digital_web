@@ -7,10 +7,12 @@
  * aynılığı dahil), sitemap tutarlılığı ve llms.txt. Örneğin /en/privacy/
  * açıklamasının "Law No." ile bitmesi gibi hatalar ancak çıktıda görünüyor.
  *
- * Kullanım: `npm run build` sonunda kendiliğinden çalışıyor; hata varsa
- * derleme (ve GitHub Actions'taki yayın) durur. Tek başına:
- * `npm run check:seo` (önce derleme gerekli).
+ * Kullanım: `npm run build` sonunda REQUIRE_LASTMOD=1 ile kendiliğinden
+ * çalışıyor; hata varsa derleme (ve GitHub Actions'taki yayın) durur. Tek
+ * başına: `npm run check:seo` (önce derleme gerekli).
  *   REQUIRE_LASTMOD=1  sitemap'teki her <url> için ISO-8601 <lastmod> ister.
+ *                      Derlemede lastmod.mjs her zaman önce çalıştığı için
+ *                      orada açık; tek başına `next build` çıktısında yok.
  *   ROOT_STRICT=1      kök sayfa (out/index.html) kurallarını hataya çevirir;
  *                      kök sayfa değişikliği sahibinin onayını beklediği için
  *                      varsayılan olarak yalnızca uyarı veriyorlar.
@@ -18,10 +20,9 @@
  * Yalnızca Node'un kendi modülleri kullanılıyor; bağımlılık yok.
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join, relative, resolve, sep } from "node:path";
+import { join, relative } from "node:path";
+import { OUT, SITE_URL, fileOf, locOf, urlOf } from "./site.mjs";
 
-const SITE_URL = "https://gudiadigital.com";
-const OUT = resolve("out");
 const ROOT_STRICT = process.env.ROOT_STRICT === "1";
 const REQUIRE_LASTMOD = process.env.REQUIRE_LASTMOD === "1";
 
@@ -132,19 +133,6 @@ function metaContent(head, name) {
   return tags(head, "meta")
     .filter((meta) => meta.name?.toLowerCase() === name)
     .map((meta) => meta.content ?? "");
-}
-
-/** out/tr/hakkimizda/index.html → https://gudiadigital.com/tr/hakkimizda/ */
-function urlOf(file) {
-  const dir = relative(OUT, file).split(sep).slice(0, -1).join("/");
-  return `${SITE_URL}/${dir ? `${dir}/` : ""}`;
-}
-
-/** Site içi adres → sayfa dosyası; site dışıysa null. */
-function fileOf(url) {
-  if (!url.startsWith(`${SITE_URL}/`)) return null;
-  const path = url.slice(SITE_URL.length).replace(/[?#].*$/, "");
-  return join(OUT, ...path.split("/").filter(Boolean), "index.html");
 }
 
 /** Sayfadaki bağlantıyı mutlak ve sonu / ile biten adrese çevirir. */
@@ -311,25 +299,29 @@ function checkJsonLd(file, html, body, canonical, lang) {
   checkBreadcrumb(file, body, canonical, nodes);
 
   // SSS: yapılandırılmış veri yalnızca sayfada görünen soru-cevabı
-  // anlatabilir. Her soru sayfada bir başlık, her cevap da görünen metnin
-  // içinde birebir olmalı; biri sözlükte değişip öteki kalırsa yakalanır.
+  // anlatabilir. Her soru sayfada bir başlık, cevabı da o başlıktan sonraki
+  // ilk paragraf olmalı ve birebir aynı. Bütün metinde aramak yetmiyordu:
+  // cevabın başına ya da sonuna eklenen parça, cevap sayfada başka yerde de
+  // geçiyorsa gözden kaçıyordu.
   const faqPages = nodes.filter((node) => [node["@type"]].flat().includes("FAQPage"));
   if (faqPages.length === 0) return;
   const headings = [...body.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)].map(
-    (match) => plainText(match[2]),
+    (match) => ({ text: plainText(match[2]), end: match.index + match[0].length }),
   );
-  const text = plainText(body);
   for (const faq of faqPages) {
     const questions = [faq.mainEntity ?? []].flat();
     if (questions.length === 0) fail(file, "faq", "FAQPage'de soru yok");
     for (const question of questions) {
       const name = String(question?.name ?? "").replace(/\s+/g, " ").trim();
       const answer = String(question?.acceptedAnswer?.text ?? "").replace(/\s+/g, " ").trim();
-      if (!headings.includes(name)) {
+      const heading = headings.find((item) => item.text === name);
+      if (!heading) {
         fail(file, "faq", `soru sayfada başlık olarak yok: ${name}`);
+        continue;
       }
-      if (!answer || !text.includes(answer)) {
-        fail(file, "faq", `cevabı sayfada birebir yok: ${name}`);
+      const shown = body.slice(heading.end).match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
+      if (!answer || shown === undefined || plainText(shown) !== answer) {
+        fail(file, "faq", `cevap, sorunun altındaki ilk paragrafla birebir aynı değil: ${name}`);
       }
     }
   }
@@ -457,7 +449,7 @@ if (!existsSync(sitemapFile)) {
   const xml = readFileSync(sitemapFile, "utf8");
   const listed = new Set();
   for (const [, entry] of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
-    const loc = decodeEntities(entry.match(/<loc>([\s\S]*?)<\/loc>/)?.[1]?.trim() ?? "");
+    const loc = locOf(entry) ?? "";
     if (!loc) {
       fail(sitemapRel, "sitemap", "<loc> olmayan <url> var");
       continue;

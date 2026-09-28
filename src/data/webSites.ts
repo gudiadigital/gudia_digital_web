@@ -83,7 +83,7 @@ export const webSites: WebSite[] = [
     project: "life-planner",
     summary: {
       tr: "Gezinme sayfanın altında duran bir uygulama çubuğu. Açılış ortalanmış ve görselsiz; gösterge şeridi kenardan kenara uzanıyor, özellikler künye satırlarına dönüşüyor.",
-      en: "Navigation sits at the bottom of the page like an app tab bar. The opening is centred and image-free, the metric strip runs edge to edge, and the features become spec-sheet rows.",
+      en: "Navigation sits at the bottom of the page like an app tab bar. The opening is centered and image-free, the metric strip runs edge to edge, and the features become spec-sheet rows.",
     },
     tags: {
       tr: ["Alt gezinme çubuğu", "Koyu tema", "7 dil", "Künye satırları"],
@@ -102,7 +102,7 @@ export const webSites: WebSite[] = [
     },
     tags: {
       tr: ["Kemer motifi", "Merkez eksen", "TR / EN", "Sıfırdan kurulum"],
-      en: ["Arch motif", "Centre axis", "TR / EN", "Built from scratch"],
+      en: ["Arch motif", "Center axis", "TR / EN", "Built from scratch"],
     },
   },
   {
@@ -113,7 +113,7 @@ export const webSites: WebSite[] = [
     project: "deyimo",
     summary: {
       tr: "Gazete künyesi, ortalanmış bir manşet ve iki sütuna akan bir köşe yazısı. İlk harf büyütülmüş, sayfa boyunca ince çizgiler ve film greni var.",
-      en: "A newspaper masthead, a centred headline and a column of text that flows into two. The first letter is dropped, and hairlines and film grain run through the whole page.",
+      en: "A newspaper masthead, a centered headline and a column of text that flows into two. The first letter is dropped, and hairlines and film grain run through the whole page.",
     },
     tags: {
       tr: ["Gazete künyesi", "İki sütun akış", "TR / EN", "SSS ve yasal sayfalar"],

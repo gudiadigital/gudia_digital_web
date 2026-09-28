@@ -1,6 +1,6 @@
 import { locales, type Locale, type ServiceSlug } from "@/i18n/config";
 import type { SourceLink } from "@/i18n/dictionaries";
-import { projects } from "./projects";
+import { projectBySlug } from "./projects";
 
 /**
  * Rehber yazıları: /tr/rehber/<slug>/, /en/guides/<slug>/.
@@ -252,11 +252,7 @@ function validate(list: Guide[]): Guide[] {
     if (guide.updatedAt < guide.publishedAt) {
       throw new Error(`${where}: updatedAt, publishedAt'ten önce olamaz`);
     }
-    for (const slug of guide.relatedProjects ?? []) {
-      if (!projects.some((project) => project.slug === slug)) {
-        throw new Error(`${where}: bilinmeyen proje "${slug}"`);
-      }
-    }
+    for (const slug of guide.relatedProjects ?? []) projectBySlug(slug, where);
   }
   return list;
 }

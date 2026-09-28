@@ -1,7 +1,6 @@
 import { publishedGuides, type Guide } from "@/data/guides";
 import {
-  listedProjects,
-  webProjects,
+  projectsInPageOrder,
   type Project,
   type ProjectLinkKind,
   type ProjectSchema,
@@ -9,8 +8,7 @@ import {
 import {
   groupOfService,
   locales,
-  serviceGroups,
-  servicesByGroup,
+  orderedServices,
   type Locale,
   type ServiceSlug,
 } from "./config";
@@ -60,9 +58,6 @@ const workId = (slug: string) => `${SITE_URL}/#work-${slug}`;
 const ref = (id: string) => ({ "@id": id });
 
 const TURKIYE = { "@type": "Country", name: "Türkiye" };
-
-/** Hizmetler, sitedeki sırasıyla: kur → iyileştir → büyüt. */
-const orderedServices = serviceGroups.flatMap((group) => servicesByGroup[group]);
 
 /**
  * Başka stüdyoların düğümleri. Kimliği biz veriyoruz, onlarınkini
@@ -528,7 +523,7 @@ export function pageSchema(locale: Locale, target: PageTarget): JsonLdGraph {
         itemList(
           locale,
           target,
-          [...listedProjects, ...webProjects].map((project) => ({
+          projectsInPageOrder.map((project) => ({
             name: project.title,
             path: projectPath(locale, project.slug),
           })),

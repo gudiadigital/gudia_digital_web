@@ -74,7 +74,7 @@ export const en: Dictionary = {
       improve: {
         label: "Improve",
         title: "Fix what you have",
-        text: "If your app is dated, your site is slow or the design has fallen behind, we repair, speed up and modernise it without a rewrite.",
+        text: "If your app is dated, your site is slow or the design has fallen behind, we repair, speed up and modernize it without a rewrite.",
         specs: [
           { k: "Start", v: "Free written review" },
           { k: "Method", v: "Repair without a rewrite" },
@@ -127,11 +127,11 @@ export const en: Dictionary = {
         short:
           "Apps built from scratch for iOS and Android: booking, membership, loyalty, payments and customer portals tailored to your business.",
         answer:
-          "Our mobile app development service builds a custom iOS and Android app for your business from scratch and releases it on the App Store and Google Play. It's for businesses that need an app that directly touches their operations or sales, such as booking, membership, loyalty, payments or a customer portal.",
+          "Our mobile app development service builds a custom iOS and Android app for your business from scratch and releases it on the App Store and Google Play. It's for businesses that need an app for things like booking, membership, loyalty, payments or a customer portal.",
         intro:
           "Our goal isn't just to hand over an app; it's to build a product the business actually uses, one that touches operations or sales. With our co-founder Gürkan's background as an iOS developer, we go especially deep in the Apple ecosystem.",
         forWhom: [
-          "Businesses that want to move booking, membership or a loyalty programme into an app",
+          "Businesses that want to move booking, membership or a loyalty program into an app",
           "Businesses that want to take payments from customers through an app",
           "Teams that need a customer portal or internal operations screens",
           "Anyone who wants a native iOS app built with Swift and SwiftUI",
@@ -223,15 +223,15 @@ export const en: Dictionary = {
           },
           {
             q: "Do you build multilingual sites?",
-            a: "Yes, a multilingual setup is available as an option. The Life Planner marketing site is published in seven languages, and the Divonia Studios site in Turkish and English.",
-            projects: ["life-planner", "divonia"],
+            a: "Yes, a multilingual setup is available as an option. The Life Planner marketing site is published in seven languages, and the Deyimo site in Turkish and English.",
+            projects: ["life-planner", "deyimo"],
           },
           {
             q: "Can I update the site myself later?",
             a: "Yes. At handover we train you on updating the content yourself, and if you'd like, we add a content management panel too.",
           },
           {
-            q: "Is search engine optimisation (SEO) included?",
+            q: "Is search engine optimization (SEO) included?",
             a: "Technical SEO, speed and accessibility work are part of the scope. At handover you also get a performance and SEO report.",
           },
           {
@@ -256,7 +256,7 @@ export const en: Dictionary = {
         forWhom: [
           "Brands that want to draw visitors to their trade show stand",
           "Campaigns that need an interactive layer, such as a prize wheel or a competition",
-          "Organisations that want to teach through a simulation or a game",
+          "Organizations that want to teach through a simulation or a game",
           "Event teams that want to collect participant data and get a report afterwards",
         ],
         features: [
@@ -287,7 +287,7 @@ export const en: Dictionary = {
           },
           {
             q: "Can I see examples?",
-            a: "For examples, see the project pages for the interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, and for PhotoSensia Kids, an app that teaches children photography through play.",
+            a: "For examples, see the project pages for the interactive experience built for the Logo Yazılım Software Development Center at KidZania İstanbul, and for PhotoSensia Kids, an app that teaches children photography through play.",
             projects: ["logo-kidzania", "photosensia"],
           },
         ] as ServiceFaq[],
@@ -302,7 +302,7 @@ export const en: Dictionary = {
         short:
           "You already have an app or site, but it's dated, slow or broken. We fix it without starting over.",
         answer:
-          "Our digital product improvement service repairs, speeds up and modernises dated, slow or broken apps and websites without a rewrite. It's for businesses that already have an app or site and don't want to rebuild it from scratch.",
+          "Our digital product improvement service repairs, speeds up and modernizes dated, slow or broken apps and websites without a rewrite. It's for businesses that already have an app or site and don't want to rebuild it from scratch.",
         intro:
           "Most businesses don't need a new product — they need the one they have to work properly. We start with a free review and write down concretely what needs fixing; you choose the scope. Apple warns developers when an app hasn't been updated in three years and has had few or no downloads over the past 12 months: unless an update is submitted within 90 days, the app is removed from the App Store. This isn't work to postpone.",
         sources: [
@@ -326,18 +326,18 @@ export const en: Dictionary = {
           "Monthly maintenance: backups, updates, security, small changes",
         ],
         deliverables: [
-          "Written review with a prioritised list",
+          "Written review with a prioritized list",
           "Fixed and released version",
           "Before / after performance comparison",
         ],
         faq: [
           {
             q: "What does the free review include?",
-            a: "We look at your app, site or store and send you a written review with a prioritised list of what concretely needs fixing. The review is free with no obligation, and you choose which work gets done.",
+            a: "We look at your app, site or store and send you a written review with a prioritized list of what concretely needs fixing. The review is free with no obligation, and you choose which work gets done.",
           },
           {
             q: "Does it have to be rewritten from scratch?",
-            a: "Avoiding that is the point of this service: we repair, speed up and modernise your existing app or site without a rewrite. We first write down what needs fixing in the free review.",
+            a: "Avoiding that is the point of this service: we repair, speed up and modernize your existing app or site without a rewrite. We first write down what needs fixing in the free review.",
           },
           {
             q: "Will Apple remove my app from the App Store?",
@@ -351,7 +351,7 @@ export const en: Dictionary = {
           },
           {
             q: "Google Play warned me about the “target API level”. What does it mean?",
-            a: "Google Play requires apps to target recent Android versions. Since 31 August 2026, new apps and app updates must target Android 16 (API level 36), and existing apps that don't target at least Android 15 (API level 35) are no longer available to new users on devices running newer Android versions. If you need more time, you can request an extension until 1 November 2026.",
+            a: "Google Play requires apps to target recent Android versions. Since 31 August 2026, new apps and app updates must target Android 16 (API level 36), and existing apps that don't target at least Android 15 (API level 35) are no longer available to new users on devices running newer Android versions. If you need more time, Google may grant an extension up to a set date; the current deadline is on the source page.",
             sources: [
               {
                 label: "Android Developers: Target API level requirements for Google Play",
@@ -428,7 +428,7 @@ export const en: Dictionary = {
         answer:
           "Our e-commerce optimization service reworks your Trendyol store's product images, titles, descriptions, categories and variants around conversion. It's for sellers with a good product whose store isn't being found in search or isn't turning visits into sales.",
         intro:
-          "According to Türkiye's Ministry of Trade, 634,611 businesses sold online in 2025. What sets them apart is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
+          "According to Türkiye's Ministry of Trade, 634,611 businesses sold online in 2025. To help a store stand out on a marketplace, we start with the product page: we review your store, show you where the quick wins are, then apply them as a before/after.",
         sources: [
           {
             label: "Türkiye Ministry of Trade announcement, 12 May 2026 (in Turkish)",
@@ -640,7 +640,7 @@ export const en: Dictionary = {
         },
         {
           title: "Get the written review",
-          text: "We send you a written review with a prioritised list of what can concretely be improved. The review is free with no obligation, and you decide which work gets done.",
+          text: "We send you a written review with a prioritized list of what can concretely be improved. The review is free with no obligation, and you decide which work gets done.",
         },
       ],
     },
@@ -701,7 +701,7 @@ export const en: Dictionary = {
     seo: {
       title: "Privacy Notice",
       description:
-        "How Gudia Digital handles personal data from its contact form and email under Türkiye's KVKK (Law No. 6698): what we collect, why, and your rights.",
+        "How we handle personal data from our contact form and email under Türkiye's KVKK (Law No. 6698): what we collect, why, and your rights.",
     },
     title: "Privacy Notice",
     lead: "Under Article 10 of Türkiye's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",
@@ -755,7 +755,7 @@ export const en: Dictionary = {
           "GitHub Pages (GitHub, Inc.) — hosts the site; may record your IP address for security when you visit",
         ],
         after: [
-          "Beyond this, your data may only be shared with authorised public authorities when they request it under a legal obligation.",
+          "Beyond this, your data may only be shared with authorized public authorities when they request it under a legal obligation.",
         ],
       },
       {
@@ -822,7 +822,7 @@ export const en: Dictionary = {
     eyebrow: "Live sites",
     title: "Sites we built for our own apps",
     subtitle:
-      "All six have a different page skeleton — none of them is the same template in another colour. Their home screens are below; clicking a card opens the live site.",
+      "All six have a different page skeleton — none of them is the same template in another color. Their home screens are below; clicking a card opens the live site.",
     visit: "Open the site",
     imageAlt: "{title} website home screen",
     project: "{title} project page",

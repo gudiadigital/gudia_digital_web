@@ -79,7 +79,7 @@ export const tr = {
     siteName: "Gudia Dijital",
     // Ana sayfanın arama başlığı. Alt sayfalarınki kendi bölümlerindeki
     // `seo` alanında; layout onların sonuna " · Gudia Dijital" ekliyor.
-    title: "Gudia Dijital — Mobil Uygulama, Web Sitesi ve Markalı Oyun Stüdyosu",
+    title: "Gudia Dijital — Mobil Uygulama, Web ve Markalı Oyun Stüdyosu",
     description:
       "Markaların dijital ürünlerini oluşturuyor, iyileştiriyor ve büyütüyoruz: mobil uygulama, web sitesi, markalı oyun, sosyal medya içeriği ve e-ticaret.",
     /*
@@ -200,7 +200,7 @@ export const tr = {
     // her adımın hizmetleri (approach.subtitle ve approach.groups).
     chooserTitle: "Hangi hizmet size uygun?",
     forWhomTitle: "Kimler için?",
-    proofTitle: "Yayındaki uygulamalarımızda kullandıklarımız",
+    proofTitle: "Kendi uygulamalarımızda yaptıklarımız",
     faqTitle: "Sık sorulan sorular",
     faqProjects: "İlgili projeler",
     items: {
@@ -213,9 +213,10 @@ export const tr = {
         },
         short:
           "iOS ve Android için sıfırdan uygulama: rezervasyon, üyelik, sadakat, ödeme ve müşteri paneli gibi işinize özel çözümler.",
-        // short + intro ("operasyonuna ya da satışına dokunan") + features (mağaza yayını)
+        // short + features (mağaza yayını). Intro'daki "operasyonuna ya da
+        // satışına dokunan" hemen altta geçtiği için burada tekrarlanmıyor.
         answer:
-          "Mobil uygulama geliştirme hizmetimizde işletmenize özel iOS ve Android uygulamasını sıfırdan kuruyor, App Store ve Google Play'de yayına alıyoruz. Rezervasyon, üyelik, sadakat, ödeme ya da müşteri paneli gibi doğrudan operasyonuna veya satışına dokunan bir uygulamaya ihtiyaç duyan işletmelere yönelik.",
+          "Mobil uygulama geliştirme hizmetimizde işletmenize özel iOS ve Android uygulamasını sıfırdan kuruyor, App Store ve Google Play'de yayına alıyoruz. Bu hizmet rezervasyon, üyelik, sadakat, ödeme ya da müşteri paneli gibi işler için bir uygulamaya ihtiyaç duyan işletmelere yönelik.",
         intro:
           "Amacımız sadece bir uygulama teslim etmek değil; işletmenin gerçekten kullandığı, operasyonuna ya da satışına dokunan bir ürün kurmak. Kurucumuz Gürkan'ın iOS geliştirici geçmişi sayesinde Apple ekosisteminde özellikle derinlikli çalışıyoruz.",
         // short ve features'tan; intro'daki Apple ekosistemi vurgusu son maddede.
@@ -293,7 +294,7 @@ export const tr = {
           "Hızlı açılan, aramada görünen, telefonda da masaüstünde de düzgün çalışan kurumsal siteler ve açılış sayfaları.",
         // short + intro (site türleri) + deliverables[0] (alan adında yayın)
         answer:
-          "Web sitesi geliştirme hizmetimizde markanıza özel kurumsal site, tanıtım sitesi ya da açılış sayfası tasarlıyor, alan adınızda yayına alıyoruz. Hızlı açılan, aramada görünen ve telefonda da masaüstünde de düzgün çalışan bir site isteyen markalara yönelik.",
+          "Web sitesi geliştirme hizmetimizde markanıza özel kurumsal site, tanıtım sitesi ya da açılış sayfası tasarlıyor, alan adınızda yayına alıyoruz. Bu hizmet hızlı açılan, aramada görünen ve telefonda da masaüstünde de düzgün çalışan bir site isteyen markalara yönelik.",
         intro:
           "Hazır şablon kurmuyoruz. Markanıza özel tasarlanan, ölçülebilir hedefi olan siteler kuruyoruz: tanıtım sitesi, kurumsal site, açılış sayfası ya da içinde rezervasyon veya müşteri paneli olan bir web uygulaması.",
         // intro ve features[0], [3]'ten
@@ -325,10 +326,11 @@ export const tr = {
             a: "Hayır, hazır şablon kurmuyoruz; arayüzü ve tasarım sistemini markanıza özel tasarlıyoruz. Kendi uygulamalarımız için kurduğumuz altı sitenin de sayfa iskeleti birbirinden farklı.",
           },
           {
-            // features[4] + projects.ts (life-planner: 7 dil, divonia: TR/EN)
+            // features[4] + projects.ts (life-planner: 7 dil, deyimo: TR/EN).
+            // Divonia örnek verilmiyor: oradaki rolümüz sahibinden onay bekliyor.
             q: "Çok dilli site yapıyor musunuz?",
-            a: "Evet, çok dilli yapı isteğe bağlı olarak kurulabiliyor. Life Planner'ın tanıtım sitesi yedi dilde, Divonia Studios'un sitesi Türkçe ve İngilizce yayında.",
-            projects: ["life-planner", "divonia"],
+            a: "Evet, çok dilli yapı isteğe bağlı olarak kurulabiliyor. Life Planner'ın tanıtım sitesi yedi dilde, Deyimo'nun sitesi Türkçe ve İngilizce yayında.",
+            projects: ["life-planner", "deyimo"],
           },
           {
             // deliverables[1] + features[4]
@@ -358,7 +360,7 @@ export const tr = {
           "Etkinlikler, kampanyalar ve fuarlar için markaya özel oyunlar ve interaktif aktivasyonlar.",
         // short + intro ("Standart bir reklam yerine insanların oynadığı bir şey")
         answer:
-          "Markalı oyun hizmetimizde etkinlik, kampanya ve fuarlar için markanıza özel oyunlar ve interaktif deneyimler tasarlayıp geliştiriyoruz. Standında ya da kampanyasında insanların yalnızca izlediği değil, oynadığı bir deneyim isteyen markalara yönelik.",
+          "Markalı oyun hizmetimizde etkinlik, kampanya ve fuarlar için markanıza özel oyunlar ve interaktif deneyimler tasarlayıp geliştiriyoruz. Bu hizmet standında ya da kampanyasında insanların yalnızca izlediği değil, oynadığı bir deneyim isteyen markalara yönelik.",
         intro:
           "Standart bir reklam yerine insanların oynadığı bir şey. Fuar standında kuyruk oluşturan bir yarışma, kampanyaya bağlı bir çark, eğitim amaçlı bir simülasyon ya da markanızın dünyasında geçen küçük bir oyun — kapsamı birlikte belirliyoruz.",
         // intro'daki örnekler ve features[4-5]'ten; sektörler sahibinden gelecek.
@@ -419,7 +421,7 @@ export const tr = {
           "Elinizde zaten bir uygulama veya site var ama eski, yavaş ya da çalışmıyor. Sıfırdan yazmadan toparlıyoruz.",
         // short + approach.groups.improve.text ("onarıyor, hızlandırıyor ve güncel tutuyoruz")
         answer:
-          "Dijital ürün iyileştirme hizmetimizde eski, yavaş ya da çalışmayan uygulama ve siteleri sıfırdan yazmadan onarıyor, hızlandırıyor ve güncel tutuyoruz. Elinde zaten bir uygulama ya da site olan ama onu yeniden yaptırmak istemeyen işletmelere yönelik.",
+          "Dijital ürün iyileştirme hizmetimizde eski, yavaş ya da çalışmayan uygulama ve siteleri sıfırdan yazmadan onarıyor, hızlandırıyor ve güncel tutuyoruz. Bu hizmet elinde zaten bir uygulama ya da site olan ama onu yeniden yaptırmak istemeyen işletmelere yönelik.",
         intro:
           "Çoğu işletmenin ihtiyacı yeni bir ürün değil, var olanın düzgün çalışması. Önce ücretsiz bir inceleme yapıp somut olarak neyin düzeltilmesi gerektiğini yazıyoruz; kapsamı siz seçiyorsunuz. Apple, üç yıldır güncellenmeyen ve son 12 ayda hiç ya da çok az indirilen uygulamaların geliştiricisini uyarıyor: 90 gün içinde güncelleme gönderilmezse uygulama App Store'dan kaldırılıyor. Bu iş ertelenecek bir iş değil.",
         sources: [
@@ -474,11 +476,12 @@ export const tr = {
           },
           {
             // Kaynak sayfada 28 Eylül 2026'da doğrulandı (sayfanın kendi
-            // güncelleme tarihi 16 Eylül 2026). Tarihler eskiyor: 1 Kasım
-            // 2026'dan sonra ve Google 2027 şartını açıkladığında bu cevap
-            // İngilizcesiyle birlikte güncellenmeli.
+            // güncelleme tarihi 16 Eylül 2026). Ek sürenin son günü (şu an
+            // 1 Kasım 2026) bilerek yazılmadı: o gün geçince cevap ve
+            // FAQPage kendiliğinden yanlış olurdu. Google 2027 şartını
+            // açıkladığında cevap İngilizcesiyle birlikte güncellenmeli.
             q: "Google Play'den “hedef API seviyesi” uyarısı aldım, bu ne demek?",
-            a: "Google Play, uygulamaların güncel Android sürümlerini hedeflemesini istiyor. 31 Ağustos 2026'dan beri yeni uygulamalar ve güncellemeler Android 16'yı (API 36) hedeflemek zorunda; en az Android 15'i (API 35) hedeflemeyen mevcut uygulamalar ise daha yeni Android sürümlü cihazlarda yeni kullanıcılara görünmüyor. Daha fazla süre gerekiyorsa 1 Kasım 2026'ya kadar uzatma istenebiliyor.",
+            a: "Google Play, uygulamaların güncel Android sürümlerini hedeflemesini istiyor. 31 Ağustos 2026'dan beri yeni uygulamalar ve güncellemeler Android 16'yı (API 36) hedeflemek zorunda; en az Android 15'i (API 35) hedeflemeyen mevcut uygulamalar ise daha yeni Android sürümlü cihazlarda yeni kullanıcılara görünmüyor. Daha fazla süre gerekiyorsa Google belirli bir tarihe kadar ek süre tanıyabiliyor; güncel son tarih kaynak sayfada.",
             sources: [
               {
                 label: "Android Developers: Google Play hedef API seviyesi şartı",
@@ -504,7 +507,7 @@ export const tr = {
           "Aylık Reels, görsel ve story üretimi — içerik planı, senaryo ve kapak tasarımlarıyla birlikte.",
         // short + intro ("kurgudan tasarıma ve paylaşıma kadar")
         answer:
-          "Sosyal medya içerik üretimi hizmetimizde her ay Reels, görsel ve story içeriklerinizi planlıyor, kurguluyor, tasarlıyor ve paylaşıyoruz. Düzenli paylaşım yapmak isteyen ama kurgu ve tasarıma vakit ayıramayan işletmelere yönelik.",
+          "Sosyal medya içerik üretimi hizmetimizde her ay Reels, görsel ve story içeriklerinizi planlıyor, kurguluyor, tasarlıyor ve paylaşıyoruz. Bu hizmet düzenli paylaşım yapmak isteyen ama kurgu ve tasarıma vakit ayıramayan işletmelere yönelik.",
         intro:
           "Düzenli içerik üretmek çoğu işletme için en zor kısım. Görselleri siz gönderiyorsunuz, kurgudan tasarıma ve paylaşıma kadar kalan işi biz yapıyoruz. Abartılı vaat yok: profesyonel çekim, oyuncu ve mekân bu kapsamın dışında.",
         // intro, features[0] ve deliverables[2]'den
@@ -563,9 +566,9 @@ export const tr = {
           "Trendyol mağazanızın ürün sayfalarını, görsellerini ve metinlerini dönüşüm için yeniden düzenliyoruz.",
         // short + seo.description + approach.groups.grow.text ("Ürün iyi olsa bile … satmıyor")
         answer:
-          "E-ticaret optimizasyonu hizmetimizde Trendyol mağazanızın ürün görsellerini, başlık ve açıklama metinlerini, kategori ve varyant yapısını dönüşüm için yeniden düzenliyoruz. Ürünü iyi olduğu halde mağazası aramada görünmeyen ya da ziyaretçisini satışa çeviremeyen satıcılara yönelik.",
+          "E-ticaret optimizasyonu hizmetimizde Trendyol mağazanızın ürün görsellerini, başlık ve açıklama metinlerini, kategori ve varyant yapısını dönüşüm için yeniden düzenliyoruz. Bu hizmet ürünü iyi olduğu halde mağazası aramada görünmeyen ya da ziyaretçisini satışa çeviremeyen satıcılara yönelik.",
         intro:
-          "Ticaret Bakanlığı'na göre 2025'te Türkiye'de 634.611 işletme e-ticaret yaptı. Aralarındaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
+          "Ticaret Bakanlığı'na göre 2025'te Türkiye'de 634.611 işletme e-ticaret yaptı. Pazaryerinde öne çıkmak için biz işe ürün sayfasından başlıyoruz: mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
         sources: [
           {
             label: "Ticaret Bakanlığı, Türkiye'de E-Ticaretin Görünümü (12 Mayıs 2026)",
@@ -738,7 +741,7 @@ export const tr = {
       "Kendi ürünlerimiz ve markalar için kurduğumuz deneyimler arasından bir seçki.",
     allProjects: "Tüm projeler",
     // {service}: hizmetin adı (services.items[slug].title)
-    referencesTitle: "{service} alanında yaptığımız işler",
+    referencesTitle: "{service} alanındaki işlerimiz",
     // Projeler sayfasının sonundaki alt bölüm: hizmeti web sitesi olan işler.
     websitesTitle: "Web siteleri",
     backToProjects: "Tüm projelere dön",
@@ -1013,7 +1016,7 @@ export const tr = {
   common: {
     backToServices: "Tüm hizmetlere dön",
     // Sayfanın üstündeki içerik haritasının (breadcrumb) ekran okuyucu adı.
-    breadcrumb: "Konum",
+    breadcrumb: "Sayfa yolu",
     // Soru biçimli başlıklar; {service} hizmetin adı. "Proje sonunda" denmedi:
     // sosyal medya aylık bir hizmet, teslim edilenler de her ay geliyor.
     whatWeDo: "{service} hizmetine neler dahil?",

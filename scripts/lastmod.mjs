@@ -36,9 +36,8 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { setTimeout as sleep } from "node:timers/promises";
+import { OUT, SITE_URL, actionsWarning, fileOf, locOf, locsOf } from "./site.mjs";
 
-const SITE_URL = "https://gudiadigital.com";
-const OUT = resolve("out");
 const SITEMAP = join(OUT, "sitemap.xml");
 const MANIFEST = join(OUT, "lastmod.json");
 const CHANGED = resolve(".indexnow-urls.json");
@@ -57,13 +56,6 @@ function fail(message) {
 if (!existsSync(SITEMAP)) fail("out/sitemap.xml yok — önce next build çalışmalı");
 
 /* ---------- parmak izi ---------- */
-
-/** Sitemap adresi → sayfa dosyası: https://gudiadigital.com/tr/kvkk/ → out/tr/kvkk/index.html */
-function fileOf(url) {
-  if (!url.startsWith(`${SITE_URL}/`)) fail(`site dışı adres: ${url}`);
-  const path = url.slice(SITE_URL.length);
-  return join(OUT, ...path.split("/").filter(Boolean), "index.html");
-}
 
 function metaDescription(html) {
   const tag = (html.match(/<meta\b[^>]*>/gi) ?? []).find((meta) =>
@@ -116,11 +108,7 @@ function sanitize(data) {
 }
 
 /** GitHub Actions'ta ::warning:: satırı olarak yazılıyor; çalıştırmanın özetinde görünsün. */
-function warn(message) {
-  const text = `lastmod: UYARI ${message}`;
-  if (process.env.GITHUB_ACTIONS === "true") console.log(`::warning::${text}`);
-  else console.warn(text);
-}
+const warn = (message) => actionsWarning("lastmod", message);
 
 /**
  * Canlı sitedeki özet. Geçici hata (zaman aşımı, 5xx, yarım yanıt) birkaç
@@ -179,11 +167,8 @@ async function previousManifest() {
 
 /* ---------- çalıştır ---------- */
 
-const decode = (text) =>
-  text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").trim();
-
 const xml = readFileSync(SITEMAP, "utf8");
-const urls = [...xml.matchAll(/<loc>([\s\S]*?)<\/loc>/g)].map((match) => decode(match[1]));
+const urls = locsOf(xml);
 if (urls.length === 0) fail("out/sitemap.xml'de <loc> yok");
 
 const previous = await previousManifest();
@@ -192,6 +177,7 @@ const changed = [];
 
 for (const url of [...new Set(urls)].sort()) {
   const file = fileOf(url);
+  if (!file) fail(`site dışı adres: ${url}`);
   if (!existsSync(file)) fail(`sitemap'teki adresin dosyası yok: ${url}`);
   const hash = fingerprint(file, readFileSync(file, "utf8"));
   const before = previous[url];
@@ -210,12 +196,12 @@ const removed = Object.keys(previous)
   .sort();
 
 const sitemap = xml.replace(/<url>([\s\S]*?)<\/url>/g, (entry, body) => {
-  const loc = body.match(/<loc>([\s\S]*?)<\/loc>/)?.[1];
+  const loc = locOf(body);
   if (!loc) return entry;
   const clean = body.replace(/\s*<lastmod>[\s\S]*?<\/lastmod>/g, "");
   return `<url>${clean.replace(
     /<\/loc>/,
-    `</loc>\n<lastmod>${manifest[decode(loc)].lastmod}</lastmod>`,
+    `</loc>\n<lastmod>${manifest[loc].lastmod}</lastmod>`,
   )}</url>`;
 });
 

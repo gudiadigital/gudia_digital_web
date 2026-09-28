@@ -21,8 +21,9 @@ export function AboutContent({ locale, dict }: PageContentProps) {
         {/* Kimlik paragrafı başlığın ve alt başlığın hemen ardından,
             anlatıdan önce geliyor; stüdyonun tanımı sayfada yalnızca burada.
             Açılış hareketi yok: arama ve yapay zekâ araçlarının alıntıladığı
-            yer burası, hiçbir koşulda gizli başlamamalı. */}
-        <p className="border-line max-w-[68ch] border-y py-7 text-[1.0625rem] leading-[1.7]">
+            yer burası, hiçbir koşulda gizli başlamamalı. Soluk renkte: altındaki
+            büyük giriş cümlesi sayfanın asıl okunan metni olarak kalsın. */}
+        <p className="border-line text-muted max-w-[68ch] border-y py-7 text-base leading-[1.75]">
           {about.entity}
         </p>
 

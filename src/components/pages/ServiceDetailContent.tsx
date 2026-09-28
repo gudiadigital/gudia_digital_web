@@ -6,7 +6,7 @@ import { guidePath, pathFor, projectPath } from "@/i18n/routes";
 import { guidesForService } from "@/data/guides";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
-import { projects } from "@/data/projects";
+import { projectBySlug, projects } from "@/data/projects";
 import { webSites } from "@/data/webSites";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
@@ -17,16 +17,6 @@ import { ProductImprovements } from "@/components/sections/ProductImprovements";
 import type { PageContentProps } from "./types";
 
 type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
-
-/**
- * Sözlükte slug'la anılan proje. Yazım hatası derlemeyi durdursun diye
- * bulunamazsa hata veriyor; bağlantı sessizce kaybolmasın.
- */
-function projectBySlug(slug: string) {
-  const project = projects.find((candidate) => candidate.slug === slug);
-  if (!project) throw new Error(`Sözlükte bilinmeyen proje: "${slug}"`);
-  return project;
-}
 
 /** "Kaynak: …" satırı; iddianın hemen altında, resmî sayfaya bağlantıyla. */
 function SourceLine({ label, sources }: { label: string; sources: SourceLink[] }) {
@@ -63,7 +53,7 @@ function ProjectLine({
   return (
     <p className="text-muted mt-3 text-sm leading-relaxed">
       <span className="text-ink/70">{label}:</span>{" "}
-      {slugs.map(projectBySlug).map((project, index) => (
+      {slugs.map((slug) => projectBySlug(slug, "Sözlük")).map((project, index) => (
         <Fragment key={project.slug}>
           {index > 0 && " · "}
           <Link
@@ -182,7 +172,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
                 <h2 className="mt-12 text-xl font-semibold">{dict.services.proofTitle}</h2>
                 <dl className="border-line mt-5 border-t">
                   {service.proof.map((item) => {
-                    const project = projectBySlug(item.project);
+                    const project = projectBySlug(item.project, "Sözlük");
                     return (
                       <div
                         key={item.project}
@@ -285,10 +275,14 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
 
       <Process dict={dict} />
 
-      <Container>
+      {/* Alttaki boşluk diğer sayfalardaki gibi: kapanış çağrısının üst
+          çizgisi son kart sırasına yapışmasın. */}
+      <Container className="pb-24">
         {/* SSS: akordeon yok, her cevap sunucuda basılı ve açık. Soru ve
             cevaplar yapılandırılmış verideki FAQPage ile birebir aynı
-            (schema.ts); check:seo ikisinin ayrışmadığını denetliyor. */}
+            (schema.ts); check:seo ikisinin ayrışmadığını denetliyor. Son
+            satırda alt çizgi yok: altındaki blok kendi üst çizgisiyle
+            açılıyor, iki çizgi arka arkaya gelmesin. */}
         <section className="border-line border-t pt-12">
           <h2 className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl" data-reveal>
             {dict.services.faqTitle}
@@ -297,7 +291,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             {service.faq.map((item) => (
               <div
                 key={item.q}
-                className="border-line grid gap-3 border-b py-7 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-12"
+                className="border-line grid gap-3 border-b py-7 last:border-b-0 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-12"
               >
                 <h3 className="font-display text-lg font-semibold leading-snug">{item.q}</h3>
                 <div>

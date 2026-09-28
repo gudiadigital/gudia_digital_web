@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { formatDate, type Locale } from "@/i18n/config";
 import { pathFor, projectPath } from "@/i18n/routes";
-import { projects } from "@/data/projects";
+import { projectBySlug } from "@/data/projects";
 import type { Guide } from "@/data/guides";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
@@ -47,11 +47,9 @@ export function GuideDetailContent({ locale, dict, guide }: GuideDetailProps) {
   const author = dict.about.founders.find((founder) => founder.id === guide.author);
   if (!author) throw new Error(`Rehber yazarı Hakkımızda'da yok: "${guide.author}"`);
   const service = dict.services.items[guide.service];
-  const related = (guide.relatedProjects ?? []).map((slug) => {
-    const project = projects.find((candidate) => candidate.slug === slug);
-    if (!project) throw new Error(`Rehberde bilinmeyen proje: "${slug}"`);
-    return project;
-  });
+  const related = (guide.relatedProjects ?? []).map((slug) =>
+    projectBySlug(slug, `Rehber "${guide.id}"`),
+  );
 
   return (
     <>

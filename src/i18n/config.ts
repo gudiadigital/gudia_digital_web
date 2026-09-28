@@ -32,6 +32,11 @@ export const servicesByGroup: Record<ServiceGroup, readonly ServiceSlug[]> = {
   grow: ["sosyal-medya-icerik", "e-ticaret-optimizasyonu"],
 };
 
+/** Hizmetler sitedeki sırasıyla: kur → iyileştir → büyüt. */
+export const orderedServices: readonly ServiceSlug[] = serviceGroups.flatMap(
+  (group) => servicesByGroup[group],
+);
+
 export const groupOfService: Record<ServiceSlug, ServiceGroup> = {
   "mobil-uygulama": "build",
   "web-sitesi": "build",

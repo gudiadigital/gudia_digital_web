@@ -1,8 +1,8 @@
-import { serviceGroups, servicesByGroup } from "@/i18n/config";
+import { orderedServices } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { guidePath, pathFor, projectPath } from "@/i18n/routes";
 import { absoluteUrl } from "@/i18n/site";
-import { listedProjects, webProjects } from "@/data/projects";
+import { projectsInPageOrder } from "@/data/projects";
 import { publishedGuides } from "@/data/guides";
 
 /*
@@ -25,9 +25,6 @@ const link = (label: string, path: string, anchor?: string) =>
 export function GET() {
   const tr = getDictionary("tr");
   const en = getDictionary("en");
-  // Hizmetler sitedeki sırasıyla: kur → iyileştir → büyüt.
-  const services = serviceGroups.flatMap((group) => servicesByGroup[group]);
-
   const lines = [
     `# ${tr.meta.siteName} (${en.meta.siteName})`,
     "",
@@ -42,13 +39,13 @@ export function GET() {
     }),
     "",
     `## ${tr.nav.services} / ${en.nav.services}`,
-    ...services.map(
+    ...orderedServices.map(
       (slug) =>
         `- ${link(tr.services.items[slug].title, pathFor("tr", "services", slug))} / ${link(en.services.items[slug].title, pathFor("en", "services", slug))}`,
     ),
     "",
     `## ${tr.nav.projects} / ${en.nav.projects}`,
-    ...[...listedProjects, ...webProjects].map(
+    ...projectsInPageOrder.map(
       (project) =>
         `- ${project.title}: ${link("TR", projectPath("tr", project.slug))}, ${link("EN", projectPath("en", project.slug))}`,
     ),

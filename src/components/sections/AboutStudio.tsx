@@ -10,7 +10,9 @@ import type { Dictionary } from "@/i18n/dictionaries";
  * iki yerde farklı tanım olmasın diye sözlükte tek anahtardan okunuyor.
  *
  * Paragrafta açılış hareketi yok: sayfanın alıntılanacak tanımı bu, JS
- * çalışmasa ya da sayfa kaydırılmasa da görünür durmalı.
+ * çalışmasa ya da sayfa kaydırılmasa da görünür durmalı. Metin uzun ve
+ * yoğun olduğu için gövde metni gibi soluk ve küçük; komşu bölümlerin
+ * başlıklarını bastırmasın.
  */
 export function AboutStudio({
   locale,
@@ -28,7 +30,7 @@ export function AboutStudio({
         >
           {dict.home.aboutTitle}
         </h2>
-        <p className="mt-6 max-w-[62ch] text-lg leading-[1.6] sm:text-xl">
+        <p className="text-muted mt-6 max-w-[65ch] text-base leading-[1.75] sm:text-lg">
           {dict.about.entity}
         </p>
         <Link

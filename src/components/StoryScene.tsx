@@ -690,17 +690,27 @@ export function StoryScene({
      */
     let stop: (() => void) | undefined;
     let cancel: (() => void) | undefined;
+    let disposed = false;
     let idle = 0;
     let timer = 0;
     const begin = () => {
-      cancel = probeGpu((usable) => {
-        cancel = undefined;
-        if (!usable) return;
-        cancel = measurePace((pace) => {
-          cancel = undefined;
-          stop = startScene(canvas, progressRef, pace);
+      /*
+       * probeGpu sonucu eşzamanlı da verebiliyor (Worker ya da
+       * OffscreenCanvas yoksa, Safari < 16.4): ölçüm, probeGpu dönmeden
+       * başlamış oluyor. İki iptal ayrı tutuluyor ki biri ötekinin üzerine
+       * yazıp ölçümü iptalsiz bırakmasın; ikisini iki kez çağırmak zararsız.
+       */
+      let cancelPace: (() => void) | undefined;
+      const cancelProbe = probeGpu((usable) => {
+        if (!usable || disposed) return;
+        cancelPace = measurePace((pace) => {
+          if (!disposed) stop = startScene(canvas, progressRef, pace);
         });
       });
+      cancel = () => {
+        cancelProbe();
+        cancelPace?.();
+      };
     };
     const whenIdle = () => {
       // Safari'de requestIdleCallback yok
@@ -714,6 +724,7 @@ export function StoryScene({
     else window.addEventListener("load", whenIdle, { once: true });
 
     return () => {
+      disposed = true;
       window.removeEventListener("load", whenIdle);
       if (idle) window.cancelIdleCallback(idle);
       if (timer) window.clearTimeout(timer);

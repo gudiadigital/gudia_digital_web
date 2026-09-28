@@ -26,8 +26,11 @@
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { SITE_URL, actionsWarning, locsOf } from "./site.mjs";
 
-const SITE = (process.env.SITE ?? "https://gudiadigital.com").replace(/\/+$/, "");
+// SITE yalnızca elle deneme için (ör. başka bir önizleme adresi); yayında
+// adres public/CNAME'den geliyor.
+const SITE = (process.env.SITE ?? SITE_URL).replace(/\/+$/, "");
 const HOST = new URL(SITE).host;
 const ENDPOINT = "https://api.indexnow.org/indexnow";
 const DRY_RUN = process.argv.includes("--dry-run");
@@ -35,12 +38,9 @@ const RESUBMIT_ALL = process.env.RESUBMIT_ALL === "1" || process.env.RESUBMIT_AL
 const KEY_TRIES = 10;
 const KEY_WAIT_MS = 30_000;
 const TIMEOUT_MS = 15_000;
-const IN_ACTIONS = process.env.GITHUB_ACTIONS === "true";
 
 /** GitHub Actions'ta özet sayfasında görünen uyarı; yerelde düz satır. */
-function warn(message) {
-  console.log(IN_ACTIONS ? `::warning::IndexNow: ${message}` : `indexnow: UYARI ${message}`);
-}
+const warn = (message) => actionsWarning("IndexNow", message);
 
 function stop(message) {
   warn(message);
@@ -60,12 +60,6 @@ function findKey() {
     stop(`public/ içinde tek bir anahtar dosyası olmalı, ${keys.length} bulundu`);
   }
   return keys[0];
-}
-
-function locsOf(xml) {
-  return [...xml.matchAll(/<loc>([\s\S]*?)<\/loc>/g)].map((match) =>
-    match[1].replace(/&amp;/g, "&").trim(),
-  );
 }
 
 async function get(url) {

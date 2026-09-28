@@ -144,7 +144,7 @@ export const projects: Project[] = [
         "HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve bir saat uygulamasıyla birlikte geliyor.",
       ],
       en: [
-        "Pofu is a calorie and nutrition tracker built for women. You photograph your plate and the app recognises the meal, then works out its calories and macros.",
+        "Pofu is a calorie and nutrition tracker built for women. You photograph your plate and the app recognizes the meal, then works out its calories and macros.",
         "Most calorie apps apply one rulebook to everyone: a fixed target and a scale that is supposed to drop every morning. Pofu was designed to account for appetite, water retention and energy swings instead.",
         "It ships with HealthKit and Apple Watch integration, Home Screen widgets and a watch app.",
       ],
@@ -429,7 +429,7 @@ export const projects: Project[] = [
     image: "logo-kidzania.webp",
     summary: {
       tr: "KidZania İstanbul'daki Logo Yazılım'ın Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
-      en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
+      en: "An interactive experience built for the Logo Yazılım Software Development Center at KidZania İstanbul, where children work like a real software team and ship their own projects.",
     },
     seo: {
       tr: {
@@ -440,7 +440,7 @@ export const projects: Project[] = [
       en: {
         title: "Logo Yazılım × KidZania: Interactive Experience",
         description:
-          "An interactive experience for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team.",
+          "An interactive experience for the Logo Yazılım Software Development Center at KidZania İstanbul, where children work like a real software team.",
       },
     },
     detail: {
@@ -450,9 +450,9 @@ export const projects: Project[] = [
         "Deneyim fiziksel mekânla birlikte tasarlandı; ekranlardaki akış merkezin kendi düzenine göre kurgulandı.",
       ],
       en: [
-        "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul.",
-        "Children entering the centre work like a real software team: they take a brief, work through it and end up shipping a project of their own.",
-        "The experience was designed together with the physical space, so the on-screen flow follows the centre's own layout.",
+        "An interactive experience built for the Logo Yazılım Software Development Center at KidZania İstanbul.",
+        "Children entering the center work like a real software team: they take a brief, work through it and end up shipping a project of their own.",
+        "The experience was designed together with the physical space, so the on-screen flow follows the center's own layout.",
       ],
     },
     facts: {
@@ -579,7 +579,7 @@ export const projects: Project[] = [
     image: "deyimo.webp",
     summary: {
       tr: "Türkçe deyim ve atasözlerini ezberletmeden öğreten uygulamanın tanıtım sitesi. 2.617 ifade, çevrimdışı kullanım.",
-      en: "The marketing site for an app that teaches Turkish idioms and proverbs without rote memorisation. 2,617 expressions, works offline.",
+      en: "The marketing site for an app that teaches Turkish idioms and proverbs without rote memorization. 2,617 expressions, works offline.",
     },
     seo: {
       tr: { title: "Deyimo: Deyim ve Atasözü Uygulamasının Sitesi" },
@@ -726,6 +726,24 @@ export const listedProjects = projects.filter(
 export const webProjects = projects.filter(
   (project) => project.service === "web-sitesi",
 );
+
+/**
+ * Projeler sayfasındaki sıra: önce ana ızgara, sonra web siteleri.
+ * Yapılandırılmış verideki liste ve llms.txt da bu sırayı okuyor; sayfayla
+ * ayrışmasınlar.
+ */
+export const projectsInPageOrder = [...listedProjects, ...webProjects];
+
+/**
+ * Sözlükte ya da rehberde slug'la anılan proje. Yazım hatası derlemeyi
+ * durdursun diye bulunamazsa hata veriyor; bağlantı sessizce kaybolmasın.
+ * `where` hatanın nereden geldiğini söylüyor.
+ */
+export function projectBySlug(slug: string, where: string): Project {
+  const project = projects.find((candidate) => candidate.slug === slug);
+  if (!project) throw new Error(`${where}: bilinmeyen proje "${slug}"`);
+  return project;
+}
 
 /** Ana sayfada gösterilecek öne çıkanlar. */
 export const featuredSlugs = ["pofu", "snappet", "date-for-dead"] as const;
