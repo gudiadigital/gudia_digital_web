@@ -11,7 +11,7 @@ import {
   shotSizeOf,
   type Project,
 } from "@/data/projects";
-import type { Locale, ServiceSlug } from "@/i18n/config";
+import { formatDate, type Locale, type ServiceSlug } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 /** Puanı "4,5" / "4.5" olarak dile uygun yazar. */
@@ -42,13 +42,6 @@ function relatedProjects(project: Project, count = 4): Project[] {
     ...others.filter(shares),
     ...others.filter((item) => !shares(item)),
   ].slice(0, count);
-}
-
-function formatDate(iso: string, locale: Locale) {
-  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(
-    locale === "tr" ? "tr-TR" : "en-GB",
-    { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" },
-  );
 }
 
 /**

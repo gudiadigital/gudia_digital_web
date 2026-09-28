@@ -97,6 +97,8 @@ export const tr = {
     services: "Hizmetler",
     projects: "Projeler",
     contact: "İletişim",
+    // Üst menüde yok; footer'da ve içerik haritasında, yalnızca yayında rehber varken.
+    guides: "Rehber",
     cta: "Ücretsiz İnceleme",
     menu: "Menü",
     close: "Kapat",
@@ -953,6 +955,31 @@ export const tr = {
         ],
       },
     ] as PrivacySection[],
+  },
+
+  /*
+   * Rehber dizini ve rehber sayfasının sabit metinleri. Rehberlerin kendisi
+   * src/data/guides.ts'te. Dizin yalnızca yayında en az bir rehber varken
+   * üretiliyor; o güne kadar bu metinler sitede hiç görünmüyor.
+   */
+  guides: {
+    seo: {
+      title: "Rehber: Uygulama, Web ve Mağaza Soruları",
+      description:
+        "Mağaza kuralları, uygulama güncellemeleri ve web siteleriyle ilgili sık sorulan sorulara kaynaklarıyla birlikte cevaplar. Her rehberin yazarı ve tarihi belli.",
+    },
+    title: "Uygulamanız, siteniz ve mağazanız için rehberler",
+    subtitle:
+      "Mağaza kuralları, uygulama güncellemeleri ve dijital ürünlerle ilgili sık sorulan sorulara kaynaklarıyla birlikte cevap veriyoruz. Her rehberin yazarı ve son güncelleme tarihi yazılı.",
+    byline: "Yazan",
+    published: "Yayın",
+    updated: "Son güncelleme",
+    sourcesTitle: "Kaynaklar",
+    serviceLabel: "İlgili hizmet",
+    projectsLabel: "İlgili projeler",
+    // Hizmet sayfasında, aynı hizmete bağlı yayındaki rehberler.
+    relatedTitle: "İlgili rehberler",
+    backToGuides: "Tüm rehberler",
   },
 
   footer: {

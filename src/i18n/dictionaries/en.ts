@@ -20,6 +20,7 @@ export const en: Dictionary = {
     services: "Services",
     projects: "Projects",
     contact: "Contact",
+    guides: "Guides",
     cta: "Free Review",
     menu: "Menu",
     close: "Close",
@@ -785,6 +786,25 @@ export const en: Dictionary = {
         ],
       },
     ] as PrivacySection[],
+  },
+
+  guides: {
+    seo: {
+      title: "Guides: App, Website and App Store Questions",
+      description:
+        "Answers to common questions about app store rules, app updates and websites, with links to the sources. Every guide shows its author and last update date.",
+    },
+    title: "Guides for your app, website and store",
+    subtitle:
+      "Plain answers to common questions about store rules, app updates and digital products, with links to the sources. Every guide shows who wrote it and when it was last updated.",
+    byline: "Author",
+    published: "Published",
+    updated: "Last updated",
+    sourcesTitle: "Sources",
+    serviceLabel: "Related service",
+    projectsLabel: "Related projects",
+    relatedTitle: "Related guides",
+    backToGuides: "All guides",
   },
 
   footer: {

@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { locales, serviceSlugs } from "@/i18n/config";
-import { pathFor, projectPath } from "@/i18n/routes";
+import { guidePath, pathFor, projectPath } from "@/i18n/routes";
 import { projects } from "@/data/projects";
+import { publishedGuides } from "@/data/guides";
 import { absoluteUrl as url } from "@/i18n/site";
 
 // Statik export: dosya derleme sırasında bir kez üretilir.
@@ -25,5 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...projects.map((project) => ({ url: url(projectPath(locale, project.slug)) })),
     { url: url(pathFor(locale, "contact")) },
     { url: url(pathFor(locale, "privacy")) },
+    // Rehberler yalnızca yayındayken; hiç yoksa dizin sayfası da yok.
+    ...(publishedGuides.length > 0 ? [{ url: url(pathFor(locale, "guides")) }] : []),
+    ...publishedGuides.map((guide) => ({ url: url(guidePath(locale, guide.slug[locale])) })),
   ]);
 }

@@ -1,3 +1,4 @@
+import { publishedGuides, type Guide } from "@/data/guides";
 import {
   listedProjects,
   webProjects,
@@ -14,7 +15,7 @@ import {
   type ServiceSlug,
 } from "./config";
 import { getDictionary, type Dictionary } from "./dictionaries";
-import { pathFor, projectPath, type PageKey } from "./routes";
+import { guidePath, pathFor, projectPath, type PageKey } from "./routes";
 import { pageCopy, type PageTarget } from "./seo";
 import { SITE_URL, absoluteUrl } from "./site";
 
@@ -125,6 +126,8 @@ function targetPath(locale: Locale, target: PageTarget): string {
       return pathFor(locale, "services", target.slug);
     case "project":
       return projectPath(locale, target.project.slug);
+    case "guide":
+      return guidePath(locale, target.guide.slug[locale]);
     case "page":
       return pathFor(locale, target.key);
   }
@@ -159,6 +162,12 @@ export function breadcrumbTrail(locale: Locale, target: PageTarget): Crumb[] {
         home,
         { name: dict.nav.projects, path: pathFor(locale, "projects") },
         { ...here, name: target.project.title },
+      ];
+    case "guide":
+      return [
+        home,
+        { name: dict.nav.guides, path: pathFor(locale, "guides") },
+        { ...here, name: target.guide.shortTitle[locale] },
       ];
     case "page":
       if (target.key === "home") return [home];
@@ -378,6 +387,25 @@ function faqPage(locale: Locale, url: string, slug: ServiceSlug): Node | undefin
   };
 }
 
+/**
+ * Rehber yazısı. Yazar sayfadaki imzayla aynı kurucu, yayıncı stüdyo;
+ * tarihler sayfada görünen "Yayın" ve "Son güncelleme" tarihleri.
+ */
+function article(locale: Locale, guide: Guide, url: string): Node {
+  return {
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline: guide.title[locale],
+    description: guide.description[locale],
+    author: ref(personId(guide.author)),
+    publisher: ref(ORG),
+    datePublished: guide.publishedAt,
+    dateModified: guide.updatedAt,
+    inLanguage: locale,
+    mainEntityOfPage: ref(`${url}#webpage`),
+  };
+}
+
 /** Hizmetler ve Projeler sayfasındaki sıralı liste. */
 function itemList(locale: Locale, target: PageTarget, items: Crumb[]): Node {
   const url = absoluteUrl(targetPath(locale, target));
@@ -421,6 +449,24 @@ export function pageSchema(locale: Locale, target: PageTarget): JsonLdGraph {
       }),
       work(locale, project),
       project.schema.authorOrg && THIRD_PARTY[project.schema.authorOrg],
+      breadcrumbList(locale, target),
+    );
+  }
+
+  if (target.kind === "guide") {
+    const { guide } = target;
+    const founder = dict.about.founders.find((item) => item.id === guide.author);
+    if (!founder) throw new Error(`Rehber yazarı Hakkımızda'da yok: "${guide.author}"`);
+    return graph(
+      organizationStub(),
+      website(false),
+      webPage(locale, target, "WebPage", { mainEntity: ref(`${url}#article`) }),
+      article(locale, guide, url),
+      // Kısa kayıt ve sayfadaki imzanın gittiği adres (Hakkımızda'daki çapa).
+      {
+        ...person(locale, founder, false),
+        url: `${absoluteUrl(pathFor(locale, "about"))}#${founder.id}`,
+      },
       breadcrumbList(locale, target),
     );
   }
@@ -492,6 +538,23 @@ export function pageSchema(locale: Locale, target: PageTarget): JsonLdGraph {
         organizationStub(),
         website(false),
         webPage(locale, target, "WebPage"),
+        breadcrumbList(locale, target),
+      );
+    case "guides":
+      return graph(
+        organizationStub(),
+        website(false),
+        webPage(locale, target, "CollectionPage", {
+          mainEntity: ref(`${url}#list`),
+        }),
+        itemList(
+          locale,
+          target,
+          publishedGuides.map((guide) => ({
+            name: guide.title[locale],
+            path: guidePath(locale, guide.slug[locale]),
+          })),
+        ),
         breadcrumbList(locale, target),
       );
   }

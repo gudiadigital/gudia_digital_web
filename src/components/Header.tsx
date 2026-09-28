@@ -7,6 +7,7 @@ import { Logo } from "./Logo";
 import { Container } from "./Container";
 import { locales, type Locale } from "@/i18n/config";
 import {
+  guidePath,
   pathFor,
   parsePath,
   projectPath,
@@ -25,10 +26,17 @@ export function Header({
   locale,
   nav,
   siteName,
+  guideSlugs,
 }: {
   locale: Locale;
   nav: Dictionary["nav"];
   siteName: string;
+  /**
+   * Yayındaki rehberlerin iki dildeki slug'ları; dil değiştirici aynı
+   * rehberin öbür dildekine gidebilsin diye. Rehber verisinin kendisi
+   * istemciye gelmiyor (taslaklar tarayıcı paketine girmesin).
+   */
+  guideSlugs: Array<Record<Locale, string>>;
 }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -89,7 +97,11 @@ export function Header({
         </nav>
 
         <div className="flex items-center gap-2">
-          <LocaleSwitch locale={locale} label={nav.langLabel} />
+          <LocaleSwitch
+            locale={locale}
+            label={nav.langLabel}
+            guideSlugs={guideSlugs}
+          />
 
           <Link
             href={pathFor(locale, "contact")}
@@ -146,9 +158,27 @@ export function Header({
   );
 }
 
-function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
+function LocaleSwitch({
+  locale,
+  label,
+  guideSlugs,
+}: {
+  locale: Locale;
+  label: string;
+  guideSlugs: Array<Record<Locale, string>>;
+}) {
   const pathname = usePathname();
   const current = parsePath(pathname);
+  // Rehber slug'ı dile göre değişiyor; bulunduğumuz rehberin öbür dildeki adı.
+  const guide = current?.guide
+    ? guideSlugs.find((slugs) => slugs[current.locale] === current.guide)
+    : undefined;
+
+  const hrefFor = (candidate: Locale) => {
+    if (current?.project) return projectPath(candidate, current.project);
+    if (guide) return guidePath(candidate, guide[candidate]);
+    return pathFor(candidate, current?.key ?? "home", current?.service);
+  };
 
   return (
     <div
@@ -159,12 +189,8 @@ function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
       {locales.map((candidate) => (
         <Link
           key={candidate}
-          /* Proje detayındayken dil değişince aynı projede kalınıyor. */
-          href={
-            current?.project
-              ? projectPath(candidate, current.project)
-              : pathFor(candidate, current?.key ?? "home", current?.service)
-          }
+          /* Proje ya da rehber detayındayken dil değişince aynı sayfada kalınıyor. */
+          href={hrefFor(candidate)}
           hrefLang={candidate}
           /*
            * Statik export'ta Next, dinamik segmentli rotalar için geçersiz bir

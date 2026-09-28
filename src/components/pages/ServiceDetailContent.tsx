@@ -2,7 +2,8 @@ import { Fragment } from "react";
 import Link from "next/link";
 import { serviceSlugs, type Locale, type ServiceSlug } from "@/i18n/config";
 import { fill, type ServiceItem, type SourceLink } from "@/i18n/dictionaries";
-import { pathFor, projectPath } from "@/i18n/routes";
+import { guidePath, pathFor, projectPath } from "@/i18n/routes";
+import { guidesForService } from "@/data/guides";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
@@ -110,6 +111,8 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
   const vitrindeOlan = new Set(
     webSites.map((site) => site.project).filter(Boolean),
   );
+  // Bu hizmete bağlı yayındaki rehberler (en çok üç); yoksa bölüm çıkmıyor.
+  const guides = guidesForService(slug);
   const references = projects.filter(
     (project) =>
       (project.service === slug || project.alsoServices?.includes(slug)) &&
@@ -314,6 +317,27 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             ))}
           </div>
         </section>
+
+        {guides.length > 0 && (
+          <section className="border-line mt-20 border-t pt-10">
+            <h2 className="text-lg font-semibold">{dict.guides.relatedTitle}</h2>
+            <ul className="mt-6 space-y-4">
+              {guides.map((guide) => (
+                <li key={guide.id}>
+                  <Link
+                    href={guidePath(locale, guide.slug[locale])}
+                    className="hover:text-accent font-medium leading-snug transition-colors"
+                  >
+                    {guide.title[locale]}
+                  </Link>
+                  <p className="text-muted mt-1 max-w-[65ch] text-sm leading-relaxed">
+                    {guide.description[locale]}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         <div className="border-line mt-20 border-t pt-10">
           <h2 className="text-lg font-semibold">{dict.services.allLink}</h2>

@@ -74,6 +74,13 @@ Detay sayfası (`/tr/projeler/<slug>/`) ve site haritası kaydı otomatik
 üretilir. Ekran görüntülerini `public/projeler/<slug>/` altına `ss-1.jpg`,
 `ss-2.jpg`… olarak koyup `tools/optimize-images.sh` ile WebP'ye çevir.
 
+**Rehber yayınlamak** → `src/data/guides.ts`. `published: false` olan rehber
+(taslak) sitede hiçbir yerde çıkmaz. Sahibi onaylayınca `published: true`
+yapılır, `publishedAt` / `updatedAt` yayın gününe çekilir; sayfa
+(`/tr/rehber/<slug>/`, `/en/guides/<slug>/`), rehber dizini, site haritası
+kaydı, footer bağlantısı ve hizmet sayfasındaki "İlgili rehberler" kendiliğinden
+gelir. Yayında hiç rehber yokken dizin sayfası da üretilmez.
+
 **Renk değiştirmek** → `src/app/globals.css` içindeki `:root` blokları.
 Koyu mod varsayılan; açık mod `prefers-color-scheme: light` ile otomatik.
 

@@ -41,6 +41,18 @@ export const groupOfService: Record<ServiceSlug, ServiceGroup> = {
   "e-ticaret-optimizasyonu": "grow",
 };
 
+/**
+ * YYYY-MM-DD tarihini sayfanın dilinde yazar: "28 Eylül 2026",
+ * "28 September 2026". UTC'de okunuyor; derleme makinesinin saat dilimi
+ * günü kaydırmasın.
+ */
+export function formatDate(iso: string, locale: Locale): string {
+  return new Date(`${iso}T00:00:00Z`).toLocaleDateString(
+    locale === "tr" ? "tr-TR" : "en-GB",
+    { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" },
+  );
+}
+
 export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }

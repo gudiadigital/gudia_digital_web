@@ -17,7 +17,8 @@ export type RouteKey =
   | "services"
   | "projects"
   | "contact"
-  | "privacy";
+  | "privacy"
+  | "guides";
 
 const pageSegments: Record<Exclude<RouteKey, "home">, Record<Locale, string>> = {
   about: { tr: "hakkimizda", en: "about" },
@@ -25,6 +26,7 @@ const pageSegments: Record<Exclude<RouteKey, "home">, Record<Locale, string>> = 
   projects: { tr: "projeler", en: "projects" },
   contact: { tr: "iletisim", en: "contact" },
   privacy: { tr: "kvkk", en: "privacy" },
+  guides: { tr: "rehber", en: "guides" },
 };
 
 const serviceSegments: Record<ServiceSlug, Record<Locale, string>> = {
@@ -48,6 +50,18 @@ const serviceSegments: Record<ServiceSlug, Record<Locale, string>> = {
  */
 export function projectPath(locale: Locale, slug: string): string {
   return `/${locale}/${pageSegments.projects[locale]}/${slug}`;
+}
+
+/**
+ * Rehber yolu: /tr/rehber/<slug>, /en/guides/<slug>. Rehberin slug'ı dile
+ * göre değişiyor ve src/data/guides.ts'te duruyor.
+ *
+ * Bu dosya rehber verisini bilerek içe aktarmıyor: Header (istemci
+ * bileşeni) burayı kullanıyor, içe aktarılırsa yayına kapalı taslakların
+ * metni de tarayıcı paketine giriyor.
+ */
+export function guidePath(locale: Locale, slug: string): string {
+  return `/${locale}/${pageSegments.guides[locale]}/${slug}`;
 }
 
 /** Ziyaretçiye gösterilecek yolu üretir. */
@@ -85,6 +99,8 @@ export function parsePath(pathname: string): {
   service?: ServiceSlug;
   /** Proje detayındaysak slug; dil değiştirirken aynı projede kalmak için. */
   project?: string;
+  /** Rehber detayındaysak bu dildeki slug; karşılığını Header buluyor. */
+  guide?: string;
 } | null {
   const [locale, page, sub] = pathname.split("/").filter(Boolean);
   if (!locale || !isLocale(locale)) return null;
@@ -100,6 +116,10 @@ export function parsePath(pathname: string): {
   // Proje slug'ları çevrilmiyor, olduğu gibi taşınıyor.
   if (pageKey === "projects" && sub) {
     return { locale, key: pageKey, project: sub };
+  }
+
+  if (pageKey === "guides" && sub) {
+    return { locale, key: pageKey, guide: sub };
   }
 
   if (pageKey === "services" && sub) {
@@ -119,6 +139,9 @@ export const pageKeys = [
   "projects",
   "contact",
   "privacy",
+  // Rehber dizini yalnızca yayında en az bir rehber varken üretiliyor
+  // ([page]/page.tsx); boş dizin sayfası hiç çıkmıyor.
+  "guides",
 ] as const;
 
 export type PageKey = (typeof pageKeys)[number];

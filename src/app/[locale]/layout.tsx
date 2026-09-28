@@ -12,6 +12,7 @@ import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { ogLocales, pageCopy, shareImage } from "@/i18n/seo";
 import { SITE_URL } from "@/i18n/site";
+import { publishedGuides } from "@/data/guides";
 
 /*
  * Fontlar src/app/fonts.css'te tanımlı, dosyaları public/fonts altında.
@@ -146,7 +147,12 @@ export default async function LocaleLayout({
         <div className="grain" aria-hidden="true" />
         <SmoothScroll />
         <Motion />
-        <Header locale={locale} nav={dict.nav} siteName={dict.meta.siteName} />
+        <Header
+          locale={locale}
+          nav={dict.nav}
+          siteName={dict.meta.siteName}
+          guideSlugs={publishedGuides.map((guide) => guide.slug)}
+        />
         <main id="main" className="flex-1">
           {children}
         </main>

@@ -16,19 +16,27 @@ import { ServicesContent } from "@/components/pages/ServicesContent";
 import { ProjectsContent } from "@/components/pages/ProjectsContent";
 import { ContactContent } from "@/components/pages/ContactContent";
 import { PrivacyContent } from "@/components/pages/PrivacyContent";
+import { GuidesContent } from "@/components/pages/GuidesContent";
+import { publishedGuides } from "@/data/guides";
 
 type Params = { params: Promise<{ locale: string; page: string }> };
 
 /**
- * Hakkımızda / Hizmetler / Projeler / İletişim / KVKK sayfalarının tamamı buradan
- * üretilir. Klasör adı yerine dile göre değişen URL parçası kullanıldığı için
- * (/tr/hakkimizda, /en/about) tek bir dinamik segment yeterli oluyor.
+ * Hakkımızda / Hizmetler / Projeler / İletişim / KVKK / Rehber sayfalarının
+ * tamamı buradan üretilir. Klasör adı yerine dile göre değişen URL parçası
+ * kullanıldığı için (/tr/hakkimizda, /en/about) tek bir dinamik segment
+ * yeterli oluyor.
  */
 export const dynamicParams = false;
 
+/** Rehber dizini yalnızca yayında en az bir rehber varken; boş sayfa üretilmiyor. */
+const builtKeys = pageKeys.filter(
+  (key) => key !== "guides" || publishedGuides.length > 0,
+);
+
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
-    pageKeys.map((key) => ({ locale, page: pageSegment(locale, key) })),
+    builtKeys.map((key) => ({ locale, page: pageSegment(locale, key) })),
   );
 }
 
@@ -36,7 +44,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { locale, page } = await params;
   if (!isLocale(locale)) return {};
   const key = pageKeyFromSegment(locale, page);
-  if (!key) return {};
+  if (!key || !builtKeys.includes(key)) return {};
 
   return pageMetadata({
     locale,
@@ -50,7 +58,7 @@ export default async function LocalizedPage({ params }: Params) {
   if (!isLocale(locale)) notFound();
 
   const key = pageKeyFromSegment(locale, page);
-  if (!key) notFound();
+  if (!key || !builtKeys.includes(key)) notFound();
 
   const dict = getDictionary(locale);
   const schema = <JsonLd data={pageSchema(locale, { kind: "page", key })} />;
@@ -89,6 +97,13 @@ export default async function LocalizedPage({ params }: Params) {
         <>
           {schema}
           <PrivacyContent locale={locale} dict={dict} />
+        </>
+      );
+    case "guides":
+      return (
+        <>
+          {schema}
+          <GuidesContent locale={locale} dict={dict} />
         </>
       );
   }

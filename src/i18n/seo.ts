@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { Guide } from "@/data/guides";
 import type { Project } from "@/data/projects";
 import { locales, type Locale, type ServiceSlug } from "./config";
 import { getDictionary } from "./dictionaries";
@@ -87,7 +88,8 @@ export function pageMetadata({
 export type PageTarget =
   | { kind: "page"; key: RouteKey }
   | { kind: "service"; slug: ServiceSlug }
-  | { kind: "project"; project: Project };
+  | { kind: "project"; project: Project }
+  | { kind: "guide"; guide: Guide };
 
 /**
  * Sayfanın arama başlığı ve açıklaması; <title>, meta açıklama ve paylaşım
@@ -117,6 +119,12 @@ export function pageCopy(
         description: seo?.description ?? metaDescription(project.summary[locale]),
       };
     }
+    case "guide":
+      // H1 (title) arama başlığına sığmıyor; kısa başlık kullanılıyor.
+      return {
+        title: target.guide.shortTitle[locale],
+        description: target.guide.description[locale],
+      };
     case "page":
       if (target.key === "home") {
         return { title: dict.meta.title, description: dict.meta.description };

@@ -17,10 +17,16 @@ export function PageHeader({
   breadcrumb,
   title,
   subtitle,
+  long = false,
 }: {
   breadcrumb?: { locale: Locale; target: PageTarget };
   title: string;
   subtitle?: string;
+  /**
+   * Cümle uzunluğunda başlık (rehber yazısı): daha küçük yazılıyor.
+   * Varsayılan boyutta telefonda ilk ekranın tamamını kaplıyordu.
+   */
+  long?: boolean;
 }) {
   return (
     <section className="relative isolate overflow-hidden pt-28 pb-10 sm:pt-36 sm:pb-14">
@@ -28,7 +34,11 @@ export function PageHeader({
       <Container className="relative z-10">
         {breadcrumb && <Breadcrumbs {...breadcrumb} />}
         <h1
-          className="fade-up max-w-4xl text-[clamp(2.5rem,6vw,4.25rem)] font-semibold leading-[1.04] tracking-[-0.035em]"
+          className={`fade-up max-w-4xl font-semibold ${
+            long
+              ? "text-[clamp(1.875rem,4.4vw,3.25rem)] leading-[1.1] tracking-[-0.03em]"
+              : "text-[clamp(2.5rem,6vw,4.25rem)] leading-[1.04] tracking-[-0.035em]"
+          }`}
           style={{ animationDelay: "0.08s" }}
         >
           {title}

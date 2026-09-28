@@ -5,6 +5,7 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { pageCopy, pageMetadata } from "@/i18n/seo";
 import { pageSchema } from "@/i18n/schema";
 import {
+  guidePath,
   pageSegment,
   pageKeyFromSegment,
   pathFor,
@@ -13,21 +14,24 @@ import {
   serviceFromSegment,
 } from "@/i18n/routes";
 import { projects } from "@/data/projects";
+import { guideBySlug, publishedGuides } from "@/data/guides";
 import { JsonLd } from "@/components/JsonLd";
 import { ServiceDetailContent } from "@/components/pages/ServiceDetailContent";
 import { ProjectDetailContent } from "@/components/pages/ProjectDetailContent";
+import { GuideDetailContent } from "@/components/pages/GuideDetailContent";
 
 type Params = {
   params: Promise<{ locale: string; page: string; slug: string }>;
 };
 
 /**
- * İki tür detay sayfası da buradan üretiliyor:
+ * Üç tür detay sayfası da buradan üretiliyor:
  *  - hizmet: /tr/hizmetler/mobil-uygulama, /en/services/mobile-apps
  *  - proje:  /tr/projeler/pofu, /en/projects/pofu
+ *  - rehber: /tr/rehber/<slug>, /en/guides/<slug> (yalnızca yayındakiler)
  *
- * Hizmet slug'ları dile göre değişiyor, proje slug'ları değişmiyor: proje
- * adları ürün adı, çevrilmiyor.
+ * Hizmet ve rehber slug'ları dile göre değişiyor, proje slug'ları
+ * değişmiyor: proje adları ürün adı, çevrilmiyor.
  */
 export const dynamicParams = false;
 
@@ -42,6 +46,12 @@ export function generateStaticParams() {
       locale,
       page: pageSegment(locale, "projects"),
       slug: project.slug,
+    })),
+    // Taslaklar (published: false) burada yok: sayfaları hiç üretilmiyor.
+    ...publishedGuides.map((guide) => ({
+      locale,
+      page: pageSegment(locale, "guides"),
+      slug: guide.slug[locale],
     })),
   ]);
 }
@@ -75,6 +85,19 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     });
   }
 
+  if (key === "guides") {
+    const guide = guideBySlug(locale, slug);
+    if (!guide) return {};
+    return pageMetadata({
+      locale,
+      paths: {
+        tr: guidePath("tr", guide.slug.tr),
+        en: guidePath("en", guide.slug.en),
+      },
+      ...pageCopy(locale, { kind: "guide", guide }),
+    });
+  }
+
   return {};
 }
 
@@ -103,6 +126,17 @@ export default async function DetailPage({ params }: Params) {
       <>
         <JsonLd data={pageSchema(locale, { kind: "project", project })} />
         <ProjectDetailContent locale={locale} dict={dict} project={project} />
+      </>
+    );
+  }
+
+  if (key === "guides") {
+    const guide = guideBySlug(locale, slug);
+    if (!guide) notFound();
+    return (
+      <>
+        <JsonLd data={pageSchema(locale, { kind: "guide", guide })} />
+        <GuideDetailContent locale={locale} dict={dict} guide={guide} />
       </>
     );
   }

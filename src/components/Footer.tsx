@@ -4,6 +4,7 @@ import { Container } from "./Container";
 import { serviceSlugs, type Locale } from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
+import { publishedGuides } from "@/data/guides";
 
 export function Footer({
   locale,
@@ -60,9 +61,15 @@ export function Footer({
         </div>
 
         <div className="border-line text-muted mt-12 flex flex-col gap-4 border-t pt-6 text-xs">
-          {/* Üst menüdeki üç bağlantı, ayrı bir sütun başlığı olmadan */}
+          {/* Üst menüdeki üç bağlantı, ayrı bir sütun başlığı olmadan. Rehber
+              yalnızca yayında en az bir rehber varken ekleniyor. */}
           <nav className="flex flex-wrap gap-x-6 gap-y-2">
-            {(["about", "projects", "contact"] as const).map((key) => (
+            {([
+              "about",
+              "projects",
+              ...(publishedGuides.length > 0 ? (["guides"] as const) : []),
+              "contact",
+            ] as const).map((key) => (
               <Link
                 key={key}
                 href={pathFor(locale, key)}
