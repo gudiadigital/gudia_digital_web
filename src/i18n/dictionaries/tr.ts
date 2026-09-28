@@ -274,11 +274,11 @@ export const tr = {
         short:
           "Trendyol mağazanızın ürün sayfalarını, görsellerini ve metinlerini dönüşüm için yeniden düzenliyoruz.",
         intro:
-          "Ticaret Bakanlığı'na göre 2024'te Türkiye'de 600.800 işletme e-ticaret yaptı. Aralarındaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
+          "Ticaret Bakanlığı'na göre 2025'te Türkiye'de 634.611 işletme e-ticaret yaptı. Aralarındaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
         sources: [
           {
-            label: "Ticaret Bakanlığı, Türkiye'de E-Ticaretin Görünümü (6 Mayıs 2025)",
-            url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-06-05-2025",
+            label: "Ticaret Bakanlığı, Türkiye'de E-Ticaretin Görünümü (12 Mayıs 2026)",
+            url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-12-05-2026",
           },
         ],
         features: [
@@ -389,15 +389,15 @@ export const tr = {
     eyebrow: "Projeler",
     title: "Üzerinde çalıştıklarımız",
     subtitle:
-      "Yayına aldığımız ve geliştirmeye devam ettiğimiz işler. Liste büyüdükçe burayı güncelliyoruz.",
+      "Mobil uygulamalar, oyunlar, interaktif deneyimler ve e-ticaret işleri. Liste büyüdükçe burayı güncelliyoruz.",
     empty:
       "İlk projelerimizi yayına hazırlıyoruz. Bu bölüm çok yakında güncellenecek — bu arada aklınızdaki projeyi konuşmak isterseniz bize yazın.",
     emptyCta: "Bize yazın",
     viewProject: "Projeyi gör",
     featuredEyebrow: "Öne çıkan işler",
-    featuredTitle: "Yayında olan projeler",
+    featuredTitle: "Uygulamalardan oyunlara",
     featuredSubtitle:
-      "Markalar için kurduğumuz deneyimlerden kendi uygulamalarımıza kadar, gerçekten yayında olan işler.",
+      "Kendi ürünlerimiz ve markalar için kurduğumuz deneyimler arasından bir seçki.",
     allProjects: "Tüm projeler",
     referencesTitle: "Bu alandaki işlerimiz",
     backToProjects: "Tüm projelere dön",

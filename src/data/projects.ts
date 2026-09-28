@@ -33,7 +33,11 @@ export type Project = {
   seo?: Record<Locale, { title?: string; description?: string }>;
   /** Detay sayfasındaki uzun anlatım; her paragraf bir dizi elemanı. */
   detail?: Record<Locale, string[]>;
-  /** Detay sayfasındaki künye satırları (sürüm, platform, dil sayısı…). */
+  /**
+   * Detay sayfasındaki künye satırları (sürüm, platform, dil sayısı…).
+   * Sürüm, App Store'daki son sürümün tarihiyle yazılıyor: statik sitede
+   * tarihsiz sürüm bir sonraki güncellemede sessizce eskiyor.
+   */
   facts?: Record<Locale, { k: string; v: string }[]>;
   rating?: ProjectRating;
   /**
@@ -152,13 +156,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "1.0.8" },
+        { k: "Sürüm", v: "1.0.8 (1 Ağustos 2026 itibarıyla)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Dil", v: "11" },
         { k: "Kategori", v: "Oyun" },
       ],
       en: [
-        { k: "Version", v: "1.0.8" },
+        { k: "Version", v: "1.0.8 (as of 1 August 2026)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Languages", v: "11" },
         { k: "Category", v: "Games" },
@@ -210,13 +214,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "1.0" },
+        { k: "Sürüm", v: "1.0 (10 Temmuz 2026 itibarıyla)" },
         { k: "Platform", v: "iOS + watchOS" },
         { k: "Dil", v: "6" },
         { k: "Kategori", v: "Verimlilik" },
       ],
       en: [
-        { k: "Version", v: "1.0" },
+        { k: "Version", v: "1.0 (as of 10 July 2026)" },
         { k: "Platform", v: "iOS + watchOS" },
         { k: "Languages", v: "6" },
         { k: "Category", v: "Productivity" },
@@ -257,13 +261,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "2.0.7" },
+        { k: "Sürüm", v: "2.0.7 (18 Eylül 2026 itibarıyla)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Dil", v: "21" },
         { k: "Kategori", v: "Referans" },
       ],
       en: [
-        { k: "Version", v: "2.0.7" },
+        { k: "Version", v: "2.0.7 (as of 18 September 2026)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Languages", v: "21" },
         { k: "Category", v: "Reference" },
@@ -316,13 +320,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "4.1.4" },
+        { k: "Sürüm", v: "4.1.4 (6 Temmuz 2025 itibarıyla)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Kategori", v: "Eğitim" },
         { k: "Tavsiye", v: "TFSF" },
       ],
       en: [
-        { k: "Version", v: "4.1.4" },
+        { k: "Version", v: "4.1.4 (as of 6 July 2025)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Category", v: "Education" },
         { k: "Endorsed by", v: "TFSF" },
@@ -402,19 +406,17 @@ export const projects: Project[] = [
       tr: [
         "Mezarlıkta geçen kara mizahlı bir flört oyunu.",
         "Elle çizilmiş sanat yönetimi ve kendine özgü bir oynanış döngüsü var; hikâye seçimlerle ilerliyor.",
-        "PC için Steam sayfası yayında; çıkış tarihi duyurulacak.",
       ],
       en: [
         "A darkly comic dating game set in a graveyard.",
         "It has hand-drawn art direction and a gameplay loop of its own, with a story that moves forward through choices.",
-        "Its Steam page for PC is live; the release date is still to be announced.",
       ],
     },
     facts: {
       tr: [
         { k: "Platform", v: "PC (Steam)" },
         // Steam oyunu "yakında" olarak listeliyor (28 Eylül 2026); çıkış
-        // tarihi açıklanınca özet, anlatım ve bu satır birlikte güncellenmeli.
+        // tarihi açıklanınca özet ve bu satır birlikte güncellenmeli.
         { k: "Durum", v: "Steam sayfası yayında, çıkış tarihi duyurulacak" },
         { k: "Tür", v: "Görsel roman" },
         { k: "Yıl", v: "2026" },

@@ -241,11 +241,11 @@ export const en: Dictionary = {
         short:
           "We rebuild your marketplace product pages, images and copy around conversion.",
         intro:
-          "According to Türkiye's Ministry of Trade, 600,800 businesses sold online in 2024. What sets them apart is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
+          "According to Türkiye's Ministry of Trade, 634,611 businesses sold online in 2025. What sets them apart is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
         sources: [
           {
-            label: "Türkiye Ministry of Trade announcement, 6 May 2025 (in Turkish)",
-            url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-06-05-2025",
+            label: "Türkiye Ministry of Trade announcement, 12 May 2026 (in Turkish)",
+            url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-12-05-2026",
           },
         ],
         features: [
@@ -354,15 +354,15 @@ export const en: Dictionary = {
     eyebrow: "Projects",
     title: "What we've been building",
     subtitle:
-      "Work we've shipped and keep developing. We update this page as the list grows.",
+      "Mobile apps, games, interactive experiences and e-commerce work. We update this page as the list grows.",
     empty:
       "We're getting our first projects ready for launch. This section will be updated soon — in the meantime, if you'd like to discuss a project, get in touch.",
     emptyCta: "Get in touch",
     viewProject: "View project",
     featuredEyebrow: "Selected work",
-    featuredTitle: "Projects that shipped",
+    featuredTitle: "From apps to games",
     featuredSubtitle:
-      "From experiences we built for brands to our own apps — work that is genuinely live.",
+      "A selection from our own products and the experiences we've built for brands.",
     allProjects: "All projects",
     referencesTitle: "Our work in this area",
     backToProjects: "Back to all projects",
