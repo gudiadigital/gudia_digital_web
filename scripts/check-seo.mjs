@@ -480,6 +480,21 @@ if (!existsSync(sitemapFile)) {
   }
 }
 
+// 9. Proje sayfalarına yeterince iç bağlantı var mı (yalnızca uyarı)
+for (const [url, file] of pageUrls) {
+  const path = url.slice(SITE_URL.length);
+  const [locale, segment, slug, extra] = path.split("/").filter(Boolean);
+  if (!slug || extra || PROJECT_SEGMENT[locale] !== segment) continue;
+  const count = inlinks.get(url)?.size ?? 0;
+  if (count < MIN_PROJECT_INLINKS) {
+    warn(
+      relative(process.cwd(), file),
+      "inlinks",
+      `aynı dilde yalnızca ${count} sayfa bağlantı veriyor (en az ${MIN_PROJECT_INLINKS} önerilir)`,
+    );
+  }
+}
+
 // 10. llms.txt: Markdown H1 ile başlıyor, kısa kalıyor ve site içi her
 // bağlantısı (çapası dahil) var olan bir sayfaya gidiyor.
 const llmsFile = join(OUT, "llms.txt");
@@ -501,21 +516,6 @@ if (!existsSync(llmsFile)) {
     } else if (anchor && !readFileSync(pageUrls.get(page), "utf8").includes(`id="${anchor}"`)) {
       fail(llmsRel, "llms", `sayfada olmayan çapa: ${url}`);
     }
-  }
-}
-
-// 9. Proje sayfalarına yeterince iç bağlantı var mı (yalnızca uyarı)
-for (const [url, file] of pageUrls) {
-  const path = url.slice(SITE_URL.length);
-  const [locale, segment, slug, extra] = path.split("/").filter(Boolean);
-  if (!slug || extra || PROJECT_SEGMENT[locale] !== segment) continue;
-  const count = inlinks.get(url)?.size ?? 0;
-  if (count < MIN_PROJECT_INLINKS) {
-    warn(
-      relative(process.cwd(), file),
-      "inlinks",
-      `aynı dilde yalnızca ${count} sayfa bağlantı veriyor (en az ${MIN_PROJECT_INLINKS} önerilir)`,
-    );
   }
 }
 
