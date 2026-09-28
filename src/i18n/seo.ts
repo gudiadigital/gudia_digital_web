@@ -133,6 +133,7 @@ export function metaDescription(text: string, max = 160): string {
   out = out.trim().replaceAll(KEPT_DOT, ".");
   if (out.length >= 110) return out;
 
-  const cut = clean.slice(0, 157);
+  // "…" dahil `max`'ı aşmasın; varsayılan 160'ta kesim 157'de kalıyor.
+  const cut = clean.slice(0, Math.min(157, max - 1));
   return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "")}…`;
 }

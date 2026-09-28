@@ -188,7 +188,7 @@ export const projects: Project[] = [
       tr: {
         title: "Habitile: Widget Öncelikli Alışkanlık Takibi",
         description:
-          "Habitile, widget öncelikli bir alışkanlık takibi: ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz. Altı dilde yayında.",
+          "Habitile, widget öncelikli alışkanlık takip uygulaması: her alışkanlığı ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz.",
       },
       en: {
         title: "Habitile: Widget-First Habit Tracker",
@@ -294,7 +294,7 @@ export const projects: Project[] = [
       tr: {
         title: "PhotoSensia Kids: Çocuklar İçin Fotoğraf Eğitimi",
         description:
-          "PhotoSensia Kids, çocuklara fotoğrafçılığı oyunlaştırarak öğreten bir eğitim uygulaması: her bölüm bir çekim tekniğini anlatıyor. iOS ve Android'de yayında.",
+          "PhotoSensia Kids, çocuklara fotoğrafçılığı oyunla öğreten bir eğitim uygulaması: her bölüm bir çekim tekniğini anlatıyor. iOS ve Android'de yayında.",
       },
       en: {
         title: "PhotoSensia Kids: Photography App for Children",

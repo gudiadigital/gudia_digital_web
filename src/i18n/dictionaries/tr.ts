@@ -138,7 +138,7 @@ export const tr = {
         seo: {
           title: "iOS ve Android Mobil Uygulama Geliştirme",
           description:
-            "iOS ve Android için işletmenize özel mobil uygulama: rezervasyon, üyelik, sadakat ve ödeme akışları. Kaynak kod sizin; App Store ve Google Play yayını dahil.",
+            "iOS ve Android için işletmenize özel uygulama: rezervasyon, üyelik, sadakat ve ödeme akışları. Kaynak kod sizin; App Store ve Google Play yayını dahil.",
         },
         short:
           "iOS ve Android için sıfırdan uygulama: rezervasyon, üyelik, sadakat, ödeme ve müşteri paneli gibi işinize özel çözümler.",
@@ -211,7 +211,7 @@ export const tr = {
       "dijital-urun-iyilestirme": {
         title: "Dijital Ürün İyileştirme",
         seo: {
-          title: "Uygulama ve Web Sitesi Bakımı, İyileştirme",
+          title: "Uygulama ve Web Sitesi Bakım ve İyileştirme",
           description:
             "Eski, yavaş ya da çalışmayan uygulama ve siteleri sıfırdan yazmadan toparlıyoruz: ücretsiz inceleme raporu, App Store uyumluluğu ve aylık teknik bakım.",
         },

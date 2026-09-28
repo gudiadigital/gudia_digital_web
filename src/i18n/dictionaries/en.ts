@@ -465,7 +465,7 @@ export const en: Dictionary = {
     seo: {
       title: "Privacy Notice",
       description:
-        "How Gudia Digital handles personal data from its contact form and email under Türkiye's KVKK Law No. 6698: data collected, purposes, transfers and your rights.",
+        "How Gudia Digital handles personal data from its contact form under Türkiye's KVKK Law No. 6698: data collected, purposes, transfers and your rights.",
     },
     title: "Privacy Notice",
     lead: "Under Article 10 of Türkiye's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",
