@@ -16,7 +16,7 @@ import {
 } from "./config";
 import { getDictionary, type Dictionary } from "./dictionaries";
 import { guidePath, pathFor, projectPath, type PageKey } from "./routes";
-import { pageCopy, type PageTarget } from "./seo";
+import { pageCopy, shareImage, type PageTarget } from "./seo";
 import { SITE_URL, absoluteUrl } from "./site";
 
 /**
@@ -389,7 +389,8 @@ function faqPage(locale: Locale, url: string, slug: ServiceSlug): Node | undefin
 
 /**
  * Rehber yazısı. Yazar sayfadaki imzayla aynı kurucu, yayıncı stüdyo;
- * tarihler sayfada görünen "Yayın" ve "Son güncelleme" tarihleri.
+ * tarihler sayfada görünen "Yayın" ve "Son güncelleme" tarihleri. Görsel,
+ * sayfanın paylaşım kartıyla aynı (Google Article'da görsel öneriyor).
  */
 function article(locale: Locale, guide: Guide, url: string): Node {
   return {
@@ -397,6 +398,7 @@ function article(locale: Locale, guide: Guide, url: string): Node {
     "@id": `${url}#article`,
     headline: guide.title[locale],
     description: guide.description[locale],
+    image: `${SITE_URL}${shareImage(locale)}`,
     author: ref(personId(guide.author)),
     publisher: ref(ORG),
     datePublished: guide.publishedAt,

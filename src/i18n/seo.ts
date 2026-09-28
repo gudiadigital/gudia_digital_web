@@ -42,18 +42,24 @@ export function shareImage(locale: Locale): string {
  * tamamen yerine geçiyor; bu yüzden kart burada eksiksiz kuruluyor.
  *
  * `title` ve `description` pageCopy()'den gelmeli; burada değiştirilmiyor.
+ *
+ * `article` verilirse (rehberler) kart "article" türünde çıkıyor ve yayın /
+ * güncelleme tarihlerini taşıyor; tarihler sayfada görünenlerle aynı olmalı.
  */
 export function pageMetadata({
   locale,
   paths,
   title,
   description,
+  article,
 }: {
   locale: Locale;
   /** Sayfanın her dildeki yolu, ör. { tr: "/tr/projeler/pofu", en: "/en/projects/pofu" } */
   paths: Record<Locale, string>;
   title: string;
   description: string;
+  /** YYYY-MM-DD */
+  article?: { publishedTime: string; modifiedTime: string };
 }): Metadata {
   const { meta } = getDictionary(locale);
   const shareTitle = `${title} · ${meta.siteName}`;
@@ -67,7 +73,7 @@ export function pageMetadata({
       languages: { ...paths, "x-default": paths.tr },
     },
     openGraph: {
-      type: "website",
+      ...(article ? { type: "article", ...article } : { type: "website" }),
       siteName: meta.siteName,
       title: shareTitle,
       description,

@@ -95,6 +95,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
         en: guidePath("en", guide.slug.en),
       },
       ...pageCopy(locale, { kind: "guide", guide }),
+      article: { publishedTime: guide.publishedAt, modifiedTime: guide.updatedAt },
     });
   }
 

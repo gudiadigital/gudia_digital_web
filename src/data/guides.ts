@@ -64,6 +64,10 @@ const guides: Guide[] = [
     // Yayına alırken publishedAt/updatedAt'i yayın günüyle değiştirin ve
     // tarihleri kaynaklarda yeniden kontrol edin (Play'in ek süresi 1 Kasım
     // 2026'da bitiyor; Apple'ın bir sonraki SDK şartı duyurulunca da).
+    // Kaynaklar ek sürenin ne sağladığını yalnızca "1 Kasım'a kadar bütün
+    // kullanıcılara dağıtım" diye anlatıyor; o sürede eski hedef API ile
+    // güncelleme gönderilip gönderilemeyeceğini yazmıyor. Yayından önce
+    // gerçek bir Play Console uyarısından doğrulanmalı.
     id: "store-update-requirements",
     slug: {
       tr: "app-store-google-play-guncelleme-zorunluluklari",
@@ -87,7 +91,7 @@ const guides: Guide[] = [
         {
           h2: "App Store'da güncelleme zorunlu mu?",
           answer:
-            "Apple güncellemeyi belirli bir takvime bağlamıyor; düzenli güncellemeyi iyi bir alışkanlık olarak öneriyor. Ama uzun süredir güncellenmeyen ve çok az indirilen uygulamalar mağazadan kaldırılabiliyor, gönderdiğiniz her yeni sürüm de o günkü teknik şartlara uymak zorunda.",
+            "Apple uygulamanızı düzenli güncellemenizi öneriyor. Uzun süredir güncellenmeyen ve çok az indirilen uygulamalar ise mağazadan kaldırılabiliyor; gönderdiğiniz her yeni sürüm de o günkü teknik şartlara uymak zorunda.",
           body: [
             "Apple, App Store'daki uygulamaları sürekli değerlendiriyor: artık amaçlandığı gibi çalışmayan, güncel inceleme kurallarına uymayan ya da eskimiş uygulamaları mağazadan kaldırıyor. Bu değerlendirme bütün kategorilerdeki uygulamaları kapsıyor.",
             "Teknik şartlar ise App Store Connect'e yüklenen yeni sürümler için geçerli. Bu yüzden uzun süredir dokunulmamış bir uygulamada ilk güncelleme, projeyi önce bugünkü şartlara uygun hâle getirmeyi gerektiriyor.",
@@ -98,7 +102,7 @@ const guides: Guide[] = [
           answer:
             "28 Nisan 2026'dan beri App Store Connect'e yüklenen uygulamaların Xcode 26 ya da daha yeni bir sürümle, iOS 26, iPadOS 26, tvOS 26, visionOS 26 veya watchOS 26 SDK'sı kullanılarak derlenmesi gerekiyor. Daha eski bir Xcode ile derlenmiş sürüm bu şartı karşılamıyor.",
           body: [
-            "SDK (yazılım geliştirme kiti), uygulamanın derlendiği Apple kütüphaneleri ve araçlarıdır. Şart, uygulamanın nasıl derlendiğiyle ilgili; kullanıcılarınızın iOS 26'ya geçmiş olması gerekmiyor. 9 Eylül 2026'dan beri yüklenen iOS ve iPadOS uygulamalarının en az iOS 13'ü hedeflemesi yeterli.",
+            "SDK (yazılım geliştirme kiti), uygulamanın derlendiği Apple kütüphaneleri ve araçlarıdır. Şart, uygulamanın nasıl derlendiğiyle ilgili; kullanıcılarınızın iOS 26'ya geçmiş olması gerekmiyor. 9 Eylül 2026'dan beri yüklenen iOS ve iPadOS uygulamalarının en az iOS 13'ü hedeflemesi gerekiyor.",
             "Uzun süredir güncellenmeyen bir projede ilk iş, projeyi Xcode 26 ile derlenir hâle getirmek.",
           ],
         },
@@ -126,7 +130,7 @@ const guides: Guide[] = [
           answer:
             "Hedef API şartını karşılamayan uygulamalar için Google Play Console'da politika uyarısı çıkıyor; ek süre formuna, Politika durumu sayfasındaki bu uyarının ayrıntılar sayfasından ulaşılıyor. Ek süre verilen uygulama 1 Kasım 2026'ya kadar Google Play'deki bütün kullanıcılara dağıtılmaya devam ediyor.",
           body: [
-            "Google, form bağlantısını etkilenen uygulamalar için Play Console'un Bildirimler bölümüne de gönderiyor. Ek süre şartı kaldırmıyor, yalnızca zaman kazandırıyor: bu sürede göndereceğiniz güncellemenin de Android 16'yı (API 36) hedeflemesi gerekiyor.",
+            "Google, form bağlantısını etkilenen uygulamalar için Play Console'un Bildirimler bölümüne de gönderiyor. Ek süre şartı kaldırmıyor, yalnızca zaman kazandırıyor; 1 Kasım 2026'dan sonra uygulamanın yine şartı karşılaması gerekiyor.",
           ],
         },
         {
@@ -142,7 +146,7 @@ const guides: Guide[] = [
         {
           h2: "Do you have to update an app on the App Store?",
           answer:
-            "Apple doesn't put updates on a fixed schedule; it recommends updating regularly as a best practice. But apps that go years without an update and are rarely downloaded can be removed, and every new version you submit has to meet the technical requirements in force that day.",
+            "Apple recommends updating your app regularly. Apps that go years without an update and are rarely downloaded can be removed, and every new version you submit has to meet the technical requirements in force that day.",
           body: [
             "Apple evaluates apps on the App Store on an ongoing basis and removes apps that no longer function as intended, don't follow the current review guidelines or are outdated. This applies to apps in every category.",
             "The technical requirements apply to new builds uploaded to App Store Connect. So for an app nobody has touched in a long time, the first update means bringing the project up to today's requirements first.",
@@ -153,7 +157,7 @@ const guides: Guide[] = [
           answer:
             "Since April 28, 2026, apps uploaded to App Store Connect must be built with Xcode 26 or later, using the iOS 26, iPadOS 26, tvOS 26, visionOS 26 or watchOS 26 SDK. A build made with an older Xcode doesn't meet this requirement.",
           body: [
-            "The SDK (software development kit) is the set of Apple frameworks and tools an app is built with. The requirement is about how the app is built, not about which iOS version your users run: since September 9, 2026, iOS and iPadOS apps uploaded to App Store Connect only need to target iOS 13 or later.",
+            "The SDK (software development kit) is the set of Apple frameworks and tools an app is built with. The requirement is about how the app is built, not about which iOS version your users run. Separately, since September 9, 2026, iOS and iPadOS apps uploaded to App Store Connect must target iOS 13 or later.",
             "For a project that hasn't been updated in a long time, the first job is getting it to build with Xcode 26.",
           ],
         },
@@ -181,7 +185,7 @@ const guides: Guide[] = [
           answer:
             "Apps that don't meet the target API level requirement get a policy warning in Google Play Console, and the extension form is reached from that warning's details page on the Policy status page. With an extension, the app stays available to all users on Google Play until November 1, 2026.",
           body: [
-            "Google also sends affected apps a link to the extension form through Play Console notifications. The extension doesn't lift the requirement, it only buys time: the update you submit in the meantime still has to target Android 16 (API level 36).",
+            "Google also sends affected apps a link to the extension form through Play Console notifications. The extension doesn't lift the requirement, it only buys time; after November 1, 2026, the app still has to meet it.",
           ],
         },
         {

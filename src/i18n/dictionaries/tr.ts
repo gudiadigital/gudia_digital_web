@@ -961,16 +961,20 @@ export const tr = {
    * Rehber dizini ve rehber sayfasının sabit metinleri. Rehberlerin kendisi
    * src/data/guides.ts'te. Dizin yalnızca yayında en az bir rehber varken
    * üretiliyor; o güne kadar bu metinler sitede hiç görünmüyor.
+   *
+   * Dizinin metni yalnızca var olan rehberlerin konusunu anlatıyor (şimdilik
+   * mağaza ve uygulama güncellemeleri). Web siteleri gibi başka bir konuda
+   * rehber yayına girince başlık ve açıklama da genişletilmeli.
    */
   guides: {
     seo: {
-      title: "Rehber: Uygulama, Web ve Mağaza Soruları",
+      title: "Rehber: Uygulama ve Mağaza Soruları",
       description:
-        "Mağaza kuralları, uygulama güncellemeleri ve web siteleriyle ilgili sık sorulan sorulara kaynaklarıyla cevaplar. Her rehberin yazarı ve tarihi belli.",
+        "App Store ve Google Play kuralları ile uygulama güncellemeleri hakkında sık sorulan sorulara kaynaklarıyla cevaplar. Her rehberin yazarı ve tarihi belli.",
     },
-    title: "Uygulamanız, siteniz ve mağazanız için rehberler",
+    title: "Uygulama güncellemeleri ve mağaza kuralları üzerine rehberler",
     subtitle:
-      "Mağaza kuralları, uygulama güncellemeleri ve dijital ürünlerle ilgili sık sorulan sorulara kaynaklarıyla birlikte cevap veriyoruz. Her rehberin yazarı ve son güncelleme tarihi yazılı.",
+      "Mağaza kuralları ve uygulama güncellemeleriyle ilgili sık sorulan sorulara kaynaklarıyla birlikte cevap veriyoruz. Her rehberin yazarı ve son güncelleme tarihi yazılı.",
     byline: "Yazan",
     published: "Yayın",
     updated: "Son güncelleme",

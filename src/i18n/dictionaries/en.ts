@@ -790,13 +790,13 @@ export const en: Dictionary = {
 
   guides: {
     seo: {
-      title: "Guides: App, Website and App Store Questions",
+      title: "Guides: App Updates and Store Rules",
       description:
-        "Answers to common questions about app store rules, app updates and websites, with links to the sources. Every guide shows its author and last update date.",
+        "Answers to common questions about App Store and Google Play rules and app updates, with links to official sources. Every guide shows its author and date.",
     },
-    title: "Guides for your app, website and store",
+    title: "Guides to app updates and store rules",
     subtitle:
-      "Plain answers to common questions about store rules, app updates and digital products, with links to the sources. Every guide shows who wrote it and when it was last updated.",
+      "Plain answers to common questions about store rules and app updates, with links to the sources. Every guide shows who wrote it and when it was last updated.",
     byline: "Author",
     published: "Published",
     updated: "Last updated",
