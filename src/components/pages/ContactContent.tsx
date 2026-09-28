@@ -1,9 +1,10 @@
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
+import { pathFor } from "@/i18n/routes";
 import type { PageContentProps } from "./types";
 
-export function ContactContent({ dict }: PageContentProps) {
+export function ContactContent({ locale, dict }: PageContentProps) {
   const { contact } = dict;
 
   return (
@@ -46,7 +47,7 @@ export function ContactContent({ dict }: PageContentProps) {
             {contact.formTitle}
           </h2>
           <div className="mt-8 max-w-3xl">
-            <ContactForm dict={dict} />
+            <ContactForm dict={dict} privacyHref={pathFor(locale, "privacy")} />
           </div>
         </div>
       </Container>

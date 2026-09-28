@@ -6,17 +6,25 @@ import {
 } from "./config";
 
 /**
- * Klasör adları (canonical) İngilizce; her dil için görünen URL parçası ayrı.
- * Görünen yolu canonical yola çeviren rewrite tablosu next.config.ts içinde —
- * bu dosyadaki tablolar değişirse orası da güncellenmeli.
+ * Sayfa anahtarları (canonical) İngilizce; her dil için görünen URL parçası
+ * ayrı. Statik export'ta rewrite yok: [page] ve [page]/[slug] rotaları
+ * generateStaticParams ile doğrudan bu tablolardan üretiliyor, yani yeni ya da
+ * değişen bir URL için yalnızca bu dosyaya dokunmak yeterli.
  */
-export type RouteKey = "home" | "about" | "services" | "projects" | "contact";
+export type RouteKey =
+  | "home"
+  | "about"
+  | "services"
+  | "projects"
+  | "contact"
+  | "privacy";
 
 const pageSegments: Record<Exclude<RouteKey, "home">, Record<Locale, string>> = {
   about: { tr: "hakkimizda", en: "about" },
   services: { tr: "hizmetler", en: "services" },
   projects: { tr: "projeler", en: "projects" },
   contact: { tr: "iletisim", en: "contact" },
+  privacy: { tr: "kvkk", en: "privacy" },
 };
 
 const serviceSegments: Record<ServiceSlug, Record<Locale, string>> = {
@@ -105,7 +113,13 @@ export function parsePath(pathname: string): {
   return { locale, key: pageKey };
 }
 
-export const pageKeys = ["about", "services", "projects", "contact"] as const;
+export const pageKeys = [
+  "about",
+  "services",
+  "projects",
+  "contact",
+  "privacy",
+] as const;
 
 export type PageKey = (typeof pageKeys)[number];
 

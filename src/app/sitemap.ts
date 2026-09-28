@@ -30,5 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     })),
     { url: url(pathFor(locale, "contact")), lastModified: now, priority: 0.7 },
+    { url: url(pathFor(locale, "privacy")), lastModified: now, priority: 0.3 },
   ]);
 }

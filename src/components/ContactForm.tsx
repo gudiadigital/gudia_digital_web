@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { serviceSlugs } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -27,7 +28,14 @@ const WEB3FORMS_KEY = "b1cf2142-424f-40cf-8fc1-c31cfbf8adb2";
  * varsayılan e-posta uygulaması kurulu değil ve bağlantı hiçbir şey
  * açmıyor.
  */
-export function ContactForm({ dict }: { dict: Dictionary }) {
+export function ContactForm({
+  dict,
+  privacyHref,
+}: {
+  dict: Dictionary;
+  /** KVKK aydınlatma metninin bu dildeki adresi. */
+  privacyHref: string;
+}) {
   const t = dict.contact.form;
   const [errors, setErrors] = useState<Errors>({});
   const [draft, setDraft] = useState<Draft | null>(null);
@@ -243,6 +251,18 @@ export function ContactForm({ dict }: { dict: Dictionary }) {
       >
         {status === "sending" ? t.submitting : t.submit}
       </button>
+
+      {/* Aydınlatma metni veri toplanmadan önce görünür olmalı (KVKK md. 10). */}
+      <p className="text-muted mt-4 text-xs leading-relaxed">
+        {t.privacyNotice.before}
+        <Link
+          href={privacyHref}
+          className="text-ink/80 hover:text-ink underline underline-offset-2 transition-colors"
+        >
+          {t.privacyNotice.link}
+        </Link>
+        {t.privacyNotice.after}
+      </p>
 
       {status === "failed" && (
         <p role="alert" className="mt-4 text-sm text-[#ff8a8a]">

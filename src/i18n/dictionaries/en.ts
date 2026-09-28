@@ -1,4 +1,4 @@
-import type { Dictionary } from "./tr";
+import type { Dictionary, PrivacySection } from "./tr";
 
 export const en: Dictionary = {
   meta: {
@@ -287,8 +287,8 @@ export const en: Dictionary = {
       },
       {
         name: "Dilara İşman",
-        role: "Co-founder",
-        bio: "Runs project management, client communication, and content & e-commerce operations.",
+        role: "Co-founder · Game Developer",
+        bio: "Runs game development, project management and client communication. Responsible for building branded games and interactive experiences, planning projects and delivering them on time, and day-to-day contact with clients.",
       },
     ],
   },
@@ -339,7 +339,7 @@ export const en: Dictionary = {
     eyebrow: "Contact",
     title: "Let's talk",
     subtitle:
-      "Ask for a free review, tell us about your project, or email us directly. We usually reply the same day.",
+      "Ask for a free review, tell us about your project, or email us directly. We reply within 24 hours on weekdays.",
     emailLabel: "Email",
     email: "contact@gudiadigital.com",
     responseLabel: "Response time",
@@ -363,6 +363,11 @@ export const en: Dictionary = {
       message: "Your message",
       messagePlaceholder: "Tell us briefly about your project: what do you want to build, and by when?",
       submit: "Send Message",
+      privacyNotice: {
+        before: "Read how the information you send is processed in our ",
+        link: "Privacy Notice",
+        after: ".",
+      },
       submitting: "Sending…",
       success: {
         title: "Message received",
@@ -394,12 +399,99 @@ export const en: Dictionary = {
     projectLink: "Project page",
   },
 
+  privacy: {
+    title: "Privacy Notice",
+    lead: "Under Article 10 of Turkey's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",
+    updated: "Last updated: 28 September 2026",
+    sections: [
+      {
+        title: "Data controller",
+        body: [
+          "Your personal data is processed by Gürkan Sevilmiş and Dilara İşman, who work together as Gudia Digital, acting as data controllers. You can reach us at contact@gudiadigital.com.",
+        ],
+      },
+      {
+        title: "What data we process",
+        items: [
+          "Identity: your first and last name",
+          "Contact: your email address and/or phone number",
+          "Request: the subject you pick and whatever you share in your message",
+          "Security: the IP address and browser information that the hosting and form services record technically when you visit the site or send the form",
+        ],
+        after: [
+          "This site uses no cookies, analytics or ad tracking. Please don't share sensitive personal data such as health, religion or ethnic origin in your message.",
+        ],
+      },
+      {
+        title: "Why we process it",
+        items: [
+          "To answer your question, project request or free review request",
+          "To prepare a proposal and discuss the project",
+          "To carry out a working relationship once one is established",
+          "To keep the site and contact form secure and to prevent unwanted submissions (spam)",
+        ],
+      },
+      {
+        title: "How we collect it and on what legal basis",
+        body: [
+          "Your data is collected electronically, directly from you, through the contact form or by email. We rely on the following legal grounds in Article 5(2) of the Law:",
+        ],
+        items: [
+          "(c) It is directly related to entering into or performing a contract — for proposals, project discussions and working relationships",
+          "(f) It is necessary for our legitimate interests, provided your fundamental rights and freedoms are not harmed — for answering general questions and site security",
+        ],
+      },
+      {
+        title: "Who we share it with",
+        body: [
+          "We don't sell your data or share it with anyone for advertising or marketing. We only use the service providers below so the site and our correspondence work. Their servers are located outside Turkey, so your data is transferred abroad within the scope of Article 9 of the Law:",
+        ],
+        items: [
+          "Web3Forms — forwards your contact form message to us by email",
+          "Google Workspace (Google LLC) — hosts our email account; your message and our correspondence are stored there",
+          "GitHub Pages (GitHub, Inc.) — hosts the site; may record your IP address for security when you visit",
+        ],
+        after: [
+          "Beyond this, your data may only be shared with authorised public authorities when they request it under a legal obligation.",
+        ],
+      },
+      {
+        title: "How long we keep it",
+        body: [
+          "Your message and our correspondence are kept for at most 1 year after your request is resolved. If we start working together, they are kept for the duration of that relationship and any legal retention periods. When the period ends, the data is deleted.",
+        ],
+      },
+      {
+        title: "Your rights",
+        body: ["Under Article 11 of the Law, you have the right to:"],
+        items: [
+          "Learn whether your personal data is processed",
+          "Request information about it if it is",
+          "Learn the purpose of processing and whether the data is used accordingly",
+          "Know the third parties it is transferred to in Turkey or abroad",
+          "Ask for it to be corrected if it is incomplete or inaccurate",
+          "Ask for it to be erased or destroyed under the conditions in Article 7 of the Law",
+          "Ask for corrections, erasures and destructions to be notified to third parties the data was transferred to",
+          "Object to an outcome against you that results solely from automated analysis",
+          "Claim compensation if you suffer damage from unlawful processing",
+        ],
+      },
+      {
+        title: "How to apply",
+        body: [
+          "To use these rights, write to the address below from the email address you used to contact us before. We reply free of charge within 30 days at the latest. If you're not satisfied with our reply, you can file a complaint with the Personal Data Protection Board (KVKK).",
+        ],
+      },
+    ] as PrivacySection[],
+  },
+
   footer: {
     tagline: "Digital product and growth studio. Build, improve, grow.",
     servicesTitle: "Services",
     contactTitle: "Contact",
     rights: "All rights reserved.",
     privacyTitle: "Your data",
+    privacyLink: "Privacy notice",
     privacyNote:
       "This site uses no cookies, analytics or tracking. What you write in the contact form is sent through the Web3Forms service only to deliver it to us by email; this site stores no data.",
   },

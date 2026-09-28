@@ -14,11 +14,12 @@ import { AboutContent } from "@/components/pages/AboutContent";
 import { ServicesContent } from "@/components/pages/ServicesContent";
 import { ProjectsContent } from "@/components/pages/ProjectsContent";
 import { ContactContent } from "@/components/pages/ContactContent";
+import { PrivacyContent } from "@/components/pages/PrivacyContent";
 
 type Params = { params: Promise<{ locale: string; page: string }> };
 
 /**
- * Hakkımızda / Hizmetler / Projeler / İletişim sayfalarının tamamı buradan
+ * Hakkımızda / Hizmetler / Projeler / İletişim / KVKK sayfalarının tamamı buradan
  * üretilir. Klasör adı yerine dile göre değişen URL parçası kullanıldığı için
  * (/tr/hakkimizda, /en/about) tek bir dinamik segment yeterli oluyor.
  */
@@ -42,6 +43,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     services: { title: dict.nav.services, description: dict.services.subtitle },
     projects: { title: dict.nav.projects, description: dict.projects.subtitle },
     contact: { title: dict.nav.contact, description: dict.contact.subtitle },
+    privacy: { title: dict.privacy.title, description: dict.privacy.lead },
   };
   return pageMetadata({
     locale,
@@ -68,5 +70,7 @@ export default async function LocalizedPage({ params }: Params) {
       return <ProjectsContent locale={locale} dict={dict} />;
     case "contact":
       return <ContactContent locale={locale} dict={dict} />;
+    case "privacy":
+      return <PrivacyContent locale={locale} dict={dict} />;
   }
 }

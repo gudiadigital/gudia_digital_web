@@ -1,3 +1,11 @@
+/** KVKK aydınlatma metninde bir başlık: paragraf, madde listesi, ek paragraf. */
+export type PrivacySection = {
+  title: string;
+  body?: string[];
+  items?: string[];
+  after?: string[];
+};
+
 export const tr = {
   meta: {
     siteName: "Gudia Dijital",
@@ -29,7 +37,7 @@ export const tr = {
       { text: "büyütüyoruz", accent: true },
       { text: ".", accent: false },
     ],
-    pillars: ["Web", "Mobile", "Interactive", "Content", "Commerce"],
+    pillars: ["Web", "Mobil", "İnteraktif", "İçerik", "E-ticaret"],
     subtitle:
       "Sıfırdan ürün kuruyoruz, elinizdeki dijital varlıkları toparlıyoruz ve satışa hazır hale getiriyoruz. Küçük bir ekibiz — aracı yok, ajans katmanı yok, ürünü kuran kişilerle konuşursunuz.",
     ctaPrimary: "Ücretsiz İnceleme İsteyin",
@@ -285,8 +293,8 @@ export const tr = {
       },
       {
         name: "Dilara İşman",
-        role: "Kurucu Ortak",
-        bio: "Proje yönetimi, müşteri iletişimi ve içerik & e-ticaret operasyonunu yürütüyor.",
+        role: "Kurucu Ortak · Oyun Geliştirici",
+        bio: "Oyun geliştirme, proje yönetimi ve müşteri iletişimini yürütüyor. Markalı oyun ve interaktif deneyim projelerinin geliştirilmesinden, işlerin planlanıp zamanında teslim edilmesinden ve müşteriyle günlük iletişimden sorumlu.",
       },
     ],
   },
@@ -337,7 +345,7 @@ export const tr = {
     eyebrow: "İletişim",
     title: "Konuşalım",
     subtitle:
-      "Ücretsiz inceleme isteyebilir, projenizi anlatabilir ya da doğrudan e-posta gönderebilirsiniz. Genellikle aynı gün içinde dönüş yapıyoruz.",
+      "Ücretsiz inceleme isteyebilir, projenizi anlatabilir ya da doğrudan e-posta gönderebilirsiniz. Hafta içi 24 saat içinde dönüş yapıyoruz.",
     emailLabel: "E-posta",
     email: "contact@gudiadigital.com",
     responseLabel: "Yanıt süresi",
@@ -361,6 +369,12 @@ export const tr = {
       message: "Mesajınız",
       messagePlaceholder: "Projenizden kısaca bahsedin: ne yapmak istiyorsunuz, ne zamana kadar?",
       submit: "Mesajı Gönder",
+      // Gönder düğmesinin altında: "<before><link><after>"
+      privacyNotice: {
+        before: "Gönderdiğiniz bilgilerin nasıl işlendiğini ",
+        link: "KVKK Aydınlatma Metni",
+        after: "’nde okuyabilirsiniz.",
+      },
       submitting: "Gönderiliyor…",
       success: {
         title: "Mesajınız alındı",
@@ -395,12 +409,99 @@ export const tr = {
     projectLink: "Proje sayfası",
   },
 
+  privacy: {
+    title: "KVKK Aydınlatma Metni",
+    lead: "6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 10. maddesi uyarınca, bu sitede ve bizimle yazışırken kişisel verilerinizin nasıl işlendiğini açıklıyoruz.",
+    updated: "Son güncelleme: 28 Eylül 2026",
+    sections: [
+      {
+        title: "Veri sorumlusu",
+        body: [
+          "Kişisel verileriniz, Gudia Dijital adıyla birlikte çalışan Gürkan Sevilmiş ve Dilara İşman tarafından veri sorumlusu sıfatıyla işlenir. Bize contact@gudiadigital.com adresinden ulaşabilirsiniz.",
+        ],
+      },
+      {
+        title: "Hangi verileri işliyoruz",
+        items: [
+          "Kimlik bilgisi: adınız ve soyadınız",
+          "İletişim bilgisi: e-posta adresiniz ve/veya telefon numaranız",
+          "Talep bilgisi: seçtiğiniz konu ve mesajınızda paylaştığınız bilgiler",
+          "İşlem güvenliği bilgisi: siteyi ziyaret ettiğinizde ya da formu gönderdiğinizde barındırma ve form hizmetlerinin teknik olarak kaydettiği IP adresi ve tarayıcı bilgisi",
+        ],
+        after: [
+          "Sitede çerez, analitik veya reklam takibi yoktur. Mesajınızda sağlık, din, etnik köken gibi özel nitelikli kişisel veri paylaşmamanızı rica ederiz.",
+        ],
+      },
+      {
+        title: "Hangi amaçlarla işliyoruz",
+        items: [
+          "Sorunuza, proje talebinize veya ücretsiz inceleme isteğinize yanıt vermek",
+          "Teklif hazırlamak ve proje görüşmesi yapmak",
+          "Kurulan iş ilişkisini yürütmek",
+          "Sitenin ve iletişim formunun güvenliğini sağlamak, istenmeyen gönderimleri (spam) önlemek",
+        ],
+      },
+      {
+        title: "Toplama yöntemi ve hukuki sebep",
+        body: [
+          "Verileriniz, iletişim formu veya e-posta aracılığıyla elektronik ortamda, doğrudan sizden toplanır. Kanun'un 5. maddesinin 2. fıkrasındaki şu hukuki sebeplere dayanılır:",
+        ],
+        items: [
+          "(c) Bir sözleşmenin kurulması veya ifasıyla doğrudan ilgili olması — teklif, proje görüşmesi ve iş ilişkisi için",
+          "(f) Temel hak ve özgürlüklerinize zarar vermemek kaydıyla meşru menfaatimiz için zorunlu olması — genel sorulara yanıt vermek ve site güvenliği için",
+        ],
+      },
+      {
+        title: "Kimlere aktarıyoruz",
+        body: [
+          "Verilerinizi satmıyor, reklam veya pazarlama amacıyla kimseyle paylaşmıyoruz. Yalnızca sitenin ve yazışmanın çalışması için aşağıdaki hizmet sağlayıcılarını kullanıyoruz. Bu hizmetlerin sunucuları yurt dışında bulunduğu için verileriniz Kanun'un 9. maddesi kapsamında yurt dışına aktarılmış olur:",
+        ],
+        items: [
+          "Web3Forms — iletişim formundaki mesajınızı bize e-posta olarak iletir",
+          "Google Workspace (Google LLC) — e-posta hesabımızı barındırır; mesajınız ve yazışmalarımız burada saklanır",
+          "GitHub Pages (GitHub, Inc.) — siteyi barındırır; ziyaret sırasında IP adresinizi güvenlik amacıyla kaydedebilir",
+        ],
+        after: [
+          "Bunun dışında verileriniz yalnızca yasal bir zorunluluk olduğunda, talep eden yetkili kamu kurum ve kuruluşlarıyla paylaşılabilir.",
+        ],
+      },
+      {
+        title: "Ne kadar süre saklıyoruz",
+        body: [
+          "Mesajınız ve yazışmalarımız, talebiniz sonuçlandıktan sonra en fazla 1 yıl saklanır. Aramızda bir iş ilişkisi kurulursa bu ilişki süresince ve yasal saklama süreleri boyunca tutulur. Süre dolduğunda veriler silinir.",
+        ],
+      },
+      {
+        title: "Haklarınız",
+        body: ["Kanun'un 11. maddesi uyarınca şu haklara sahipsiniz:"],
+        items: [
+          "Kişisel verilerinizin işlenip işlenmediğini öğrenme",
+          "İşlenmişse buna ilişkin bilgi talep etme",
+          "İşlenme amacını ve verilerin amacına uygun kullanılıp kullanılmadığını öğrenme",
+          "Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme",
+          "Eksik veya yanlış işlenmişse düzeltilmesini isteme",
+          "Kanun'un 7. maddesindeki şartlar çerçevesinde silinmesini veya yok edilmesini isteme",
+          "Düzeltme, silme ve yok etme işlemlerinin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme",
+          "Yalnızca otomatik sistemlerle analiz edilmesi sonucunda aleyhinize bir sonuç çıkmasına itiraz etme",
+          "Kanuna aykırı işleme nedeniyle zarara uğramanız halinde zararın giderilmesini talep etme",
+        ],
+      },
+      {
+        title: "Başvuru",
+        body: [
+          "Bu haklarınızı kullanmak için, bize daha önce yazdığınız e-posta adresinden aşağıdaki adrese yazabilirsiniz. Başvurunuzu en geç 30 gün içinde ücretsiz olarak yanıtlarız. Yanıtımızdan memnun kalmazsanız Kişisel Verileri Koruma Kurulu'na şikâyette bulunabilirsiniz.",
+        ],
+      },
+    ] as PrivacySection[],
+  },
+
   footer: {
     tagline: "Dijital ürün ve büyüme stüdyosu. Kur, iyileştir, büyüt.",
     servicesTitle: "Hizmetler",
     contactTitle: "İletişim",
     rights: "Tüm hakları saklıdır.",
     privacyTitle: "Verileriniz",
+    privacyLink: "Aydınlatma metni",
     privacyNote:
       "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formuna yazdıklarınız yalnızca bize e-posta olarak ulaştırılmak üzere Web3Forms hizmeti üzerinden gönderilir; bu site hiçbir veri saklamaz.",
   },

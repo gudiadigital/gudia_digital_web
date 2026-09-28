@@ -29,7 +29,7 @@ npm run lint
 src/
   app/[locale]/          Kök layout burada; html lang dile göre ayarlanır
     page.tsx             Ana sayfa
-    [page]/page.tsx      Hakkımızda / Hizmetler / Projeler / İletişim
+    [page]/page.tsx      Hakkımızda / Hizmetler / Projeler / İletişim / KVKK
     [page]/[slug]/       Hizmet detay sayfaları
   components/
     pages/               Sayfa içerikleri (route dosyaları bunları çağırır)
@@ -40,7 +40,7 @@ src/
     config.ts            Diller ve hizmet slug listesi
     routes.ts            Dile göre URL üretimi — TEK kaynak
     dictionaries/        tr.ts (kaynak) · en.ts (tr'nin tipine uymak zorunda)
-  data/projects.ts       Portfolyo listesi (şu an boş)
+  data/projects.ts       Portfolyo listesi (proje kartları ve detay sayfaları)
 public/
   index.html             Kök adres (/) için dil algılayan yönlendirme
   CNAME                  Özel alan adı — GitHub Pages bunu okur
@@ -53,7 +53,9 @@ public/
 yapıda olmak zorundadır; `en.ts` eksik alan bırakırsa derleme hata verir.
 
 **Proje eklemek** → `src/data/projects.ts` içindeki diziye bir nesne ekle.
-Liste boş olduğu sürece Projeler sayfası boş durum metnini gösterir.
+Detay sayfası (`/tr/projeler/<slug>/`) ve site haritası kaydı otomatik
+üretilir. Ekran görüntülerini `public/projeler/<slug>/` altına `ss-1.jpg`,
+`ss-2.jpg`… olarak koyup `tools/optimize-images.sh` ile WebP'ye çevir.
 
 **Renk değiştirmek** → `src/app/globals.css` içindeki `:root` blokları.
 Koyu mod varsayılan; açık mod `prefers-color-scheme: light` ile otomatik.
@@ -76,6 +78,7 @@ URL'ler oradan üretildiği için başka yere dokunmak gerekmez.
 | Hizmetler| `/tr/hizmetler/`              | `/en/services/`               |
 | Hizmet   | `/tr/hizmetler/markali-oyunlar/` | `/en/services/branded-games/` |
 | Hakkında | `/tr/hakkimizda/`             | `/en/about/`                  |
+| KVKK     | `/tr/kvkk/`                   | `/en/privacy/`                |
 
 Kök adres (`/`) tarayıcı diline bakıp `/tr/` veya `/en/`'e yönlendirir.
 
@@ -136,6 +139,12 @@ bölüm boş görünmez.
 ## Kısıtlar
 
 Site tamamen statiktir — sunucu tarafında çalışan kod yoktur. Bu yüzden
-iletişim formu ziyaretçinin e-posta uygulamasında hazır mesaj açar
-(`src/components/ContactForm.tsx`). Gerçek form gönderimi istenirse Formspree
-gibi dışarıdan bir servis eklenmelidir.
+iletişim formu mesajı dışarıdan bir servis olan Web3Forms'a gönderir; Web3Forms
+da onu contact@gudiadigital.com adresine e-posta olarak iletir
+(`src/components/ContactForm.tsx`). Gönderim başarısız olursa form, mesajı
+Gmail, Outlook, e-posta uygulaması ya da kopyalama ile göndermeyi önerir.
+
+Form kişisel veri topladığı için KVKK aydınlatma metni (`/tr/kvkk/`) formun
+altında ve footer'da bağlantılıdır. Forma yeni bir alan eklenir ya da yeni bir
+hizmet sağlayıcı (analitik, farklı form servisi vb.) kullanılmaya başlanırsa
+metin `tr.ts` / `en.ts` içindeki `privacy` bölümünde güncellenmelidir.

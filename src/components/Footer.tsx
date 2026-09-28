@@ -78,7 +78,13 @@ export function Footer({
             </p>
             <p className="max-w-md">
               <span className="text-ink/70">{dict.footer.privacyTitle}:</span>{" "}
-              {dict.footer.privacyNote}
+              {dict.footer.privacyNote}{" "}
+              <Link
+                href={pathFor(locale, "privacy")}
+                className="text-ink/70 hover:text-ink underline underline-offset-2 transition-colors"
+              >
+                {dict.footer.privacyLink}
+              </Link>
             </p>
           </div>
         </div>
