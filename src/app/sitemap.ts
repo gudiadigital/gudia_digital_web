@@ -7,25 +7,23 @@ import { absoluteUrl as url } from "@/i18n/site";
 // Statik export: dosya derleme sırasında bir kez üretilir.
 export const dynamic = "force-static";
 
+/*
+ * Burada yalnızca adresler var. <lastmod>'u derleme sonrasında
+ * scripts/lastmod.mjs ekliyor: sayfanın içeriği bir önceki yayındakinden
+ * farklıysa bu derlemenin zamanı, aynıysa eski tarih kalıyor. Buraya
+ * derleme zamanı yazılırsa her sayfa her yayında "değişti" görünüyor ve
+ * arama motorları tarihi yok saymayı öğreniyor. priority de yok: Google
+ * okumuyor.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
-
   return locales.flatMap((locale) => [
-    { url: url(pathFor(locale)), lastModified: now, priority: 1 },
-    { url: url(pathFor(locale, "services")), lastModified: now, priority: 0.9 },
-    ...serviceSlugs.map((slug) => ({
-      url: url(pathFor(locale, "services", slug)),
-      lastModified: now,
-      priority: 0.8,
-    })),
-    { url: url(pathFor(locale, "about")), lastModified: now, priority: 0.7 },
-    { url: url(pathFor(locale, "projects")), lastModified: now, priority: 0.7 },
-    ...projects.map((project) => ({
-      url: url(projectPath(locale, project.slug)),
-      lastModified: now,
-      priority: 0.6,
-    })),
-    { url: url(pathFor(locale, "contact")), lastModified: now, priority: 0.7 },
-    { url: url(pathFor(locale, "privacy")), lastModified: now, priority: 0.3 },
+    { url: url(pathFor(locale)) },
+    { url: url(pathFor(locale, "services")) },
+    ...serviceSlugs.map((slug) => ({ url: url(pathFor(locale, "services", slug)) })),
+    { url: url(pathFor(locale, "about")) },
+    { url: url(pathFor(locale, "projects")) },
+    ...projects.map((project) => ({ url: url(projectPath(locale, project.slug)) })),
+    { url: url(pathFor(locale, "contact")) },
+    { url: url(pathFor(locale, "privacy")) },
   ]);
 }

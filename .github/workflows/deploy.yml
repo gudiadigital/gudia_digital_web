@@ -1,10 +1,16 @@
-# main dalına her push'ta siteyi derleyip GitHub Pages'e yayınlar.
+# main dalına her push'ta siteyi derleyip GitHub Pages'e yayınlar,
+# ardından içeriği değişen sayfaları IndexNow'a bildirir.
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      resubmit_all:
+        description: "Sitemap'teki bütün adresleri IndexNow'a yeniden gönder"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -19,6 +25,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      urls: ${{ steps.changed.outputs.urls }}
     steps:
       - uses: actions/checkout@v4
 
@@ -28,7 +36,12 @@ jobs:
           cache: npm
 
       - run: npm ci
+      # Derleme içinde scripts/lastmod.mjs canlı sitedeki /lastmod.json ile
+      # karşılaştırıp değişen adresleri .indexnow-urls.json'a yazıyor.
       - run: npm run build
+
+      - id: changed
+        run: echo "urls=$(cat .indexnow-urls.json)" >> "$GITHUB_OUTPUT"
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -44,3 +57,29 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Yayından sonra çalışıyor ve hata verse bile yayını geri almıyor ya da
+  # durdurmuyor (continue-on-error). Değişen sayfa yoksa hiç başlamıyor.
+  # Google IndexNow'a katılmıyor; ona ping atılmıyor.
+  indexnow:
+    needs: [build, deploy]
+    if: needs.build.outputs.urls != '[]' || inputs.resubmit_all
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Anahtar public/<anahtar>.txt'ten okunuyor; betik anahtar dosyası
+      # canlıda görünene kadar bekliyor (10 deneme, 30 sn arayla).
+      - run: node scripts/indexnow.mjs
+        env:
+          SITE: https://gudiadigital.com
+          URLS: ${{ needs.build.outputs.urls }}
+          RESUBMIT_ALL: ${{ inputs.resubmit_all && '1' || '' }}

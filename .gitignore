@@ -48,3 +48,6 @@ next-env.d.ts
 .github/agents/
 .github/hooks/
 .impeccable/
+
+# scripts/lastmod.mjs'in yazdığı, IndexNow'a gidecek değişen adresler (derleme çıktısı)
+/.indexnow-urls.json

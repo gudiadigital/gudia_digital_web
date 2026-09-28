@@ -21,6 +21,14 @@ büyüt** olarak üç gruba ayrılır; gruplama `src/i18n/config.ts` içindeki
 otomatik yayınlar. Elle yapılacak bir şey yok. Yayının durumu deponun
 **Actions** sekmesinde görünür.
 
+Site haritasındaki `<lastmod>` tarihleri sayfa içeriğinin parmak izinden
+gelir (`scripts/lastmod.mjs`): yalnızca içeriği önceki yayındakinden farklı
+olan sayfanın tarihi değişir. Yayından sonra bu sayfalar IndexNow'a (Bing,
+Yandex…) bildirilir (`scripts/indexnow.mjs`); bu adım başarısız olsa da yayın
+etkilenmez. Bütün adresleri yeniden göndermek için Actions'ta iş akışını
+**Run workflow** ile `resubmit_all` seçerek çalıştırın. `public/` altındaki
+`<anahtar>.txt` IndexNow anahtarıdır, silinmemeli.
+
 ## Çalıştırma
 
 ```bash
