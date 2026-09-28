@@ -178,7 +178,7 @@ export const tr = {
      * Arama sonucu ve paylaşım kartındaki başlık ve açıklama. Sayfadaki
      * H1'e dokunmuyor; H1 marka dilinde kalırken arama başlığı hizmetin
      * adını taşıyor. Açıklamalar olduğu gibi kullanılıyor, kısaltılmıyor:
-     * 160 karakteri geçmemeli.
+     * 120–155 karakter arasında kalmalı (check:seo 155 üstünü uyarıyor).
      */
     seo: {
       title: "Hizmetler: Mobil Uygulama, Web, Oyun ve E-Ticaret",
@@ -411,7 +411,7 @@ export const tr = {
       "dijital-urun-iyilestirme": {
         title: "Dijital Ürün İyileştirme",
         seo: {
-          title: "Uygulama ve Web Sitesi Bakım ve İyileştirme",
+          title: "Uygulama ve Web Sitesi Bakımı ve İyileştirmesi",
           description:
             "Eski, yavaş ya da çalışmayan uygulama ve siteleri sıfırdan yazmadan toparlıyoruz: ücretsiz inceleme raporu, App Store uyumluluğu ve aylık teknik bakım.",
         },
@@ -717,17 +717,17 @@ export const tr = {
 
   projects: {
     // Web sitesi işleri Projeler sayfasında ayrı bir alt bölümde, en sonda
-    // duruyor (asıl vitrinleri Web Sitesi hizmetinde). Arama başlığı 70
-    // karakter sınırına sığsın diye ana kümeleri sayıyor.
+    // duruyor (asıl vitrinleri Web Sitesi hizmetinde). Sayfada listelendikleri
+    // için arama başlığı ve açıklaması onları da sayıyor.
     seo: {
-      title: "Projeler: Uygulamalar, Oyunlar ve E-Ticaret",
+      title: "Projeler: Uygulamalar, Oyunlar ve Web Siteleri",
       description:
-        "Üzerinde çalıştığımız projeler: Pofu, SnapPet, Habitile ve İkra gibi mobil uygulamalar, markalı oyun ve interaktif deneyimler, bir Trendyol mağazası.",
+        "Üzerinde çalıştığımız projeler: Pofu, SnapPet ve İkra gibi mobil uygulamalar, markalı oyun ve interaktif deneyimler, web siteleri ve bir Trendyol mağazası.",
     },
     eyebrow: "Projeler",
     title: "Üzerinde çalıştıklarımız",
     subtitle:
-      "Mobil uygulamalar, oyunlar, interaktif deneyimler ve e-ticaret işleri. Liste büyüdükçe burayı güncelliyoruz.",
+      "Mobil uygulamalar, oyunlar, interaktif deneyimler, web siteleri ve e-ticaret işleri. Liste büyüdükçe burayı güncelliyoruz.",
     empty:
       "İlk projelerimizi yayına hazırlıyoruz. Bu bölüm çok yakında güncellenecek — bu arada aklınızdaki projeyi konuşmak isterseniz bize yazın.",
     emptyCta: "Bize yazın",

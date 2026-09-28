@@ -565,14 +565,14 @@ export const en: Dictionary = {
 
   projects: {
     seo: {
-      title: "Projects: Apps, Games & E-Commerce",
+      title: "Projects: Apps, Games & Websites",
       description:
-        "Projects we've worked on: mobile apps such as Pofu, SnapPet, Habitile and İkra, branded games and interactive experiences, and a Trendyol store.",
+        "Projects we've worked on: mobile apps such as Pofu, SnapPet and İkra, branded games and interactive experiences, websites and a Trendyol store.",
     },
     eyebrow: "Projects",
     title: "What we've been building",
     subtitle:
-      "Mobile apps, games, interactive experiences and e-commerce work. We update this page as the list grows.",
+      "Mobile apps, games, interactive experiences, websites and e-commerce work. We update this page as the list grows.",
     empty:
       "We're getting our first projects ready for launch. This section will be updated soon — in the meantime, if you'd like to discuss a project, get in touch.",
     emptyCta: "Get in touch",
@@ -701,7 +701,7 @@ export const en: Dictionary = {
     seo: {
       title: "Privacy Notice",
       description:
-        "How Gudia Digital handles personal data from its contact form under Türkiye's KVKK Law No. 6698: data collected, purposes, transfers and your rights.",
+        "How Gudia Digital handles personal data from its contact form and email under Türkiye's KVKK (Law No. 6698): what we collect, why, and your rights.",
     },
     title: "Privacy Notice",
     lead: "Under Article 10 of Türkiye's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",

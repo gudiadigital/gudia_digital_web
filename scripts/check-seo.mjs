@@ -36,10 +36,17 @@ const TITLE_WARN = 65;
 const DESC_MIN = 70;
 const DESC_MAX = 165;
 const DESC_WARN = 110;
+// Elle yazılan açıklamaların hedefi 120–155; 155–165 arası kesilebilir ama
+// hata değil, yalnızca her derlemede görünsün diye uyarı.
+const DESC_WARN_MAX = 155;
 const MIN_PROJECT_INLINKS = 3;
 const LLMS_MAX_LINES = 60;
-// Kısaltmayla biten açıklama cümle ortasında kesilmiş demektir ("Law No.").
-const ABBR_END = /\b(No|Nr|Dr|vb|vs|St)\.$/;
+// Kısaltmayla biten açıklama cümle ortasında kesilmiş demektir ("Law No.",
+// metaDescription'ın kısalttığı metinde "Law No.…"). Liste src/i18n/seo.ts'teki
+// ABBREVIATIONS ile aynı.
+const ABBR_END = /\b(No|Nr|Dr|vb|vs|St|Md)\.…?$/;
+// Kısaltılan metinde üç noktadan önce noktalama kalmamalı ("Kısa.…").
+const PUNCT_BEFORE_ELLIPSIS = /[.,;:]…$/;
 const ISO_8601 =
   /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2}(\.\d+)?)?(Z|[+-]\d{2}:\d{2}))?$/;
 
@@ -410,9 +417,14 @@ for (const file of pages) {
       fail(rel, "description", `${n} karakter (${DESC_MIN}–${DESC_MAX} olmalı): ${description}`);
     } else if (n < DESC_WARN) {
       warn(rel, "description", `${n} karakter, ${DESC_WARN} altı kısa: ${description}`);
+    } else if (n > DESC_WARN_MAX) {
+      warn(rel, "description", `${n} karakter, ${DESC_WARN_MAX} üstü kesilebilir: ${description}`);
     }
     if (ABBR_END.test(description)) {
       fail(rel, "description", `kısaltmayla bitiyor, cümle ortasında kesilmiş: …${description.slice(-40)}`);
+    }
+    if (PUNCT_BEFORE_ELLIPSIS.test(description)) {
+      fail(rel, "description", `üç noktadan önce noktalama var: …${description.slice(-40)}`);
     }
   }
 

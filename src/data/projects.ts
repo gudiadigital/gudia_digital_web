@@ -64,8 +64,10 @@ export type Project = {
   detail?: Record<Locale, string[]>;
   /**
    * Detay sayfasındaki künye satırları (sürüm, platform, dil sayısı…).
-   * Sürüm, App Store'daki son sürümün tarihiyle yazılıyor: statik sitede
-   * tarihsiz sürüm bir sonraki güncellemede sessizce eskiyor.
+   * Sürüm, App Store'daki son sürümün yayın tarihiyle yazılıyor: statik
+   * sitede tarihsiz sürüm bir sonraki güncellemede sessizce eskiyor.
+   * "itibarıyla / as of" değil "yayımlandı / released": aynı sayfadaki puan
+   * satırında "as of" kontrol tarihini anlatıyor, sürüm tarihi ise yayın günü.
    */
   facts?: Record<Locale, { k: string; v: string }[]>;
   rating?: ProjectRating;
@@ -149,13 +151,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "2.0.5 (25 Eylül 2026 itibarıyla)" },
+        { k: "Sürüm", v: "2.0.5 (25 Eylül 2026'da yayımlandı)" },
         { k: "Platform", v: "iOS" },
         { k: "Dil", v: "6" },
         { k: "Kategori", v: "Sağlık & Fitness" },
       ],
       en: [
-        { k: "Version", v: "2.0.5 (as of 25 September 2026)" },
+        { k: "Version", v: "2.0.5 (released 25 September 2026)" },
         { k: "Platform", v: "iOS" },
         { k: "Languages", v: "6" },
         { k: "Category", v: "Health & Fitness" },
@@ -206,13 +208,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "1.0.8 (1 Ağustos 2026 itibarıyla)" },
+        { k: "Sürüm", v: "1.0.8 (1 Ağustos 2026'da yayımlandı)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Dil", v: "11" },
         { k: "Kategori", v: "Oyun" },
       ],
       en: [
-        { k: "Version", v: "1.0.8 (as of 1 August 2026)" },
+        { k: "Version", v: "1.0.8 (released 1 August 2026)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Languages", v: "11" },
         { k: "Category", v: "Games" },
@@ -272,13 +274,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "1.0 (10 Temmuz 2026 itibarıyla)" },
+        { k: "Sürüm", v: "1.0 (10 Temmuz 2026'da yayımlandı)" },
         { k: "Platform", v: "iOS + watchOS" },
         { k: "Dil", v: "6" },
         { k: "Kategori", v: "Verimlilik" },
       ],
       en: [
-        { k: "Version", v: "1.0 (as of 10 July 2026)" },
+        { k: "Version", v: "1.0 (released 10 July 2026)" },
         { k: "Platform", v: "iOS + watchOS" },
         { k: "Languages", v: "6" },
         { k: "Category", v: "Productivity" },
@@ -328,13 +330,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "2.0.7 (18 Eylül 2026 itibarıyla)" },
+        { k: "Sürüm", v: "2.0.7 (18 Eylül 2026'da yayımlandı)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Dil", v: "21" },
         { k: "Kategori", v: "Referans" },
       ],
       en: [
-        { k: "Version", v: "2.0.7 (as of 18 September 2026)" },
+        { k: "Version", v: "2.0.7 (released 18 September 2026)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Languages", v: "21" },
         { k: "Category", v: "Reference" },
@@ -394,13 +396,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "4.1.4 (6 Temmuz 2025 itibarıyla)" },
+        { k: "Sürüm", v: "4.1.4 (6 Temmuz 2025'te yayımlandı)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Kategori", v: "Eğitim" },
         { k: "Tavsiye", v: "TFSF" },
       ],
       en: [
-        { k: "Version", v: "4.1.4 (as of 6 July 2025)" },
+        { k: "Version", v: "4.1.4 (released 6 July 2025)" },
         { k: "Platform", v: "iOS + Android" },
         { k: "Category", v: "Education" },
         { k: "Endorsed by", v: "TFSF" },

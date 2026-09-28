@@ -140,6 +140,7 @@ export function pageCopy(
  * geçici bir işaretle saklanıp sonra geri konuyor.
  */
 const ABBREVIATIONS = /\b(No|Nr|Dr|vb|vs|St|Md)\./g;
+const ABBREVIATION_WORD = /^(No|Nr|Dr|vb|vs|St|Md)\.$/;
 const KEPT_DOT = "\u0000";
 
 /**
@@ -165,6 +166,13 @@ export function metaDescription(text: string, max = 160): string {
   if (out.length >= 110) return out;
 
   // "…" dahil `max`'ı aşmasın; varsayılan 160'ta kesim 157'de kalıyor.
-  const cut = clean.slice(0, Math.min(157, max - 1));
-  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,;:—–-]+$/, "")}…`;
+  // Son sözcük yarım kalmış olabilir, atılıyor. Kesim "Law No." gibi bir
+  // kısaltmada biterse cümle yine yarıda kalmış olur; bir sözcük daha geri
+  // çekiliyor. Sondaki nokta da siliniyor, yoksa "Kısa.…" çıkıyor.
+  const words = clean.slice(0, Math.min(157, max - 1)).split(" ");
+  if (words.length > 1) words.pop();
+  while (words.length > 1 && ABBREVIATION_WORD.test(words[words.length - 1])) {
+    words.pop();
+  }
+  return `${words.join(" ").replace(/[\s.,;:—–-]+$/, "")}…`;
 }
