@@ -17,13 +17,14 @@ import { publishedGuides } from "@/data/guides";
 /*
  * Fontlar src/app/fonts.css'te tanımlı, dosyaları public/fonts altında.
  * İlk boyamada gereken dört dosya önden yükleniyor: Türkçe metin latin-ext
- * dosyasına da ihtiyaç duyduğu için o da listede.
+ * dosyasına da ihtiyaç duyduğu için o da listede. latin-ext dosyaları
+ * yalnızca Türkçe harfleri içerdiğinden 2 KB civarında.
  */
 const FONT_FILES = [
-  "/fonts/space-grotesk-latin.woff2",
-  "/fonts/space-grotesk-latin-ext.woff2",
-  "/fonts/inter-latin.woff2",
-  "/fonts/inter-latin-ext.woff2",
+  "/fonts/space-grotesk-latin-v2.woff2",
+  "/fonts/space-grotesk-latin-ext-v2.woff2",
+  "/fonts/inter-latin-v2.woff2",
+  "/fonts/inter-latin-ext-v2.woff2",
 ];
 
 export function generateStaticParams() {
