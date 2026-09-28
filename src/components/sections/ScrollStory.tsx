@@ -176,9 +176,14 @@ export function ScrollStory({
         <StoryScene progressRef={progressRef} />
         <div className="story-veil" aria-hidden="true" />
 
-        <Container className="relative z-10 flex h-full items-center">
+        {/* Üst boşluk sabit menünün yüksekliği (Header: h-16 sm:h-18).
+            Paneller menünün altında kalan alanda ortalanıyor; tüm ekranda
+            ortalanınca kısa ekranda ilk satır saydam menünün altına
+            giriyordu. */}
+        <Container className="relative z-10 flex h-full items-center pt-16 sm:pt-18">
           <div ref={panelsRef} className="story-panels grid w-full">
-            {/* Panel 0 — karşılama */}
+            {/* Panel 0 — karşılama. short-phone: kısa telefonda aralıklar ve
+                başlık küçülüyor ki panel menünün altına sığsın (globals.css). */}
             <div data-panel className="story-panel max-w-4xl">
               {/* Başlık markayı anmıyor; marka adı ve tanımı hemen üstünde.
                   Eskiden burada duran çerçeveli, noktalı rozet şablon izi
@@ -187,7 +192,7 @@ export function ScrollStory({
                   satır "·" işaretinden sonra kırılıyor, tanımın son kelimesi
                   tek başına alt satıra düşmüyor. */}
               <p
-                className="text-accent fade-up mb-5 font-display text-xs font-semibold uppercase tracking-[0.18em]"
+                className="text-accent fade-up mb-5 font-display text-xs font-semibold uppercase tracking-[0.18em] short-phone:mb-3"
                 style={{ animationDelay: "0.05s" }}
               >
                 {hero.eyebrow.split(" · ").map((part, index) => (
@@ -197,7 +202,7 @@ export function ScrollStory({
                   </Fragment>
                 ))}
               </p>
-              <h1 className="text-[2.5rem] font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
+              <h1 className="text-[2.5rem] font-semibold leading-[1.06] short-phone:text-[2.125rem] sm:text-6xl lg:text-7xl">
                 {words.map((word, index) => (
                   <Fragment key={index}>
                     {index > 0 && " "}
@@ -221,7 +226,7 @@ export function ScrollStory({
                 ))}
               </h1>
 
-              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-5 gap-y-1.5 font-display text-sm font-medium tracking-wide sm:gap-x-3 sm:text-base">
+              <ul className="text-muted mt-8 flex flex-wrap items-center gap-x-5 gap-y-1.5 font-display text-sm font-medium tracking-wide short-phone:mt-5 sm:gap-x-3 sm:text-base">
                 {hero.pillars.map((pillar, index) => (
                   <li
                     key={pillar}
@@ -240,14 +245,14 @@ export function ScrollStory({
               </ul>
 
               <p
-                className="text-muted fade-up mt-7 max-w-2xl text-base leading-relaxed sm:text-lg"
+                className="text-muted fade-up mt-7 max-w-2xl text-base leading-relaxed short-phone:mt-4 sm:text-lg"
                 style={{ animationDelay: `${afterTitle + 0.3}s` }}
               >
                 {hero.subtitle}
               </p>
 
               <div
-                className="fade-up mt-9 flex flex-wrap items-center gap-3"
+                className="fade-up mt-9 flex flex-wrap items-center gap-3 short-phone:mt-6"
                 style={{ animationDelay: `${afterTitle + 0.42}s` }}
               >
                 <Link

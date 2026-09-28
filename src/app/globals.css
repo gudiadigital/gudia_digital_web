@@ -371,6 +371,14 @@
    Yükseklik = panel sayısı × ekran; içerideki katman sticky kalır.
    --------------------------------------------------------------- */
 
+/*
+ * Kısa telefon ekranı (375x667, 360x640 sınıfı). Açılış paneli bu
+ * yükseklikte sabit menünün altındaki alana sığmıyor, üst satırı menünün
+ * altına kayıyordu. Yalnızca panelin aralıkları ve başlık boyu küçülüyor;
+ * geniş ekran ve uzun telefonlar etkilenmiyor.
+ */
+@custom-variant short-phone (@media (max-width: 639px) and (max-height: 720px));
+
 @layer utilities {
   .story {
     /* panel sayısı × ekran yüksekliği */
