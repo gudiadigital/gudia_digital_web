@@ -144,6 +144,11 @@ function normalizeHref(href, base) {
   }
 }
 
+/** Adresin dil kısmı: https://gudiadigital.com/tr/... → "tr". */
+function localeOf(url) {
+  return new URL(url).pathname.split("/")[1];
+}
+
 function walk(dir, found = []) {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const full = join(dir, entry.name);
@@ -338,12 +343,14 @@ for (const file of pages) {
   // 7. JSON-LD
   checkJsonLd(rel, html, expected, lang);
 
-  // 9. İç bağlantılar: aynı dildeki sayfalardan gelenler. Dil değiştirici
-  // (hrefLang taşıyan <a>) ve sayfanın kendisine verdiği bağlantı sayılmıyor.
+  // 9. İç bağlantılar: yalnızca aynı dildeki sayfalardan gelenler. Dil
+  // değiştirici (hrefLang taşıyan <a>), başka dildeki sayfaya giden
+  // bağlantılar ve sayfanın kendisine verdiği bağlantı sayılmıyor.
   for (const anchor of tags(body, "a")) {
     if (!anchor.href || anchor.hreflang) continue;
     const target = normalizeHref(anchor.href, expected);
     if (!target || target === expected) continue;
+    if (localeOf(target) !== localeOf(expected)) continue;
     if (!inlinks.has(target)) inlinks.set(target, new Set());
     inlinks.get(target).add(expected);
   }
