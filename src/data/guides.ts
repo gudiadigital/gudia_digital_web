@@ -42,7 +42,7 @@ export type Guide = {
    * sığmadığı için ayrı.
    */
   shortTitle: Record<Locale, string>;
-  /** Meta açıklama ve başlığın altındaki özet; 110–160 karakter. */
+  /** Meta açıklama ve başlığın altındaki özet; 120–155 karakter (check:seo 155 üstünü uyarıyor). */
   description: Record<Locale, string>;
   sections: Record<Locale, GuideSection[]>;
   /** Hakkımızda'daki kurucu kimliği (about.founders[].id); imza oraya bağlanıyor. */
@@ -79,8 +79,8 @@ const guides: Guide[] = [
       en: "App Store and Google Play Update Requirements",
     },
     description: {
-      tr: "Apple'ın Xcode 26 şartı ve güncellenmeyen uygulamaları kaldırması, Google Play'in API 36 ve API 35 şartı, 1 Kasım 2026 ek süresi: ne anlama geliyor, ne yapmalı?",
-      en: "Apple's Xcode 26 requirement and outdated-app removals, Google Play's API 36 and API 35 targets and the November 1, 2026 extension: what they mean, what to do.",
+      tr: "Apple'ın Xcode 26 şartı ve güncellenmeyen uygulamaları kaldırması, Google Play'in API 36 ve API 35 şartı, 1 Kasım 2026 ek süresi: ne demek, ne yapmalı?",
+      en: "Apple's Xcode 26 rule and outdated-app removals, Google Play's API 36 and API 35 targets and the November 1, 2026 extension: what they mean, what to do.",
     },
     sections: {
       tr: [
@@ -181,7 +181,7 @@ const guides: Guide[] = [
           answer:
             "Apps that don't meet the target API level requirement get a policy warning in Google Play Console, and the extension form is reached from that warning's details page on the Policy status page. With an extension, the app stays available to all users on Google Play until November 1, 2026.",
           body: [
-            "Google also sends a link to the extension form to the Inbox in Play Console for affected apps. The extension doesn't lift the requirement, it only buys time: the update you submit in the meantime still has to target Android 16 (API level 36).",
+            "Google also sends affected apps a link to the extension form through Play Console notifications. The extension doesn't lift the requirement, it only buys time: the update you submit in the meantime still has to target Android 16 (API level 36).",
           ],
         },
         {

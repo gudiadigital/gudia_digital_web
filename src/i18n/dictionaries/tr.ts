@@ -966,7 +966,7 @@ export const tr = {
     seo: {
       title: "Rehber: Uygulama, Web ve Mağaza Soruları",
       description:
-        "Mağaza kuralları, uygulama güncellemeleri ve web siteleriyle ilgili sık sorulan sorulara kaynaklarıyla birlikte cevaplar. Her rehberin yazarı ve tarihi belli.",
+        "Mağaza kuralları, uygulama güncellemeleri ve web siteleriyle ilgili sık sorulan sorulara kaynaklarıyla cevaplar. Her rehberin yazarı ve tarihi belli.",
     },
     title: "Uygulamanız, siteniz ve mağazanız için rehberler",
     subtitle:
