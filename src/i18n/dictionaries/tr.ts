@@ -6,23 +6,57 @@ export type PrivacySection = {
   after?: string[];
 };
 
+/** Bir iddianın resmî kaynağı; sayfada "Kaynak" satırı olarak çıkıyor. */
+export type SourceLink = { label: string; url: string };
+
+/**
+ * Hizmet sayfasındaki bir soru-cevap. Cevap bağlamından koparılıp
+ * alıntılandığında da anlaşılır olmalı. Yapılandırılmış verideki (FAQPage)
+ * soru ve cevap bu alanlardan birebir okunuyor; sayfada görünenden farklı
+ * bir metin yazılmıyor.
+ *
+ * Her cevap depodaki bir ifadeye (hizmetin kendi alanları, projects.ts) ya
+ * da `sources`'taki resmî kaynağa dayanıyor. Fiyat, süre, sektör ve müşteri
+ * adı sahibinden gelmeden SSS'ye girmiyor.
+ */
+export type ServiceFaq = {
+  q: string;
+  a: string;
+  /** Cevabın andığı projeler (projects.ts slug'ı); cevabın altında bağlantı olarak çıkıyor. */
+  projects?: string[];
+  sources?: SourceLink[];
+};
+
+/** Hizmet sayfasındaki kanıt satırı: kullandığımız teknik ve onu gösteren proje. */
+export type ServiceProof = { text: string; project: string };
+
 /**
  * Hizmet sayfasının metinleri. Sözlük türü `typeof tr`'den çıktığı için her
  * hizmet kendi alanlarıyla çıkarılıyor; bileşen bu türle okuyup isteğe bağlı
- * alanlara (sources) güvenle erişiyor.
+ * alanlara (sources, proof) güvenle erişiyor.
  */
 export type ServiceItem = {
   title: string;
   seo: { title: string; description: string };
   short: string;
+  /**
+   * Başlığın hemen altındaki iki cümle: hizmet nedir, kimler için. Kısa
+   * tanım (short) ve girişten (intro) türetildi; kartlarda short kalıyor.
+   */
+  answer: string;
   intro: string;
   /**
    * Girişteki sayı ya da kuralın resmî kaynağı; girişin altında "Kaynak"
    * satırı olarak çıkıyor. Doğrulanamayan iddia metne girmiyor.
    */
-  sources?: { label: string; url: string }[];
+  sources?: SourceLink[];
+  /** "Kimler için?" listesi: sektör değil, durum. Sektörler sahibinden gelecek. */
+  forWhom: string[];
+  /** Yalnızca kendi uygulamalarımızda gösterilebilen teknikler (şimdilik mobilde). */
+  proof?: ServiceProof[];
   features: string[];
   deliverables: string[];
+  faq: ServiceFaq[];
 };
 
 /**
@@ -160,6 +194,13 @@ export const tr = {
       improve: "İyileştir",
       grow: "Büyüt",
     },
+    // Hizmetler sayfasında kartlardan önce: çalışma modelinin üç adımı ve
+    // her adımın hizmetleri (approach.subtitle ve approach.groups).
+    chooserTitle: "Hangi hizmet size uygun?",
+    forWhomTitle: "Kimler için?",
+    proofTitle: "Yayındaki uygulamalarımızda kullandıklarımız",
+    faqTitle: "Sık sorulan sorular",
+    faqProjects: "İlgili projeler",
     items: {
       "mobil-uygulama": {
         title: "Mobil Uygulama Geliştirme",
@@ -170,8 +211,25 @@ export const tr = {
         },
         short:
           "iOS ve Android için sıfırdan uygulama: rezervasyon, üyelik, sadakat, ödeme ve müşteri paneli gibi işinize özel çözümler.",
+        // short + intro ("operasyonuna ya da satışına dokunan") + features (mağaza yayını)
+        answer:
+          "Mobil uygulama geliştirme hizmetimizde işletmenize özel iOS ve Android uygulamasını sıfırdan kuruyor, App Store ve Google Play'de yayına alıyoruz. Rezervasyon, üyelik, sadakat, ödeme ya da müşteri paneli gibi doğrudan operasyonuna veya satışına dokunan bir uygulamaya ihtiyaç duyan işletmelere yönelik.",
         intro:
           "Amacımız sadece bir uygulama teslim etmek değil; işletmenin gerçekten kullandığı, operasyonuna ya da satışına dokunan bir ürün kurmak. Kurucumuz Gürkan'ın iOS geliştirici geçmişi sayesinde Apple ekosisteminde özellikle derinlikli çalışıyoruz.",
+        // short ve features'tan; intro'daki Apple ekosistemi vurgusu son maddede.
+        forWhom: [
+          "Rezervasyon, üyelik ya da sadakat programını bir uygulamaya taşımak isteyen işletmeler",
+          "Müşterilerinden uygulama üzerinden ödeme almak isteyenler",
+          "Müşteri paneline ya da şirket içi operasyon ekranlarına ihtiyaç duyanlar",
+          "Swift ve SwiftUI ile geliştirilmiş, native bir iOS uygulaması isteyenler",
+        ],
+        // projects.ts: pofu.summary, habitile.detail[1], ikra.detail[2], snappet.detail[2]
+        proof: [
+          { text: "HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve saat uygulaması", project: "pofu" },
+          { text: "Etkileşimli widget'lar, Live Activity ve watchOS için saat uygulaması", project: "habitile" },
+          { text: "iOS ve Android'de yayında; mağaza metinleri 21 dile çevrildi", project: "ikra" },
+          { text: "iOS ve Android'de, 11 dilde yayında", project: "snappet" },
+        ] as ServiceProof[],
         features: [
           "iOS için Swift / SwiftUI ile native geliştirme",
           "Android ve çapraz platform seçenekleri",
@@ -185,6 +243,42 @@ export const tr = {
           "Tasarım dosyaları ve bileşen kütüphanesi",
           "TestFlight dağıtımı ve yayın sonrası destek süresi",
         ],
+        // Süre, fiyat, Android teknolojisi ve destek süresi sahibinden
+        // gelmeden eklenmiyor.
+        faq: [
+          {
+            // deliverables[0-1] + about.values "Sahiplik sizde"
+            q: "Uygulamanın kaynak kodu kime ait olacak?",
+            a: "Kaynak kodun tamamı size ait. Tasarım dosyaları ve bileşen kütüphanesi de teslimle birlikte size geçiyor; kimseye bağımlı kalmazsınız.",
+          },
+          {
+            // features[5] + deliverables[2]
+            q: "App Store ve Google Play yayınını siz mi yapıyorsunuz?",
+            a: "Evet. Mağaza yayınını ve sonraki sürümlerin yönetimini biz üstleniyoruz. iOS sürümünü yayından önce TestFlight üzerinden size dağıtıyoruz.",
+          },
+          {
+            // features[0] + about.founders[0].bio
+            q: "iOS uygulamalarını hangi teknolojiyle geliştiriyorsunuz?",
+            a: "iOS uygulamalarını Swift ve SwiftUI ile native olarak geliştiriyoruz. Bu tarafı kurucu ortağımız Gürkan Sevilmiş yürütüyor; App Store yayın süreçleri ve mimari kararlar da onun sorumluluğunda.",
+          },
+          {
+            // features[1] + projects.ts (ikra, snappet: playstore)
+            q: "Android uygulaması da yapıyor musunuz?",
+            a: "Evet, Android ve çapraz platform seçenekleri de bu hizmetin kapsamında. Kendi uygulamalarımızdan İkra ve SnapPet hem iOS'ta hem Android'de yayında.",
+            projects: ["ikra", "snappet"],
+          },
+          {
+            // deliverables[2] + process.steps[3]
+            q: "Yayından sonra destek veriyor musunuz?",
+            a: "Evet. Teslimin bir parçası olarak yayın sonrası bir destek süresi var; sonrasında da bakım paketiyle desteğe devam edebiliyoruz.",
+          },
+          {
+            // about.entity
+            q: "Hangi uygulamaları geliştirdiniz?",
+            a: "Kendi uygulamalarımız Pofu, SnapPet, Habitile ve İkra App Store'da yayında; SnapPet ile İkra Google Play'de de var.",
+            projects: ["pofu", "snappet", "habitile", "ikra"],
+          },
+        ] as ServiceFaq[],
       },
       "web-sitesi": {
         title: "Web Sitesi Geliştirme",
@@ -195,8 +289,18 @@ export const tr = {
         },
         short:
           "Hızlı açılan, aramada görünen, telefonda da masaüstünde de düzgün çalışan kurumsal siteler ve açılış sayfaları.",
+        // short + intro (site türleri) + deliverables[0] (alan adında yayın)
+        answer:
+          "Web sitesi geliştirme hizmetimizde markanıza özel kurumsal site, tanıtım sitesi ya da açılış sayfası tasarlıyor, alan adınızda yayına alıyoruz. Hızlı açılan, aramada görünen ve telefonda da masaüstünde de düzgün çalışan bir site isteyen markalara yönelik.",
         intro:
           "Hazır şablon kurmuyoruz. Markanıza özel tasarlanan, ölçülebilir hedefi olan siteler kuruyoruz: tanıtım sitesi, kurumsal site, açılış sayfası ya da içinde rezervasyon veya müşteri paneli olan bir web uygulaması.",
+        // intro ve features[0], [3]'ten
+        forWhom: [
+          "Şablon görünümünde değil, markasına özel bir site isteyenler",
+          "Bir ürünü ya da kampanyayı tek bir açılış sayfasında anlatmak isteyenler",
+          "Sitesinden WhatsApp, form ya da rezervasyonla müşteri almak isteyenler",
+          "İçinde rezervasyon ya da müşteri paneli olan bir web uygulamasına ihtiyaç duyanlar",
+        ],
         features: [
           "Markaya özel arayüz ve tasarım sistemi",
           "Mobil öncelikli, tüm ekranlara uyumlu yapı",
@@ -210,6 +314,36 @@ export const tr = {
           "İçerik güncelleme eğitimi",
           "Performans ve SEO raporu",
         ],
+        // Süre, fiyat, alan adının kimin adına alındığı ve yıllık maliyet
+        // sahibinden gelmeden eklenmiyor.
+        faq: [
+          {
+            // intro + features[0] + webShowcase.subtitle ("Altısının da sayfa iskeleti ayrı")
+            q: "Hazır şablon ya da tema kullanıyor musunuz?",
+            a: "Hayır, hazır şablon kurmuyoruz; arayüzü ve tasarım sistemini markanıza özel tasarlıyoruz. Kendi uygulamalarımız için kurduğumuz altı sitenin de sayfa iskeleti birbirinden farklı.",
+          },
+          {
+            // features[4] + projects.ts (life-planner: 7 dil, divonia: TR/EN)
+            q: "Çok dilli site yapıyor musunuz?",
+            a: "Evet, çok dilli yapı isteğe bağlı olarak kurulabiliyor. Life Planner'ın tanıtım sitesi yedi dilde, Divonia Studios'un sitesi Türkçe ve İngilizce yayında.",
+            projects: ["life-planner", "divonia"],
+          },
+          {
+            // deliverables[1] + features[4]
+            q: "Siteyi sonradan kendim güncelleyebilir miyim?",
+            a: "Evet. Teslimde içeriği nasıl güncelleyeceğinizi gösteren bir eğitim veriyoruz; isterseniz siteye bir içerik yönetim paneli de ekliyoruz.",
+          },
+          {
+            // features[2] + deliverables[2]
+            q: "Arama motoru optimizasyonu (SEO) dahil mi?",
+            a: "Teknik SEO, hız ve erişilebilirlik çalışması kapsamda. Teslimde bir performans ve SEO raporu da veriyoruz.",
+          },
+          {
+            // features[5] + deliverables[0]
+            q: "Alan adı ve hosting kurulumunu siz mi yapıyorsunuz?",
+            a: "Evet. Alan adı, hosting ve yayın kurulumunu biz yapıyoruz; siteyi alan adınıza bağlanmış ve yayında olarak teslim ediyoruz.",
+          },
+        ] as ServiceFaq[],
       },
       "markali-oyunlar": {
         title: "Markalı Oyun & İnteraktif Deneyim",
@@ -220,8 +354,18 @@ export const tr = {
         },
         short:
           "Etkinlikler, kampanyalar ve fuarlar için markaya özel oyunlar ve interaktif aktivasyonlar.",
+        // short + intro ("Standart bir reklam yerine insanların oynadığı bir şey")
+        answer:
+          "Markalı oyun hizmetimizde etkinlik, kampanya ve fuarlar için markanıza özel oyunlar ve interaktif deneyimler tasarlayıp geliştiriyoruz. Standında ya da kampanyasında insanların yalnızca izlediği değil, oynadığı bir deneyim isteyen markalara yönelik.",
         intro:
           "Standart bir reklam yerine insanların oynadığı bir şey. Fuar standında kuyruk oluşturan bir yarışma, kampanyaya bağlı bir çark, eğitim amaçlı bir simülasyon ya da markanızın dünyasında geçen küçük bir oyun — kapsamı birlikte belirliyoruz.",
+        // intro'daki örnekler ve features[4-5]'ten; sektörler sahibinden gelecek.
+        forWhom: [
+          "Fuar standına ziyaretçi çekmek isteyen markalar",
+          "Kampanyasına çark ya da yarışma gibi interaktif bir katman eklemek isteyenler",
+          "Bir eğitimi simülasyonla ya da oyunla anlatmak isteyen kurumlar",
+          "Etkinlikte katılımcı verisi toplayıp sonrasında rapor almak isteyenler",
+        ],
         features: [
           "Etkinlik ve fuar için oyunlaştırma (gamification)",
           "Kampanyaya bağlı interaktif deneyimler",
@@ -235,6 +379,32 @@ export const tr = {
           "Etkinliğe hazır kurulum ve yedek plan",
           "Katılım ve etkileşim raporu",
         ],
+        // Süre, fiyat, oyun motoru ve KVKK'ya uygun veri toplama sahibinden
+        // gelmeden eklenmiyor. Örneklerde rolümüz söylenmiyor; roller netleşince
+        // proje sayfalarıyla birlikte güncellenecek.
+        faq: [
+          {
+            // short + intro
+            q: "Markalı oyun (advergame) nedir, nerede kullanılır?",
+            a: "Markalı oyun, bir markanın dünyasında geçen ve reklam yerine insanların oynadığı özel bir oyun ya da interaktif deneyimdir. Etkinliklerde, kampanyalarda ve fuarlarda kullanılıyor: fuar standında bir yarışma, kampanyaya bağlı bir çark ya da eğitim amaçlı bir simülasyon olabilir.",
+          },
+          {
+            // features[3] + intro ("kapsamı birlikte belirliyoruz")
+            q: "Oyun hangi cihazlarda çalışıyor?",
+            a: "Tablet, kiosk, web ya da mobilde çalışacak şekilde geliştiriyoruz. Hangisinin kullanılacağını kapsamla birlikte belirliyoruz.",
+          },
+          {
+            // features[4] + deliverables[2]
+            q: "Liderlik tablosu ve ödül eklenebilir mi?",
+            a: "Evet. Liderlik tablosu, ödül ve katılımcı verisi toplama eklenebiliyor; etkinlikten sonra katılım ve etkileşim raporunu gönderiyoruz.",
+          },
+          {
+            // projects.ts: logo-kidzania.summary, photosensia.detail[0]
+            q: "Örnek görebilir miyim?",
+            a: "Örnek olarak KidZania İstanbul'daki Logo Yazılım'ın Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyimin ve çocuklara fotoğrafçılığı oyunla öğreten PhotoSensia Kids'in proje sayfalarına bakabilirsiniz.",
+            projects: ["logo-kidzania", "photosensia"],
+          },
+        ] as ServiceFaq[],
       },
       "dijital-urun-iyilestirme": {
         title: "Dijital Ürün İyileştirme",
@@ -245,6 +415,9 @@ export const tr = {
         },
         short:
           "Elinizde zaten bir uygulama veya site var ama eski, yavaş ya da çalışmıyor. Sıfırdan yazmadan toparlıyoruz.",
+        // short + approach.groups.improve.text ("onarıyor, hızlandırıyor ve güncel tutuyoruz")
+        answer:
+          "Dijital ürün iyileştirme hizmetimizde eski, yavaş ya da çalışmayan uygulama ve siteleri sıfırdan yazmadan onarıyor, hızlandırıyor ve güncel tutuyoruz. Elinde zaten bir uygulama ya da site olan ama onu yeniden yaptırmak istemeyen işletmelere yönelik.",
         intro:
           "Çoğu işletmenin ihtiyacı yeni bir ürün değil, var olanın düzgün çalışması. Önce ücretsiz bir inceleme yapıp somut olarak neyin düzeltilmesi gerektiğini yazıyoruz; kapsamı siz seçiyorsunuz. Apple, üç yıldır güncellenmeyen ve son 12 ayda hiç ya da çok az indirilen uygulamaların geliştiricisini uyarıyor: 90 gün içinde güncelleme gönderilmezse uygulama App Store'dan kaldırılıyor. Bu iş ertelenecek bir iş değil.",
         sources: [
@@ -252,6 +425,13 @@ export const tr = {
             label: "Apple Developer: App Store Improvements",
             url: "https://developer.apple.com/support/app-store-improvements/",
           },
+        ],
+        // short ve features'tan
+        forWhom: [
+          "Uygulaması uzun süredir güncellenmemiş olanlar",
+          "Sitesi yavaş açılan ya da telefonda bozuk görünenler",
+          "Uygulaması çöken ya da App Store uyumluluğu için güncellenmesi gerekenler",
+          "Sitesindeki formu çalışmayan ya da WhatsApp, rezervasyon gibi dönüşüm noktaları eksik olanlar",
         ],
         features: [
           "Uygulama incelemesi: çökme, performans ve kullanım analizi",
@@ -266,6 +446,50 @@ export const tr = {
           "Düzeltilmiş ve yayına alınmış sürüm",
           "Öncesi / sonrası performans karşılaştırması",
         ],
+        // İnceleme raporunun kaç günde geldiği, başkasının yazdığı ürünü
+        // devralma ve bakımın fiyatı sahibinden gelmeden eklenmiyor.
+        faq: [
+          {
+            // cta.subtitle + deliverables[0] + intro ("kapsamı siz seçiyorsunuz")
+            q: "Ücretsiz inceleme neleri kapsıyor?",
+            a: "Uygulamanıza, sitenize ya da mağazanıza bakıp somut olarak neyin düzeltilmesi gerektiğini yazılı bir inceleme raporu ve öncelik listesi olarak gönderiyoruz. İnceleme ücretsiz ve hiçbir yükümlülük getirmiyor; hangi işlerin yapılacağını siz seçiyorsunuz.",
+          },
+          {
+            // short + approach.groups.improve.text + intro
+            q: "Sıfırdan yeniden yazmak gerekiyor mu?",
+            a: "Bu hizmetin amacı tam da bundan kaçınmak: var olan uygulamayı ya da siteyi sıfırdan yazmadan onarıyor, hızlandırıyor ve güncel tutuyoruz. Neyin düzeltilmesi gerektiğini önce ücretsiz incelemede yazıyoruz.",
+          },
+          {
+            // Kaynak sayfada 28 Eylül 2026'da doğrulandı.
+            q: "Apple uygulamamı App Store'dan kaldırır mı?",
+            a: "Apple, son üç yılda güncellenmemiş ve son 12 ayda hiç ya da çok az indirilmiş uygulamaların geliştiricisine e-postayla bildirim gönderiyor. 90 gün içinde güncelleme gönderilmezse uygulama, yeni bir sürüm onaylanana kadar App Store'dan kaldırılıyor; uygulamayı yüklemiş kullanıcılar kullanmaya devam edebiliyor. Açılışta çöken uygulamalar ise hemen kaldırılıyor.",
+            sources: [
+              {
+                label: "Apple Developer: App Store Improvements",
+                url: "https://developer.apple.com/support/app-store-improvements/",
+              },
+            ],
+          },
+          {
+            // Kaynak sayfada 28 Eylül 2026'da doğrulandı (sayfanın kendi
+            // güncelleme tarihi 16 Eylül 2026). Tarihler eskiyor: 1 Kasım
+            // 2026'dan sonra ve Google 2027 şartını açıkladığında bu cevap
+            // İngilizcesiyle birlikte güncellenmeli.
+            q: "Google Play'den “hedef API seviyesi” uyarısı aldım, bu ne demek?",
+            a: "Google Play, uygulamaların güncel Android sürümlerini hedeflemesini istiyor. 31 Ağustos 2026'dan beri yeni uygulamalar ve güncellemeler Android 16'yı (API 36) hedeflemek zorunda; en az Android 15'i (API 35) hedeflemeyen mevcut uygulamalar ise daha yeni Android sürümlü cihazlarda yeni kullanıcılara görünmüyor. Daha fazla süre gerekiyorsa 1 Kasım 2026'ya kadar uzatma istenebiliyor.",
+            sources: [
+              {
+                label: "Android Developers: Google Play hedef API seviyesi şartı",
+                url: "https://developer.android.com/google/play/requirements/target-sdk",
+              },
+            ],
+          },
+          {
+            // features[5] + approach.groups.improve.specs ("Sonrası: Aylık teknik bakım")
+            q: "Aylık bakım neleri kapsıyor?",
+            a: "Aylık teknik bakımda yedekleme, güncellemeler, güvenlik ve küçük değişiklikler var. İyileştirme bittikten sonra ürünün güncel kalması için isterseniz bu bakımla devam ediyoruz.",
+          },
+        ] as ServiceFaq[],
       },
       "sosyal-medya-icerik": {
         title: "Sosyal Medya İçerik Üretimi",
@@ -276,8 +500,18 @@ export const tr = {
         },
         short:
           "Aylık Reels, görsel ve story üretimi — içerik planı, senaryo ve kapak tasarımlarıyla birlikte.",
+        // short + intro ("kurgudan tasarıma ve paylaşıma kadar")
+        answer:
+          "Sosyal medya içerik üretimi hizmetimizde her ay Reels, görsel ve story içeriklerinizi planlıyor, kurguluyor, tasarlıyor ve paylaşıyoruz. Düzenli paylaşım yapmak isteyen ama kurgu ve tasarıma vakit ayıramayan işletmelere yönelik.",
         intro:
           "Düzenli içerik üretmek çoğu işletme için en zor kısım. Görselleri siz gönderiyorsunuz, kurgudan tasarıma ve paylaşıma kadar kalan işi biz yapıyoruz. Abartılı vaat yok: profesyonel çekim, oyuncu ve mekân bu kapsamın dışında.",
+        // intro, features[0] ve deliverables[2]'den
+        forWhom: [
+          "Düzenli paylaşım yapmakta zorlanan işletmeler",
+          "Elinde görsel olan ama kurgu ve tasarıma vakit ayıramayanlar",
+          "Aylık bir içerik planı ve paylaşım takvimiyle çalışmak isteyenler",
+          "Paylaşımlarının etkileşimini her ay bir raporla görmek isteyenler",
+        ],
         features: [
           "Aylık içerik planı ve paylaşım takvimi",
           "Reels kurgusu, fikir ve kısa senaryolar",
@@ -291,6 +525,30 @@ export const tr = {
           "Paylaşıma hazır Reels, görsel ve story setleri",
           "Aylık etkileşim raporu",
         ],
+        // Aylık içerik sayısı, platformlar, reklam yönetimi, raporun hangi
+        // ölçümleri içerdiği ve fiyat sahibinden gelmeden eklenmiyor.
+        faq: [
+          {
+            // intro
+            q: "Çekimleri kim yapıyor?",
+            a: "Görselleri siz gönderiyorsunuz; kurgudan tasarıma ve paylaşıma kadar kalan işi biz yapıyoruz. Profesyonel çekim, oyuncu ve mekân bu hizmetin kapsamında değil.",
+          },
+          {
+            // features[1], [3]
+            q: "Fikir ve senaryoyu da siz mi hazırlıyorsunuz?",
+            a: "Evet. Reels için fikir ve kısa senaryoları, kapak tasarımlarını ve açıklama metinlerini biz hazırlıyoruz.",
+          },
+          {
+            // features[0], [5]
+            q: "Paylaşımları da siz mi yapıyorsunuz?",
+            a: "Evet. İçerikleri aylık paylaşım takvimine göre planlayıp paylaşıyoruz.",
+          },
+          {
+            // deliverables
+            q: "Her ay neler teslim ediyorsunuz?",
+            a: "Her ay bir içerik takvimi, paylaşıma hazır Reels, görsel ve story setleri ve o ay paylaşılan içeriklerin etkileşimini gösteren bir rapor teslim ediyoruz.",
+          },
+        ] as ServiceFaq[],
       },
       "e-ticaret-optimizasyonu": {
         title: "E-Ticaret Optimizasyonu",
@@ -301,6 +559,9 @@ export const tr = {
         },
         short:
           "Trendyol mağazanızın ürün sayfalarını, görsellerini ve metinlerini dönüşüm için yeniden düzenliyoruz.",
+        // short + seo.description + approach.groups.grow.text ("Ürün iyi olsa bile … satmıyor")
+        answer:
+          "E-ticaret optimizasyonu hizmetimizde Trendyol mağazanızın ürün görsellerini, başlık ve açıklama metinlerini, kategori ve varyant yapısını dönüşüm için yeniden düzenliyoruz. Ürünü iyi olduğu halde mağazası aramada görünmeyen ya da ziyaretçisini satışa çeviremeyen satıcılara yönelik.",
         intro:
           "Ticaret Bakanlığı'na göre 2025'te Türkiye'de 634.611 işletme e-ticaret yaptı. Aralarındaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
         sources: [
@@ -308,6 +569,13 @@ export const tr = {
             label: "Ticaret Bakanlığı, Türkiye'de E-Ticaretin Görünümü (12 Mayıs 2026)",
             url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-12-05-2026",
           },
+        ],
+        // approach.groups.grow.text ve features'tan
+        forWhom: [
+          "Ürünü iyi olduğu halde mağazası görünmeyen ya da satmayan Trendyol satıcıları",
+          "Ürün ve kapak görselleri dağınık ya da eksik olan mağazalar",
+          "Kategori ve varyant düzeni karışmış mağazalar",
+          "Çok sayıda ürünü toplu olarak yüklemek ya da güncellemek isteyenler",
         ],
         features: [
           "Ürün görselleri ve kapak görseli düzenlemesi",
@@ -322,6 +590,31 @@ export const tr = {
           "Düzenlenmiş ve yayında ürün sayfaları",
           "Satış ve görüntülenme raporu",
         ],
+        // Diğer pazaryerleri, sonucun ne zaman görüleceği, fiyat ve mağaza
+        // paneline erişim sahibinden gelmeden eklenmiyor. Sonuç vaadi yok.
+        faq: [
+          {
+            // features
+            q: "Trendyol mağaza optimizasyonu neleri kapsıyor?",
+            a: "Ürün ve kapak görsellerinin düzenlenmesini, SEO uyumlu ürün başlığı ve açıklama metinlerini, infografik ve ölçü/özellik görsellerini, kategori ve varyant düzenini, mağaza kapak görsellerini ve vitrin düzenini kapsıyor. Ürün yükleme ve toplu güncellemeyi de biz yapıyoruz.",
+          },
+          {
+            // intro
+            q: "Çalışma nasıl başlıyor?",
+            a: "Önce mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz. Ardından değişiklikleri öncesi/sonrası olarak uyguluyoruz.",
+          },
+          {
+            // deliverables
+            q: "Sonuçları nasıl görüyorum?",
+            a: "Neyin değiştiğini öncesi/sonrası karşılaştırma görselleriyle, sonucunu da satış ve görüntülenme raporuyla görüyorsunuz. Düzenlenen ürün sayfaları doğrudan mağazanızda yayında oluyor.",
+          },
+          {
+            // projects.ts: aysquilt.detail[1] (edilgen; rol iddiası yok)
+            q: "Örnek bir mağaza var mı?",
+            a: "AysQuilt'in Trendyol mağazasında ürün görselleri, başlık ve açıklama metinleri dönüşüm için yeniden düzenlendi; ayrıntılar proje sayfasında.",
+            projects: ["aysquilt"],
+          },
+        ] as ServiceFaq[],
       },
     },
   },
@@ -441,7 +734,8 @@ export const tr = {
     featuredSubtitle:
       "Kendi ürünlerimiz ve markalar için kurduğumuz deneyimler arasından bir seçki.",
     allProjects: "Tüm projeler",
-    referencesTitle: "Bu alandaki işlerimiz",
+    // {service}: hizmetin adı (services.items[slug].title)
+    referencesTitle: "{service} alanında yaptığımız işler",
     backToProjects: "Tüm projelere dön",
     detailTitle: "Proje hakkında",
     screensTitle: "Mağaza görselleri",
@@ -485,6 +779,31 @@ export const tr = {
     responseValue: "Hafta içi 24 saat içinde",
     locationLabel: "Konum",
     locationValue: "Türkiye · Uzaktan çalışıyoruz",
+    /*
+     * Sitenin ana çağrısı olan ücretsiz incelemenin üç adımı; yalnızca
+     * sitede zaten yazan bilgiden kuruldu: ne gönderileceği (formdaki
+     * konular), yanıt süresi (responseValue) ve incelemenin çıktısı
+     * (dijital ürün iyileştirmenin ilk teslimi). Raporun kaç günde geldiği
+     * ve kimin yanıt verdiği sahibinden gelmeden yazılmıyor.
+     * {subject}: formdaki "ücretsiz inceleme" konusu (form.subjectReview).
+     */
+    review: {
+      title: "Ücretsiz inceleme nasıl işler?",
+      steps: [
+        {
+          title: "Bağlantıyı gönderin",
+          text: "Formda “{subject}” konusunu seçip uygulamanızın App Store ya da Google Play bağlantısını, sitenizin adresini veya Trendyol mağazanızın bağlantısını yazın. Dilerseniz doğrudan e-posta da gönderebilirsiniz.",
+        },
+        {
+          title: "Size dönüyoruz",
+          text: "Mesajınıza hafta içi 24 saat içinde dönüş yapıyoruz.",
+        },
+        {
+          title: "Yazılı raporu alın",
+          text: "Somut olarak neyin düzeltilebileceğini yazılı bir inceleme raporu ve öncelik listesi olarak gönderiyoruz. İnceleme ücretsiz ve hiçbir yükümlülük getirmiyor; hangi işlerin yapılacağına siz karar veriyorsunuz.",
+        },
+      ],
+    },
     formTitle: "Ya da formu doldurun",
     form: {
       name: "Ad Soyad",
@@ -655,8 +974,10 @@ export const tr = {
 
   common: {
     backToServices: "Tüm hizmetlere dön",
-    whatWeDo: "Kapsam",
-    whatYouGet: "Teslim edilenler",
+    // Soru biçimli başlıklar; {service} hizmetin adı. "Proje sonunda" denmedi:
+    // sosyal medya aylık bir hizmet, teslim edilenler de her ay geliyor.
+    whatWeDo: "{service} hizmetine neler dahil?",
+    whatYouGet: "Elinize neler geçecek?",
     source: "Kaynak",
     skipToContent: "İçeriğe geç",
   },

@@ -1,8 +1,8 @@
 import { Fragment } from "react";
 import Link from "next/link";
-import { serviceSlugs, type ServiceSlug } from "@/i18n/config";
-import type { ServiceItem } from "@/i18n/dictionaries";
-import { pathFor } from "@/i18n/routes";
+import { serviceSlugs, type Locale, type ServiceSlug } from "@/i18n/config";
+import { fill, type ServiceItem, type SourceLink } from "@/i18n/dictionaries";
+import { pathFor, projectPath } from "@/i18n/routes";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
 import { projects } from "@/data/projects";
@@ -10,11 +10,91 @@ import { webSites } from "@/data/webSites";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
+import { Process } from "@/components/sections/Process";
 import { WebShowcase } from "@/components/sections/WebShowcase";
 import { ProductImprovements } from "@/components/sections/ProductImprovements";
 import type { PageContentProps } from "./types";
 
 type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
+
+/**
+ * Sözlükte slug'la anılan proje. Yazım hatası derlemeyi durdursun diye
+ * bulunamazsa hata veriyor; bağlantı sessizce kaybolmasın.
+ */
+function projectBySlug(slug: string) {
+  const project = projects.find((candidate) => candidate.slug === slug);
+  if (!project) throw new Error(`Sözlükte bilinmeyen proje: "${slug}"`);
+  return project;
+}
+
+/** "Kaynak: …" satırı; iddianın hemen altında, resmî sayfaya bağlantıyla. */
+function SourceLine({ label, sources }: { label: string; sources: SourceLink[] }) {
+  return (
+    <p className="text-muted mt-3 text-sm leading-relaxed">
+      <span className="text-ink/70">{label}:</span>{" "}
+      {sources.map((source, index) => (
+        <Fragment key={source.url}>
+          {index > 0 && " · "}
+          <a
+            href={source.url}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-ink/70 hover:text-ink underline underline-offset-2 transition-colors"
+          >
+            {source.label}
+          </a>
+        </Fragment>
+      ))}
+    </p>
+  );
+}
+
+/** SSS cevabının altında, cevabın andığı projelerin sayfalarına bağlantı. */
+function ProjectLine({
+  label,
+  slugs,
+  locale,
+}: {
+  label: string;
+  slugs: string[];
+  locale: Locale;
+}) {
+  return (
+    <p className="text-muted mt-3 text-sm leading-relaxed">
+      <span className="text-ink/70">{label}:</span>{" "}
+      {slugs.map(projectBySlug).map((project, index) => (
+        <Fragment key={project.slug}>
+          {index > 0 && " · "}
+          <Link
+            href={projectPath(locale, project.slug)}
+            className="text-ink/70 hover:text-accent underline underline-offset-2 transition-colors"
+          >
+            {project.title}
+          </Link>
+        </Fragment>
+      ))}
+    </p>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="var(--accent)"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="mt-0.5 shrink-0"
+    >
+      <path d="M3 8.5l3.2 3.2L13 5" />
+    </svg>
+  );
+}
 
 export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps) {
   const service: ServiceItem = dict.services.items[slug];
@@ -38,11 +118,9 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
 
   return (
     <>
-      <PageHeader
-        eyebrow={dict.services.eyebrow}
-        title={service.title}
-        subtitle={service.short}
-      />
+      {/* Alt başlık yok: kısa tanım (short) kartlarda kalıyor, burada onun
+          yerini hemen aşağıdaki cevap alıyor; ikisi alt alta tekrar ediyordu. */}
+      <PageHeader eyebrow={dict.services.eyebrow} title={service.title} />
 
       <Container>
         <Link
@@ -55,51 +133,80 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
           {dict.common.backToServices}
         </Link>
 
-        <div className="mt-10 grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+        {/* Cevap: hizmet nedir, kimler için. Başlıktan hemen sonra ve açılış
+            hareketi olmadan duruyor (Hakkımızda'daki kimlik paragrafı gibi):
+            arama ve yapay zekâ araçlarının alıntıladığı yer burası, hiçbir
+            koşulda gizli başlamamalı. */}
+        <p className="border-line mt-8 max-w-[68ch] border-y py-7 text-lg leading-[1.6] sm:text-xl">
+          {service.answer}
+        </p>
+
+        <div className="mt-12 grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
           <div>
             <span className="border-line bg-surface-soft text-accent mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl border">
               <ServiceIcon slug={slug} className="h-6 w-6" />
             </span>
 
-            <p className="text-base leading-relaxed sm:text-lg">{service.intro}</p>
-            {/* Girişteki sayı ya da kural doğrulanabilsin diye resmî kaynağı. */}
+            <p className="text-muted text-base leading-relaxed sm:text-lg">{service.intro}</p>
+            {/* Girişteki sayı ya da kural doğrulanabilsin diye resmî kaynağı
+                girişin hemen altında; sayfanın sonunda iddiadan kopuyordu. */}
             {service.sources && (
-              <p className="text-muted mt-3 text-sm leading-relaxed">
-                <span className="text-ink/70">{dict.common.source}:</span>{" "}
-                {service.sources.map((source, index) => (
-                  <Fragment key={source.url}>
-                    {index > 0 && " · "}
-                    <a
-                      href={source.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="text-ink/70 hover:text-ink underline underline-offset-2 transition-colors"
-                    >
-                      {source.label}
-                    </a>
-                  </Fragment>
-                ))}
-              </p>
+              <SourceLine label={dict.common.source} sources={service.sources} />
             )}
 
-            <h2 className="mt-12 text-xl font-semibold">{dict.common.whatWeDo}</h2>
+            <h2 className="mt-12 text-xl font-semibold">{dict.services.forWhomTitle}</h2>
+            <ul className="mt-5 space-y-3">
+              {service.forWhom.map((situation) => (
+                <li key={situation} className="flex gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="bg-accent mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full"
+                  />
+                  <span className="text-muted text-sm leading-relaxed sm:text-base">
+                    {situation}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            {/* Kanıt: anlatılan tekniğin yayındaki kendi uygulamamızdaki
+                karşılığı; her satır o projenin sayfasına gidiyor. */}
+            {service.proof && (
+              <>
+                <h2 className="mt-12 text-xl font-semibold">{dict.services.proofTitle}</h2>
+                <dl className="border-line mt-5 border-t">
+                  {service.proof.map((item) => {
+                    const project = projectBySlug(item.project);
+                    return (
+                      <div
+                        key={item.project}
+                        className="border-line grid gap-1 border-b py-4 sm:grid-cols-[minmax(0,7.5rem)_1fr] sm:gap-6"
+                      >
+                        <dt>
+                          <Link
+                            href={projectPath(locale, project.slug)}
+                            className="font-display hover:text-accent font-semibold transition-colors"
+                          >
+                            {project.title}
+                          </Link>
+                        </dt>
+                        <dd className="text-muted text-sm leading-relaxed sm:text-base">
+                          {item.text}
+                        </dd>
+                      </div>
+                    );
+                  })}
+                </dl>
+              </>
+            )}
+
+            <h2 className="mt-12 text-xl font-semibold">
+              {fill(dict.common.whatWeDo, { service: service.title })}
+            </h2>
             <ul className="mt-5 space-y-3">
               {service.features.map((feature) => (
                 <li key={feature} className="flex gap-3">
-                  <svg
-                    viewBox="0 0 16 16"
-                    width="18"
-                    height="18"
-                    fill="none"
-                    stroke="var(--accent)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                    className="mt-0.5 shrink-0"
-                  >
-                    <path d="M3 8.5l3.2 3.2L13 5" />
-                  </svg>
+                  <CheckIcon />
                   <span className="text-muted text-sm leading-relaxed sm:text-base">
                     {feature}
                   </span>
@@ -110,7 +217,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <div className="card rounded-2xl p-7">
-              <h2 className="text-accent font-display text-xs font-semibold uppercase tracking-[0.18em]">
+              <h2 className="font-display text-lg font-semibold">
                 {dict.common.whatYouGet}
               </h2>
               <ul className="mt-5 space-y-4">
@@ -146,7 +253,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
               className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl"
               data-reveal
             >
-              {dict.projects.referencesTitle}
+              {fill(dict.projects.referencesTitle, { service: service.title })}
             </h2>
             <div className="mt-8 grid gap-6 sm:grid-cols-2">
               {references.map((project, index) => (
@@ -168,6 +275,42 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             </div>
           </div>
         )}
+      </Container>
+
+      <Process dict={dict} />
+
+      <Container>
+        {/* SSS: akordeon yok, her cevap sunucuda basılı ve açık. Soru ve
+            cevaplar yapılandırılmış verideki FAQPage ile birebir aynı
+            (schema.ts); check:seo ikisinin ayrışmadığını denetliyor. */}
+        <section className="border-line border-t pt-12">
+          <h2 className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl" data-reveal>
+            {dict.services.faqTitle}
+          </h2>
+          <div className="border-line mt-8 border-t">
+            {service.faq.map((item) => (
+              <div
+                key={item.q}
+                className="border-line grid gap-3 border-b py-7 lg:grid-cols-[minmax(0,22rem)_1fr] lg:gap-12"
+              >
+                <h3 className="font-display text-lg font-semibold leading-snug">{item.q}</h3>
+                <div>
+                  <p className="text-muted max-w-[65ch] leading-[1.75]">{item.a}</p>
+                  {item.projects && (
+                    <ProjectLine
+                      label={dict.services.faqProjects}
+                      slugs={item.projects}
+                      locale={locale}
+                    />
+                  )}
+                  {item.sources && (
+                    <SourceLine label={dict.common.source} sources={item.sources} />
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="border-line mt-20 border-t pt-10">
           <h2 className="text-lg font-semibold">{dict.services.allLink}</h2>

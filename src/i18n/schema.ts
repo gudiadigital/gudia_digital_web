@@ -355,6 +355,28 @@ function work(locale: Locale, project: Project): Node {
   };
 }
 
+/**
+ * Hizmet sayfasındaki SSS. Soru ve cevaplar sayfada görünen metnin
+ * kendisi (aynı sözlük alanı); check:seo ayrışmadıklarını denetliyor.
+ * Google 7 Mayıs 2026'dan beri SSS zengin sonucu göstermiyor; bu düğüm
+ * görünüm için değil, soru-cevabın makinece okunabilmesi için.
+ */
+function faqPage(locale: Locale, url: string, slug: ServiceSlug): Node | undefined {
+  const faq = getDictionary(locale).services.items[slug].faq;
+  if (faq.length === 0) return undefined;
+  return {
+    "@type": "FAQPage",
+    "@id": `${url}#faq`,
+    inLanguage: locale,
+    isPartOf: ref(`${url}#webpage`),
+    mainEntity: faq.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
+
 /** Hizmetler ve Projeler sayfasındaki sıralı liste. */
 function itemList(locale: Locale, target: PageTarget, items: Crumb[]): Node {
   const url = absoluteUrl(targetPath(locale, target));
@@ -383,6 +405,7 @@ export function pageSchema(locale: Locale, target: PageTarget): JsonLdGraph {
         mainEntity: ref(serviceId(target.slug)),
       }),
       service(locale, target.slug, true),
+      faqPage(locale, url, target.slug),
       breadcrumbList(locale, target),
     );
   }

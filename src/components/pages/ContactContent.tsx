@@ -1,6 +1,7 @@
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
+import { fill } from "@/i18n/dictionaries";
 import { pathFor } from "@/i18n/routes";
 import type { PageContentProps } from "./types";
 
@@ -39,6 +40,34 @@ export function ContactContent({ locale, dict }: PageContentProps) {
             </div>
           ))}
         </dl>
+      </Container>
+
+      {/* Ücretsiz inceleme sitenin ana çağrısı; nasıl işlediği formdan önce
+          üç adımda. Metinler sözlükte zaten yazan bilgiden kuruldu. Adımlar
+          açılış hareketi olmadan duruyor: sayfanın cevap verdiği soru bu. */}
+      <Container className="pb-14">
+        <section className="border-line border-t pt-12">
+          <h2 className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">
+            {contact.review.title}
+          </h2>
+          <ol className="mt-8 grid gap-5 md:grid-cols-3">
+            {contact.review.steps.map((step, index, steps) => (
+              <li key={step.title} className="card rounded-2xl p-6 sm:p-7">
+                <span
+                  className="text-muted font-mono text-xs tabular-nums tracking-[0.16em]"
+                  aria-hidden="true"
+                >
+                  {String(index + 1).padStart(2, "0")} /{" "}
+                  {String(steps.length).padStart(2, "0")}
+                </span>
+                <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>
+                <p className="text-muted mt-3 text-sm leading-relaxed sm:text-base">
+                  {fill(step.text, { subject: contact.form.subjectReview })}
+                </p>
+              </li>
+            ))}
+          </ol>
+        </section>
       </Container>
 
       <Container className="pb-24">

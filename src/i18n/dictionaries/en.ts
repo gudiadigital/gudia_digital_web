@@ -1,4 +1,9 @@
-import type { Dictionary, PrivacySection } from "./tr";
+import type {
+  Dictionary,
+  PrivacySection,
+  ServiceFaq,
+  ServiceProof,
+} from "./tr";
 
 export const en: Dictionary = {
   meta: {
@@ -105,6 +110,11 @@ export const en: Dictionary = {
       improve: "Improve",
       grow: "Grow",
     },
+    chooserTitle: "Which service fits you?",
+    forWhomTitle: "Who is it for?",
+    proofTitle: "What we've shipped in our own apps",
+    faqTitle: "Frequently asked questions",
+    faqProjects: "Related projects",
     items: {
       "mobil-uygulama": {
         title: "Mobile App Development",
@@ -115,8 +125,22 @@ export const en: Dictionary = {
         },
         short:
           "Apps built from scratch for iOS and Android: booking, membership, loyalty, payments and customer portals tailored to your business.",
+        answer:
+          "Our mobile app development service builds a custom iOS and Android app for your business from scratch and releases it on the App Store and Google Play. It's for businesses that need an app that directly touches their operations or sales, such as booking, membership, loyalty, payments or a customer portal.",
         intro:
           "Our goal isn't just to hand over an app; it's to build a product the business actually uses, one that touches operations or sales. With our co-founder Gürkan's background as an iOS developer, we go especially deep in the Apple ecosystem.",
+        forWhom: [
+          "Businesses that want to move booking, membership or a loyalty programme into an app",
+          "Businesses that want to take payments from customers through an app",
+          "Teams that need a customer portal or internal operations screens",
+          "Anyone who wants a native iOS app built with Swift and SwiftUI",
+        ],
+        proof: [
+          { text: "HealthKit and Apple Watch integration, Home Screen widgets and a watch app", project: "pofu" },
+          { text: "Interactive widgets, Live Activities and a watchOS app", project: "habitile" },
+          { text: "Live on iOS and Android, with the store listing translated into 21 languages", project: "ikra" },
+          { text: "Live on iOS and Android in 11 languages", project: "snappet" },
+        ] as ServiceProof[],
         features: [
           "Native iOS development with Swift / SwiftUI",
           "Android and cross-platform options",
@@ -130,6 +154,34 @@ export const en: Dictionary = {
           "Design files and component library",
           "TestFlight distribution and post-launch support period",
         ],
+        faq: [
+          {
+            q: "Who owns the app's source code?",
+            a: "You own the full source code. The design files and component library are handed over with it, so you're never locked in to us.",
+          },
+          {
+            q: "Do you handle the App Store and Google Play release?",
+            a: "Yes. We take care of the store release and manage later versions. Before launch, we distribute the iOS build to you through TestFlight.",
+          },
+          {
+            q: "What technology do you use for iOS apps?",
+            a: "We build iOS apps natively with Swift and SwiftUI. This side is led by our co-founder Gürkan Sevilmiş, who is also responsible for App Store releases and architecture decisions.",
+          },
+          {
+            q: "Do you build Android apps too?",
+            a: "Yes, Android and cross-platform options are part of this service. Two of our own apps, İkra and SnapPet, are live on both iOS and Android.",
+            projects: ["ikra", "snappet"],
+          },
+          {
+            q: "Do you offer support after launch?",
+            a: "Yes. A post-launch support period is part of the handover, and after that we can keep supporting the app on a maintenance plan.",
+          },
+          {
+            q: "Which apps have you built?",
+            a: "Our own apps Pofu, SnapPet, Habitile and İkra are live on the App Store, and SnapPet and İkra are on Google Play too.",
+            projects: ["pofu", "snappet", "habitile", "ikra"],
+          },
+        ] as ServiceFaq[],
       },
       "web-sitesi": {
         title: "Website Development",
@@ -140,8 +192,16 @@ export const en: Dictionary = {
         },
         short:
           "Fast-loading, search-visible corporate sites and landing pages that work properly on phones and desktops alike.",
+        answer:
+          "Our website development service designs a business site, marketing site or landing page around your brand and puts it live on your domain. It's for brands that want a site that loads fast, shows up in search and works properly on both phones and desktops.",
         intro:
           "We don't install templates. We build sites designed around your brand with a measurable goal: a marketing site, a corporate presence, a landing page, or a web app with booking or a customer portal inside it.",
+        forWhom: [
+          "Brands that want a site of their own, not one that looks like a template",
+          "Anyone who wants to present a product or campaign on a single landing page",
+          "Businesses that want to win customers through WhatsApp, forms or booking on their site",
+          "Teams that need a web app with booking or a customer portal inside it",
+        ],
         features: [
           "Custom interface and design system",
           "Mobile-first, responsive across every screen",
@@ -155,6 +215,29 @@ export const en: Dictionary = {
           "Training on updating content yourself",
           "Performance and SEO report",
         ],
+        faq: [
+          {
+            q: "Do you use ready-made templates or themes?",
+            a: "No, we don't install templates; we design the interface and design system around your brand. The six sites we built for our own apps each have a different page skeleton.",
+          },
+          {
+            q: "Do you build multilingual sites?",
+            a: "Yes, a multilingual setup is available as an option. The Life Planner marketing site is published in seven languages, and the Divonia Studios site in Turkish and English.",
+            projects: ["life-planner", "divonia"],
+          },
+          {
+            q: "Can I update the site myself later?",
+            a: "Yes. At handover we train you on updating the content yourself, and if you'd like, we add a content management panel too.",
+          },
+          {
+            q: "Is search engine optimisation (SEO) included?",
+            a: "Technical SEO, speed and accessibility work are part of the scope. At handover you also get a performance and SEO report.",
+          },
+          {
+            q: "Do you set up the domain and hosting?",
+            a: "Yes. We handle the domain, hosting and deployment setup, and hand the site over live and connected to your domain.",
+          },
+        ] as ServiceFaq[],
       },
       "markali-oyunlar": {
         title: "Branded Games & Interactive Experiences",
@@ -165,8 +248,16 @@ export const en: Dictionary = {
         },
         short:
           "Custom games and interactive activations for events, campaigns and trade shows.",
+        answer:
+          "Our branded games service designs and builds custom games and interactive experiences for your brand's events, campaigns and trade shows. It's for brands that want something people play, not just watch, at their stand or in their campaign.",
         intro:
           "Something people play instead of another ad. A competition that draws a queue at your trade show stand, a campaign-linked prize wheel, a training simulation, or a small game set in your brand's world — we define the scope together.",
+        forWhom: [
+          "Brands that want to draw visitors to their trade show stand",
+          "Campaigns that need an interactive layer, such as a prize wheel or a competition",
+          "Organisations that want to teach through a simulation or a game",
+          "Event teams that want to collect participant data and get a report afterwards",
+        ],
         features: [
           "Gamification for events and trade shows",
           "Campaign-linked interactive experiences",
@@ -180,6 +271,25 @@ export const en: Dictionary = {
           "Event-ready setup with a fallback plan",
           "Participation and engagement report",
         ],
+        faq: [
+          {
+            q: "What is a branded game (advergame), and where is it used?",
+            a: "A branded game is a custom game or interactive experience set in a brand's world that people play instead of watching another ad. It's used at events, in campaigns and at trade shows: a competition at a stand, a campaign-linked prize wheel or a training simulation, for example.",
+          },
+          {
+            q: "Which devices does it run on?",
+            a: "We build for tablet, kiosk, web or mobile. Which one to use is decided together with you when we set the scope.",
+          },
+          {
+            q: "Can you add a leaderboard and prizes?",
+            a: "Yes. Leaderboards, prizes and participant data capture can be added, and after the event we send you a participation and engagement report.",
+          },
+          {
+            q: "Can I see examples?",
+            a: "For examples, see the project pages for the interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, and for PhotoSensia Kids, an app that teaches children photography through play.",
+            projects: ["logo-kidzania", "photosensia"],
+          },
+        ] as ServiceFaq[],
       },
       "dijital-urun-iyilestirme": {
         title: "Digital Product Improvement",
@@ -190,6 +300,8 @@ export const en: Dictionary = {
         },
         short:
           "You already have an app or site, but it's dated, slow or broken. We fix it without starting over.",
+        answer:
+          "Our digital product improvement service repairs, speeds up and modernises dated, slow or broken apps and websites without a rewrite. It's for businesses that already have an app or site and don't want to rebuild it from scratch.",
         intro:
           "Most businesses don't need a new product — they need the one they have to work properly. We start with a free review and write down concretely what needs fixing; you choose the scope. Apple warns developers when an app hasn't been updated in three years and has had few or no downloads over the past 12 months: unless an update is submitted within 90 days, the app is removed from the App Store. This isn't work to postpone.",
         sources: [
@@ -197,6 +309,12 @@ export const en: Dictionary = {
             label: "Apple Developer: App Store Improvements",
             url: "https://developer.apple.com/support/app-store-improvements/",
           },
+        ],
+        forWhom: [
+          "Owners of an app that hasn't been updated in a long time",
+          "Anyone whose site loads slowly or looks broken on phones",
+          "Apps that crash or need updating for App Store compliance",
+          "Sites with a broken form or missing conversion points such as WhatsApp or booking",
         ],
         features: [
           "App audit: crash, performance and usage analysis",
@@ -211,6 +329,40 @@ export const en: Dictionary = {
           "Fixed and released version",
           "Before / after performance comparison",
         ],
+        faq: [
+          {
+            q: "What does the free review include?",
+            a: "We look at your app, site or store and send you a written review with a prioritised list of what concretely needs fixing. The review is free with no obligation, and you choose which work gets done.",
+          },
+          {
+            q: "Does it have to be rewritten from scratch?",
+            a: "Avoiding that is the point of this service: we repair, speed up and modernise your existing app or site without a rewrite. We first write down what needs fixing in the free review.",
+          },
+          {
+            q: "Will Apple remove my app from the App Store?",
+            a: "Apple emails the developers of apps that haven't been updated in the last three years and were downloaded very few times or not at all in the past 12 months. If no update is submitted within 90 days, the app is removed from the App Store until a new version is approved; people who already have it can keep using it. Apps that crash on launch are removed immediately.",
+            sources: [
+              {
+                label: "Apple Developer: App Store Improvements",
+                url: "https://developer.apple.com/support/app-store-improvements/",
+              },
+            ],
+          },
+          {
+            q: "Google Play warned me about the “target API level”. What does it mean?",
+            a: "Google Play requires apps to target recent Android versions. Since 31 August 2026, new apps and app updates must target Android 16 (API level 36), and existing apps that don't target at least Android 15 (API level 35) are no longer available to new users on devices running newer Android versions. If you need more time, you can request an extension until 1 November 2026.",
+            sources: [
+              {
+                label: "Android Developers: Target API level requirements for Google Play",
+                url: "https://developer.android.com/google/play/requirements/target-sdk",
+              },
+            ],
+          },
+          {
+            q: "What does monthly maintenance cover?",
+            a: "Monthly technical maintenance covers backups, updates, security and small changes. Once the improvement work is done, we can continue on this plan to keep the product up to date.",
+          },
+        ] as ServiceFaq[],
       },
       "sosyal-medya-icerik": {
         title: "Social Media Content Production",
@@ -221,8 +373,16 @@ export const en: Dictionary = {
         },
         short:
           "Monthly Reels, posts and stories — with the content plan, scripts and cover designs included.",
+        answer:
+          "Our social media content service plans, edits, designs and publishes your Reels, posts and stories every month. It's for businesses that want to post consistently but don't have time for editing and design.",
         intro:
           "Producing content consistently is the hardest part for most businesses. You send us the footage; we handle everything from editing and design to publishing. No overpromising: professional shoots, talent and locations are outside this scope.",
+        forWhom: [
+          "Businesses that struggle to post consistently",
+          "Teams with footage on hand but no time for editing and design",
+          "Brands that want to work from a monthly content plan and publishing calendar",
+          "Anyone who wants a monthly report on the engagement their posts get",
+        ],
         features: [
           "Monthly content plan and publishing calendar",
           "Reels editing, ideas and short scripts",
@@ -236,6 +396,24 @@ export const en: Dictionary = {
           "Ready-to-publish Reels, image and story sets",
           "Monthly engagement report",
         ],
+        faq: [
+          {
+            q: "Who does the shooting?",
+            a: "You send us the footage; we handle everything else, from editing and design to publishing. Professional shoots, talent and locations are outside this service.",
+          },
+          {
+            q: "Do you come up with the ideas and scripts too?",
+            a: "Yes. We write the Reels ideas and short scripts, and prepare the cover designs and captions.",
+          },
+          {
+            q: "Do you publish the posts too?",
+            a: "Yes. We schedule and publish the content according to the monthly publishing calendar.",
+          },
+          {
+            q: "What do you deliver each month?",
+            a: "Each month you get a content calendar, ready-to-publish Reels, image and story sets, and a report on the engagement the month's content received.",
+          },
+        ] as ServiceFaq[],
       },
       "e-ticaret-optimizasyonu": {
         title: "E-Commerce Optimization",
@@ -246,6 +424,8 @@ export const en: Dictionary = {
         },
         short:
           "We rebuild your marketplace product pages, images and copy around conversion.",
+        answer:
+          "Our e-commerce optimization service reworks your Trendyol store's product images, titles, descriptions, categories and variants around conversion. It's for sellers with a good product whose store isn't being found in search or isn't turning visits into sales.",
         intro:
           "According to Türkiye's Ministry of Trade, 634,611 businesses sold online in 2025. What sets them apart is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
         sources: [
@@ -253,6 +433,12 @@ export const en: Dictionary = {
             label: "Türkiye Ministry of Trade announcement, 12 May 2026 (in Turkish)",
             url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-12-05-2026",
           },
+        ],
+        forWhom: [
+          "Trendyol sellers with a good product whose store isn't being found or isn't selling",
+          "Stores with messy or missing product and cover images",
+          "Stores whose category and variant structure has become tangled",
+          "Sellers who need to upload or update many products in bulk",
         ],
         features: [
           "Product and cover image rework",
@@ -267,6 +453,25 @@ export const en: Dictionary = {
           "Rebuilt, live product pages",
           "Sales and impressions report",
         ],
+        faq: [
+          {
+            q: "What does Trendyol store optimization cover?",
+            a: "It covers product and cover images, SEO-friendly product titles and descriptions, infographics and spec/dimension visuals, category and variant structure, and store cover images and storefront layout. We also handle product uploads and bulk updates.",
+          },
+          {
+            q: "How does the work start?",
+            a: "We first review your store and show you which products offer quick wins. Then we apply the changes as a before/after.",
+          },
+          {
+            q: "How do I see the results?",
+            a: "Before/after comparison visuals show what changed, and a sales and impressions report shows the outcome. The reworked product pages go live directly in your store.",
+          },
+          {
+            q: "Is there an example store?",
+            a: "In AysQuilt's Trendyol store, the product imagery, titles and descriptions were rebuilt around conversion; the details are on the project page.",
+            projects: ["aysquilt"],
+          },
+        ] as ServiceFaq[],
       },
     },
   },
@@ -376,7 +581,7 @@ export const en: Dictionary = {
     featuredSubtitle:
       "A selection from our own products and the experiences we've built for brands.",
     allProjects: "All projects",
-    referencesTitle: "Our work in this area",
+    referencesTitle: "Our {service} work",
     backToProjects: "Back to all projects",
     detailTitle: "About the project",
     screensTitle: "Store screenshots",
@@ -420,6 +625,23 @@ export const en: Dictionary = {
     responseValue: "Within 24 hours on weekdays",
     locationLabel: "Location",
     locationValue: "Türkiye · We work remotely",
+    review: {
+      title: "How does the free review work?",
+      steps: [
+        {
+          title: "Send us a link",
+          text: "Choose “{subject}” in the form and add your app's App Store or Google Play link, your site's address or your Trendyol store link. You can also email us directly.",
+        },
+        {
+          title: "We get back to you",
+          text: "We reply to your message within 24 hours on weekdays.",
+        },
+        {
+          title: "Get the written review",
+          text: "We send you a written review with a prioritised list of what can concretely be improved. The review is free with no obligation, and you decide which work gets done.",
+        },
+      ],
+    },
     formTitle: "Or fill in the form",
     form: {
       name: "Full name",
@@ -586,8 +808,8 @@ export const en: Dictionary = {
 
   common: {
     backToServices: "Back to all services",
-    whatWeDo: "Scope",
-    whatYouGet: "What you get",
+    whatWeDo: "What does {service} include?",
+    whatYouGet: "What do you get?",
     source: "Source",
     skipToContent: "Skip to content",
   },

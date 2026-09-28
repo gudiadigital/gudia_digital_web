@@ -3,7 +3,8 @@
  *
  * Repoda test yok; bu betik SEO işlerinin kabul testi. Kaynak koda değil,
  * gerçekten yayınlanacak HTML'e bakıyor: canonical, hreflang, başlık,
- * açıklama, H1, JSON-LD ve sitemap tutarlılığı. Örneğin /en/privacy/
+ * açıklama, H1, JSON-LD (SSS'nin sayfadaki metinle aynılığı dahil) ve
+ * sitemap tutarlılığı. Örneğin /en/privacy/
  * açıklamasının "Law No." ile bitmesi gibi hatalar ancak çıktıda görünüyor.
  *
  * Kullanım: `npm run build` sonunda kendiliğinden çalışıyor; hata varsa
@@ -104,6 +105,11 @@ function visibleBody(html) {
     .replace(/<!--[\s\S]*?-->/g, "");
 }
 
+/** Etiketleri atılmış, boşlukları tekleştirilmiş metin. */
+function plainText(html) {
+  return decodeEntities(html.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+}
+
 function headOf(html) {
   const match = html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i);
   return match ? match[1] : "";
@@ -197,7 +203,7 @@ function collectGraph(value, nodes, refs) {
   }
 }
 
-function checkJsonLd(file, html, canonical, lang) {
+function checkJsonLd(file, html, body, canonical, lang) {
   const blocks = [];
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
     if (parseAttrs(`<script ${match[1]}>`).type === "application/ld+json") {
@@ -252,6 +258,30 @@ function checkJsonLd(file, html, canonical, lang) {
   const ids = new Set(nodes.map((node) => node["@id"]));
   for (const ref of new Set(refs)) {
     if (!ids.has(ref)) fail(file, "jsonld", `@id başvurusu karşılıksız: ${ref}`);
+  }
+
+  // SSS: yapılandırılmış veri yalnızca sayfada görünen soru-cevabı
+  // anlatabilir. Her soru sayfada bir başlık, her cevap da görünen metnin
+  // içinde birebir olmalı; biri sözlükte değişip öteki kalırsa yakalanır.
+  const faqPages = nodes.filter((node) => [node["@type"]].flat().includes("FAQPage"));
+  if (faqPages.length === 0) return;
+  const headings = [...body.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)].map(
+    (match) => plainText(match[2]),
+  );
+  const text = plainText(body);
+  for (const faq of faqPages) {
+    const questions = [faq.mainEntity ?? []].flat();
+    if (questions.length === 0) fail(file, "faq", "FAQPage'de soru yok");
+    for (const question of questions) {
+      const name = String(question?.name ?? "").replace(/\s+/g, " ").trim();
+      const answer = String(question?.acceptedAnswer?.text ?? "").replace(/\s+/g, " ").trim();
+      if (!headings.includes(name)) {
+        fail(file, "faq", `soru sayfada başlık olarak yok: ${name}`);
+      }
+      if (!answer || !text.includes(answer)) {
+        fail(file, "faq", `cevabı sayfada birebir yok: ${name}`);
+      }
+    }
   }
 }
 
@@ -348,7 +378,7 @@ for (const file of pages) {
   if (h1s !== 1) fail(rel, "h1", `${h1s} adet <h1> var, 1 olmalı`);
 
   // 7. JSON-LD
-  checkJsonLd(rel, html, expected, lang);
+  checkJsonLd(rel, html, body, expected, lang);
 
   // 9. İç bağlantılar: yalnızca aynı dildeki sayfalardan gelenler. Dil
   // değiştirici (hrefLang taşıyan <a>), başka dildeki sayfaya giden
