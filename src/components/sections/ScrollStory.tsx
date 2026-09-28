@@ -180,6 +180,23 @@ export function ScrollStory({
           <div ref={panelsRef} className="story-panels grid w-full">
             {/* Panel 0 — karşılama */}
             <div data-panel className="story-panel max-w-4xl">
+              {/* Başlık markayı anmıyor; marka adı ve tanımı hemen üstünde.
+                  Eskiden burada duran çerçeveli, noktalı rozet şablon izi
+                  olduğu için kaldırılmıştı: bu, alt sayfa başlıklarındaki
+                  gibi düz bir üst satır. Parçalar bölünmüyor; dar ekranda
+                  satır "·" işaretinden sonra kırılıyor, tanımın son kelimesi
+                  tek başına alt satıra düşmüyor. */}
+              <p
+                className="text-accent fade-up mb-5 font-display text-xs font-semibold uppercase tracking-[0.18em]"
+                style={{ animationDelay: "0.05s" }}
+              >
+                {hero.eyebrow.split(" · ").map((part, index) => (
+                  <Fragment key={part}>
+                    {index > 0 && " · "}
+                    <span className="inline-block">{part}</span>
+                  </Fragment>
+                ))}
+              </p>
               <h1 className="text-[2.5rem] font-semibold leading-[1.06] sm:text-6xl lg:text-7xl">
                 {words.map((word, index) => (
                   <Fragment key={index}>

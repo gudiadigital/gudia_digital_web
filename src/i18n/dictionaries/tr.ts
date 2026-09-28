@@ -48,7 +48,8 @@ export const tr = {
   },
 
   hero: {
-    eyebrow: "Digital Products & Growth Studio",
+    // Başlığın hemen üstünde marka adı ve ne olduğu; başlık markayı anmıyor.
+    eyebrow: "Gudia Dijital · Dijital Ürün ve Büyüme Stüdyosu",
     title: [
       { text: "Markaların dijital ürünlerini ", accent: false },
       { text: "oluşturuyor", accent: true },
@@ -63,6 +64,11 @@ export const tr = {
       "Sıfırdan ürün kuruyoruz, elinizdeki dijital varlıkları toparlıyoruz ve satışa hazır hale getiriyoruz. Küçük bir ekibiz — aracı yok, ajans katmanı yok, ürünü kuran kişilerle konuşursunuz.",
     ctaPrimary: "Ücretsiz İnceleme İsteyin",
     ctaSecondary: "Hizmetlerimiz",
+  },
+
+  home: {
+    aboutTitle: "Gudia Dijital hakkında",
+    aboutLink: "Kurucular ve hikâyemiz",
   },
 
   story: {
@@ -331,6 +337,15 @@ export const tr = {
     },
     eyebrow: "Hakkımızda",
     title: "İki kişilik bir ekip, doğrudan iletişim",
+    /*
+     * Stüdyonun kim, ne, nerede ve kimlerden oluştuğunu tek yerde söyleyen
+     * paragraf: Hakkımızda'da başlığın altında, ana sayfada iletişim
+     * çağrısının üstünde aynen çıkıyor. Alıntılanabilir olması için her
+     * cümle tek başına anlaşılır yazıldı. Sayılar projects.ts ile aynı
+     * olmalı; stüdyo kayıtlı bir şirket olmadığı için "şirket" denmiyor.
+     */
+    entity:
+      "Gudia Dijital, Türkiye'den uzaktan çalışan iki kişilik bir dijital ürün ve büyüme stüdyosudur. Stüdyoyu kurucu ortaklar Gürkan Sevilmiş ve Dilara İşman birlikte yürütüyor: Gürkan, Swift ve SwiftUI ile iOS uygulamaları geliştiriyor; Dilara ise oyun geliştirmenin yanı sıra proje yönetimini ve müşteri iletişimini üstleniyor. Gudia Dijital, küçük ve orta ölçekli markalar için mobil uygulama, web sitesi, markalı oyun ve interaktif deneyim geliştiriyor; var olan uygulama ve siteleri sıfırdan yazmadan iyileştiriyor, sosyal medya içeriği üretiyor ve Trendyol mağazalarını dönüşüm için yeniden düzenliyor. Ekip kendi uygulamalarını da geliştirip yayınlıyor: İkra iOS ve Android'de 21 dilde, SnapPet iOS ve Android'de 11 dilde, Pofu ve Habitile ise App Store'da yayında.",
     lead:
       "Gudia Dijital bir dijital ürün ve büyüme stüdyosu. Büyük ajansların araya koyduğu katmanları kaldırmak için kuruldu — projenizi kim yapıyorsa onunla konuşursunuz.",
     story: [

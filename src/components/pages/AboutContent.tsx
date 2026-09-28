@@ -14,7 +14,14 @@ export function AboutContent({ locale, dict }: PageContentProps) {
       {/* Anlatı solda okunur bir ölçüde; misyon ve vizyon sağda, sayfa
           kaydıkça yerinde kalarak metne eşlik ediyor. */}
       <Container className="pt-6 pb-24">
-        <div className="grid gap-14 lg:grid-cols-[1.35fr_1fr] lg:gap-20">
+        {/* Kimlik paragrafı sayfanın ilk metni. Açılış hareketi yok: arama
+            ve yapay zekâ araçlarının alıntıladığı yer burası, hiçbir koşulda
+            gizli başlamamalı. */}
+        <p className="border-line max-w-[68ch] border-y py-7 text-[1.0625rem] leading-[1.7]">
+          {about.entity}
+        </p>
+
+        <div className="mt-14 grid gap-14 lg:grid-cols-[1.35fr_1fr] lg:gap-20">
           <div data-reveal>
             <p className="max-w-[62ch] text-xl leading-[1.55] sm:text-[1.375rem]">
               {lede}

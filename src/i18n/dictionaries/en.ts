@@ -21,7 +21,7 @@ export const en: Dictionary = {
   },
 
   hero: {
-    eyebrow: "Digital Products & Growth Studio",
+    eyebrow: "Gudia Digital · Digital Product & Growth Studio",
     title: [
       { text: "We ", accent: false },
       { text: "build", accent: true },
@@ -36,6 +36,11 @@ export const en: Dictionary = {
       "We build products from scratch, fix the digital assets you already have, and get them ready to sell. Small team — no account managers, no agency layers, you talk to the people who actually build it.",
     ctaPrimary: "Get a Free Review",
     ctaSecondary: "Our Services",
+  },
+
+  home: {
+    aboutTitle: "About Gudia Digital",
+    aboutLink: "Founders and our story",
   },
 
   story: {
@@ -298,6 +303,8 @@ export const en: Dictionary = {
     },
     eyebrow: "About",
     title: "A two-person team, direct contact",
+    entity:
+      "Gudia Digital is a two-person digital product and growth studio working remotely from Türkiye. It is run by co-founders Gürkan Sevilmiş and Dilara İşman: Gürkan builds iOS apps with Swift and SwiftUI, while Dilara develops games and handles project management and client communication. Gudia Digital builds mobile apps, websites, branded games and interactive experiences for small and mid-sized brands, improves existing apps and sites without a rewrite, produces social media content and reworks Trendyol stores for conversion. The team also builds and publishes its own apps: İkra (iOS and Android, 21 languages), SnapPet (iOS and Android, 11 languages), and Pofu and Habitile on the App Store.",
     lead:
       "Gudia Digital is a digital product and growth studio, founded to remove the layers big agencies put in the middle — you talk to whoever is building your project.",
     story: [

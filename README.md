@@ -1,7 +1,15 @@
 # Gudia Dijital — gudiadigital.com
 
-Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · TR/EN çok dilli.
-Statik site olarak derlenir, GitHub Pages'te yayınlanır.
+[Gudia Dijital](https://gudiadigital.com) (Gudia Digital), Gürkan Sevilmiş ve
+Dilara İşman'ın Türkiye'den uzaktan yürüttüğü iki kişilik bir dijital ürün ve
+büyüme stüdyosudur. Küçük ve orta ölçekli markalar için mobil uygulama, web
+sitesi, markalı oyun ve interaktif deneyim geliştiriyor; var olan uygulama ve
+siteleri sıfırdan yazmadan iyileştiriyor, sosyal medya içeriği üretiyor ve
+Trendyol mağazalarını dönüşüm için yeniden düzenliyor.
+
+Bu depo sitenin kaynak kodudur: Next.js 16 (App Router) · TypeScript ·
+Tailwind CSS v4 · TR/EN çok dilli. Statik site olarak derlenir, GitHub
+Pages'te yayınlanır.
 
 Konumlandırma: dijital ürün ve büyüme stüdyosu. Hizmetler **kur / iyileştir /
 büyüt** olarak üç gruba ayrılır; gruplama `src/i18n/config.ts` içindeki
@@ -98,8 +106,12 @@ takip eden ışık için `data-spotlight` ve `spotlight` sınıfı eklenir.
   kısıtlama da `requestAnimationFrame` yerine `setTimeout` ile yapılıyor.
   İkisi de arka plandaki sekmelerde tarayıcı tarafından askıya alınıyor ve
   bu durumda bölümler görünmez kalıyordu.
-- JavaScript çalışmazsa hiçbir şey gizlenmez; `data-reveal-root` işareti
-  konmadığı için tüm içerik normal şekilde görünür.
+- JavaScript çalışmazsa `data-reveal` ile işaretli bölümler gizlenmez;
+  `data-reveal-root` işareti konmadığı için normal şekilde görünürler.
+  İstisna açılıştaki kaydırmalı hikâye (ScrollStory): hareket azaltma
+  kapalıyken 2–4. paneller CSS'te `opacity: 0` ile başlar ve ancak sayfa
+  kaydırıldıkça görünür. JS yoksa ya da sayfa hiç kaydırılmazsa yalnızca ilk
+  panel görünür; metinleri HTML'de yine de bulunur.
 
 `prefers-reduced-motion: reduce` seçili cihazlarda tüm hareket kapanır ve
 içerik doğrudan görünür gelir.
