@@ -18,7 +18,11 @@
  *    (LASTMOD_BASE ile başka bir adres verilebilir);
  *  - yerelde LASTMOD_BASE_FILE verilmişse o dosya;
  *  - okunamazsa uyarı verilip boş kabul ediliyor: bütün sayfalar bu
- *    derlemenin tarihini alıyor. Yayın bu yüzden durmuyor.
+ *    derlemenin tarihini alıyor. Yayın bu yüzden durmuyor. Boş kabul edilen
+ *    özet bir sonraki yayına aynen geçtiği için bu, geçmiş tarihlerin kalıcı
+ *    olarak silinmesi demek; CI'da bu yüzden birkaç kez deneniyor ve uyarı
+ *    Actions özetine düşüyor. Yalnızca 404 (ilk yayın, dosya henüz yok)
+ *    sessizce boş sayılıyor.
  *
  * Çıktılar:
  *  - out/lastmod.json   { adres: { hash, lastmod } }; bir sonraki yayın bunu okuyor
@@ -31,6 +35,7 @@
 import { createHash } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { setTimeout as sleep } from "node:timers/promises";
 
 const SITE_URL = "https://gudiadigital.com";
 const OUT = resolve("out");
@@ -38,6 +43,8 @@ const SITEMAP = join(OUT, "sitemap.xml");
 const MANIFEST = join(OUT, "lastmod.json");
 const CHANGED = resolve(".indexnow-urls.json");
 const FETCH_TIMEOUT_MS = 10_000;
+const FETCH_ATTEMPTS = 3;
+const FETCH_BACKOFF_MS = 2_000;
 const ISO_8601 = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z$/;
 
 const now = new Date().toISOString();
@@ -108,18 +115,51 @@ function sanitize(data) {
   );
 }
 
-async function previousManifest() {
-  try {
-    if (process.env.CI === "true") {
-      const base = (process.env.LASTMOD_BASE ?? SITE_URL).replace(/\/+$/, "");
-      // Sorgu parametresi CDN'deki eski kopyayı atlatıyor (Pages max-age=600).
-      const source = `${base}/lastmod.json?build=${Date.now()}`;
+/** GitHub Actions'ta ::warning:: satırı olarak yazılıyor; çalıştırmanın özetinde görünsün. */
+function warn(message) {
+  const text = `lastmod: UYARI ${message}`;
+  if (process.env.GITHUB_ACTIONS === "true") console.log(`::warning::${text}`);
+  else console.warn(text);
+}
+
+/**
+ * Canlı sitedeki özet. Geçici hata (zaman aşımı, 5xx, yarım yanıt) birkaç
+ * kez yeniden deneniyor. 404 yeniden denenmiyor: ilk yayında dosya yok,
+ * bu durumda null dönüyor.
+ */
+async function fetchManifest(base) {
+  let lastError;
+  for (let attempt = 1; attempt <= FETCH_ATTEMPTS; attempt++) {
+    // Sorgu parametresi CDN'deki eski kopyayı atlatıyor (Pages max-age=600).
+    const source = `${base}/lastmod.json?build=${Date.now()}`;
+    try {
       const response = await fetch(source, {
         signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
         headers: { accept: "application/json" },
       });
+      if (response.status === 404) return null;
       if (!response.ok) throw new Error(`${source} → HTTP ${response.status}`);
-      const manifest = sanitize(await response.json());
+      return sanitize(await response.json());
+    } catch (error) {
+      lastError = error;
+      if (attempt < FETCH_ATTEMPTS) {
+        console.log(`lastmod: ${attempt}. deneme başarısız (${error.message}); yeniden deneniyor`);
+        await sleep(FETCH_BACKOFF_MS * attempt);
+      }
+    }
+  }
+  throw lastError;
+}
+
+async function previousManifest() {
+  try {
+    if (process.env.CI === "true") {
+      const base = (process.env.LASTMOD_BASE ?? SITE_URL).replace(/\/+$/, "");
+      const manifest = await fetchManifest(base);
+      if (manifest === null) {
+        console.log(`lastmod: ${base}/lastmod.json yok (ilk yayın); bütün sayfalar bu derlemenin tarihini alıyor`);
+        return {};
+      }
       console.log(`lastmod: önceki yayın ${base}/lastmod.json (${Object.keys(manifest).length} kayıt)`);
       return manifest;
     }
@@ -132,7 +172,7 @@ async function previousManifest() {
     console.log("lastmod: önceki yayın verilmedi (yerel derleme); bütün sayfalar bu derlemenin tarihini alıyor");
     return {};
   } catch (error) {
-    console.warn(`lastmod: UYARI önceki yayın okunamadı (${error.message}); bütün sayfalar bu derlemenin tarihini alıyor`);
+    warn(`önceki yayın okunamadı (${error.message}); bütün sayfalar bu derlemenin tarihini alıyor`);
     return {};
   }
 }
