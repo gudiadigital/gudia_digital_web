@@ -4,7 +4,7 @@
  * Repoda test yok; bu betik SEO işlerinin kabul testi. Kaynak koda değil,
  * gerçekten yayınlanacak HTML'e bakıyor: canonical, hreflang, başlık,
  * açıklama, H1, JSON-LD (SSS'nin ve içerik haritasının sayfadakiyle
- * aynılığı dahil) ve sitemap tutarlılığı. Örneğin /en/privacy/
+ * aynılığı dahil), sitemap tutarlılığı ve llms.txt. Örneğin /en/privacy/
  * açıklamasının "Law No." ile bitmesi gibi hatalar ancak çıktıda görünüyor.
  *
  * Kullanım: `npm run build` sonunda kendiliğinden çalışıyor; hata varsa
@@ -37,6 +37,7 @@ const DESC_MIN = 70;
 const DESC_MAX = 165;
 const DESC_WARN = 110;
 const MIN_PROJECT_INLINKS = 3;
+const LLMS_MAX_LINES = 60;
 // Kısaltmayla biten açıklama cümle ortasında kesilmiş demektir ("Law No.").
 const ABBR_END = /\b(No|Nr|Dr|vb|vs|St)\.$/;
 const ISO_8601 =
@@ -464,6 +465,30 @@ if (!existsSync(sitemapFile)) {
   }
   for (const url of pageUrls.keys()) {
     if (!listed.has(url)) fail(sitemapRel, "sitemap", `sitemap'te yok: ${url}`);
+  }
+}
+
+// 10. llms.txt: Markdown H1 ile başlıyor, kısa kalıyor ve site içi her
+// bağlantısı (çapası dahil) var olan bir sayfaya gidiyor.
+const llmsFile = join(OUT, "llms.txt");
+const llmsRel = relative(process.cwd(), llmsFile);
+if (!existsSync(llmsFile)) {
+  fail(llmsRel, "llms", "llms.txt yok");
+} else {
+  const text = readFileSync(llmsFile, "utf8");
+  const lines = text.trimEnd().split("\n");
+  if (!lines[0].startsWith("# ")) fail(llmsRel, "llms", "ilk satır Markdown H1 (# …) değil");
+  if (lines.length > LLMS_MAX_LINES) {
+    fail(llmsRel, "llms", `${lines.length} satır (en çok ${LLMS_MAX_LINES})`);
+  }
+  for (const [, url] of text.matchAll(/\]\((https?:\/\/[^)\s]+)\)/g)) {
+    if (!url.startsWith(`${SITE_URL}/`)) continue;
+    const [page, anchor] = url.split("#");
+    if (!pageUrls.has(page)) {
+      fail(llmsRel, "llms", `olmayan sayfaya bağlantı: ${url}`);
+    } else if (anchor && !readFileSync(pageUrls.get(page), "utf8").includes(`id="${anchor}"`)) {
+      fail(llmsRel, "llms", `sayfada olmayan çapa: ${url}`);
+    }
   }
 }
 
