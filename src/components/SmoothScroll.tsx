@@ -18,10 +18,40 @@ export function SmoothScroll() {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduced.matches) return;
 
-    let lenis: { raf: (time: number) => void; destroy: () => void } | null =
-      null;
+    let lenis: {
+      raf: (time: number) => void;
+      destroy: () => void;
+      isScrolling: boolean | "native" | "smooth";
+    } | null = null;
     let frame = 0;
     let cancelled = false;
+
+    /*
+     * Lenis'in karesi yalnızca tekerlekle başlayan yumuşak kaydırma
+     * sürerken dönüyor. Sürekli dönen döngü sayfa boştayken de her karede
+     * ana iş parçacığını uyandırıyordu; dokunmatikte ve klavyede Lenis
+     * zaten devreye girmiyor, tarayıcının kendi kaydırması çalışıyor.
+     *
+     * Lenis'e kendi saatimiz veriliyor: döngü dururken saat de duruyor.
+     * Gerçek zaman verilseydi uyandığı ilk karede aradaki süreyi tek adımda
+     * işleyip hedefe zıplardı.
+     */
+    let clock = performance.now();
+    let last = 0;
+    const loop = (time: number) => {
+      clock += last ? time - last : 0;
+      last = time;
+      lenis?.raf(clock);
+      if (lenis?.isScrolling === "smooth") {
+        frame = requestAnimationFrame(loop);
+      } else {
+        frame = 0;
+        last = 0;
+      }
+    };
+    const wake = () => {
+      if (!frame) frame = requestAnimationFrame(loop);
+    };
 
     void import("lenis").then(({ default: Lenis }) => {
       if (cancelled) return;
@@ -40,15 +70,14 @@ export function SmoothScroll() {
         wheelMultiplier: 1,
       });
 
-      const loop = (time: number) => {
-        lenis?.raf(time);
-        frame = requestAnimationFrame(loop);
-      };
-      frame = requestAnimationFrame(loop);
+      // Lenis kendi tekerlek dinleyicisini kurucuda ekliyor; bu ondan sonra
+      // çalışıyor, yani uyandığımızda kaydırma hedefi çoktan ayarlanmış oluyor.
+      window.addEventListener("wheel", wake, { passive: true });
     });
 
     return () => {
       cancelled = true;
+      window.removeEventListener("wheel", wake);
       if (frame) cancelAnimationFrame(frame);
       lenis?.destroy();
     };
