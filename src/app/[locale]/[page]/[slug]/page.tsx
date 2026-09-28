@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, serviceSlugs, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { pageMetadata } from "@/i18n/seo";
+import { pageCopy, pageMetadata } from "@/i18n/seo";
 import {
   pageSegment,
   pageKeyFromSegment,
@@ -52,7 +52,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   if (key === "services") {
     const service = serviceFromSegment(locale, slug);
     if (!service) return {};
-    const item = getDictionary(locale).services.items[service];
     return pageMetadata({
       locale,
       // Hizmet slug'ı dile göre değişiyor: /tr/hizmetler/web-sitesi ↔ /en/services/web-development
@@ -60,8 +59,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
         tr: pathFor("tr", "services", service),
         en: pathFor("en", "services", service),
       },
-      title: item.title,
-      description: item.short,
+      ...pageCopy(locale, { kind: "service", slug: service }),
     });
   }
 
@@ -71,8 +69,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     return pageMetadata({
       locale,
       paths: { tr: projectPath("tr", slug), en: projectPath("en", slug) },
-      title: project.title,
-      description: project.summary[locale],
+      ...pageCopy(locale, { kind: "project", project }),
     });
   }
 

@@ -10,6 +10,7 @@ import { Motion } from "@/components/Motion";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
+import { pageCopy } from "@/i18n/seo";
 
 /*
  * Fontlar src/app/fonts.css'te tanımlı, dosyaları public/fonts altında.
@@ -37,14 +38,15 @@ export async function generateMetadata({
   const { locale } = await params;
   if (!isLocale(locale)) return {};
   const dict = getDictionary(locale);
+  const home = pageCopy(locale, { kind: "page", key: "home" });
 
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      default: dict.meta.title,
+      default: home.title,
       template: `%s · ${dict.meta.siteName}`,
     },
-    description: dict.meta.description,
+    description: home.description,
     // Google arama sonucundaki ikon için kare ve 48'in katı boyut şart.
     // ?v=2: ilk sürüm Next'in varsayılan ▲ ikonuyla yayınlanmıştı ve
     // tarayıcılar onu önbellekte tutuyor; yeni adres yeniden indirtir.
@@ -79,8 +81,8 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       siteName: dict.meta.siteName,
-      title: dict.meta.title,
-      description: dict.meta.description,
+      title: home.title,
+      description: home.description,
       locale: locale === "tr" ? "tr_TR" : "en_US",
       url: `/${locale}`,
       images: [
@@ -88,14 +90,14 @@ export async function generateMetadata({
           url: "/brand/og.jpg",
           width: 1200,
           height: 630,
-          alt: dict.meta.siteName,
+          alt: home.title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: dict.meta.title,
-      description: dict.meta.description,
+      title: home.title,
+      description: home.description,
       images: ["/brand/og.jpg"],
     },
   };

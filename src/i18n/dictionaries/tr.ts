@@ -9,7 +9,9 @@ export type PrivacySection = {
 export const tr = {
   meta: {
     siteName: "Gudia Dijital",
-    title: "Gudia Dijital — Dijital Ürün ve Büyüme Stüdyosu",
+    // Ana sayfanın arama başlığı. Alt sayfalarınki kendi bölümlerindeki
+    // `seo` alanında; layout onların sonuna " · Gudia Dijital" ekliyor.
+    title: "Gudia Dijital — Mobil Uygulama, Web Sitesi ve Markalı Oyun Stüdyosu",
     description:
       "Markaların dijital ürünlerini oluşturuyor, iyileştiriyor ve büyütüyoruz: mobil uygulama, web sitesi, markalı oyun, sosyal medya içeriği ve e-ticaret.",
   },
@@ -89,6 +91,17 @@ export const tr = {
   },
 
   services: {
+    /*
+     * Arama sonucu ve paylaşım kartındaki başlık ve açıklama. Sayfadaki
+     * H1'e dokunmuyor; H1 marka dilinde kalırken arama başlığı hizmetin
+     * adını taşıyor. Açıklamalar olduğu gibi kullanılıyor, kısaltılmıyor:
+     * 160 karakteri geçmemeli.
+     */
+    seo: {
+      title: "Hizmetler: Mobil Uygulama, Web, Oyun ve E-Ticaret",
+      description:
+        "Mobil uygulama, web sitesi, markalı oyun, dijital ürün iyileştirme, sosyal medya içeriği ve Trendyol mağaza optimizasyonu. Her hizmetin kapsamı baştan net.",
+    },
     eyebrow: "Hizmetler",
     title: "Uçtan uca dijital üretim",
     subtitle:
@@ -103,6 +116,11 @@ export const tr = {
     items: {
       "mobil-uygulama": {
         title: "Mobil Uygulama Geliştirme",
+        seo: {
+          title: "iOS ve Android Mobil Uygulama Geliştirme",
+          description:
+            "iOS ve Android için işletmenize özel mobil uygulama: rezervasyon, üyelik, sadakat ve ödeme akışları. Kaynak kod sizin; App Store ve Google Play yayını dahil.",
+        },
         short:
           "iOS ve Android için sıfırdan uygulama: rezervasyon, üyelik, sadakat, ödeme ve müşteri paneli gibi işinize özel çözümler.",
         intro:
@@ -123,6 +141,11 @@ export const tr = {
       },
       "web-sitesi": {
         title: "Web Sitesi Geliştirme",
+        seo: {
+          title: "Kurumsal Web Sitesi ve Açılış Sayfası",
+          description:
+            "Hazır şablon kullanmadan markanıza özel kurumsal site ve açılış sayfası: mobil uyumlu, hızlı açılan, teknik SEO'su yapılmış ve alan adınızda yayında.",
+        },
         short:
           "Hızlı açılan, aramada görünen, telefonda da masaüstünde de düzgün çalışan kurumsal siteler ve açılış sayfaları.",
         intro:
@@ -143,6 +166,11 @@ export const tr = {
       },
       "markali-oyunlar": {
         title: "Markalı Oyun & İnteraktif Deneyim",
+        seo: {
+          title: "Markaya Özel Oyun: Fuar ve Etkinlik Oyunları",
+          description:
+            "Fuar, etkinlik ve kampanyalar için markaya özel oyun ve interaktif deneyimler. Tablet, kiosk, web ve mobilde çalışır; liderlik tablosu ve ödül eklenebilir.",
+        },
         short:
           "Etkinlikler, kampanyalar ve fuarlar için markaya özel oyunlar ve interaktif aktivasyonlar.",
         intro:
@@ -163,6 +191,11 @@ export const tr = {
       },
       "dijital-urun-iyilestirme": {
         title: "Dijital Ürün İyileştirme",
+        seo: {
+          title: "Uygulama ve Web Sitesi Bakımı, İyileştirme",
+          description:
+            "Eski, yavaş ya da çalışmayan uygulama ve siteleri sıfırdan yazmadan toparlıyoruz: ücretsiz inceleme raporu, App Store uyumluluğu ve aylık teknik bakım.",
+        },
         short:
           "Elinizde zaten bir uygulama veya site var ama eski, yavaş ya da çalışmıyor. Sıfırdan yazmadan toparlıyoruz.",
         intro:
@@ -183,6 +216,11 @@ export const tr = {
       },
       "sosyal-medya-icerik": {
         title: "Sosyal Medya İçerik Üretimi",
+        seo: {
+          title: "Sosyal Medya İçerik Üretimi: Reels, Post, Story",
+          description:
+            "Aylık Reels, görsel ve story üretimi: içerik planı, kısa senaryolar, kurgu, kapak tasarımı ve açıklama metinleri; paylaşım ve aylık etkileşim raporu dahil.",
+        },
         short:
           "Aylık Reels, görsel ve story üretimi — içerik planı, senaryo ve kapak tasarımlarıyla birlikte.",
         intro:
@@ -203,6 +241,11 @@ export const tr = {
       },
       "e-ticaret-optimizasyonu": {
         title: "E-Ticaret Optimizasyonu",
+        seo: {
+          title: "Trendyol Mağaza Optimizasyonu",
+          description:
+            "Trendyol mağazanızın ürün görsellerini, başlık ve açıklama metinlerini, kategori ve varyant yapısını dönüşüm için yeniden düzenliyoruz.",
+        },
         short:
           "Trendyol mağazanızın ürün sayfalarını, görsellerini ve metinlerini dönüşüm için yeniden düzenliyoruz.",
         intro:
@@ -250,6 +293,11 @@ export const tr = {
   },
 
   about: {
+    seo: {
+      title: "Hakkımızda: Gürkan Sevilmiş ve Dilara İşman",
+      description:
+        "Gudia Dijital, Gürkan Sevilmiş ve Dilara İşman'ın Türkiye'den uzaktan yürüttüğü iki kişilik dijital ürün ve büyüme stüdyosu.",
+    },
     eyebrow: "Hakkımızda",
     title: "İki kişilik bir ekip, doğrudan iletişim",
     lead:
@@ -300,6 +348,13 @@ export const tr = {
   },
 
   projects: {
+    // Projeler sayfası web sitesi işlerini listelemiyor (onlar Web Sitesi
+    // hizmetinde); başlık da bu yüzden uygulama, oyun ve e-ticareti sayıyor.
+    seo: {
+      title: "Projeler: Uygulamalar, Oyunlar ve E-Ticaret",
+      description:
+        "Üzerinde çalıştığımız projeler: Pofu, SnapPet, Habitile ve İkra gibi mobil uygulamalar, markalı oyun ve interaktif deneyimler, bir Trendyol mağazası.",
+    },
     eyebrow: "Projeler",
     title: "Üzerinde çalıştıklarımız",
     subtitle:
@@ -342,6 +397,11 @@ export const tr = {
   },
 
   contact: {
+    seo: {
+      title: "İletişim ve Ücretsiz İnceleme",
+      description:
+        "Uygulamanız, siteniz veya mağazanız için ücretsiz inceleme isteyin, projenizi anlatın ya da e-posta gönderin. Hafta içi 24 saat içinde dönüş yapıyoruz.",
+    },
     eyebrow: "İletişim",
     title: "Konuşalım",
     subtitle:
@@ -410,6 +470,11 @@ export const tr = {
   },
 
   privacy: {
+    seo: {
+      title: "KVKK Aydınlatma Metni",
+      description:
+        "6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 10. maddesi uyarınca, bu sitede ve bizimle yazışırken kişisel verilerinizin nasıl işlendiğini açıklıyoruz.",
+    },
     title: "KVKK Aydınlatma Metni",
     lead: "6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 10. maddesi uyarınca, bu sitede ve bizimle yazışırken kişisel verilerinizin nasıl işlendiğini açıklıyoruz.",
     updated: "Son güncelleme: 28 Eylül 2026",

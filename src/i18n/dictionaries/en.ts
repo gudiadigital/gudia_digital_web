@@ -3,7 +3,7 @@ import type { Dictionary, PrivacySection } from "./tr";
 export const en: Dictionary = {
   meta: {
     siteName: "Gudia Digital",
-    title: "Gudia Digital — Digital Products & Growth Studio",
+    title: "Gudia Digital — Mobile App, Website & Branded Game Studio",
     description:
       "We build, improve and grow digital products for brands: mobile apps, websites, branded games, social media content and e-commerce.",
   },
@@ -83,6 +83,11 @@ export const en: Dictionary = {
   },
 
   services: {
+    seo: {
+      title: "Services: Mobile Apps, Web, Games & E-Commerce",
+      description:
+        "Mobile apps, websites, branded games, product improvement, social media content and Trendyol store optimization, each with a clearly defined scope.",
+    },
     eyebrow: "Services",
     title: "End-to-end digital production",
     subtitle:
@@ -97,6 +102,11 @@ export const en: Dictionary = {
     items: {
       "mobil-uygulama": {
         title: "Mobile App Development",
+        seo: {
+          title: "iOS & Android App Development",
+          description:
+            "Custom iOS and Android apps for your business: booking, membership, loyalty and payment flows. You own the source code; we handle the store release.",
+        },
         short:
           "Apps built from scratch for iOS and Android: booking, membership, loyalty, payments and customer portals tailored to your business.",
         intro:
@@ -117,6 +127,11 @@ export const en: Dictionary = {
       },
       "web-sitesi": {
         title: "Website Development",
+        seo: {
+          title: "Business Websites & Landing Pages",
+          description:
+            "Business websites and landing pages designed around your brand, not a template: mobile-first, fast-loading, with technical SEO, live on your domain.",
+        },
         short:
           "Fast-loading, search-visible corporate sites and landing pages that work properly on phones and desktops alike.",
         intro:
@@ -137,6 +152,11 @@ export const en: Dictionary = {
       },
       "markali-oyunlar": {
         title: "Branded Games & Interactive",
+        seo: {
+          title: "Branded Games for Events & Trade Shows",
+          description:
+            "Branded games and interactive experiences for events, trade shows and campaigns, on tablet, kiosk, web or mobile, with optional leaderboards and prizes.",
+        },
         short:
           "Custom games and interactive activations for events, campaigns and trade shows.",
         intro:
@@ -157,6 +177,11 @@ export const en: Dictionary = {
       },
       "dijital-urun-iyilestirme": {
         title: "Digital Product Improvement",
+        seo: {
+          title: "App & Website Maintenance and Improvement",
+          description:
+            "We fix dated, slow or broken apps and websites without a rewrite: a free written review, App Store compliance updates and monthly maintenance.",
+        },
         short:
           "You already have an app or site, but it's dated, slow or broken. We fix it without starting over.",
         intro:
@@ -177,6 +202,11 @@ export const en: Dictionary = {
       },
       "sosyal-medya-icerik": {
         title: "Social Media Content Production",
+        seo: {
+          title: "Social Media Content: Reels, Posts & Stories",
+          description:
+            "Monthly Reels, posts and stories: content plan, short scripts, editing, cover designs and captions, with publishing and a monthly engagement report.",
+        },
         short:
           "Monthly Reels, posts and stories — with the content plan, scripts and cover designs included.",
         intro:
@@ -197,6 +227,11 @@ export const en: Dictionary = {
       },
       "e-ticaret-optimizasyonu": {
         title: "E-Commerce Optimization",
+        seo: {
+          title: "Trendyol Store Optimization",
+          description:
+            "We rework your Trendyol store for conversion: product images, SEO-friendly titles and descriptions, and a tidy category and variant structure.",
+        },
         short:
           "We rebuild your marketplace product pages, images and copy around conversion.",
         intro:
@@ -244,6 +279,11 @@ export const en: Dictionary = {
   },
 
   about: {
+    seo: {
+      title: "About: Gürkan Sevilmiş & Dilara İşman",
+      description:
+        "Gudia Digital is a two-person digital product and growth studio run remotely from Türkiye by co-founders Gürkan Sevilmiş and Dilara İşman.",
+    },
     eyebrow: "About",
     title: "A two-person team, direct contact",
     lead:
@@ -294,6 +334,11 @@ export const en: Dictionary = {
   },
 
   projects: {
+    seo: {
+      title: "Projects: Apps, Games & E-Commerce",
+      description:
+        "Projects we've worked on: mobile apps such as Pofu, SnapPet, Habitile and İkra, branded games and interactive experiences, and a Trendyol store.",
+    },
     eyebrow: "Projects",
     title: "What we've been building",
     subtitle:
@@ -336,6 +381,11 @@ export const en: Dictionary = {
   },
 
   contact: {
+    seo: {
+      title: "Contact & Free Review",
+      description:
+        "Ask for a free review of your app, site or store, tell us about your project, or email us directly. We reply within 24 hours on weekdays.",
+    },
     eyebrow: "Contact",
     title: "Let's talk",
     subtitle:
@@ -400,6 +450,11 @@ export const en: Dictionary = {
   },
 
   privacy: {
+    seo: {
+      title: "Privacy Notice",
+      description:
+        "How Gudia Digital handles personal data from its contact form and email under Türkiye's KVKK Law No. 6698: data collected, purposes, transfers and your rights.",
+    },
     title: "Privacy Notice",
     lead: "Under Article 10 of Turkey's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",
     updated: "Last updated: 28 September 2026",

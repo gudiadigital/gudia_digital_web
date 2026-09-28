@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, isLocale } from "@/i18n/config";
-import { pageMetadata } from "@/i18n/seo";
+import { pageCopy, pageMetadata } from "@/i18n/seo";
 import { getDictionary } from "@/i18n/dictionaries";
 import {
   pageKeys,
   pageSegment,
   pathFor,
   pageKeyFromSegment,
-  type PageKey,
 } from "@/i18n/routes";
 import { AboutContent } from "@/components/pages/AboutContent";
 import { ServicesContent } from "@/components/pages/ServicesContent";
@@ -37,18 +36,10 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const key = pageKeyFromSegment(locale, page);
   if (!key) return {};
 
-  const dict = getDictionary(locale);
-  const copy: Record<PageKey, { title: string; description: string }> = {
-    about: { title: dict.nav.about, description: dict.about.lead },
-    services: { title: dict.nav.services, description: dict.services.subtitle },
-    projects: { title: dict.nav.projects, description: dict.projects.subtitle },
-    contact: { title: dict.nav.contact, description: dict.contact.subtitle },
-    privacy: { title: dict.privacy.title, description: dict.privacy.lead },
-  };
   return pageMetadata({
     locale,
     paths: { tr: pathFor("tr", key), en: pathFor("en", key) },
-    ...copy[key],
+    ...pageCopy(locale, { kind: "page", key }),
   });
 }
 

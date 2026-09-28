@@ -25,6 +25,12 @@ export type Project = {
   title: string;
   /** Kısa tanıtım — her dil için ayrı. */
   summary: Record<Locale, string>;
+  /**
+   * Arama sonucu ve paylaşım kartı için başlık ve açıklama. Başlık yoksa
+   * proje adı, açıklama yoksa `summary`'den kısaltılan metin kullanılır.
+   * Sayfadaki H1 hep proje adı kalır.
+   */
+  seo?: Record<Locale, { title?: string; description?: string }>;
   /** Detay sayfasındaki uzun anlatım; her paragraf bir dizi elemanı. */
   detail?: Record<Locale, string[]>;
   /** Detay sayfasındaki künye satırları (sürüm, platform, dil sayısı…). */
@@ -78,6 +84,10 @@ export const projects: Project[] = [
       tr: "Kadınlara özel kalori ve beslenme takibi. HealthKit ve Apple Watch entegrasyonu, ana ekran widget'ları ve saat uygulamasıyla birlikte.",
       en: "Calorie and nutrition tracking built for women, with HealthKit and Apple Watch integration, home screen widgets and a watch app.",
     },
+    seo: {
+      tr: { title: "Pofu: Kadınlara Özel Kalori Takip Uygulaması" },
+      en: { title: "Pofu: Calorie Tracker Built for Women" },
+    },
     detail: {
       tr: [
         "Pofu, kadınlar için tasarlanmış bir kalori ve beslenme takip uygulaması. Tabağınızın fotoğrafını çekiyorsunuz; uygulama yemeği tanıyıp kalorisini ve makrolarını çıkarıyor.",
@@ -123,6 +133,10 @@ export const projects: Project[] = [
     summary: {
       tr: "Sokakta gördüğünüz kedi ve köpekleri fotoğraflayıp koleksiyona dönüştüren kamera tabanlı kart oyunu. iOS ve Android sürümleri var.",
       en: "A camera-based card game that turns the cats and dogs you meet on the street into a collection. Available on iOS and Android.",
+    },
+    seo: {
+      tr: { title: "SnapPet: Kamera Tabanlı Kedi ve Köpek Kart Oyunu" },
+      en: { title: "SnapPet: Camera-Based Cat and Dog Card Game" },
     },
     detail: {
       tr: [
@@ -170,6 +184,18 @@ export const projects: Project[] = [
       tr: "Sakin ve widget öncelikli alışkanlık takibi. Ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz; affeden seriler bir günü kaçırınca ilerlemeyi silmiyor. Altı dilde yayında.",
       en: "A calm, widget-first habit tracker. Check habits with one tap from the Home Screen, Lock Screen or Apple Watch, and forgiving streaks mean one missed day won't wipe your progress. Live in six languages.",
     },
+    seo: {
+      tr: {
+        title: "Habitile: Widget Öncelikli Alışkanlık Takibi",
+        description:
+          "Habitile, widget öncelikli bir alışkanlık takibi: ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz. Altı dilde yayında.",
+      },
+      en: {
+        title: "Habitile: Widget-First Habit Tracker",
+        description:
+          "Habitile is a calm, widget-first habit tracker: check habits with one tap from the Home Screen, Lock Screen or Apple Watch. Live in six languages.",
+      },
+    },
     detail: {
       tr: [
         "Habitile, widget öncelikli ve sakin bir alışkanlık takibi. Uygulamayı açmaya gerek kalmadan ana ekrandan, kilit ekranından veya Apple Watch'tan tek dokunuşla işaretliyorsunuz.",
@@ -212,6 +238,10 @@ export const projects: Project[] = [
     summary: {
       tr: "Namaz vakitleri, Kur'an okuma, kıble ve günlük zikir takibiyle İslami yaşam asistanı. iOS ve Android'de, yirmi bir dilde yayında.",
       en: "An Islamic lifestyle companion with prayer times, Quran reading, qibla and daily dhikr tracking. Live on iOS and Android in twenty-one languages.",
+    },
+    seo: {
+      tr: { title: "İkra: Namaz Vakitleri ve Kur'an Uygulaması" },
+      en: { title: "İkra: Prayer Times and Quran App" },
     },
     detail: {
       tr: [
@@ -260,6 +290,18 @@ export const projects: Project[] = [
       tr: "Çocuklar için tasarlanmış, sade ve güvenli bir fotoğraf uygulaması. App Store ve Google Play'de yayında.",
       en: "A simple, safe photo app designed for children. Live on the App Store and Google Play.",
     },
+    seo: {
+      tr: {
+        title: "PhotoSensia Kids: Çocuklar İçin Fotoğraf Eğitimi",
+        description:
+          "PhotoSensia Kids, çocuklara fotoğrafçılığı oyunlaştırarak öğreten bir eğitim uygulaması: her bölüm bir çekim tekniğini anlatıyor. iOS ve Android'de yayında.",
+      },
+      en: {
+        title: "PhotoSensia Kids: Photography App for Children",
+        description:
+          "PhotoSensia Kids is an educational app that teaches children photography through play, one shooting technique per mission. Live on iOS and Android.",
+      },
+    },
     detail: {
       tr: [
         "PhotoSensia Kids, çocuklara fotoğrafçılığı oyunlaştırarak öğreten bir eğitim uygulaması. Türkiye Fotoğraf Sanatı Federasyonu (TFSF) tarafından tavsiye ediliyor.",
@@ -303,6 +345,18 @@ export const projects: Project[] = [
       tr: "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
       en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
     },
+    seo: {
+      tr: {
+        title: "Logo Yazılım × KidZania: İnteraktif Deneyim",
+        description:
+          "KidZania İstanbul'daki Logo Yazılım'ın Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim: çocuklar gerçek bir yazılım ekibi gibi çalışıyor.",
+      },
+      en: {
+        title: "Logo Yazılım × KidZania: Interactive Experience",
+        description:
+          "An interactive experience for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team.",
+      },
+    },
     detail: {
       tr: [
         "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim.",
@@ -339,6 +393,10 @@ export const projects: Project[] = [
     summary: {
       tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
       en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
+    },
+    seo: {
+      tr: { title: "Date For Dead: Kara Mizahlı Flört Oyunu (PC)" },
+      en: { title: "Date For Dead: Darkly Comic Dating Game (PC)" },
     },
     detail: {
       tr: [
@@ -378,6 +436,10 @@ export const projects: Project[] = [
       tr: "Bağımsız bir oyun stüdyosunun web sitesi: logodaki piksel kalpten üretilen 3B voksel sahne, oynanabilir kart destesi ve oyun diliyle yazılmış sayfalar.",
       en: "Website for an independent game studio: a 3D voxel scene built from the logo's pixel heart, a playable card deck and pages written like a game.",
     },
+    seo: {
+      tr: { title: "Divonia Studios: Oyun Stüdyosu Web Sitesi" },
+      en: { title: "Divonia Studios: Game Studio Website" },
+    },
     detail: {
       tr: [
         "Bağımsız bir oyun stüdyosunun web sitesi: logodaki piksel kalpten üretilen 3B voksel sahne, oynanabilir kart destesi ve oyun diliyle yazılmış sayfalar.",
@@ -414,6 +476,10 @@ export const projects: Project[] = [
     summary: {
       tr: "Türkçe deyim ve atasözlerini ezberletmeden öğreten uygulamanın tanıtım sitesi. 2.617 ifade, çevrimdışı kullanım.",
       en: "The marketing site for an app that teaches Turkish idioms and proverbs without rote memorisation. 2,617 expressions, works offline.",
+    },
+    seo: {
+      tr: { title: "Deyimo: Deyim ve Atasözü Uygulamasının Sitesi" },
+      en: { title: "Deyimo: Site for a Turkish Idioms App" },
     },
     detail: {
       tr: [
@@ -452,6 +518,10 @@ export const projects: Project[] = [
       tr: "iPhone için günlük planlayıcının tanıtım sitesi: iş, alışkanlık ve sağlık takibini tek günlük akışta toplayan uygulamayı anlatıyor. Yedi dilde.",
       en: "The marketing site for an iPhone daily planner that brings work, habits and health into one daily flow. Published in seven languages.",
     },
+    seo: {
+      tr: { title: "Life Planner: Günlük Planlayıcı Tanıtım Sitesi" },
+      en: { title: "Life Planner: Daily Planner App Website" },
+    },
     detail: {
       tr: [
         "İş planlaması, alışkanlıklar ve beslenme/vücut takibini tek bir günlük akışta toplayan iPhone uygulamasının tanıtım sitesi.",
@@ -489,6 +559,10 @@ export const projects: Project[] = [
     summary: {
       tr: "El yapımı çanta charm ve aksesuar markasının Trendyol mağazası: ürün görselleri, başlık ve açıklama metinleri dönüşüm için yeniden düzenlendi.",
       en: "A handmade bag charm and accessory brand's Trendyol store: product imagery, titles and descriptions rebuilt around conversion.",
+    },
+    seo: {
+      tr: { title: "AysQuilt Trendyol Mağazası" },
+      en: { title: "AysQuilt Trendyol Store" },
     },
     detail: {
       tr: [
