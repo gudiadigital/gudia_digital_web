@@ -36,7 +36,7 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
             </p>
             <Link
               href={pathFor(locale, "contact")}
-              className="bg-accent mt-8 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+              className="bg-accent mt-8 inline-flex rounded-full px-6 py-3 text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
             >
               {dict.projects.emptyCta}
             </Link>
@@ -64,6 +64,8 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
                   locale={locale}
                   dict={dict}
                   featured={isWide(index, listedProjects.length)}
+                  /* Yalnızca ilk kart başlığın hemen altında, ilk ekranda. */
+                  eager={index === 0}
                 />
               </div>
             ))}

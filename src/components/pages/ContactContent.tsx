@@ -1,7 +1,7 @@
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ContactForm } from "@/components/ContactForm";
-import { fill } from "@/i18n/dictionaries";
+import { fill, serviceTitles } from "@/i18n/dictionaries";
 import { pathFor } from "@/i18n/routes";
 import type { PageContentProps } from "./types";
 
@@ -80,7 +80,13 @@ export function ContactContent({ locale, dict }: PageContentProps) {
             {contact.formTitle}
           </h2>
           <div className="mt-8 max-w-3xl">
-            <ContactForm dict={dict} privacyHref={pathFor(locale, "privacy")} />
+            <ContactForm
+              form={contact.form}
+              email={contact.email}
+              siteName={dict.meta.siteName}
+              serviceTitles={serviceTitles(dict)}
+              privacyHref={pathFor(locale, "privacy")}
+            />
           </div>
         </div>
       </Container>

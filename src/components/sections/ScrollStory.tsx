@@ -4,7 +4,12 @@ import { Fragment, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Container } from "../Container";
 import { StoryScene } from "../StoryScene";
-import { serviceGroups, servicesByGroup, type Locale } from "@/i18n/config";
+import {
+  serviceGroups,
+  servicesByGroup,
+  type Locale,
+  type ServiceSlug,
+} from "@/i18n/config";
 import { pathFor } from "@/i18n/routes";
 import type { Dictionary } from "@/i18n/dictionaries";
 
@@ -48,20 +53,28 @@ function toWords(segments: readonly Segment[]): Segment[][] {
  * Panel görünürlüğü doğrudan kaydırma olayında hesaplanır; içerik hiçbir
  * koşulda görünmez kalmaz. İlk panel sunucu çıktısında zaten açık gelir,
  * böylece JS çalışmasa da sayfa anlamlı.
+ *
+ * İstemci bileşeni olduğu için prop'ları sayfanın HTML'ine gömülüyor;
+ * bütün sözlük yerine yalnızca kullandığı parçalar geliyor.
  */
 export function ScrollStory({
   locale,
-  dict,
+  hero,
+  approach,
+  story,
+  serviceTitles,
 }: {
   locale: Locale;
-  dict: Dictionary;
+  hero: Dictionary["hero"];
+  approach: Dictionary["approach"];
+  story: Dictionary["story"];
+  serviceTitles: Record<ServiceSlug, string>;
 }) {
   const sectionRef = useRef<HTMLElement>(null);
   const progressRef = useRef(0);
   const panelsRef = useRef<HTMLDivElement>(null);
   const chapterRef = useRef<HTMLSpanElement>(null);
   const percentRef = useRef<HTMLSpanElement>(null);
-  const { hero } = dict;
   const words = toWords(hero.title);
   const afterTitle = 0.2 + words.length * 0.05;
 
@@ -264,7 +277,7 @@ export function ScrollStory({
               >
                 <Link
                   href={pathFor(locale, "contact")}
-                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-white very-short-phone:py-3 shadow-[var(--shadow-button)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+                  className="bg-accent rounded-full px-6 py-3.5 text-sm font-semibold text-on-accent very-short-phone:py-3 shadow-[var(--shadow-button)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
                 >
                   {hero.ctaPrimary}
                 </Link>
@@ -279,7 +292,7 @@ export function ScrollStory({
 
             {/* Panel 1–3 — çalışma modeli */}
             {serviceGroups.map((group) => {
-              const content = dict.approach.groups[group];
+              const content = approach.groups[group];
               return (
                 <div key={group} data-panel className="story-panel max-w-3xl">
                   <h2 className="text-4xl font-semibold sm:text-5xl lg:text-6xl">
@@ -309,7 +322,7 @@ export function ScrollStory({
                           href={pathFor(locale, "services", slug)}
                           className="border-line-strong bg-space/40 text-ink hover:border-accent rounded-full border px-4 py-2 text-sm backdrop-blur-sm transition-all active:scale-[0.97]"
                         >
-                          {dict.services.items[slug].title}
+                          {serviceTitles[slug]}
                         </Link>
                       </li>
                     ))}
@@ -335,13 +348,13 @@ export function ScrollStory({
 
           <div className="hud-readout">
             <div>
-              <span className="hud-key">{dict.story.chapter}</span>
+              <span className="hud-key">{story.chapter}</span>
               <span ref={chapterRef} className="hud-val">
                 01 / 04
               </span>
             </div>
             <div>
-              <span className="hud-key">{dict.story.progress}</span>
+              <span className="hud-key">{story.progress}</span>
               <span ref={percentRef} className="hud-val hud-big">
                 000%
               </span>

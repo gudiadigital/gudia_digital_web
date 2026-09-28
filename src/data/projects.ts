@@ -10,6 +10,8 @@ export type ProjectLinkKind =
 
 export type ProjectLink = { kind: ProjectLinkKind; url: string };
 
+export type ShotSize = { w: number; h: number };
+
 /** Mağaza puanı. Statik site olduğu için ölçüm tarihiyle birlikte tutulur. */
 export type ProjectRating = {
   score: number;
@@ -69,9 +71,16 @@ export type Project = {
   rating?: ProjectRating;
   /**
    * public/projeler/<slug>/ altındaki ekran görüntüsü sayısı.
-   * Dosyalar ss-1.jpg … ss-N.jpg olarak adlandırılır.
+   * Dosyalar ss-1.webp … ss-N.webp olarak adlandırılır.
    */
   shots?: number;
+  /**
+   * Ekran görüntülerinin piksel boyutu; <img>'nin width/height'ı. Tarayıcı
+   * görsel inmeden yerini ayırıyor, şerit yüklenirken yana kaymıyor.
+   * `sips -g pixelWidth -g pixelHeight public/projeler/<slug>/ss-1.webp`
+   * ile ölçülüyor. Klasördeki görseller farklı boyuttaysa sırayla her biri.
+   */
+  shotSize?: ShotSize | ShotSize[];
   /** Projenin ana hizmet alanı; kartta bu yazıyor. */
   service: ServiceSlug;
   /**
@@ -87,6 +96,12 @@ export type Project = {
   links: ProjectLink[];
   schema: ProjectSchema;
 };
+
+/** n. ekran görüntüsünün boyutu (1'den başlıyor); bilinmiyorsa undefined. */
+export function shotSizeOf(project: Project, n: number): ShotSize | undefined {
+  const size = project.shotSize;
+  return Array.isArray(size) ? size[n - 1] : size;
+}
 
 /** iOS / Android / PC rozetleri bağlantılardan türetilir. */
 export const platformOf: Partial<Record<ProjectLinkKind, string>> = {
@@ -148,6 +163,7 @@ export const projects: Project[] = [
     },
     rating: { score: 5.0, count: 2, store: "appstore", asOf: "2026-09-23" },
     shots: 6,
+    shotSize: { w: 498, h: 1080 },
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6778044605" },
       { kind: "instagram", url: "https://www.instagram.com/pofu.app/" },
@@ -204,6 +220,7 @@ export const projects: Project[] = [
     },
     rating: { score: 5.0, count: 9, store: "appstore", asOf: "2026-09-23" },
     shots: 6,
+    shotSize: { w: 498, h: 1080 },
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6784579838" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.easestack.snappet" },
@@ -268,6 +285,7 @@ export const projects: Project[] = [
       ],
     },
     shots: 6,
+    shotSize: { w: 498, h: 1080 },
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6779264379" },
       { kind: "web", url: "https://gurkansvlms.github.io/widgetai-habit-legal-site/" },
@@ -324,6 +342,7 @@ export const projects: Project[] = [
     },
     rating: { score: 4.5, count: 87, store: "appstore", asOf: "2026-09-23" },
     shots: 6,
+    shotSize: { w: 608, h: 1080 },
     links: [
       // Yalnızca TR mağazasında; ülkesiz bağlantı yurt dışından açılınca 404 veriyor.
       { kind: "appstore", url: "https://apps.apple.com/tr/app/id6756602687" },
@@ -389,6 +408,7 @@ export const projects: Project[] = [
     },
     rating: { score: 5.0, count: 8, store: "appstore", asOf: "2026-09-23" },
     shots: 6,
+    shotSize: { w: 498, h: 1080 },
     links: [
       { kind: "appstore", url: "https://apps.apple.com/app/id6624305795" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids" },
@@ -446,6 +466,11 @@ export const projects: Project[] = [
       ],
     },
     shots: 3,
+    shotSize: [
+      { w: 1600, h: 1000 },
+      { w: 1600, h: 640 },
+      { w: 942, h: 1000 },
+    ],
     links: [{ kind: "web", url: "https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" }],
     schema: { type: "CreativeWork" },
   },
@@ -490,6 +515,7 @@ export const projects: Project[] = [
       ],
     },
     shots: 6,
+    shotSize: { w: 1080, h: 608 },
     links: [{ kind: "steam", url: "https://store.steampowered.com/app/4622170/Date_For_Dead/" }],
     // Steam kaydında geliştirici ve yayıncı Divonia Studios.
     schema: {
@@ -539,6 +565,7 @@ export const projects: Project[] = [
       ],
     },
     shots: 4,
+    shotSize: { w: 1600, h: 1000 },
     links: [{ kind: "web", url: "https://divoniastudios.com" }],
     schema: { type: "WebSite" },
   },
@@ -581,6 +608,7 @@ export const projects: Project[] = [
       ],
     },
     shots: 4,
+    shotSize: { w: 1600, h: 1000 },
     links: [{ kind: "web", url: "https://gurkansvlms.github.io/IdiomWeb" }],
     schema: { type: "WebSite", relation: "creator" },
   },
@@ -623,6 +651,7 @@ export const projects: Project[] = [
       ],
     },
     shots: 3,
+    shotSize: { w: 1600, h: 1000 },
     links: [{ kind: "web", url: "https://gurkansvlms.github.io/widgetai-legal-site/" }],
     schema: { type: "WebSite", relation: "creator" },
   },
@@ -666,6 +695,7 @@ export const projects: Project[] = [
       ],
     },
     shots: 3,
+    shotSize: { w: 1600, h: 1000 },
     links: [
       { kind: "trendyol", url: "https://www.trendyol.com/magaza/aysquilt-m-1070133" },
       { kind: "instagram", url: "https://www.instagram.com/aysquilt/" },

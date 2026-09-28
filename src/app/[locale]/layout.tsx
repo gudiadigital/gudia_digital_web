@@ -127,7 +127,7 @@ export default async function LocaleLayout({
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60]"
+          className="bg-accent sr-only rounded-lg px-4 py-2 text-sm font-semibold text-on-accent focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60]"
         >
           {dict.common.skipToContent}
         </a>

@@ -972,6 +972,8 @@ export const tr = {
     subtitle:
       "Altısının da sayfa iskeleti ayrı — aynı şablonun rengi değiştirilmiş hâli değil. Ana ekranları burada; kartlara tıklayınca sitenin kendisi açılıyor.",
     visit: "Siteyi aç",
+    // Kart görselinin alternatif metni; {title}: sitenin adı.
+    imageAlt: "{title} sitesinin ana ekranı",
     // {title}: projenin adı. Bağlantı metni nereye gittiğini söylesin diye
     // "Projeyi gör" yerine.
     project: "{title} proje sayfası",

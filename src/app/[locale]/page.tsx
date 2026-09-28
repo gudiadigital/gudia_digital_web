@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { getDictionary, serviceTitles } from "@/i18n/dictionaries";
 import { pageSchema } from "@/i18n/schema";
 import { JsonLd } from "@/components/JsonLd";
 import { Marquee } from "@/components/sections/Marquee";
@@ -23,7 +23,13 @@ export default async function HomePage({
   return (
     <>
       <JsonLd data={pageSchema(locale, { kind: "page", key: "home" })} />
-      <ScrollStory locale={locale} dict={dict} />
+      <ScrollStory
+        locale={locale}
+        hero={dict.hero}
+        approach={dict.approach}
+        story={dict.story}
+        serviceTitles={serviceTitles(dict)}
+      />
       <Marquee locale={locale} dict={dict} />
       <Services locale={locale} dict={dict} />
       <FeaturedProjects locale={locale} dict={dict} />

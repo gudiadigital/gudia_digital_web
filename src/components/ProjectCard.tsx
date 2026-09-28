@@ -10,12 +10,19 @@ export function ProjectCard({
   locale,
   dict,
   featured = false,
+  eager = false,
 }: {
   project: Project;
   locale: Locale;
   dict: Dictionary;
   /** Öne çıkan kart: iki sütun genişliğinde, görsel ve başlık büyür. */
   featured?: boolean;
+  /**
+   * Kart ilk ekranda görünüyorsa ilk görsel hemen yüklensin. React eager
+   * görseli <head>'e preload olarak ekliyor; ana sayfada kart uzun açılış
+   * bölümünün çok altında kaldığı için varsayılan kapalı.
+   */
+  eager?: boolean;
 }) {
   const platforms = project.links
     .map((link) => platformOf[link.kind])
@@ -90,7 +97,7 @@ export function ProjectCard({
                 }
                 alt=""
                 aria-hidden="true"
-                loading={featured && n === 1 ? "eager" : "lazy"}
+                loading={eager && n === 1 ? "eager" : "lazy"}
                 decoding="async"
                 width={420}
                 height={910}

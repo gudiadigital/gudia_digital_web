@@ -32,8 +32,14 @@ export function Logo({ siteName, className = "", markOnly = false }: LogoProps) 
       {!markOnly && (
         <span className="font-display text-[1.0625rem] font-semibold tracking-tight">
           {first}
+          {/* Boşluk renkli parçanın dışında: içindeyken erişilebilirlik
+              denetimleri görünen metni "GudiaDijital" diye okuyor, başlık
+              bağlantısının adıyla eşleştiremiyordu. */}
           {rest.length > 0 && (
-            <span className="text-accent"> {rest.join(" ")}</span>
+            <>
+              {" "}
+              <span className="text-accent">{rest.join(" ")}</span>
+            </>
           )}
         </span>
       )}

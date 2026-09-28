@@ -232,7 +232,7 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
               </ul>
               <Link
                 href={pathFor(locale, "contact")}
-                className="bg-accent mt-7 block rounded-full px-5 py-3 text-center text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+                className="bg-accent mt-7 block rounded-full px-5 py-3 text-center text-sm font-semibold text-on-accent transition-transform hover:-translate-y-0.5"
               >
                 {dict.cta.button}
               </Link>

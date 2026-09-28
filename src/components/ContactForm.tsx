@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { serviceSlugs } from "@/i18n/config";
+import { serviceSlugs, type ServiceSlug } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
+
+type FormCopy = Dictionary["contact"]["form"];
 
 type Errors = Partial<Record<"name" | "email" | "phone" | "contact" | "message", string>>;
 
@@ -27,16 +29,26 @@ const WEB3FORMS_KEY = "b1cf2142-424f-40cf-8fc1-c31cfbf8adb2";
  * açılır. Yalnızca mailto kullanmak yetmiyordu: Windows'ta çoğu zaman
  * varsayılan e-posta uygulaması kurulu değil ve bağlantı hiçbir şey
  * açmıyor.
+ *
+ * İstemci bileşeni olduğu için prop'ları sayfanın HTML'ine gömülüyor;
+ * bütün sözlük yerine yalnızca formun metinleri ve birkaç değer geliyor.
  */
 export function ContactForm({
-  dict,
+  form: t,
+  email: to,
+  siteName,
+  serviceTitles,
   privacyHref,
 }: {
-  dict: Dictionary;
+  form: FormCopy;
+  /** Mesajların gittiği adres (contact.email). */
+  email: string;
+  /** Konu boş kalırsa e-postanın konusu. */
+  siteName: string;
+  serviceTitles: Record<ServiceSlug, string>;
   /** KVKK aydınlatma metninin bu dildeki adresi. */
   privacyHref: string;
 }) {
-  const t = dict.contact.form;
   const [errors, setErrors] = useState<Errors>({});
   const [draft, setDraft] = useState<Draft | null>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -51,7 +63,7 @@ export function ContactForm({
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
     const phone = String(data.get("phone") ?? "").trim();
-    const subject = String(data.get("subject") ?? "").trim() || dict.meta.siteName;
+    const subject = String(data.get("subject") ?? "").trim() || siteName;
     const message = String(data.get("message") ?? "").trim();
 
     const nextErrors: Errors = {};
@@ -113,7 +125,7 @@ export function ContactForm({
   /* Ücretsiz inceleme başta ve varsayılan: sayfanın asıl çağrısı bu. */
   const subjects = [
     t.subjectReview,
-    ...serviceSlugs.map((slug) => dict.services.items[slug].title),
+    ...serviceSlugs.map((slug) => serviceTitles[slug]),
     t.subjectOther,
   ];
 
@@ -247,7 +259,7 @@ export function ContactForm({
         ref={submitRef}
         type="submit"
         disabled={status === "sending"}
-        className="bg-accent mt-7 w-full rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto sm:px-8"
+        className="bg-accent mt-7 w-full rounded-full px-6 py-3.5 text-sm font-semibold text-on-accent shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60 sm:w-auto sm:px-8"
       >
         {status === "sending" ? t.submitting : t.submit}
       </button>
@@ -270,7 +282,7 @@ export function ContactForm({
         </p>
       )}
 
-      {draft && <SendPanel dict={dict} draft={draft} />}
+      {draft && <SendPanel form={t} to={to} draft={draft} />}
 
       {thanks && (
         <SuccessDialog
@@ -306,7 +318,7 @@ function SuccessDialog({
   text,
   onClose,
 }: {
-  text: Dictionary["contact"]["form"]["success"];
+  text: FormCopy["success"];
   onClose: () => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
@@ -370,7 +382,7 @@ function SuccessDialog({
           type="button"
           autoFocus
           onClick={() => setClosing(true)}
-          className="bg-accent mt-7 w-full rounded-full px-6 py-3 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
+          className="bg-accent mt-7 w-full rounded-full px-6 py-3 text-sm font-semibold text-on-accent shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98]"
         >
           {text.close}
         </button>
@@ -379,9 +391,16 @@ function SuccessDialog({
   );
 }
 
-function SendPanel({ dict, draft }: { dict: Dictionary; draft: Draft }) {
-  const t = dict.contact.form.send;
-  const to = dict.contact.email;
+function SendPanel({
+  form,
+  to,
+  draft,
+}: {
+  form: FormCopy;
+  to: string;
+  draft: Draft;
+}) {
+  const t = form.send;
   const [copy, setCopy] = useState<"idle" | "done" | "failed">("idle");
   const titleRef = useRef<HTMLHeadingElement>(null);
 
@@ -411,7 +430,7 @@ function SendPanel({ dict, draft }: { dict: Dictionary; draft: Draft }) {
   ];
 
   async function copyMessage() {
-    const text = `${t.to}: ${to}\n${dict.contact.form.subject}: ${draft.subject}\n\n${draft.body}`;
+    const text = `${t.to}: ${to}\n${form.subject}: ${draft.subject}\n\n${draft.body}`;
     try {
       await navigator.clipboard.writeText(text);
       setCopy("done");

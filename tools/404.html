@@ -10,8 +10,10 @@
 <link rel="apple-touch-icon" href="/brand/apple-touch-icon.png?v=2" sizes="180x180">
 <link rel="manifest" href="/manifest.webmanifest">
 <style>
- :root{--bg:#131730;--ink:#EDEEF7;--muted:#9CA3C4;--a:#7C93FF;--a2:#A78BFA;--line:rgba(255,255,255,.12)}
- @media(prefers-color-scheme:light){:root{--bg:#F6F7FC;--ink:#1B1F35;--muted:#5B6180;--a:#5B6EF5;--a2:#8B5CF6;--line:rgba(27,31,53,.14)}}
+ /* --on-a: vurgu renkli düğmedeki yazı. Koyu temada beyaz, açık mavi
+    zeminde 2.8:1 kalıyordu; sitedeki --on-accent ile aynı koyu mürekkep. */
+ :root{--bg:#131730;--ink:#EDEEF7;--muted:#9CA3C4;--a:#7C93FF;--a2:#A78BFA;--on-a:#0b0d1a;--line:rgba(255,255,255,.12)}
+ @media(prefers-color-scheme:light){:root{--bg:#F6F7FC;--ink:#1B1F35;--muted:#5B6180;--a:#4F5FE8;--a2:#8B5CF6;--on-a:#fff;--line:rgba(27,31,53,.14)}}
  *{margin:0;padding:0;box-sizing:border-box}
  body{min-height:100dvh;background:var(--bg);color:var(--ink);display:grid;place-items:center;
       font:400 16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;padding:24px;position:relative;overflow:hidden}
@@ -28,12 +30,17 @@
  a{text-decoration:none;border-radius:999px;padding:.8rem 1.5rem;font-size:.875rem;font-weight:600;
    transition:transform .2s,background .2s}
  a:active{transform:scale(.97)}
- .primary{background:var(--a);color:#fff}
+ .primary{background:var(--a);color:var(--on-a)}
  .ghost{border:1px solid var(--line);color:var(--ink)}
  .ghost:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+ .alt{margin-top:2.25rem;font-size:.875rem}
+ .alt a{padding:0;border-radius:0;font-size:inherit;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
 </style></head><body>
 <div class="glow g1"></div><div class="glow g2"></div>
-<main class="box">
+<!-- İki dil: bilinmeyen her adreste aynı dosya servis ediliyor. Adres
+     /en ile başlıyorsa İngilizcesi gösteriliyor; JS çalışmazsa Türkçe
+     sayfanın altındaki İngilizce satır ve /en/ bağlantısı yetiyor. -->
+<main class="box" id="tr">
   <span class="code">404 — Sayfa bulunamadı</span>
   <h1>Aradığın sayfa <span class="grad">burada değil</span>.</h1>
   <p>Bağlantı eski olabilir ya da adres yanlış yazılmış olabilir. Buradan devam edebilirsin.</p>
@@ -42,5 +49,25 @@
     <a class="ghost" href="/tr/projeler/">Projeler</a>
     <a class="ghost" href="/tr/iletisim/">İletişim</a>
   </div>
+  <p class="alt" lang="en">Page not found. <a href="/en/">Continue in English</a></p>
 </main>
+<main class="box" id="en" lang="en" hidden>
+  <span class="code">404 — Page not found</span>
+  <h1>The page you’re looking for <span class="grad">isn’t here</span>.</h1>
+  <p>The link may be out of date, or the address may have been mistyped. You can carry on from here.</p>
+  <div class="row">
+    <a class="primary" href="/en/">Home</a>
+    <a class="ghost" href="/en/projects/">Projects</a>
+    <a class="ghost" href="/en/contact/">Contact</a>
+  </div>
+  <p class="alt" lang="tr">Sayfa bulunamadı. <a href="/tr/">Türkçe devam et</a></p>
+</main>
+<script>
+  if (location.pathname.startsWith("/en")) {
+    document.getElementById("tr").hidden = true;
+    document.getElementById("en").hidden = false;
+    document.documentElement.lang = "en";
+    document.title = "Page not found · Gudia Digital";
+  }
+</script>
 </body></html>

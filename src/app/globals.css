@@ -12,6 +12,9 @@
   --accent: #7c93ff;
   --accent-2: #a78bfa;
   --accent-3: #f2a86a;
+  /* Vurgu zeminli düğmedeki yazı. Koyu temada vurgu açık mavi; beyaz
+     yazı 2.8:1 kalıyordu, koyu mürekkep 6.9:1 (WCAG AA 4.5:1). */
+  --on-accent: #0b0d1a;
   --ink: #ecedf5;
   --muted: #959bb8;
 
@@ -36,6 +39,8 @@
     --accent: #4f5fe8;
     --accent-2: #7c4ddb;
     --accent-3: #a0591a;
+    /* Açık temada vurgu koyu; beyaz yazı 5.1:1. */
+    --on-accent: #ffffff;
     --ink: #191a24;
     --muted: #5d6076;
 
@@ -60,6 +65,7 @@
   --accent: #4f5fe8;
   --accent-2: #7c4ddb;
   --accent-3: #a0591a;
+  --on-accent: #ffffff;
   --ink: #191a24;
   --muted: #5d6076;
 
@@ -82,6 +88,7 @@
   --color-accent: var(--accent);
   --color-accent-2: var(--accent-2);
   --color-accent-3: var(--accent-3);
+  --color-on-accent: var(--on-accent);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-line: var(--line);

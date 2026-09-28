@@ -69,8 +69,9 @@ export function WebShowcase({
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={`/web/${site.image}`}
-                    alt={`${site.title} sitesinin ana ekranı`}
-                    loading={wide ? "eager" : "lazy"}
+                    alt={fill(copy.imageAlt, { title: site.title })}
+                    /* Vitrin sayfanın ortasında; ilk ekranda değil. */
+                    loading="lazy"
                     decoding="async"
                     width={1200}
                     height={750}

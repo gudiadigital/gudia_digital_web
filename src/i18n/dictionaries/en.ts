@@ -804,6 +804,7 @@ export const en: Dictionary = {
     subtitle:
       "All six have a different page skeleton — none of them is the same template in another colour. Their home screens are below; clicking a card opens the live site.",
     visit: "Open the site",
+    imageAlt: "{title} website home screen",
     project: "{title} project page",
   },
 

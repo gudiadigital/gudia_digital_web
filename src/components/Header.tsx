@@ -64,7 +64,9 @@ export function Header({
         <Link
           href={pathFor(locale)}
           className="hover:opacity-85 transition-opacity"
-          aria-label={nav.home}
+          /* Erişilebilir ad görünen yazıyı (marka adı) içermeli; sesle
+             "Gudia Dijital'e tıkla" diyen kullanıcı bağlantıyı bulabilsin. */
+          aria-label={`${siteName} — ${nav.home}`}
         >
           <Logo siteName={siteName} />
         </Link>
@@ -91,7 +93,7 @@ export function Header({
 
           <Link
             href={pathFor(locale, "contact")}
-            className="bg-accent hidden rounded-full px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] sm:inline-flex"
+            className="bg-accent hidden rounded-full px-4 py-2 text-sm font-semibold text-on-accent shadow-[var(--shadow-button)] transition-transform hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] sm:inline-flex"
           >
             {nav.cta}
           </Link>
@@ -133,7 +135,7 @@ export function Header({
             <Link
               href={pathFor(locale, "contact")}
               onClick={() => setOpen(false)}
-              className="bg-accent mt-2 rounded-full px-4 py-3 text-center text-sm font-semibold text-white"
+              className="bg-accent mt-2 rounded-full px-4 py-3 text-center text-sm font-semibold text-on-accent"
             >
               {nav.cta}
             </Link>
@@ -174,7 +176,7 @@ function LocaleSwitch({ locale, label }: { locale: Locale; label: string }) {
           /* Dokunma hedefi: telefonda 24px çok küçüktü, py ile 40px'e çıktı. */
           className={`rounded-full px-3 py-2.5 text-xs font-semibold uppercase leading-none transition-colors sm:px-2.5 sm:py-1 ${
             candidate === locale
-              ? "bg-accent text-white"
+              ? "bg-accent text-on-accent"
               : "text-muted hover:text-ink"
           }`}
         >

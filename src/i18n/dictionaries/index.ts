@@ -1,4 +1,4 @@
-import type { Locale } from "../config";
+import { serviceSlugs, type Locale, type ServiceSlug } from "../config";
 import {
   tr,
   type Dictionary,
@@ -21,6 +21,19 @@ export function getDictionary(locale: Locale): Dictionary {
  */
 export function fill(template: string, values: Record<string, string>): string {
   return template.replace(/\{(\w+)\}/g, (match, key: string) => values[key] ?? match);
+}
+
+/**
+ * Hizmet adları, slug'a göre. İstemci bileşenlerine bütün sözlük yerine bu
+ * gidiyor: istemci bileşeninin prop'ları sayfanın HTML'ine gömülüyor;
+ * sözlüğün tamamı (KVKK metni dahil) ana sayfa ve İletişim'e ~21 KB
+ * ekliyordu. Sunucu tarafında çağrılmalı: istemci bileşeni bu dosyadan
+ * değer içe aktarırsa iki sözlük de tarayıcı paketine giriyor.
+ */
+export function serviceTitles(dict: Dictionary): Record<ServiceSlug, string> {
+  return Object.fromEntries(
+    serviceSlugs.map((slug) => [slug, dict.services.items[slug].title]),
+  ) as Record<ServiceSlug, string>;
 }
 
 export type { Dictionary, ServiceFaq, ServiceItem, SourceLink };

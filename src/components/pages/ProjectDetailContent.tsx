@@ -5,7 +5,12 @@ import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { pathFor, projectPath } from "@/i18n/routes";
-import { projects, platformOf, type Project } from "@/data/projects";
+import {
+  projects,
+  platformOf,
+  shotSizeOf,
+  type Project,
+} from "@/data/projects";
 import type { Locale, ServiceSlug } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
@@ -128,7 +133,11 @@ export function ProjectDetailContent({
               )}
             </p>
 
-            <div className="mt-7 space-y-5" data-reveal>
+            <h2 className="mt-4 text-2xl font-semibold tracking-[-0.025em] sm:text-3xl">
+              {t.detailTitle}
+            </h2>
+
+            <div className="mt-6 space-y-5" data-reveal>
               {(project.detail?.[locale] ?? [project.summary[locale]]).map(
                 (paragraph, index) => (
                   <p
@@ -146,13 +155,15 @@ export function ProjectDetailContent({
             </div>
           </div>
 
-          {/* Künye + puan + bağlantılar: kaydırdıkça yerinde kalan sütun */}
+          {/* Künye + puan + bağlantılar: kaydırdıkça yerinde kalan sütun.
+              Üç küçük etiket de h2: başlık ağacında "Proje hakkında" ile
+              aynı seviyede, ekran okuyucuda başlıkla gezilebiliyor. */}
           <aside className="lg:sticky lg:top-28 lg:self-start" data-reveal data-reveal-delay={120}>
             {project.rating && (
               <div className="border-line border-t py-7">
-                <p className="text-accent-3 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.2em]">
+                <h2 className="text-accent-3 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.2em]">
                   {t.ratingLabel}
-                </p>
+                </h2>
                 <p className="mt-3 flex items-baseline gap-2">
                   <span className="font-display text-4xl font-semibold tabular-nums">
                     {formatScore(project.rating.score, locale)}
@@ -168,26 +179,26 @@ export function ProjectDetailContent({
             )}
 
             {facts.length > 0 && (
-              <dl className="border-line border-t py-7">
-                <dt className="text-accent-3 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.2em]">
+              <div className="border-line border-t py-7">
+                <h2 className="text-accent-3 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.2em]">
                   {t.factsTitle}
-                </dt>
-                <dd className="mt-4 grid gap-3">
+                </h2>
+                <dl className="mt-4 grid gap-3">
                   {facts.map((fact) => (
-                    <span key={fact.k} className="flex justify-between gap-6 text-sm">
-                      <span className="text-muted">{fact.k}</span>
-                      <span className="text-ink text-right">{fact.v}</span>
-                    </span>
+                    <div key={fact.k} className="flex justify-between gap-6 text-sm">
+                      <dt className="text-muted">{fact.k}</dt>
+                      <dd className="text-ink text-right">{fact.v}</dd>
+                    </div>
                   ))}
-                </dd>
-              </dl>
+                </dl>
+              </div>
             )}
 
             {project.links.length > 0 && (
               <div className="border-line border-y py-7">
-                <p className="text-accent-3 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.2em]">
+                <h2 className="text-accent-3 font-display text-[0.6875rem] font-semibold uppercase tracking-[0.2em]">
                   {t.linksTitle}
-                </p>
+                </h2>
                 <ul className="mt-4 grid gap-2.5">
                   {project.links.map((link) => (
                     <li key={link.url}>
@@ -235,19 +246,29 @@ export function ProjectDetailContent({
             için ızgaraya dizmek sayfayı gereksiz uzatıyor. Şeritte hepsi
             aynı yükseklikte, yan yana geziliyor.
           */}
+          {/*
+            Şerit ilk ekranda görünmüyor; hepsi tembel yükleniyor. İlki
+            eager'ken React onu <head>'e preload olarak ekliyordu, bağlantı
+            önyüklemesiyle başka sayfalarda da iniyordu.
+          */}
           <ul className="shot-rail mt-8" data-reveal data-reveal-delay={90}>
-            {shots.map((n) => (
-              <li key={n}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/projeler/${project.slug}/ss-${n}.webp`}
-                  alt={`${project.title} — ${n}`}
-                  loading={n === 1 ? "eager" : "lazy"}
-                  decoding="async"
-                  className="shot"
-                />
-              </li>
-            ))}
+            {shots.map((n) => {
+              const size = shotSizeOf(project, n);
+              return (
+                <li key={n}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/projeler/${project.slug}/ss-${n}.webp`}
+                    alt={`${project.title} — ${screensTitle} ${n}/${shots.length}`}
+                    width={size?.w}
+                    height={size?.h}
+                    loading="lazy"
+                    decoding="async"
+                    className="shot"
+                  />
+                </li>
+              );
+            })}
           </ul>
         </Container>
       )}
