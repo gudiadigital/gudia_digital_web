@@ -13,7 +13,7 @@ export function ServicesContent({ locale, dict }: PageContentProps) {
   return (
     <>
       <PageHeader
-        eyebrow={dict.services.eyebrow}
+        breadcrumb={{ locale, target: { kind: "page", key: "services" } }}
         title={dict.services.title}
         subtitle={dict.services.subtitle}
       />

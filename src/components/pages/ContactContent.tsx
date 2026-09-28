@@ -10,7 +10,11 @@ export function ContactContent({ locale, dict }: PageContentProps) {
 
   return (
     <>
-      <PageHeader title={contact.title} subtitle={contact.subtitle} />
+      <PageHeader
+        breadcrumb={{ locale, target: { kind: "page", key: "contact" } }}
+        title={contact.title}
+        subtitle={contact.subtitle}
+      />
 
       {/* E-posta sayfanın birincil eylemi: form doldurmadan da yazılabilsin
           diye adres etiketsiz ve başlık boyunda duruyor. */}

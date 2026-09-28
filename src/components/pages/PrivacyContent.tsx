@@ -7,12 +7,16 @@ import type { PageContentProps } from "./types";
  * başlık, paragraf ve madde listesi olarak diziliyor. Hareket yok: yasal
  * metin kaydırırken belirmek yerine hemen okunabilir olmalı.
  */
-export function PrivacyContent({ dict }: PageContentProps) {
+export function PrivacyContent({ locale, dict }: PageContentProps) {
   const { privacy, contact } = dict;
 
   return (
     <>
-      <PageHeader title={privacy.title} subtitle={privacy.lead} />
+      <PageHeader
+        breadcrumb={{ locale, target: { kind: "page", key: "privacy" } }}
+        title={privacy.title}
+        subtitle={privacy.lead}
+      />
 
       <Container className="pt-2 pb-24">
         <div className="max-w-[70ch]">

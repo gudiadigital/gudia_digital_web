@@ -247,7 +247,10 @@
     animation: marquee 42s linear infinite;
   }
 
-  .marquee:hover .marquee-track {
+  /* Adlar bağlantı: imleç üstündeyken ya da klavyeyle bir ada gelinmişken
+     şerit durur, hedef kaçmaz. */
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
     animation-play-state: paused;
   }
 

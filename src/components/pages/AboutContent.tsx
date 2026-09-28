@@ -9,7 +9,11 @@ export function AboutContent({ locale, dict }: PageContentProps) {
 
   return (
     <>
-      <PageHeader title={about.title} subtitle={about.lead} />
+      <PageHeader
+        breadcrumb={{ locale, target: { kind: "page", key: "about" } }}
+        title={about.title}
+        subtitle={about.lead}
+      />
 
       {/* Anlatı solda okunur bir ölçüde; misyon ve vizyon sağda, sayfa
           kaydıkça yerinde kalarak metne eşlik ediyor. */}

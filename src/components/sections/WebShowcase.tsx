@@ -2,7 +2,7 @@ import Link from "next/link";
 import { webSites } from "@/data/webSites";
 import { projectPath } from "@/i18n/routes";
 import type { Locale } from "@/i18n/config";
-import type { Dictionary } from "@/i18n/dictionaries";
+import { fill, type Dictionary } from "@/i18n/dictionaries";
 
 /*
  * İlk kart iki sütun genişliğinde; geri kalanlar ikişerli sıralara diziliyor.
@@ -140,7 +140,7 @@ export function WebShowcase({
                       href={projectPath(locale, site.project)}
                       className="text-muted hover:text-ink transition-colors"
                     >
-                      {copy.project}
+                      {fill(copy.project, { title: site.title })}
                     </Link>
                   )}
                 </div>

@@ -714,8 +714,9 @@ export const tr = {
   },
 
   projects: {
-    // Projeler sayfası web sitesi işlerini listelemiyor (onlar Web Sitesi
-    // hizmetinde); başlık da bu yüzden uygulama, oyun ve e-ticareti sayıyor.
+    // Web sitesi işleri Projeler sayfasında ayrı bir alt bölümde, en sonda
+    // duruyor (asıl vitrinleri Web Sitesi hizmetinde). Arama başlığı 70
+    // karakter sınırına sığsın diye ana kümeleri sayıyor.
     seo: {
       title: "Projeler: Uygulamalar, Oyunlar ve E-Ticaret",
       description:
@@ -736,6 +737,8 @@ export const tr = {
     allProjects: "Tüm projeler",
     // {service}: hizmetin adı (services.items[slug].title)
     referencesTitle: "{service} alanında yaptığımız işler",
+    // Projeler sayfasının sonundaki alt bölüm: hizmeti web sitesi olan işler.
+    websitesTitle: "Web siteleri",
     backToProjects: "Tüm projelere dön",
     detailTitle: "Proje hakkında",
     screensTitle: "Mağaza görselleri",
@@ -969,11 +972,15 @@ export const tr = {
     subtitle:
       "Altısının da sayfa iskeleti ayrı — aynı şablonun rengi değiştirilmiş hâli değil. Ana ekranları burada; kartlara tıklayınca sitenin kendisi açılıyor.",
     visit: "Siteyi aç",
-    project: "Projeyi gör",
+    // {title}: projenin adı. Bağlantı metni nereye gittiğini söylesin diye
+    // "Projeyi gör" yerine.
+    project: "{title} proje sayfası",
   },
 
   common: {
     backToServices: "Tüm hizmetlere dön",
+    // Sayfanın üstündeki içerik haritasının (breadcrumb) ekran okuyucu adı.
+    breadcrumb: "Konum",
     // Soru biçimli başlıklar; {service} hizmetin adı. "Proje sonunda" denmedi:
     // sosyal medya aylık bir hizmet, teslim edilenler de her ay geliyor.
     whatWeDo: "{service} hizmetine neler dahil?",

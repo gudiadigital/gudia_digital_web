@@ -1,11 +1,12 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { pathFor, projectPath } from "@/i18n/routes";
-import { listedProjects, platformOf, type Project } from "@/data/projects";
-import type { Locale } from "@/i18n/config";
+import { projects, platformOf, type Project } from "@/data/projects";
+import type { Locale, ServiceSlug } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 /** Puanı "4,5" / "4.5" olarak dile uygun yazar. */
@@ -14,6 +15,28 @@ function formatScore(score: number, locale: Locale) {
     minimumFractionDigits: 1,
     maximumFractionDigits: 1,
   });
+}
+
+/** İşin girdiği bütün hizmet alanları: önce ana alan, sonra ekler. */
+function servicesOf(project: Project): ServiceSlug[] {
+  return [project.service, ...(project.alsoServices ?? [])];
+}
+
+/**
+ * "Diğer projeler": aynı hizmet alanını paylaşan işler önde, kalanlar
+ * dizideki sırayla arkada; ilk dördü. Eskiden her sayfada dizinin ilk dört
+ * işi çıkıyordu, sonda duran işlere (web siteleri) neredeyse hiç bağlantı
+ * gitmiyordu.
+ */
+function relatedProjects(project: Project, count = 4): Project[] {
+  const own = new Set(servicesOf(project));
+  const others = projects.filter((item) => item.slug !== project.slug);
+  const shares = (item: Project) =>
+    servicesOf(item).some((slug) => own.has(slug));
+  return [
+    ...others.filter(shares),
+    ...others.filter((item) => !shares(item)),
+  ].slice(0, count);
 }
 
 function formatDate(iso: string, locale: Locale) {
@@ -44,9 +67,7 @@ export function ProjectDetailContent({
     .map((link) => platformOf[link.kind])
     .filter((value): value is string => Boolean(value));
   const shots = Array.from({ length: project.shots ?? 0 }, (_, i) => i + 1);
-  const others = listedProjects
-    .filter((item) => item.slug !== project.slug)
-    .slice(0, 4);
+  const others = relatedProjects(project);
   const facts = project.facts?.[locale] ?? [];
   /*
    * Başlık işin türüne göre: uygulama ve oyunlarda görseller mağaza
@@ -59,7 +80,11 @@ export function ProjectDetailContent({
 
   return (
     <>
-      <PageHeader title={project.title} subtitle={project.summary[locale]} />
+      <PageHeader
+        breadcrumb={{ locale, target: { kind: "project", project } }}
+        title={project.title}
+        subtitle={project.summary[locale]}
+      />
 
       <Container className="pb-20">
         <Link
@@ -84,8 +109,20 @@ export function ProjectDetailContent({
 
         <div className="mt-10 grid gap-14 lg:grid-cols-[1.35fr_1fr] lg:gap-20">
           <div>
+            {/* Hizmet adları ilgili hizmet sayfasına gidiyor: ana alan
+                önce, ek alanlar arkasında. */}
             <p className="text-accent font-display text-[0.6875rem] font-semibold uppercase tracking-[0.16em]">
-              {dict.services.items[project.service].title}
+              {servicesOf(project).map((slug, index) => (
+                <Fragment key={slug}>
+                  {index > 0 && " · "}
+                  <Link
+                    href={pathFor(locale, "services", slug)}
+                    className="underline-offset-4 hover:underline"
+                  >
+                    {dict.services.items[slug].title}
+                  </Link>
+                </Fragment>
+              ))}
               {platforms.length > 0 && (
                 <span className="text-muted"> · {platforms.join(" + ")}</span>
               )}

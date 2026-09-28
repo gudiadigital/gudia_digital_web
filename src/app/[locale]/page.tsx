@@ -24,7 +24,7 @@ export default async function HomePage({
     <>
       <JsonLd data={pageSchema(locale, { kind: "page", key: "home" })} />
       <ScrollStory locale={locale} dict={dict} />
-      <Marquee dict={dict} />
+      <Marquee locale={locale} dict={dict} />
       <Services locale={locale} dict={dict} />
       <FeaturedProjects locale={locale} dict={dict} />
       <Process dict={dict} />

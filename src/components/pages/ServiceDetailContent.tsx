@@ -120,7 +120,10 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
     <>
       {/* Alt başlık yok: kısa tanım (short) kartlarda kalıyor, burada onun
           yerini hemen aşağıdaki cevap alıyor; ikisi alt alta tekrar ediyordu. */}
-      <PageHeader eyebrow={dict.services.eyebrow} title={service.title} />
+      <PageHeader
+        breadcrumb={{ locale, target: { kind: "service", slug } }}
+        title={service.title}
+      />
 
       <Container>
         <Link

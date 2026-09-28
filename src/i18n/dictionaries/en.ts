@@ -582,6 +582,7 @@ export const en: Dictionary = {
       "A selection from our own products and the experiences we've built for brands.",
     allProjects: "All projects",
     referencesTitle: "Our {service} work",
+    websitesTitle: "Websites",
     backToProjects: "Back to all projects",
     detailTitle: "About the project",
     screensTitle: "Store screenshots",
@@ -803,11 +804,12 @@ export const en: Dictionary = {
     subtitle:
       "All six have a different page skeleton — none of them is the same template in another colour. Their home screens are below; clicking a card opens the live site.",
     visit: "Open the site",
-    project: "See the project",
+    project: "{title} project page",
   },
 
   common: {
     backToServices: "Back to all services",
+    breadcrumb: "Breadcrumb",
     whatWeDo: "What does {service} include?",
     whatYouGet: "What do you get?",
     source: "Source",

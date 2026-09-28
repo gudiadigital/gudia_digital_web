@@ -4,7 +4,7 @@ import { Container } from "@/components/Container";
 import { PageHeader } from "@/components/PageHeader";
 import { ProjectCard } from "@/components/ProjectCard";
 import { CallToAction } from "@/components/sections/CallToAction";
-import { listedProjects } from "@/data/projects";
+import { listedProjects, webProjects } from "@/data/projects";
 import type { PageContentProps } from "./types";
 
 /*
@@ -20,7 +20,11 @@ function isWide(index: number, total: number) {
 export function ProjectsContent({ locale, dict }: PageContentProps) {
   return (
     <>
-      <PageHeader title={dict.projects.title} subtitle={dict.projects.subtitle} />
+      <PageHeader
+        breadcrumb={{ locale, target: { kind: "page", key: "projects" } }}
+        title={dict.projects.title}
+        subtitle={dict.projects.subtitle}
+      />
 
       <Container>
         {/* Kart başlıkları h3; h1 ile arasında seviye atlamasın diye. */}
@@ -64,6 +68,41 @@ export function ProjectsContent({ locale, dict }: PageContentProps) {
               </div>
             ))}
           </div>
+        )}
+
+        {/* Web sitesi işleri ayrı bir alt bölümde: ana ızgarada uygulama ve
+            oyunların arasına karışmıyorlar ama bu sayfadan da bağlantı
+            alıyorlar. Kart düzeni yukarıdakiyle aynı (1 geniş + 2 dar). */}
+        {webProjects.length > 0 && (
+          <section className="border-line mt-20 border-t pt-12">
+            <h2
+              className="text-2xl font-semibold tracking-[-0.025em] sm:text-3xl"
+              data-reveal
+            >
+              {dict.projects.websitesTitle}
+            </h2>
+            <div className="mt-8 grid gap-6 sm:grid-cols-2">
+              {webProjects.map((project, index) => (
+                <div
+                  key={project.slug}
+                  data-reveal
+                  data-reveal-delay={(index % 3) * 100}
+                  className={
+                    isWide(index, webProjects.length)
+                      ? "h-full sm:col-span-2"
+                      : "h-full"
+                  }
+                >
+                  <ProjectCard
+                    project={project}
+                    locale={locale}
+                    dict={dict}
+                    featured={isWide(index, webProjects.length)}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
         )}
       </Container>
 

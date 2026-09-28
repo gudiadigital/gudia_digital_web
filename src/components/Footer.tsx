@@ -24,9 +24,11 @@ export function Footer({
           </div>
 
           <div>
-            <h3 className="font-display mb-4 text-sm font-semibold">
+            {/* Sütun başlıkları başlık etiketi değil: sayfanın son h2'si
+                (çağrı bölümü) altında alt başlık gibi görünüyorlardı. */}
+            <p className="font-display mb-4 text-sm font-semibold">
               {dict.footer.servicesTitle}
-            </h3>
+            </p>
             <ul className="space-y-2.5">
               {serviceSlugs.map((slug) => (
                 <li key={slug}>
@@ -42,9 +44,9 @@ export function Footer({
           </div>
 
           <div>
-            <h3 className="font-display mb-4 text-sm font-semibold">
+            <p className="font-display mb-4 text-sm font-semibold">
               {dict.footer.contactTitle}
-            </h3>
+            </p>
             <a
               href={`mailto:${dict.contact.email}`}
               className="text-accent text-sm transition-opacity hover:opacity-80"

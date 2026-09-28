@@ -3,8 +3,8 @@
  *
  * Repoda test yok; bu betik SEO işlerinin kabul testi. Kaynak koda değil,
  * gerçekten yayınlanacak HTML'e bakıyor: canonical, hreflang, başlık,
- * açıklama, H1, JSON-LD (SSS'nin sayfadaki metinle aynılığı dahil) ve
- * sitemap tutarlılığı. Örneğin /en/privacy/
+ * açıklama, H1, JSON-LD (SSS'nin ve içerik haritasının sayfadakiyle
+ * aynılığı dahil) ve sitemap tutarlılığı. Örneğin /en/privacy/
  * açıklamasının "Law No." ile bitmesi gibi hatalar ancak çıktıda görünüyor.
  *
  * Kullanım: `npm run build` sonunda kendiliğinden çalışıyor; hata varsa
@@ -203,6 +203,46 @@ function collectGraph(value, nodes, refs) {
   }
 }
 
+/**
+ * Görünen içerik haritası (başlığın üstündeki <nav><ol>) ile BreadcrumbList
+ * aynı yolu söylemeli: aynı adlar aynı sırayla, bağlantılar da aynı
+ * adreslere. Ana sayfa dışındaki her sayfada ikisi de olmalı.
+ */
+function checkBreadcrumb(file, body, canonical, nodes) {
+  const list = nodes.find((node) => [node["@type"]].flat().includes("BreadcrumbList"));
+  const nav = body.match(/<nav\b[^>]*>\s*<ol\b[\s\S]*?<\/ol>\s*<\/nav>/i)?.[0];
+  const isHome = /^https:\/\/[^/]+\/[a-z]{2}\/$/.test(canonical);
+  if (isHome) {
+    if (list || nav) fail(file, "breadcrumb", "ana sayfada içerik haritası olmamalı");
+    return;
+  }
+  if (!list) return fail(file, "breadcrumb", "BreadcrumbList yok");
+  if (!nav) return fail(file, "breadcrumb", "sayfada görünen içerik haritası yok");
+
+  const items = [...nav.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)].map((match) => ({
+    name: plainText(match[1]),
+    href: parseAttrs(match[1].match(/<a\b[^>]*>/i)?.[0] ?? "<a>").href,
+    current: /aria-current="page"/i.test(match[1]),
+  }));
+  const expected = [list.itemListElement ?? []].flat();
+  const shown = items.map((item) => item.name).join(" › ");
+  const listed = expected.map((item) => item.name).join(" › ");
+  if (shown !== listed) {
+    fail(file, "breadcrumb", `görünen "${shown}" ≠ BreadcrumbList "${listed}"`);
+    return;
+  }
+  expected.forEach((element, index) => {
+    const item = items[index];
+    const last = index === expected.length - 1;
+    if (last) {
+      if (item.href) fail(file, "breadcrumb", `son eleman bağlantı olmamalı: ${item.name}`);
+      if (!item.current) fail(file, "breadcrumb", `son elemanda aria-current="page" yok`);
+    } else if (normalizeHref(item.href ?? "", canonical) !== element.item) {
+      fail(file, "breadcrumb", `"${item.name}" bağlantısı ${item.href} ≠ ${element.item}`);
+    }
+  });
+}
+
 function checkJsonLd(file, html, body, canonical, lang) {
   const blocks = [];
   for (const match of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi)) {
@@ -259,6 +299,8 @@ function checkJsonLd(file, html, body, canonical, lang) {
   for (const ref of new Set(refs)) {
     if (!ids.has(ref)) fail(file, "jsonld", `@id başvurusu karşılıksız: ${ref}`);
   }
+
+  checkBreadcrumb(file, body, canonical, nodes);
 
   // SSS: yapılandırılmış veri yalnızca sayfada görünen soru-cevabı
   // anlatabilir. Her soru sayfada bir başlık, her cevap da görünen metnin

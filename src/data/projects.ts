@@ -679,14 +679,20 @@ export const projects: Project[] = [
 ];
 
 /**
- * Projeler sayfasında ve ana sayfadaki öne çıkanlarda listelenen işler.
+ * Projeler sayfasının ana ızgarasında ve ana sayfadaki öne çıkanlarda
+ * listelenen işler.
  *
- * Web sitesi işleri burada çıkmıyor; onlar Hizmetler > Web Sitesi
- * Geliştirme sayfasındaki referans listesinde duruyor. Detay sayfaları
- * yerinde, bağlantı verilebiliyor.
+ * Web sitesi işleri bu ızgarada çıkmıyor: asıl vitrinleri Hizmetler > Web
+ * Sitesi Geliştirme sayfası. Projeler sayfasında ise en sonda kendi alt
+ * bölümleri var (webProjects).
  */
 export const listedProjects = projects.filter(
   (project) => project.service !== "web-sitesi",
+);
+
+/** Projeler sayfasının sonundaki "Web siteleri" alt bölümü. */
+export const webProjects = projects.filter(
+  (project) => project.service === "web-sitesi",
 );
 
 /** Ana sayfada gösterilecek öne çıkanlar. */

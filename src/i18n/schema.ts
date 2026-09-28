@@ -1,5 +1,6 @@
 import {
   listedProjects,
+  webProjects,
   type Project,
   type ProjectLinkKind,
   type ProjectSchema,
@@ -475,10 +476,11 @@ export function pageSchema(locale: Locale, target: PageTarget): JsonLdGraph {
         webPage(locale, target, "CollectionPage", {
           mainEntity: ref(`${url}#list`),
         }),
+        // Sayfadaki sırayla: önce ana ızgara, sonra "Web siteleri".
         itemList(
           locale,
           target,
-          listedProjects.map((project) => ({
+          [...listedProjects, ...webProjects].map((project) => ({
             name: project.title,
             path: projectPath(locale, project.slug),
           })),
