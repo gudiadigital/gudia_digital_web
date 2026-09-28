@@ -89,10 +89,13 @@ export function AboutContent({ locale, dict }: PageContentProps) {
           {about.foundersTitle}
         </h2>
         <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-14">
+          {/* id, yapılandırılmış verideki kişi adresinin çapası
+              (/hakkimizda/#gurkan-sevilmis); sabit başlığın altında kalmasın. */}
           {about.founders.map((founder, index) => (
             <article
-              key={founder.name}
-              className="founder border-line relative overflow-hidden border-t pt-8"
+              key={founder.id}
+              id={founder.id}
+              className="founder border-line relative scroll-mt-24 overflow-hidden border-t pt-8"
               data-reveal
               data-reveal-delay={index * 110}
             >

@@ -2,14 +2,10 @@ import type { MetadataRoute } from "next";
 import { locales, serviceSlugs } from "@/i18n/config";
 import { pathFor, projectPath } from "@/i18n/routes";
 import { projects } from "@/data/projects";
-
-export const SITE_URL = "https://gudiadigital.com";
+import { absoluteUrl as url } from "@/i18n/site";
 
 // Statik export: dosya derleme sırasında bir kez üretilir.
 export const dynamic = "force-static";
-
-/** trailingSlash açık olduğu için adresler sonunda / ile biter. */
-const url = (path: string) => `${SITE_URL}${path}/`;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

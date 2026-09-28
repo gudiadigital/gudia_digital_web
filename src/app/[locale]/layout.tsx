@@ -11,6 +11,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageCopy } from "@/i18n/seo";
+import { SITE_URL } from "@/i18n/site";
 
 /*
  * Fontlar src/app/fonts.css'te tanımlı, dosyaları public/fonts altında.
@@ -23,8 +24,6 @@ const FONT_FILES = [
   "/fonts/inter-latin.woff2",
   "/fonts/inter-latin-ext.woff2",
 ];
-
-const SITE_URL = "https://gudiadigital.com";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

@@ -20,6 +20,33 @@ export type ProjectRating = {
   asOf: string;
 };
 
+/**
+ * İşin yapılandırılmış verideki karşılığı (schema.org). Sayfada görünen
+ * bilgiden fazlasını söylemiyor.
+ *
+ * `relation` Gudia Dijital'in işle ilişkisi: kendi uygulamalarımızda
+ * sourceOrganization, kendi yaptığımız tanıtım sitelerinde creator. Rolün
+ * henüz netleşmediği işlerde (PhotoSensia, KidZania, Date For Dead,
+ * Divonia, AysQuilt) boş; boşken hiçbir ilişki iddia edilmiyor.
+ *
+ * Mağaza puanı, fiyat, yayın tarihi ve sürüm bilerek burada yok: Google
+ * başka sitelerden alınmış puanın işaretlenmesine izin vermiyor, mağaza
+ * bilgisi de statik sitede sessizce eskiyor.
+ */
+export type ProjectSchema = {
+  type: string | string[];
+  /** Düğümün adı proje adından farklıysa (ör. "… Trendyol mağazası"). */
+  name?: Record<Locale, string>;
+  applicationCategory?: string;
+  operatingSystem?: string;
+  gamePlatform?: string | string[];
+  relation?: "sourceOrganization" | "creator" | "contributor";
+  /** Mağaza kaydındaki geliştirici ve yayıncı başka bir stüdyoysa. */
+  authorOrg?: "divonia";
+  /** İşin konusu olan marka; marka düğümünün sameAs'ı projenin bağlantıları. */
+  aboutBrand?: string;
+};
+
 export type Project = {
   slug: string;
   title: string;
@@ -58,6 +85,7 @@ export type Project = {
   /** true ise kart görseli ikon gibi (kare, ortalanmış) gösterilir. */
   iconStyle?: boolean;
   links: ProjectLink[];
+  schema: ProjectSchema;
 };
 
 /** iOS / Android / PC rozetleri bağlantılardan türetilir. */
@@ -125,6 +153,12 @@ export const projects: Project[] = [
       { kind: "instagram", url: "https://www.instagram.com/pofu.app/" },
       { kind: "web", url: "https://gurkansvlms.github.io/nutrition-legal-site/" },
     ],
+    schema: {
+      type: "MobileApplication",
+      applicationCategory: "HealthApplication",
+      operatingSystem: "iOS",
+      relation: "sourceOrganization",
+    },
   },
   {
     slug: "snappet",
@@ -176,6 +210,13 @@ export const projects: Project[] = [
       { kind: "instagram", url: "https://www.instagram.com/playsnappet/" },
       { kind: "web", url: "https://gurkansvlms.github.io/SnapPetWeb/" },
     ],
+    schema: {
+      type: ["MobileApplication", "VideoGame"],
+      applicationCategory: "GameApplication",
+      operatingSystem: "iOS, Android",
+      gamePlatform: ["iOS", "Android"],
+      relation: "sourceOrganization",
+    },
   },
   {
     slug: "habitile",
@@ -231,6 +272,14 @@ export const projects: Project[] = [
       { kind: "appstore", url: "https://apps.apple.com/app/id6779264379" },
       { kind: "web", url: "https://gurkansvlms.github.io/widgetai-habit-legal-site/" },
     ],
+    // Mağaza türü Verimlilik; Google'ın uygulama kategorilerinde karşılığı
+    // olmadığı için en yakını seçildi.
+    schema: {
+      type: "MobileApplication",
+      applicationCategory: "LifestyleApplication",
+      operatingSystem: "iOS",
+      relation: "sourceOrganization",
+    },
   },
   {
     slug: "ikra",
@@ -282,6 +331,12 @@ export const projects: Project[] = [
       { kind: "instagram", url: "https://www.instagram.com/ikra.mobile/" },
       { kind: "web", url: "https://ikraapp.netlify.app" },
     ],
+    schema: {
+      type: "MobileApplication",
+      applicationCategory: "ReferenceApplication",
+      operatingSystem: "iOS, Android",
+      relation: "sourceOrganization",
+    },
   },
   {
     slug: "photosensia",
@@ -338,6 +393,11 @@ export const projects: Project[] = [
       { kind: "appstore", url: "https://apps.apple.com/app/id6624305795" },
       { kind: "playstore", url: "https://play.google.com/store/apps/details?id=com.photosensia.photosensiaforkids" },
     ],
+    schema: {
+      type: "MobileApplication",
+      applicationCategory: "EducationalApplication",
+      operatingSystem: "iOS, Android",
+    },
   },
   {
     slug: "logo-kidzania",
@@ -387,6 +447,7 @@ export const projects: Project[] = [
     },
     shots: 3,
     links: [{ kind: "web", url: "https://istanbul.kidzania.com/yazilim-gelistirme-merkezi" }],
+    schema: { type: "CreativeWork" },
   },
   {
     slug: "date-for-dead",
@@ -430,6 +491,13 @@ export const projects: Project[] = [
     },
     shots: 6,
     links: [{ kind: "steam", url: "https://store.steampowered.com/app/4622170/Date_For_Dead/" }],
+    // Steam kaydında geliştirici ve yayıncı Divonia Studios.
+    schema: {
+      type: ["VideoGame", "SoftwareApplication"],
+      applicationCategory: "GameApplication",
+      gamePlatform: "PC",
+      authorOrg: "divonia",
+    },
   },
   {
     slug: "divonia",
@@ -472,6 +540,7 @@ export const projects: Project[] = [
     },
     shots: 4,
     links: [{ kind: "web", url: "https://divoniastudios.com" }],
+    schema: { type: "WebSite" },
   },
   {
     slug: "deyimo",
@@ -513,6 +582,7 @@ export const projects: Project[] = [
     },
     shots: 4,
     links: [{ kind: "web", url: "https://gurkansvlms.github.io/IdiomWeb" }],
+    schema: { type: "WebSite", relation: "creator" },
   },
   {
     slug: "life-planner",
@@ -554,6 +624,7 @@ export const projects: Project[] = [
     },
     shots: 3,
     links: [{ kind: "web", url: "https://gurkansvlms.github.io/widgetai-legal-site/" }],
+    schema: { type: "WebSite", relation: "creator" },
   },
   {
     slug: "aysquilt",
@@ -599,6 +670,11 @@ export const projects: Project[] = [
       { kind: "trendyol", url: "https://www.trendyol.com/magaza/aysquilt-m-1070133" },
       { kind: "instagram", url: "https://www.instagram.com/aysquilt/" },
     ],
+    schema: {
+      type: "CreativeWork",
+      name: { tr: "AysQuilt Trendyol mağazası", en: "AysQuilt Trendyol store" },
+      aboutBrand: "AysQuilt",
+    },
   },
 ];
 

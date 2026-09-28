@@ -25,7 +25,8 @@ otomatik yayınlar. Elle yapılacak bir şey yok. Yayının durumu deponun
 
 ```bash
 npm run dev     # http://localhost:3000 — geliştirme
-npm run build   # statik siteyi out/ klasörüne üretir
+npm run build   # statik siteyi out/ klasörüne üretir ve SEO denetimini çalıştırır
+npm run check:seo  # yalnızca denetim (out/ üzerinde)
 npm run lint
 ```
 

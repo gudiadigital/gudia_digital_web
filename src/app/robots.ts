@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "./sitemap";
+import { SITE_URL } from "@/i18n/site";
 
 // Statik export: dosya derleme sırasında bir kez üretilir.
 export const dynamic = "force-static";

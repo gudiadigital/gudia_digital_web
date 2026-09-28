@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { locales, serviceSlugs, isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { pageCopy, pageMetadata } from "@/i18n/seo";
+import { pageSchema } from "@/i18n/schema";
 import {
   pageSegment,
   pageKeyFromSegment,
@@ -12,6 +13,7 @@ import {
   serviceFromSegment,
 } from "@/i18n/routes";
 import { projects } from "@/data/projects";
+import { JsonLd } from "@/components/JsonLd";
 import { ServiceDetailContent } from "@/components/pages/ServiceDetailContent";
 import { ProjectDetailContent } from "@/components/pages/ProjectDetailContent";
 
@@ -86,13 +88,23 @@ export default async function DetailPage({ params }: Params) {
   if (key === "services") {
     const service = serviceFromSegment(locale, slug);
     if (!service) notFound();
-    return <ServiceDetailContent locale={locale} dict={dict} slug={service} />;
+    return (
+      <>
+        <JsonLd data={pageSchema(locale, { kind: "service", slug: service })} />
+        <ServiceDetailContent locale={locale} dict={dict} slug={service} />
+      </>
+    );
   }
 
   if (key === "projects") {
     const project = projects.find((candidate) => candidate.slug === slug);
     if (!project) notFound();
-    return <ProjectDetailContent locale={locale} dict={dict} project={project} />;
+    return (
+      <>
+        <JsonLd data={pageSchema(locale, { kind: "project", project })} />
+        <ProjectDetailContent locale={locale} dict={dict} project={project} />
+      </>
+    );
   }
 
   notFound();

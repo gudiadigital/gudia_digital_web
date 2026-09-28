@@ -6,6 +6,7 @@ export const en: Dictionary = {
     title: "Gudia Digital — Mobile App, Website & Branded Game Studio",
     description:
       "We build, improve and grow digital products for brands: mobile apps, websites, branded games, social media content and e-commerce.",
+    profiles: [],
   },
 
   nav: {
@@ -340,14 +341,18 @@ export const en: Dictionary = {
     foundersTitle: "Founders",
     founders: [
       {
+        id: "gurkan-sevilmis",
         name: "Gürkan Sevilmiş",
         role: "Co-founder · iOS Developer",
         bio: "Leads mobile app development and product improvement. Builds native iOS apps with Swift and SwiftUI, and is responsible for App Store release processes, architecture decisions and technical production.",
+        profiles: [],
       },
       {
+        id: "dilara-isman",
         name: "Dilara İşman",
         role: "Co-founder · Game Developer",
         bio: "Runs game development, project management and client communication. Responsible for building branded games and interactive experiences, planning projects and delivering them on time, and day-to-day contact with clients.",
+        profiles: [],
       },
     ],
   },

@@ -6,7 +6,9 @@
  * açıklama, H1, JSON-LD ve sitemap tutarlılığı. Örneğin /en/privacy/
  * açıklamasının "Law No." ile bitmesi gibi hatalar ancak çıktıda görünüyor.
  *
- * Kullanım: önce `npm run build`, sonra `npm run check:seo`.
+ * Kullanım: `npm run build` sonunda kendiliğinden çalışıyor; hata varsa
+ * derleme (ve GitHub Actions'taki yayın) durur. Tek başına:
+ * `npm run check:seo` (önce derleme gerekli).
  *   REQUIRE_LASTMOD=1  sitemap'teki her <url> için ISO-8601 <lastmod> ister.
  *   ROOT_STRICT=1      kök sayfa (out/index.html) kurallarını hataya çevirir;
  *                      kök sayfa değişikliği sahibinin onayını beklediği için

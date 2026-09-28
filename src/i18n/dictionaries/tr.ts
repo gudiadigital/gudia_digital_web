@@ -25,6 +25,21 @@ export type ServiceItem = {
   deliverables: string[];
 };
 
+/**
+ * Hakkımızda'daki kurucu. `id` iki dilde aynı: sayfadaki çapa
+ * (/hakkimizda/#gurkan-sevilmis) ve yapılandırılmış verideki kişi kimliği.
+ */
+export type Founder = {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  /** Kişinin kendi profilleri (LinkedIn, GitHub…); yapılandırılmış veride sameAs. Boşken yazılmıyor. */
+  profiles: string[];
+  /** Başka yerlerde geçen adı (ör. mağazalardaki tam adı); yalnızca kişinin onayıyla. */
+  alternateName?: string;
+};
+
 export const tr = {
   meta: {
     siteName: "Gudia Dijital",
@@ -33,6 +48,13 @@ export const tr = {
     title: "Gudia Dijital — Mobil Uygulama, Web Sitesi ve Markalı Oyun Stüdyosu",
     description:
       "Markaların dijital ürünlerini oluşturuyor, iyileştiriyor ve büyütüyoruz: mobil uygulama, web sitesi, markalı oyun, sosyal medya içeriği ve e-ticaret.",
+    /*
+     * Stüdyonun gerçekten var olan kendi profilleri (LinkedIn şirket
+     * sayfası, dolu bir GitHub hesabı…). Yapılandırılmış verideki sameAs
+     * buradan geliyor; boşken hiç yazılmıyor. Kurucuların kişisel
+     * profilleri buraya değil, kendi kayıtlarına. İki dilde aynı olmalı.
+     */
+    profiles: [] as string[],
   },
 
   nav: {
@@ -381,16 +403,20 @@ export const tr = {
     foundersTitle: "Kurucular",
     founders: [
       {
+        id: "gurkan-sevilmis",
         name: "Gürkan Sevilmiş",
         role: "Kurucu Ortak · iOS Geliştirici",
         bio: "Mobil uygulama geliştirme ve ürün iyileştirme tarafını yürütüyor. Swift ve SwiftUI ile native iOS uygulamaları geliştiriyor; App Store yayın süreçleri, mimari kararlar ve teknik üretimden sorumlu.",
+        profiles: [],
       },
       {
+        id: "dilara-isman",
         name: "Dilara İşman",
         role: "Kurucu Ortak · Oyun Geliştirici",
         bio: "Oyun geliştirme, proje yönetimi ve müşteri iletişimini yürütüyor. Markalı oyun ve interaktif deneyim projelerinin geliştirilmesinden, işlerin planlanıp zamanında teslim edilmesinden ve müşteriyle günlük iletişimden sorumlu.",
+        profiles: [],
       },
-    ],
+    ] as Founder[],
   },
 
   projects: {
