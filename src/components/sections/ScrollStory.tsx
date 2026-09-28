@@ -76,7 +76,10 @@ export function ScrollStory({
   const chapterRef = useRef<HTMLSpanElement>(null);
   const percentRef = useRef<HTMLSpanElement>(null);
   const words = toWords(hero.title);
-  const afterTitle = 0.2 + words.length * 0.05;
+  // Alan listesi (Web, Mobil…) ve çağrı başlığın son kelimesinin hemen
+  // ardından geliyor; kelime gecikmesi (0,05 + i·0,03 sn) değişirse bu da
+  // değişmeli.
+  const afterTitle = 0.1 + words.length * 0.03;
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -229,7 +232,7 @@ export function ScrollStory({
                     <span className="word-mask">
                       <span
                         className="word-rise"
-                        style={{ animationDelay: `${0.18 + index * 0.05}s` }}
+                        style={{ animationDelay: `${0.05 + index * 0.03}s` }}
                       >
                         {word.map((part, partIndex) =>
                           part.accent ? (
@@ -264,9 +267,10 @@ export function ScrollStory({
                 ))}
               </ul>
 
+              {/* İlk boyamada görünür olmalı: en büyük metin (LCP adayı) bu paragraf */}
               <p
-                className="text-muted fade-up mt-7 max-w-2xl text-base leading-relaxed short-phone:mt-4 very-short-phone:mt-3 very-short-phone:text-sm sm:text-lg short-wide:mt-4"
-                style={{ animationDelay: `${afterTitle + 0.3}s` }}
+                className="text-muted rise-in mt-7 max-w-2xl text-base leading-relaxed short-phone:mt-4 very-short-phone:mt-3 very-short-phone:text-sm sm:text-lg short-wide:mt-4"
+                style={{ animationDelay: "0.1s" }}
               >
                 {hero.subtitle}
               </p>

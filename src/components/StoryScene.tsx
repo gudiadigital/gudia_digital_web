@@ -13,8 +13,9 @@ import { useEffect, useRef, type RefObject } from "react";
  * tamamen CSS değişkenlerinden geliyor (açık/koyu mod otomatik uyuyor) ve
  * kaydırma karesi aramak zorunda olmadığı için takılma ihtimali yok.
  *
- * Geri düşme: WebGL yoksa ya da kullanıcı hareket azaltma istiyorsa tuval
- * hiç kurulmaz, altındaki CSS degradesi görünür kalır.
+ * Geri düşme: WebGL yoksa, sürücü yazılımla çiziyorsa, kareler
+ * yetişmiyorsa ya da kullanıcı hareket azaltma istiyorsa tuval hiç
+ * görünmez, arkasındaki CSS degradesi kalır.
  */
 
 const VERT = `
@@ -160,52 +161,262 @@ function hexToRgb(value: string): RGB {
   return [((n >> 16) & 255) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
 }
 
+/*
+ * Derleme durumu burada okunmuyor: KHR_parallel_shader_compile varken
+ * COMPILE_STATUS sormak derleme bitene kadar ana iş parçacığını bekletir.
+ * Derlenemeyen shader bağlamayı da bozduğu için LINK_STATUS ikisini de
+ * yakalıyor.
+ */
 function compile(gl: WebGLRenderingContext, type: number, source: string) {
   const shader = gl.createShader(type);
   if (!shader) return null;
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    gl.deleteShader(shader);
-    return null;
-  }
   return shader;
 }
 
-export function StoryScene({
-  progressRef,
-}: {
-  /** 0–1 arası kaydırma ilerlemesi; sahne buna doğru yumuşayarak gider. */
-  progressRef: RefObject<number>;
-}) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+/** Yazılımla çizen WebGL sürücüleri (SwiftShader, Mesa llvmpipe, Windows'un temel sürücüsü). */
+const SOFTWARE_GL = /swiftshader|llvmpipe|software|basic render/i;
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+/*
+ * Sürücü önce ayrı bir iş parçacığında, 1×1'lik bir OffscreenCanvas
+ * bağlamıyla yoklanıyor. Tarayıcıdaki ilk WebGL bağlamı yazılım sürücüsünü
+ * ayağa kaldırırken çağıranı bekletiyor: SwiftShader'da bu, ana iş
+ * parçacığında 1,4–3 sn'lik tek bir uzun görev demekti. Worker'da aynı
+ * bekleme sayfayı dondurmuyor; donanım GPU'sunda yoklama ~10 ms sürüyor.
+ * Worker ayrı bir betik olarak çalıştığı için kodu metin hâlinde duruyor;
+ * paketleyiciden geçmiyor.
+ *
+ * Bayraklı bağlam alınamadığında bayraksız bir kez daha deneniyor: o
+ * zaman bağlam geliyorsa sürücü yazılımla çiziyor demek (false). İkisi de
+ * gelmiyorsa worker'da WebGL yok (null) ve karar ana iş parçacığına
+ * kalıyor: Safari 16.4–16.7 OffscreenCanvas'ta yalnızca 2B bağlam veriyor,
+ * bunu "GPU yok" saymak güçlü cihazlarda da sahneyi kapatıyordu.
+ */
+const PROBE_WORKER = `onmessage = function () {
+  var result = null;
+  try {
+    var gl = new OffscreenCanvas(1, 1).getContext("webgl", { failIfMajorPerformanceCaveat: true });
+    if (gl) {
+      var info = gl.getExtension("WEBGL_debug_renderer_info");
+      result = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
+    } else {
+      gl = new OffscreenCanvas(1, 1).getContext("webgl");
+      if (gl) result = false;
+    }
+    if (gl) {
+      var lose = gl.getExtension("WEBGL_lose_context");
+      if (lose) lose.loseContext();
+    }
+  } catch (error) {}
+  postMessage(result);
+};`;
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reduced.matches) return;
+/** Yoklama bu süreyi aşarsa GPU sahneyi taşıyacak durumda sayılmıyor. */
+const PROBE_TIMEOUT_MS = 5000;
 
-    const gl = canvas.getContext("webgl", {
-      alpha: false,
-      antialias: false,
-      depth: false,
-      stencil: false,
-      powerPreference: "low-power",
-    });
-    if (!gl) return;
+/**
+ * Sonucu `onResult`a verir: false ise sürücü yazılımla çiziyor. Worker
+ * kurulamıyorsa ya da worker'da WebGL yoksa true döner; karar
+ * startScene'deki aynı denetimlere kalır. Yoklamayı iptal eden fonksiyonu
+ * döndürür.
+ */
+function probeGpu(onResult: (usable: boolean) => void): () => void {
+  if (typeof Worker !== "function" || typeof OffscreenCanvas !== "function") {
+    onResult(true);
+    return () => {};
+  }
 
-    const vs = compile(gl, gl.VERTEX_SHADER, VERT);
-    const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
-    if (!vs || !fs) return;
+  let url = "";
+  let worker: Worker;
+  try {
+    url = URL.createObjectURL(
+      new Blob([PROBE_WORKER], { type: "text/javascript" }),
+    );
+    worker = new Worker(url);
+  } catch {
+    if (url) URL.revokeObjectURL(url);
+    onResult(true);
+    return () => {};
+  }
 
-    const program = gl.createProgram();
-    if (!program) return;
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  const end = () => {
+    window.clearTimeout(timer);
+    worker.terminate();
+    URL.revokeObjectURL(url);
+  };
+  const finish = (usable: boolean) => {
+    end();
+    onResult(usable);
+  };
+  const timer = window.setTimeout(() => finish(false), PROBE_TIMEOUT_MS);
+  worker.onmessage = (event: MessageEvent<unknown>) => {
+    const result = event.data;
+    finish(
+      result === null ||
+        (typeof result === "string" && !SOFTWARE_GL.test(result)),
+    );
+  };
+  worker.onerror = () => finish(true);
+  worker.postMessage(0);
+  return end;
+}
+
+/*
+ * Kare bekçisi. Sahne açıldıktan sonraki ilk anlar shader'ın ilk
+ * çizimde tamamlanması yüzünden takılabiliyor; bu yüzden kısa bir
+ * ısınmadan sonra ~20 kare aralığı ölçülüyor. Ortanca ~30 fps'in altına
+ * inerse ya da iki kare 120 ms'yi aşarsa cihaz sahneyi taşıyamıyor
+ * demektir: döngü durur, degrade zemine dönülür.
+ *
+ * Tek bir uzun aralık sahneyi kapatmıyor, ikincisi kapatıyor. Tek
+ * takılma çoğu zaman sahneden değil başka bir işten geliyor (çöp
+ * toplama, başka bir betiğin uzun görevi) ve güçlü bir GPU'da da
+ * olabiliyor; gerçekten yetişemeyen bir cihazda ikinci uzun kare hemen
+ * ardından geliyor.
+ */
+const WATCH_WARMUP_MS = 300;
+const WATCH_FRAMES = 20;
+const WATCH_MEDIAN_MS = 34;
+const WATCH_GAP_MS = 120;
+const WATCH_STALLS = 2;
+
+/*
+ * Sınırda kalan cihaz (ortanca ~50 fps'in altında ama 30 fps'in üstünde)
+ * sahneyi kapatmıyor, piksel bütçesi %40'a iniyor (telefonda ~200 bin).
+ * Bütçe herkes için düşürülseydi küre kenarları güçlü GPU'da da
+ * basamaklı görünecekti; böylece yalnızca yetişemeyen cihaz bedel ödüyor.
+ */
+const WATCH_SLOW_MS = 20;
+const SLOW_PIXEL_SHARE = 0.4;
+
+/*
+ * iOS Düşük Güç Modu ve Chrome'un enerji tasarrufu rAF'ı 30 fps'e
+ * sınırlıyor. Bekçi bunu bilmeden ortancayı ~33 ms görünce güçlü GPU'da
+ * da piksel bütçesini düşürüyordu (küre kenarları basamaklanıyor); 34 ms
+ * eşiğine bu kadar yakınken küçük bir oynama sahneyi kapatabiliyordu.
+ * Bu yüzden sahne kurulmadan önce birkaç boş karenin hızı ölçülüyor ve
+ * bekçinin eşikleri bu hızın altına inmiyor: sınıra yetişen sahne yavaş
+ * sayılmıyor. Yalnızca 30 fps'e kadarki sınır hesaba katılıyor; ölçüm
+ * uzun bir göreve denk gelirse eşikler bundan fazla gevşemiyor.
+ */
+const PACE_FRAMES = 8;
+const PACE_MAX_MS = 1000 / 30;
+// Kare zamanları biraz oynuyor; sınırın hemen üstü de "yetişiyor" sayılıyor.
+const PACE_SLACK = 1.15;
+
+/*
+ * Girdi yokken sahne 30 fps'e iniyor; hareket yavaş olduğu için fark
+ * görünmüyor. Bir süre hiç girdi gelmezse son 1,5 sn'de yavaşlayıp duruyor,
+ * kaydırma ya da imleç hareketiyle kaldığı yerden devam ediyor.
+ */
+const CALM_AFTER_MS = 600;
+const STOP_AFTER_MS = 7000;
+const SLOWDOWN_MS = 1500;
+
+function median(values: readonly number[]) {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[sorted.length >> 1];
+}
+
+/**
+ * Tarayıcının boştayken verdiği kare aralığını (ms, ortanca) `onResult`a
+ * verir. Ölçümü iptal eden fonksiyonu döndürür.
+ */
+function measurePace(onResult: (ms: number) => void): () => void {
+  const gaps: number[] = [];
+  let last = 0;
+  let frame = 0;
+  const tick = (now: number) => {
+    if (last) gaps.push(now - last);
+    last = now;
+    if (gaps.length < PACE_FRAMES) {
+      frame = requestAnimationFrame(tick);
+    } else {
+      frame = 0;
+      onResult(median(gaps));
+    }
+  };
+  frame = requestAnimationFrame(tick);
+  return () => cancelAnimationFrame(frame);
+}
+
+/**
+ * Sahneyi kurar ve döngüyü başlatır; kapatan fonksiyonu döndürür. Sahne
+ * hiç başlamazsa ya da sonradan geri düşerse tuval görünmez kalır.
+ */
+function startScene(
+  canvas: HTMLCanvasElement,
+  progressRef: RefObject<number>,
+  /** Tarayıcının boştaki kare aralığı (ms); bkz. measurePace. */
+  pace: number,
+): () => void {
+  const gl = canvas.getContext("webgl", {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    powerPreference: "low-power",
+    // GPU kapalı ya da kara listedeyse tarayıcı yazılımla çizecek bir
+    // bağlam vermek yerine null döner.
+    failIfMajorPerformanceCaveat: true,
+  });
+  if (!gl) return () => {};
+
+  const lose = () => gl.getExtension("WEBGL_lose_context")?.loseContext();
+
+  /*
+   * SwiftShader açıkça seçildiğinde yukarıdaki bayrak yine bağlam veriyor.
+   * Yazılım sürücüsünde sahne 21 fps'e düşüyor, dokunmalar 350–520 ms
+   * gecikiyordu; PageSpeed Insights ölçümleri bu yüzden zaman aşımına
+   * uğruyordu. Worker yoklaması yapılamadıysa karar burada veriliyor.
+   */
+  const info = gl.getExtension("WEBGL_debug_renderer_info");
+  const renderer = String(
+    gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER) ?? "",
+  );
+  if (SOFTWARE_GL.test(renderer)) {
+    lose();
+    return () => {};
+  }
+
+  const vs = compile(gl, gl.VERTEX_SHADER, VERT);
+  const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG);
+  const program = gl.createProgram();
+  if (!vs || !fs || !program) {
+    lose();
+    return () => {};
+  }
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+
+  // Destekleniyorsa derleme arka planda sürüyor; bitene kadar karelerle yoklanır.
+  const parallel = gl.getExtension("KHR_parallel_shader_compile");
+
+  let frame = 0;
+  let dead = false;
+  let detach = () => {};
+
+  /*
+   * Kapatma ve geri düşme aynı yol. Tuval .is-live olmadan görünmüyor:
+   * alpha:false bir bağlam kurulduğu anda tuval çizim olmasa da siyah,
+   * bağlam kaybından sonra beyaz boyanıyor; degradeyi arkadaki kap veriyor.
+   */
+  const stop = () => {
+    if (dead) return;
+    dead = true;
+    canvas.removeEventListener("webglcontextlost", stop);
+    if (frame) cancelAnimationFrame(frame);
+    frame = 0;
+    detach();
+    canvas.classList.remove("is-live");
+    lose();
+  };
+  // Tarayıcı bağlamı kendisi düşürürse (GPU sıfırlanması, arka plan) de degradeye dön.
+  canvas.addEventListener("webglcontextlost", stop);
+
+  const play = () => {
     gl.useProgram(program);
 
     const buffer = gl.createBuffer();
@@ -267,17 +478,16 @@ export function StoryScene({
      * yumuşak ve bulanık olduğu için düşük çözünürlük gözle ayırt edilmiyor.
      */
     // Telefonlarda GPU çok daha zayıf; orada sınır daha da aşağıda.
-    const MAX_PIXELS = window.innerWidth < 768 ? 480_000 : 1_100_000;
+    let maxPixels = window.innerWidth < 768 ? 480_000 : 1_100_000;
     let width = 0;
     let height = 0;
 
-    const resize = () => {
-      const rect = canvas.getBoundingClientRect();
+    const resize = (rect: DOMRect) => {
       if (!rect.width || !rect.height) return;
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       let scale = dpr;
       const raw = rect.width * rect.height * dpr * dpr;
-      if (raw > MAX_PIXELS) scale = dpr * Math.sqrt(MAX_PIXELS / raw);
+      if (raw > maxPixels) scale = dpr * Math.sqrt(maxPixels / raw);
       const w = Math.max(1, Math.round(rect.width * scale));
       const h = Math.max(1, Math.round(rect.height * scale));
       if (w === width && h === height) return;
@@ -291,67 +501,230 @@ export function StoryScene({
 
     let ptrX = 0;
     let ptrY = 0;
-    const onPointer = (event: PointerEvent) => {
-      ptrX = event.clientX / window.innerWidth - 0.5;
-      ptrY = event.clientY / window.innerHeight - 0.5;
-    };
-
     let shown = progressRef.current ?? 0;
-    let frame = 0;
     let running = false;
-    const start = performance.now();
+    let live = false;
+
+    // Son girdinin (kaydırma, imleç, boyut), son karenin ve son çizimin zamanı.
+    let lastInput = performance.now();
+    let lastFrame = 0;
+    let lastDraw = 0;
+    // Sahne saati (sn): döngü dururken ilerlemiyor, devam edince zıplamıyor.
+    let clock = 0;
+    let speed = 1;
+
+    let watching = true;
+    let warmUntil = 0;
+    let stalls = 0;
+    const gaps: number[] = [];
+    const paced = Math.min(pace, PACE_MAX_MS) * PACE_SLACK;
+    const stopAbove = Math.max(WATCH_MEDIAN_MS, paced);
+    const slowAbove = Math.max(WATCH_SLOW_MS, paced);
 
     const render = (now: number) => {
       frame = 0;
       const rect = canvas.getBoundingClientRect();
       const visible = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (!visible || document.hidden) {
+      const quiet = now - lastInput;
+      if (!visible || document.hidden || quiet > STOP_AFTER_MS) {
         running = false;
+        lastFrame = 0;
+        lastDraw = 0;
         return;
       }
 
-      resize();
+      /*
+       * Bekçi rAF'ın verdiği zamanı değil, geri çağrının gerçekten çalıştığı
+       * anı ölçüyor: rAF zamanı karenin başladığı an; ana iş parçacığı kare
+       * başladıktan sonra tıkanırsa o gecikme rAF zamanında hiç görünmüyor.
+       */
+      const at = performance.now();
+      if (watching) {
+        if (!warmUntil) {
+          warmUntil = at + WATCH_WARMUP_MS;
+        } else if (lastFrame && at > warmUntil) {
+          const gap = at - lastFrame;
+          gaps.push(gap);
+          if (gap > WATCH_GAP_MS) stalls++;
+          if (
+            stalls >= WATCH_STALLS ||
+            (gaps.length >= WATCH_FRAMES && median(gaps) > stopAbove)
+          ) {
+            stop();
+            return;
+          }
+          if (gaps.length >= WATCH_FRAMES) {
+            watching = false;
+            if (median(gaps) > slowAbove) maxPixels *= SLOW_PIXEL_SHARE;
+          }
+        }
+      }
+      lastFrame = at;
 
       const target = Math.min(1, Math.max(0, progressRef.current ?? 0));
       const diff = target - shown;
+      // Bekçi ölçerken her kare çiziliyor; atlanan kareler ölçümü yumuşatırdı.
+      const calm = !watching && quiet > CALM_AFTER_MS && Math.abs(diff) < 0.001;
+      if (calm && now - lastDraw < 30) {
+        frame = requestAnimationFrame(render);
+        return;
+      }
+
+      resize(rect);
       shown += Math.abs(diff) > 0.25 ? diff : diff * 0.12;
 
+      const step = lastDraw ? Math.min(now - lastDraw, 100) : 0;
+      lastDraw = now;
+      const want = Math.min(1, Math.max(0, (STOP_AFTER_MS - quiet) / SLOWDOWN_MS));
+      speed = want < speed ? want : Math.min(want, speed + step / 500);
+      clock += (step / 1000) * speed;
+
       gl.uniform1f(uProg, shown);
-      gl.uniform1f(uTime, (now - start) / 1000);
+      gl.uniform1f(uTime, clock);
       gl.uniform2f(uPtr, ptrX, ptrY);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      // Tuval ancak içi dolu olduğu karede görünür oluyor; öncesinde siyah.
+      if (!live) {
+        live = true;
+        canvas.classList.add("is-live");
+      }
 
       frame = requestAnimationFrame(render);
     };
 
     const kick = () => {
-      if (running || document.hidden) return;
+      if (running || dead || document.hidden) return;
       running = true;
+      if (watching) warmUntil = 0;
       frame = requestAnimationFrame(render);
     };
 
+    const onInput = () => {
+      lastInput = performance.now();
+      kick();
+    };
+
+    const onPointer = (event: PointerEvent) => {
+      ptrX = event.clientX / window.innerWidth - 0.5;
+      ptrY = event.clientY / window.innerHeight - 0.5;
+      onInput();
+    };
+
+    const onScheme = () => {
+      readPalette();
+      onInput();
+    };
+
+    // Sekme arka plandayken rAF duruyor; dönüşteki uzun boşluk ölçülmesin.
+    const onVisibility = () => {
+      lastFrame = 0;
+      lastDraw = 0;
+      warmUntil = 0;
+      if (!document.hidden) onInput();
+    };
+
     readPalette();
-    resize();
-    canvas.classList.add("is-live");
-    kick();
 
     const scheme = window.matchMedia("(prefers-color-scheme: dark)");
-    scheme.addEventListener("change", readPalette);
-    window.addEventListener("scroll", kick, { passive: true });
-    window.addEventListener("resize", kick);
+    scheme.addEventListener("change", onScheme);
+    window.addEventListener("scroll", onInput, { passive: true });
+    window.addEventListener("resize", onInput);
     window.addEventListener("pointermove", onPointer, { passive: true });
-    document.addEventListener("visibilitychange", kick);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    detach = () => {
+      scheme.removeEventListener("change", onScheme);
+      window.removeEventListener("scroll", onInput);
+      window.removeEventListener("resize", onInput);
+      window.removeEventListener("pointermove", onPointer);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+
+    kick();
+  };
+
+  const waitForLink = () => {
+    frame = 0;
+    if (gl.isContextLost()) {
+      stop();
+      return;
+    }
+    if (
+      parallel &&
+      !gl.getProgramParameter(program, parallel.COMPLETION_STATUS_KHR)
+    ) {
+      frame = requestAnimationFrame(waitForLink);
+      return;
+    }
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      stop();
+      return;
+    }
+    play();
+  };
+
+  waitForLink();
+  return stop;
+}
+
+export function StoryScene({
+  progressRef,
+}: {
+  /** 0–1 arası kaydırma ilerlemesi; sahne buna doğru yumuşayarak gider. */
+  progressRef: RefObject<number>;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduced.matches) return;
+
+    /*
+     * Kurulum sayfa yüklendikten sonra, tarayıcı boşa çıktığında başlıyor:
+     * shader derlemesi ve ilk kareler hidrasyonla ve LCP ile yarışmasın.
+     * O ana kadar degrade zemin görünüyor.
+     */
+    let stop: (() => void) | undefined;
+    let cancel: (() => void) | undefined;
+    let idle = 0;
+    let timer = 0;
+    const begin = () => {
+      cancel = probeGpu((usable) => {
+        cancel = undefined;
+        if (!usable) return;
+        cancel = measurePace((pace) => {
+          cancel = undefined;
+          stop = startScene(canvas, progressRef, pace);
+        });
+      });
+    };
+    const whenIdle = () => {
+      // Safari'de requestIdleCallback yok
+      if (typeof window.requestIdleCallback === "function") {
+        idle = window.requestIdleCallback(begin, { timeout: 2000 });
+      } else {
+        timer = window.setTimeout(begin, 200);
+      }
+    };
+    if (document.readyState === "complete") whenIdle();
+    else window.addEventListener("load", whenIdle, { once: true });
 
     return () => {
-      scheme.removeEventListener("change", readPalette);
-      window.removeEventListener("scroll", kick);
-      window.removeEventListener("resize", kick);
-      window.removeEventListener("pointermove", onPointer);
-      document.removeEventListener("visibilitychange", kick);
-      if (frame) cancelAnimationFrame(frame);
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      window.removeEventListener("load", whenIdle);
+      if (idle) window.cancelIdleCallback(idle);
+      if (timer) window.clearTimeout(timer);
+      cancel?.();
+      stop?.();
     };
   }, [progressRef]);
 
-  return <canvas ref={canvasRef} className="story-canvas" aria-hidden="true" />;
+  return (
+    <div className="story-scene" aria-hidden="true">
+      <canvas ref={canvasRef} className="story-canvas" />
+    </div>
+  );
 }
