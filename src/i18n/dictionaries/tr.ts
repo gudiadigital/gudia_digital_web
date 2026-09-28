@@ -870,7 +870,7 @@ export const tr = {
     seo: {
       title: "KVKK Aydınlatma Metni",
       description:
-        "6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 10. maddesi uyarınca, bu sitede ve bizimle yazışırken kişisel verilerinizin nasıl işlendiğini açıklıyoruz.",
+        "6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 10. maddesi uyarınca, bu sitede ve bizimle yazışırken verilerinizin nasıl işlendiğini açıklıyoruz.",
     },
     title: "KVKK Aydınlatma Metni",
     lead: "6698 sayılı Kişisel Verilerin Korunması Kanunu'nun 10. maddesi uyarınca, bu sitede ve bizimle yazışırken kişisel verilerinizin nasıl işlendiğini açıklıyoruz.",
