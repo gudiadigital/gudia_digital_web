@@ -14,7 +14,10 @@ export type Improvement = {
   /** İlgili projenin slug'ı — proje sayfasına bağlanmak için. */
   project: string;
   title: string;
-  /** Ürünün bugünkü künyesi; tek satır. */
+  /**
+   * Ürünün künyesi; tek satır. Sürüm tarihiyle birlikte yazılıyor: statik
+   * sitede "bugünkü sürüm" bir sonraki güncellemede yanlış kalıyordu.
+   */
   standing: Record<Locale, string>;
   /** Sırayla aşamalar: başlık + ne yapıldığı. */
   stages: Record<Locale, { k: string; v: string }[]>;
@@ -25,14 +28,14 @@ export const improvements: Improvement[] = [
     project: "ikra",
     title: "İkra",
     standing: {
-      tr: "iOS ve Android'de yayında · Sürüm 2.0.7 · Mağaza künyesi 21 dilde",
-      en: "Live on iOS and Android · Version 2.0.7 · Store listing in 21 languages",
+      tr: "iOS ve Android'de yayında · 18 Eylül 2026 itibarıyla sürüm 2.0.7 · Mağaza künyesi 21 dilde",
+      en: "Live on iOS and Android · Version 2.0.7 as of 18 September 2026 · Store listing in 21 languages",
     },
     stages: {
       tr: [
         {
           k: "Akışın toparlanması",
-          v: "Namaz vakitleri, Kur'an okuma ve dinleme, kıble, dua, zikir, hadis ve İslami takvim ayrı ayrı durmak yerine tek bir günlük akışta toplandı. Uygulama bu düzenlemeyle 2.0 serisine geçti; bugünkü sürüm 2.0.7.",
+          v: "Namaz vakitleri, Kur'an okuma ve dinleme, kıble, dua, zikir, hadis ve İslami takvim ayrı ayrı durmak yerine tek bir günlük akışta toplandı. Uygulama bu düzenlemeyle 2.0 serisine geçti; 18 Eylül 2026 itibarıyla sürüm 2.0.7.",
         },
         {
           k: "Gün boyu kullanım",
@@ -50,7 +53,7 @@ export const improvements: Improvement[] = [
       en: [
         {
           k: "Pulling the flow together",
-          v: "Prayer times, Quran reading and listening, qibla, duas, dhikr, hadith and the Islamic calendar stopped being separate corners and came into one daily flow. That work moved the app to the 2.0 series; the current release is 2.0.7.",
+          v: "Prayer times, Quran reading and listening, qibla, duas, dhikr, hadith and the Islamic calendar stopped being separate corners and came into one daily flow. That work moved the app to the 2.0 series; as of 18 September 2026, the current release is 2.0.7.",
         },
         {
           k: "Built for all-day use",
@@ -71,14 +74,14 @@ export const improvements: Improvement[] = [
     project: "pofu",
     title: "Pofu",
     standing: {
-      tr: "iOS'ta yayında · Sürüm 2.0.4 · Mağaza künyesi 6 dilde",
-      en: "Live on iOS · Version 2.0.4 · Store listing in 6 languages",
+      tr: "iOS'ta yayında · 25 Eylül 2026 itibarıyla sürüm 2.0.5 · Mağaza künyesi 6 dilde",
+      en: "Live on iOS · Version 2.0.5 as of 25 September 2026 · Store listing in 6 languages",
     },
     stages: {
       tr: [
         {
           k: "Ana akışın yeniden kurulması",
-          v: "Ürün 2.0 serisine taşınırken ana akış tek bir işin etrafında toplandı: tabağın fotoğrafını çek, kalorisi ve makroları çıksın. Bugünkü sürüm 2.0.4.",
+          v: "Ürün 2.0 serisine taşınırken ana akış tek bir işin etrafında toplandı: tabağın fotoğrafını çek, kalorisi ve makroları çıksın. 25 Eylül 2026 itibarıyla sürüm 2.0.5.",
         },
         {
           k: "Takip modeli",
@@ -96,7 +99,7 @@ export const improvements: Improvement[] = [
       en: [
         {
           k: "Rebuilding the main flow",
-          v: "As the product moved to the 2.0 series, the main flow gathered around a single job: photograph the plate, get its calories and macros. The current release is 2.0.4.",
+          v: "As the product moved to the 2.0 series, the main flow gathered around a single job: photograph the plate, get its calories and macros. As of 25 September 2026, the current release is 2.0.5.",
         },
         {
           k: "The tracking model",

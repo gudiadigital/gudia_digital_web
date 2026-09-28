@@ -102,13 +102,13 @@ export const projects: Project[] = [
     },
     facts: {
       tr: [
-        { k: "Sürüm", v: "2.0.4" },
+        { k: "Sürüm", v: "2.0.5 (25 Eylül 2026 itibarıyla)" },
         { k: "Platform", v: "iOS" },
         { k: "Dil", v: "6" },
         { k: "Kategori", v: "Sağlık & Fitness" },
       ],
       en: [
-        { k: "Version", v: "2.0.4" },
+        { k: "Version", v: "2.0.5 (as of 25 September 2026)" },
         { k: "Platform", v: "iOS" },
         { k: "Languages", v: "6" },
         { k: "Category", v: "Health & Fitness" },
@@ -342,7 +342,7 @@ export const projects: Project[] = [
     year: 2026,
     image: "logo-kidzania.webp",
     summary: {
-      tr: "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
+      tr: "KidZania İstanbul'daki Logo Yazılım'ın Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim. Çocuklar gerçek bir yazılım ekibi gibi çalışıp kendi projelerini üretiyor.",
       en: "An interactive experience built for the Logo Yazılım Software Development Centre at KidZania İstanbul, where children work like a real software team and ship their own projects.",
     },
     seo: {
@@ -359,7 +359,7 @@ export const projects: Project[] = [
     },
     detail: {
       tr: [
-        "KidZania İstanbul'daki Logo Yazılım Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim.",
+        "KidZania İstanbul'daki Logo Yazılım'ın Yazılım Geliştirme Merkezi için kurgulanan interaktif deneyim.",
         "Çocuklar merkeze girdiklerinde gerçek bir yazılım ekibi gibi çalışıyor: görevi alıyor, üzerinde çalışıyor ve sonunda kendi projelerini ortaya çıkarıyor.",
         "Deneyim fiziksel mekânla birlikte tasarlandı; ekranlardaki akış merkezin kendi düzenine göre kurgulandı.",
       ],
@@ -391,8 +391,8 @@ export const projects: Project[] = [
     year: 2026,
     image: "date-for-dead.webp",
     summary: {
-      tr: "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
-      en: "A darkly comic dating game set in a graveyard, released on Steam. Hand-drawn art direction and a gameplay loop of its own.",
+      tr: "Steam sayfası yayında olan, mezarlıkta geçen kara mizahlı bir flört oyunu. Elle çizilmiş sanat yönetimi ve kendine özgü oynanış döngüsü.",
+      en: "A darkly comic dating game set in a graveyard, with its Steam page now live. Hand-drawn art direction and a gameplay loop of its own.",
     },
     seo: {
       tr: { title: "Date For Dead: Kara Mizahlı Flört Oyunu (PC)" },
@@ -400,24 +400,28 @@ export const projects: Project[] = [
     },
     detail: {
       tr: [
-        "Steam'de yayınlanan, mezarlıkta geçen kara mizahlı bir flört oyunu.",
+        "Mezarlıkta geçen kara mizahlı bir flört oyunu.",
         "Elle çizilmiş sanat yönetimi ve kendine özgü bir oynanış döngüsü var; hikâye seçimlerle ilerliyor.",
-        "PC için yayınlandı.",
+        "PC için Steam sayfası yayında; çıkış tarihi duyurulacak.",
       ],
       en: [
-        "A darkly comic dating game set in a graveyard, released on Steam.",
+        "A darkly comic dating game set in a graveyard.",
         "It has hand-drawn art direction and a gameplay loop of its own, with a story that moves forward through choices.",
-        "Released for PC.",
+        "Its Steam page for PC is live; the release date is still to be announced.",
       ],
     },
     facts: {
       tr: [
         { k: "Platform", v: "PC (Steam)" },
+        // Steam oyunu "yakında" olarak listeliyor (28 Eylül 2026); çıkış
+        // tarihi açıklanınca özet, anlatım ve bu satır birlikte güncellenmeli.
+        { k: "Durum", v: "Steam sayfası yayında, çıkış tarihi duyurulacak" },
         { k: "Tür", v: "Görsel roman" },
         { k: "Yıl", v: "2026" },
       ],
       en: [
         { k: "Platform", v: "PC (Steam)" },
+        { k: "Status", v: "Steam page live, release date to be announced" },
         { k: "Genre", v: "Visual novel" },
         { k: "Year", v: "2026" },
       ],

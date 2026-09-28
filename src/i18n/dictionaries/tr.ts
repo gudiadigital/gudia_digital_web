@@ -6,6 +6,25 @@ export type PrivacySection = {
   after?: string[];
 };
 
+/**
+ * Hizmet sayfasının metinleri. Sözlük türü `typeof tr`'den çıktığı için her
+ * hizmet kendi alanlarıyla çıkarılıyor; bileşen bu türle okuyup isteğe bağlı
+ * alanlara (sources) güvenle erişiyor.
+ */
+export type ServiceItem = {
+  title: string;
+  seo: { title: string; description: string };
+  short: string;
+  intro: string;
+  /**
+   * Girişteki sayı ya da kuralın resmî kaynağı; girişin altında "Kaynak"
+   * satırı olarak çıkıyor. Doğrulanamayan iddia metne girmiyor.
+   */
+  sources?: { label: string; url: string }[];
+  features: string[];
+  deliverables: string[];
+};
+
 export const tr = {
   meta: {
     siteName: "Gudia Dijital",
@@ -199,7 +218,13 @@ export const tr = {
         short:
           "Elinizde zaten bir uygulama veya site var ama eski, yavaş ya da çalışmıyor. Sıfırdan yazmadan toparlıyoruz.",
         intro:
-          "Çoğu işletmenin ihtiyacı yeni bir ürün değil, var olanın düzgün çalışması. Önce ücretsiz bir inceleme yapıp somut olarak neyin düzeltilmesi gerektiğini yazıyoruz; kapsamı siz seçiyorsunuz. Uzun süredir güncellenmeyen uygulamalar App Store tarafından kaldırılma sürecine bile girebiliyor — bu iş ertelenecek bir iş değil.",
+          "Çoğu işletmenin ihtiyacı yeni bir ürün değil, var olanın düzgün çalışması. Önce ücretsiz bir inceleme yapıp somut olarak neyin düzeltilmesi gerektiğini yazıyoruz; kapsamı siz seçiyorsunuz. Apple, üç yıldır güncellenmeyen ve son 12 ayda hiç ya da çok az indirilen uygulamaların geliştiricisini uyarıyor: 90 gün içinde güncelleme gönderilmezse uygulama App Store'dan kaldırılıyor. Bu iş ertelenecek bir iş değil.",
+        sources: [
+          {
+            label: "Apple Developer: App Store Improvements",
+            url: "https://developer.apple.com/support/app-store-improvements/",
+          },
+        ],
         features: [
           "Uygulama incelemesi: çökme, performans ve kullanım analizi",
           "Arayüz yenileme ve kullanıcı akışı düzeltmeleri",
@@ -249,7 +274,13 @@ export const tr = {
         short:
           "Trendyol mağazanızın ürün sayfalarını, görsellerini ve metinlerini dönüşüm için yeniden düzenliyoruz.",
         intro:
-          "Türkiye'de 600 binden fazla işletme pazaryerlerinde satış yapıyor; aradaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
+          "Ticaret Bakanlığı'na göre 2024'te Türkiye'de 600.800 işletme e-ticaret yaptı. Aralarındaki fark çoğu zaman üründe değil, ürün sayfasında. Mağazanızı inceleyip hangi ürünlerde hızlı kazanım olduğunu gösteriyoruz, sonra öncesi/sonrası olarak uyguluyoruz.",
+        sources: [
+          {
+            label: "Ticaret Bakanlığı, Türkiye'de E-Ticaretin Görünümü (6 Mayıs 2025)",
+            url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-06-05-2025",
+          },
+        ],
         features: [
           "Ürün görselleri ve kapak görseli düzenlemesi",
           "SEO uyumlu ürün başlığı ve açıklama metinleri",
@@ -584,6 +615,7 @@ export const tr = {
     backToServices: "Tüm hizmetlere dön",
     whatWeDo: "Kapsam",
     whatYouGet: "Teslim edilenler",
+    source: "Kaynak",
     skipToContent: "İçeriğe geç",
   },
 };

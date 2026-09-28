@@ -1,5 +1,7 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import { serviceSlugs, type ServiceSlug } from "@/i18n/config";
+import type { ServiceItem } from "@/i18n/dictionaries";
 import { pathFor } from "@/i18n/routes";
 import { Container } from "@/components/Container";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -15,7 +17,7 @@ import type { PageContentProps } from "./types";
 type ServiceDetailProps = PageContentProps & { slug: ServiceSlug };
 
 export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps) {
-  const service = dict.services.items[slug];
+  const service: ServiceItem = dict.services.items[slug];
   const others = serviceSlugs.filter((candidate) => candidate !== slug);
   /*
    * Bu hizmet kapsamındaki işler: ana alanı bu hizmet olanlar ve ek
@@ -60,6 +62,25 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             </span>
 
             <p className="text-base leading-relaxed sm:text-lg">{service.intro}</p>
+            {/* Girişteki sayı ya da kural doğrulanabilsin diye resmî kaynağı. */}
+            {service.sources && (
+              <p className="text-muted mt-3 text-sm leading-relaxed">
+                <span className="text-ink/70">{dict.common.source}:</span>{" "}
+                {service.sources.map((source, index) => (
+                  <Fragment key={source.url}>
+                    {index > 0 && " · "}
+                    <a
+                      href={source.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="text-ink/70 hover:text-ink underline underline-offset-2 transition-colors"
+                    >
+                      {source.label}
+                    </a>
+                  </Fragment>
+                ))}
+              </p>
+            )}
 
             <h2 className="mt-12 text-xl font-semibold">{dict.common.whatWeDo}</h2>
             <ul className="mt-5 space-y-3">

@@ -151,7 +151,7 @@ export const en: Dictionary = {
         ],
       },
       "markali-oyunlar": {
-        title: "Branded Games & Interactive",
+        title: "Branded Games & Interactive Experiences",
         seo: {
           title: "Branded Games for Events & Trade Shows",
           description:
@@ -185,7 +185,13 @@ export const en: Dictionary = {
         short:
           "You already have an app or site, but it's dated, slow or broken. We fix it without starting over.",
         intro:
-          "Most businesses don't need a new product — they need the one they have to work properly. We start with a free review and write down concretely what needs fixing; you choose the scope. Apps left un-updated for long enough can even enter App Store removal review, so this isn't work to postpone.",
+          "Most businesses don't need a new product — they need the one they have to work properly. We start with a free review and write down concretely what needs fixing; you choose the scope. Apple warns developers when an app hasn't been updated in three years and has had few or no downloads over the past 12 months: unless an update is submitted within 90 days, the app is removed from the App Store. This isn't work to postpone.",
+        sources: [
+          {
+            label: "Apple Developer: App Store Improvements",
+            url: "https://developer.apple.com/support/app-store-improvements/",
+          },
+        ],
         features: [
           "App audit: crash, performance and usage analysis",
           "Interface refresh and user flow fixes",
@@ -235,7 +241,13 @@ export const en: Dictionary = {
         short:
           "We rebuild your marketplace product pages, images and copy around conversion.",
         intro:
-          "Over 600,000 businesses in Türkiye sell on marketplaces, and the difference is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
+          "According to Türkiye's Ministry of Trade, 600,800 businesses sold online in 2024. What sets them apart is rarely the product — it's the product page. We review your store, show you where the quick wins are, then apply them as a before/after.",
+        sources: [
+          {
+            label: "Türkiye Ministry of Trade announcement, 6 May 2025 (in Turkish)",
+            url: "https://ticaret.gov.tr/duyurular/turkiyede-e-ticaretin-gorunumu-raporu-yayinlandi-06-05-2025",
+          },
+        ],
         features: [
           "Product and cover image rework",
           "SEO-friendly product titles and descriptions",
@@ -456,7 +468,7 @@ export const en: Dictionary = {
         "How Gudia Digital handles personal data from its contact form and email under Türkiye's KVKK Law No. 6698: data collected, purposes, transfers and your rights.",
     },
     title: "Privacy Notice",
-    lead: "Under Article 10 of Turkey's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",
+    lead: "Under Article 10 of Türkiye's Personal Data Protection Law No. 6698 (KVKK), this notice explains how your personal data is processed on this site and when you write to us.",
     updated: "Last updated: 28 September 2026",
     sections: [
       {
@@ -499,7 +511,7 @@ export const en: Dictionary = {
       {
         title: "Who we share it with",
         body: [
-          "We don't sell your data or share it with anyone for advertising or marketing. We only use the service providers below so the site and our correspondence work. Their servers are located outside Turkey, so your data is transferred abroad within the scope of Article 9 of the Law:",
+          "We don't sell your data or share it with anyone for advertising or marketing. We only use the service providers below so the site and our correspondence work. Their servers are located outside Türkiye, so your data is transferred abroad within the scope of Article 9 of the Law:",
         ],
         items: [
           "Web3Forms — forwards your contact form message to us by email",
@@ -523,7 +535,7 @@ export const en: Dictionary = {
           "Learn whether your personal data is processed",
           "Request information about it if it is",
           "Learn the purpose of processing and whether the data is used accordingly",
-          "Know the third parties it is transferred to in Turkey or abroad",
+          "Know the third parties it is transferred to in Türkiye or abroad",
           "Ask for it to be corrected if it is incomplete or inaccurate",
           "Ask for it to be erased or destroyed under the conditions in Article 7 of the Law",
           "Ask for corrections, erasures and destructions to be notified to third parties the data was transferred to",
@@ -564,6 +576,7 @@ export const en: Dictionary = {
     backToServices: "Back to all services",
     whatWeDo: "Scope",
     whatYouGet: "What you get",
+    source: "Source",
     skipToContent: "Skip to content",
   },
 };
