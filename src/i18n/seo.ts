@@ -1,8 +1,32 @@
 import type { Metadata } from "next";
 import type { Project } from "@/data/projects";
-import type { Locale, ServiceSlug } from "./config";
+import { locales, type Locale, type ServiceSlug } from "./config";
 import { getDictionary } from "./dictionaries";
 import type { RouteKey } from "./routes";
+
+const OG_LOCALE: Record<Locale, string> = { tr: "tr_TR", en: "en_US" };
+
+/**
+ * Paylaşım kartının dil alanları: og:locale sayfanın dili,
+ * og:locale:alternate öteki dil (aynı sayfanın çevirisi var).
+ */
+export function ogLocales(locale: Locale) {
+  return {
+    locale: OG_LOCALE[locale],
+    alternateLocale: locales
+      .filter((other) => other !== locale)
+      .map((other) => OG_LOCALE[other]),
+  };
+}
+
+/**
+ * Paylaşım kartı görseli, başlığı sayfanın dilinde. İkisi de
+ * tools/og-card.html'den üretiliyor; EN sayfalar önceden Türkçe başlıklı
+ * kartı gösteriyordu.
+ */
+export function shareImage(locale: Locale): string {
+  return locale === "en" ? "/brand/og-en.jpg" : "/brand/og.jpg";
+}
 
 /**
  * Alt sayfaların arama ve paylaşım bilgisi.
@@ -32,6 +56,7 @@ export function pageMetadata({
 }): Metadata {
   const { meta } = getDictionary(locale);
   const shareTitle = `${title} · ${meta.siteName}`;
+  const image = shareImage(locale);
 
   return {
     title,
@@ -45,17 +70,15 @@ export function pageMetadata({
       siteName: meta.siteName,
       title: shareTitle,
       description,
-      locale: locale === "tr" ? "tr_TR" : "en_US",
+      ...ogLocales(locale),
       url: paths[locale],
-      images: [
-        { url: "/brand/og.jpg", width: 1200, height: 630, alt: shareTitle },
-      ],
+      images: [{ url: image, width: 1200, height: 630, alt: shareTitle }],
     },
     twitter: {
       card: "summary_large_image",
       title: shareTitle,
       description,
-      images: ["/brand/og.jpg"],
+      images: [image],
     },
   };
 }

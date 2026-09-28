@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { preload } from "react-dom";
 import "../fonts.css";
@@ -10,7 +10,7 @@ import { Motion } from "@/components/Motion";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { locales, isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { pageCopy } from "@/i18n/seo";
+import { ogLocales, pageCopy, shareImage } from "@/i18n/seo";
 import { SITE_URL } from "@/i18n/site";
 
 /*
@@ -28,6 +28,18 @@ const FONT_FILES = [
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
+
+/*
+ * Mobil tarayıcının adres çubuğu sayfanın zemin rengini alsın
+ * (globals.css'teki --space; koyu tema varsayılan). Next 16'da themeColor
+ * metadata'da değil, viewport'ta.
+ */
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0b12" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f1ec" },
+  ],
+};
 
 export async function generateMetadata({
   params,
@@ -82,11 +94,11 @@ export async function generateMetadata({
       siteName: dict.meta.siteName,
       title: home.title,
       description: home.description,
-      locale: locale === "tr" ? "tr_TR" : "en_US",
+      ...ogLocales(locale),
       url: `/${locale}`,
       images: [
         {
-          url: "/brand/og.jpg",
+          url: shareImage(locale),
           width: 1200,
           height: 630,
           alt: home.title,
@@ -97,7 +109,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: home.title,
       description: home.description,
-      images: ["/brand/og.jpg"],
+      images: [shareImage(locale)],
     },
   };
 }

@@ -1,4 +1,19 @@
 <!doctype html>
+<!--
+  Paylaşım kartının kaynağı: public/brand/og.jpg (TR) ve og-en.jpg (EN).
+  Başlıklar sözlükteki hero.title ile aynı olmalı; ?lang=en İngilizcesini
+  yazıyor. Depo kökünden servis edip 1200x630 ekran görüntüsü alınıyor:
+
+    python3 -m http.server 8123
+    CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+    "$CHROME" --headless=new --hide-scrollbars --window-size=1200,630 \
+      --virtual-time-budget=8000 --screenshot=/tmp/og-en.png \
+      "http://127.0.0.1:8123/tools/og-card.html?lang=en"
+    sips -s format jpeg -s formatOptions 82 /tmp/og-en.png \
+      --out public/brand/og-en.jpg
+
+  Dosya 100 KB'ı geçmemeli; paylaşım önizlemeleri büyük görseli atlayabiliyor.
+-->
 <html lang="tr"><head><meta charset="utf-8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +46,7 @@
 <div class="dots"></div>
 <div class="wrap">
   <div class="top">
-    <img class="mark" src="/brand/mark-dark.png" alt="">
+    <img class="mark" src="../public/brand/mark-dark.png" alt="">
     <div class="name">Gudia <span>Dijital</span></div>
   </div>
   <h1>Markaların dijital ürünlerini <span class="accent">oluşturuyor</span>, <span class="accent">iyileştiriyor</span> ve <span class="accent">büyütüyoruz</span>.</h1>
@@ -40,4 +55,12 @@
   </div>
 </div>
 <div class="bar"></div>
+<script>
+  if (new URLSearchParams(location.search).get("lang") === "en") {
+    document.documentElement.lang = "en";
+    document.querySelector(".name span").textContent = "Digital";
+    document.querySelector("h1").innerHTML =
+      'We <span class="accent">build</span>, <span class="accent">improve</span> and <span class="accent">grow</span> digital products for brands.';
+  }
+</script>
 </body></html>
