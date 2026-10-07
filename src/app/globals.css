@@ -1291,10 +1291,19 @@ html.lenis body {
   animation: thanks-draw 0.35s 0.62s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
+/* Form eksikken açılan pencerede ünlem, hata metinleriyle aynı renkte */
+.thanks-check.is-error {
+  stroke: #ff8a8a;
+}
+
 .thanks-card h2,
 .thanks-card p,
+.thanks-card ul,
 .thanks-card button {
   animation: fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.thanks-card ul {
+  animation-delay: 0.32s;
 }
 .thanks-card h2 {
   animation-delay: 0.2s;
@@ -1355,6 +1364,7 @@ html.lenis body {
   .thanks-card,
   .thanks-card h2,
   .thanks-card p,
+  .thanks-card ul,
   .thanks-card button,
   .thanks-dialog.is-closing .thanks-card {
     animation: none;

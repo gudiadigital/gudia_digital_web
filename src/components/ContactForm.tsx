@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { serviceSlugs, type ServiceSlug } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 
 type FormCopy = Dictionary["contact"]["form"];
 
 type Errors = Partial<Record<"name" | "email" | "phone" | "contact" | "message", string>>;
+
+/** Formdaki sırayla; pencere listesi ve odaklanacak ilk alan buna göre. */
+const ERROR_ORDER = ["name", "email", "phone", "contact", "message"] as const;
 
 type Draft = { subject: string; body: string };
 
@@ -53,7 +56,28 @@ export function ContactForm({
   const [draft, setDraft] = useState<Draft | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [thanks, setThanks] = useState(false);
+  const [invalid, setInvalid] = useState<Errors | null>(null);
   const submitRef = useRef<HTMLButtonElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  /** "contact" hatası e-posta ile telefonun ortak hatası; e-postaya gidilir. */
+  const fieldLabel: Record<(typeof ERROR_ORDER)[number], string> = {
+    name: t.name,
+    email: t.email,
+    phone: t.phone,
+    contact: `${t.email} / ${t.phone}`,
+    message: t.message,
+  };
+
+  function focusFirstInvalid(found: Errors) {
+    const first = ERROR_ORDER.find((key) => found[key]);
+    if (!first) return;
+    const field = formRef.current?.querySelector<HTMLElement>(
+      `#${first === "contact" ? "email" : first}`,
+    );
+    field?.scrollIntoView({ block: "center" });
+    field?.focus({ preventScroll: true });
+  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -76,7 +100,13 @@ export function ContactForm({
     if (!message) nextErrors.message = t.required;
 
     setErrors(nextErrors);
-    if (Object.keys(nextErrors).length > 0) return;
+    if (Object.keys(nextErrors).length > 0) {
+      // Hata metinleri alanların altında çıkıyor ama Gönder'e basan kişi
+      // formun en altında; mobilde Ad Soyad ~550px yukarıda kalıyor ve
+      // "hiçbir şey olmadı" sanılıyordu. Eksikler bir pencerede listeleniyor.
+      setInvalid(nextErrors);
+      return;
+    }
 
     const body = [
       `${t.name}: ${name}`,
@@ -134,6 +164,7 @@ export function ContactForm({
 
   return (
     <form
+      ref={formRef}
       onSubmit={handleSubmit}
       /* Mesaj değişince hazır taslak ve durum mesajı eskiyor; Gönder'e
          yeniden basılınca güncel haliyle açılır. */
@@ -284,8 +315,23 @@ export function ContactForm({
 
       {draft && <SendPanel form={t} to={to} draft={draft} />}
 
+      {invalid && (
+        <NoticeDialog
+          tone="error"
+          text={t.invalid}
+          items={ERROR_ORDER.filter((key) => invalid[key]).map(
+            (key) => `${fieldLabel[key]}: ${invalid[key]}`,
+          )}
+          onClose={() => {
+            setInvalid(null);
+            focusFirstInvalid(invalid);
+          }}
+        />
+      )}
+
       {thanks && (
-        <SuccessDialog
+        <NoticeDialog
+          tone="success"
           text={t.success}
           onClose={() => {
             setThanks(false);
@@ -310,19 +356,25 @@ function isPhone(value: string) {
 }
 
 /**
- * Gönderim başarılı olunca açılan bildirim. Native <dialog> kullanılıyor:
- * odak içeride tutuluyor, Esc kapatıyor, kapanınca odak Gönder düğmesine
- * dönüyor. Kapanırken kısa bir çıkış animasyonu oynatılıp sonra kapatılıyor.
+ * Gönderim sonrası bildirim: başarılıysa teşekkür, form eksik ya da
+ * hatalıysa düzeltilecek alanların listesi. Native <dialog> kullanılıyor:
+ * odak içeride tutuluyor, Esc kapatıyor, odağı nereye döndüreceğine
+ * onClose karar veriyor. Kapanırken kısa bir çıkış animasyonu oynatılıyor.
  */
-function SuccessDialog({
+function NoticeDialog({
+  tone,
   text,
+  items,
   onClose,
 }: {
+  tone: "success" | "error";
   text: FormCopy["success"];
+  items?: string[];
   onClose: () => void;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
   const [closing, setClosing] = useState(false);
+  const id = useId();
 
   useEffect(() => {
     const dialog = ref.current;
@@ -345,8 +397,9 @@ function SuccessDialog({
   return (
     <dialog
       ref={ref}
-      aria-labelledby="thanks-title"
-      aria-describedby="thanks-text"
+      role={tone === "error" ? "alertdialog" : undefined}
+      aria-labelledby={`${id}-title`}
+      aria-describedby={`${id}-text`}
       className={`thanks-dialog ${closing ? "is-closing" : ""}`}
       data-lenis-prevent
       onCancel={(event) => {
@@ -362,7 +415,7 @@ function SuccessDialog({
       <div className="thanks-card">
         <span className="thanks-halo" aria-hidden="true" />
         <svg
-          className="thanks-check"
+          className={`thanks-check ${tone === "error" ? "is-error" : ""}`}
           viewBox="0 0 56 56"
           width="56"
           height="56"
@@ -370,14 +423,22 @@ function SuccessDialog({
           aria-hidden="true"
         >
           <circle cx="28" cy="28" r="24" />
-          <path d="M18 28.5l7 7 13-14" />
+          {/* Başarıda tik, hatada ünlem */}
+          <path d={tone === "error" ? "M28 16v14M28 38.5v.5" : "M18 28.5l7 7 13-14"} />
         </svg>
-        <h2 id="thanks-title" className="font-display mt-5 text-xl font-semibold">
+        <h2 id={`${id}-title`} className="font-display mt-5 text-xl font-semibold">
           {text.title}
         </h2>
-        <p id="thanks-text" className="text-muted mt-2 text-sm leading-relaxed">
+        <p id={`${id}-text`} className="text-muted mt-2 text-sm leading-relaxed">
           {text.text}
         </p>
+        {items && items.length > 0 && (
+          <ul className="border-line mt-4 space-y-1.5 rounded-xl border px-4 py-3 text-left text-sm">
+            {items.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        )}
         <button
           type="button"
           autoFocus

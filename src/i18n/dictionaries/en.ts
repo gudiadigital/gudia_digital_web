@@ -672,6 +672,11 @@ export const en: Dictionary = {
         text: "We'll get back to you shortly.",
         close: "OK",
       },
+      invalid: {
+        title: "Please check a few fields",
+        text: "Fix the following so we can send your message:",
+        close: "Fix",
+      },
       error: "Couldn't send the message. You can still reach us with one of the options below.",
       required: "This field is required",
       invalidEmail: "Enter a valid email address",

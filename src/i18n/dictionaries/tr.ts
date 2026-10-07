@@ -841,6 +841,12 @@ export const tr = {
         text: "En kısa sürede dönüş yapacağız.",
         close: "Tamam",
       },
+      // Form eksik ya da hatalıyken Gönder'e basılınca açılan pencere.
+      invalid: {
+        title: "Birkaç alanı kontrol edin",
+        text: "Mesajınızı gönderebilmemiz için şu alanları düzeltin:",
+        close: "Düzelt",
+      },
       error: "Mesaj gönderilemedi. Aşağıdaki seçeneklerden biriyle bize ulaştırabilirsiniz.",
       required: "Bu alan zorunlu",
       invalidEmail: "Geçerli bir e-posta adresi girin",
