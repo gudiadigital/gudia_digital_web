@@ -238,10 +238,6 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             anlatılan işin kanıtı doğrudan sitenin kendisi. */}
         {slug === "web-sitesi" && <WebShowcase locale={locale} dict={dict} />}
 
-        {/* Markalı oyunlarda kanıt oyunun kendisi: reklam kurguları ve
-            oynanış kayıtları referans kartlarından önce geliyor. */}
-        {slug === "markali-oyunlar" && <GameVideos locale={locale} dict={dict} />}
-
         {/* Ürün iyileştirmede de kanıt işin kendisi: kendi uygulamalarımızda
             yapılan mağaza ve sürüm çalışması örnek olarak gösteriliyor. */}
         {slug === "dijital-urun-iyilestirme" && (
@@ -276,6 +272,9 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
             </div>
           </div>
         )}
+
+        {/* Markalı oyunlarda önce referans kartları, videolar onların altında. */}
+        {slug === "markali-oyunlar" && <GameVideos locale={locale} dict={dict} />}
       </Container>
 
       <Process dict={dict} />
