@@ -360,6 +360,60 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "aura",
+    title: "Aura",
+    service: "mobil-uygulama",
+    year: 2026,
+    image: "icon-aura.webp",
+    iconStyle: true,
+    summary: {
+      tr: "Tek telefonda ya da online oynanan yirmiye yakın grup oyunu: Sahtekâr, Vampir Köylü, 2 Doğru 1 Yalan, Şişe Çevir. Sesli odalarda canlı çeviri, on iki dil.",
+      en: "Around twenty party games on one phone or online: Imposter, Werewolf, Two Truths and a Lie, Spin the Bottle. Voice rooms with live translation, in twelve languages.",
+    },
+    seo: {
+      tr: { title: "Aura: Sahtekâr ve Grup Oyunları Uygulaması" },
+      en: { title: "Aura: Imposter and Party Games App" },
+    },
+    detail: {
+      tr: [
+        "Aura, arkadaş toplantıları için yapılmış bir grup oyunları uygulaması. Sahtekâr, Vampir Köylü, 2 Doğru 1 Yalan, Şişe Çevir ve Sessiz Sinema dahil yirmiye yakın oyun, tek telefonu elden ele vererek ya da online odalarda oynanıyor.",
+        "Sesli odalarda canlı çeviri var; farklı dil konuşan oyuncular aynı masada oynayabiliyor. Uygulama on iki dilde, 18+ kart desteleri isteğe bağlı. Engelleme ve şikâyet araçları da içinde.",
+        "Uygulama ücretsiz; Aura Gold aboneliği tüm oyun paketlerini açıyor.",
+      ],
+      en: [
+        "Aura is a party games app built for get-togethers. Around twenty games, including Imposter, Werewolf, Two Truths and a Lie, Spin the Bottle and Charades, are played by passing one phone around or in online rooms.",
+        "Voice rooms come with live translation, so players who speak different languages can share a table. The app is available in twelve languages, with optional 18+ card decks and tools to block and report other players.",
+        "The app is free; an Aura Gold subscription unlocks every game pack.",
+      ],
+    },
+    facts: {
+      tr: [
+        { k: "Sürüm", v: "1.0.1 (24 Ekim 2026'da yayımlandı)" },
+        { k: "Platform", v: "iOS" },
+        { k: "Dil", v: "12" },
+        { k: "Kategori", v: "Kelime" },
+      ],
+      en: [
+        { k: "Version", v: "1.0.1 (released 24 October 2026)" },
+        { k: "Platform", v: "iOS" },
+        { k: "Languages", v: "12" },
+        { k: "Category", v: "Word" },
+      ],
+    },
+    rating: { score: 5.0, count: 3, store: "appstore", asOf: "2026-10-26" },
+    shots: 6,
+    shotSize: { w: 497, h: 1080 },
+    links: [
+      { kind: "appstore", url: "https://apps.apple.com/tr/app/id6804788518" },
+    ],
+    schema: {
+      type: "MobileApplication",
+      applicationCategory: "GameApplication",
+      operatingSystem: "iOS",
+      relation: "sourceOrganization",
+    },
+  },
+  {
     slug: "photosensia",
     title: "PhotoSensia Kids",
     service: "markali-oyunlar",
