@@ -13,6 +13,7 @@ import { ServiceIcon } from "@/components/ServiceIcon";
 import { CallToAction } from "@/components/sections/CallToAction";
 import { Process } from "@/components/sections/Process";
 import { WebShowcase } from "@/components/sections/WebShowcase";
+import { GameVideos } from "@/components/sections/GameVideos";
 import { ProductImprovements } from "@/components/sections/ProductImprovements";
 import type { PageContentProps } from "./types";
 
@@ -236,6 +237,10 @@ export function ServiceDetailContent({ locale, dict, slug }: ServiceDetailProps)
         {/* Web sitesi hizmetinde önce yayındaki siteler geliyor: bu alanda
             anlatılan işin kanıtı doğrudan sitenin kendisi. */}
         {slug === "web-sitesi" && <WebShowcase locale={locale} dict={dict} />}
+
+        {/* Markalı oyunlarda kanıt oyunun kendisi: reklam kurguları ve
+            oynanış kayıtları referans kartlarından önce geliyor. */}
+        {slug === "markali-oyunlar" && <GameVideos locale={locale} dict={dict} />}
 
         {/* Ürün iyileştirmede de kanıt işin kendisi: kendi uygulamalarımızda
             yapılan mağaza ve sürüm çalışması örnek olarak gösteriliyor. */}

@@ -1006,6 +1006,13 @@ export const tr = {
       "Bu sitede çerez, analitik veya takip kodu bulunmuyor. İletişim formuna yazdıklarınız yalnızca bize e-posta olarak ulaştırılmak üzere Web3Forms hizmeti üzerinden gönderilir; bu site hiçbir veri saklamaz.",
   },
 
+  gameVideos: {
+    eyebrow: "Oyun videoları",
+    title: "Oyun denemelerimiz ve reklam kurgularımız",
+    subtitle:
+      "Hyper-casual oyun denemelerimizin TikTok ve Facebook reklam videoları ile oynanış kayıtları. Oynat'a basılınca video yükleniyor.",
+  },
+
   webShowcase: {
     eyebrow: "Yayında olan siteler",
     title: "Kendi uygulamalarımız için kurduğumuz siteler",

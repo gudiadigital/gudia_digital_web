@@ -823,6 +823,13 @@ export const en: Dictionary = {
       "This site uses no cookies, analytics or tracking. What you write in the contact form is sent through the Web3Forms service only to deliver it to us by email; this site stores no data.",
   },
 
+  gameVideos: {
+    eyebrow: "Game videos",
+    title: "Our game prototypes and ad creatives",
+    subtitle:
+      "TikTok and Facebook ad videos and gameplay recordings from our hyper-casual game prototypes. A video loads when you press play.",
+  },
+
   webShowcase: {
     eyebrow: "Live sites",
     title: "Sites we built for our own apps",
