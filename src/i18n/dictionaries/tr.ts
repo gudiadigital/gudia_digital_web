@@ -88,7 +88,7 @@ export const tr = {
      * buradan geliyor; boşken hiç yazılmıyor. Kurucuların kişisel
      * profilleri buraya değil, kendi kayıtlarına. İki dilde aynı olmalı.
      */
-    profiles: [] as string[],
+    profiles: ["https://github.com/gudiadigital"] as string[],
   },
 
   nav: {
@@ -706,14 +706,17 @@ export const tr = {
         name: "Gürkan Sevilmiş",
         role: "Kurucu Ortak · iOS Geliştirici",
         bio: "Mobil uygulama geliştirme ve ürün iyileştirme tarafını yürütüyor. Swift ve SwiftUI ile native iOS uygulamaları geliştiriyor; App Store yayın süreçleri, mimari kararlar ve teknik üretimden sorumlu.",
-        profiles: [],
+        profiles: [
+          "https://www.linkedin.com/in/gurkansevilmis/",
+          "https://apps.apple.com/us/developer/ali-gurkan-sevilmis/id1861724130",
+        ],
       },
       {
         id: "dilara-isman",
         name: "Dilara İşman",
         role: "Kurucu Ortak · Oyun Geliştirici",
         bio: "Oyun geliştirme, proje yönetimi ve müşteri iletişimini yürütüyor. Markalı oyun ve interaktif deneyim projelerinin geliştirilmesinden, işlerin planlanıp zamanında teslim edilmesinden ve müşteriyle günlük iletişimden sorumlu.",
-        profiles: [],
+        profiles: ["https://www.linkedin.com/in/dilaraisman/"],
       },
     ] as Founder[],
   },
