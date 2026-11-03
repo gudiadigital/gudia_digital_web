@@ -51,3 +51,4 @@ next-env.d.ts
 
 # scripts/lastmod.mjs'in yazdığı, IndexNow'a gidecek değişen adresler (derleme çıktısı)
 /.indexnow-urls.json
+graphify-out/
